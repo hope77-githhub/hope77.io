@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Max33 Dashboard — 장자훈 Portfolio</title>
-    <!-- Fonts: Inter, Pretendard, Noto Sans KR -->
+    <title>HOPE77 Portfolio — 장자훈</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
@@ -12,11 +11,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* =========================================================
-           1. DESIGN SPECIFICATION VARIABLES (Max33 Dashboard)
-           ========================================================= */
         :root {
-            /* Core Surfaces */
+            /* Surfaces & Borders (design_EA.MD) */
             --app-bg: #F3F6FB;
             --surface-primary: #FFFFFF;
             --surface-soft: #F8FAFF;
@@ -35,42 +31,18 @@
             --accent-shadow: 0 4px 14px rgba(63, 111, 219, 0.12);
 
             /* Semantic Chips */
-            --chip-success-bg: #DDF8E7;
-            --chip-success-text: #2C8A4B;
-            --chip-info-bg: #E7F0FF;
-            --chip-info-text: #2E60D0;
-            --chip-purple-bg: #F1E9FF;
-            --chip-purple-text: #7B4ACB;
-            --chip-warning-bg: #FFF0DD;
-            --chip-warning-text: #CC7A22;
+            --chip-success-bg: #DDF8E7; --chip-success-text: #2C8A4B;
+            --chip-info-bg: #E7F0FF;    --chip-info-text: #2E60D0;
+            --chip-purple-bg: #F1E9FF;  --chip-purple-text: #7B4ACB;
+            --chip-warning-bg: #FFF0DD; --chip-warning-text: #CC7A22;
 
-            /* Radius Scale */
-            --radius-sm: 12px;
-            --radius-md: 14px;
-            --radius-lg: 18px;
-            --radius-pill: 999px;
-
-            /* Spacing System (8px base) */
-            --space-1: 8px;
-            --space-2: 12px;
-            --space-3: 16px;
-            --space-4: 24px;
-            --space-5: 32px;
+            /* Radius & Spacing */
+            --radius-sm: 12px; --radius-md: 14px; --radius-lg: 18px; --radius-pill: 999px;
+            --space-1: 8px; --space-2: 12px; --space-3: 16px; --space-4: 24px; --space-5: 32px;
         }
 
-        /* =========================================================
-           2. RESET & BASE TYPOGRAPHY
-           ========================================================= */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
         body {
             background-color: var(--app-bg);
             color: var(--text-primary);
@@ -80,743 +52,229 @@
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
         }
+        a { color: inherit; text-decoration: none; }
 
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
+        /* Typography */
+        .page-heading { font-size: clamp(28px, 3vw, 34px); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
+        .section-heading { font-size: 19px; font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; }
+        .body-text { font-size: 15px; font-weight: 500; line-height: 1.5; color: var(--text-secondary); }
+        .meta-label { font-size: 12.5px; font-weight: 600; line-height: 1.4; color: var(--text-muted); }
 
-        /* Typography Scale */
-        .page-heading {
-            font-size: clamp(28px, 3vw, 34px);
-            font-weight: 700;
-            line-height: 1.2;
-            color: var(--text-primary);
-            letter-spacing: -0.02em;
-        }
-
-        .section-heading {
-            font-size: 19px;
-            font-weight: 700;
-            line-height: 1.3;
-            color: var(--text-primary);
-            letter-spacing: -0.01em;
-        }
-
-        .body-text {
-            font-size: 15px;
-            font-weight: 500;
-            line-height: 1.5;
-            color: var(--text-secondary);
-        }
-
-        .meta-label {
-            font-size: 12.5px;
-            font-weight: 600;
-            line-height: 1.4;
-            color: var(--text-muted);
-        }
-
-        /* Chips & Pills */
+        /* Chips */
         .chip {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 10px;
-            border-radius: var(--radius-pill);
-            font-size: 11px;
-            font-weight: 700;
-            line-height: 1.1;
-            white-space: nowrap;
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 4px 10px; border-radius: var(--radius-pill);
+            font-size: 11px; font-weight: 700; line-height: 1.1; white-space: nowrap;
         }
+        .chip-success { background: var(--chip-success-bg); color: var(--chip-success-text); }
+        .chip-info    { background: var(--chip-info-bg);    color: var(--chip-info-text); }
+        .chip-purple  { background: var(--chip-purple-bg);  color: var(--chip-purple-text); }
+        .chip-warning { background: var(--chip-warning-bg); color: var(--chip-warning-text); }
+        .chip-neutral { background: var(--surface-soft);    color: var(--text-secondary); border: 1px solid var(--border-color); }
 
-        .chip-success {
-            background-color: var(--chip-success-bg);
-            color: var(--chip-success-text);
-        }
-
-        .chip-info {
-            background-color: var(--chip-info-bg);
-            color: var(--chip-info-text);
-        }
-
-        .chip-purple {
-            background-color: var(--chip-purple-bg);
-            color: var(--chip-purple-text);
-        }
-
-        .chip-warning {
-            background-color: var(--chip-warning-bg);
-            color: var(--chip-warning-text);
-        }
-
-        .chip-neutral {
-            background-color: var(--surface-soft);
-            color: var(--text-secondary);
-            border: 1px solid var(--border-color);
-        }
-
-        /* =========================================================
-           3. APP SHELL & TOP APP BAR
-           ========================================================= */
+        /* Top App Bar */
         .top-app-bar {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background-color: var(--surface-primary);
+            position: sticky; top: 0; z-index: 100;
+            background: var(--surface-primary);
             border-bottom: 1px solid var(--border-color);
-            height: 60px;
-            display: flex;
-            align-items: center;
+            height: 60px; display: flex; align-items: center;
         }
-
         .top-app-bar-inner {
-            width: 100%;
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 var(--space-4);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 var(--space-4);
+            display: flex; align-items: center; justify-content: space-between;
         }
-
-        .product-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text-primary);
-            letter-spacing: -0.01em;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: var(--space-2);
-        }
-
+        .product-title { font-size: 18px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.01em; }
         .active-module-pill {
-            background-color: var(--accent-soft);
-            color: var(--accent-text);
+            background: var(--accent-soft); color: var(--accent-text);
             border: 1px solid rgba(63, 111, 219, 0.2);
-            padding: 6px 12px;
-            border-radius: var(--radius-pill);
-            font-size: 11.5px;
-            font-weight: 700;
-            line-height: 1.1;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+            padding: 6px 12px; border-radius: var(--radius-pill);
+            font-size: 11.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;
         }
-
         .active-module-pill::before {
-            content: "";
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background-color: var(--accent-primary);
-            display: inline-block;
+            content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent-primary);
         }
 
-        /* Main Container (max-w-7xl) */
+        /* Layout & Cards */
         .app-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: var(--space-4);
-            display: flex;
-            flex-direction: column;
-            gap: var(--space-4);
+            max-width: 1280px; margin: 0 auto; padding: var(--space-4);
+            display: flex; flex-direction: column; gap: var(--space-4);
         }
-
-        /* Standard Section Card */
         .section-card {
-            background-color: var(--surface-primary);
+            background: var(--surface-primary);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
             padding: var(--space-4);
         }
-
         .section-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: var(--space-2);
-            margin-bottom: var(--space-3);
-            padding-bottom: var(--space-2);
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: var(--space-2);
+            margin-bottom: var(--space-3); padding-bottom: var(--space-2);
             border-bottom: 1px solid var(--divider-color);
         }
+        .section-header-left { display: flex; align-items: center; gap: var(--space-2); }
 
-        .section-header-left {
-            display: flex;
-            align-items: center;
-            gap: var(--space-2);
-        }
-
-        /* =========================================================
-           4. SUMMARY / HERO PANEL
-           ========================================================= */
-        .summary-grid {
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: var(--space-4);
-            align-items: stretch;
-        }
-
-        .summary-main {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            gap: var(--space-3);
-        }
-
-        .summary-chips {
-            display: flex;
-            flex-wrap: wrap;
-            gap: var(--space-1);
-        }
-
+        /* Hero / Profile Summary */
+        .summary-grid { display: grid; grid-template-columns: 1fr 310px; gap: var(--space-4); }
+        .summary-main { display: flex; flex-direction: column; justify-content: space-between; gap: var(--space-3); }
+        .summary-chips { display: flex; flex-wrap: wrap; gap: var(--space-1); }
         .summary-owner-bar {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: var(--space-3);
-            padding-top: var(--space-2);
-            border-top: 1px solid var(--divider-color);
+            display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3);
+            padding-top: var(--space-2); border-top: 1px solid var(--divider-color);
         }
-
-        .summary-thumbnail-card {
-            background-color: var(--surface-soft);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: var(--space-3);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            gap: var(--space-2);
+        .summary-profile-box {
+            background: var(--surface-soft); border: 1px solid var(--border-color);
+            border-radius: var(--radius-md); padding: var(--space-3);
+            display: flex; flex-direction: column; justify-content: space-between; gap: var(--space-2);
         }
-
-        .thumbnail-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+        .profile-stat-list {
+            background: var(--surface-primary); border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm); padding: var(--space-2);
+            display: flex; flex-direction: column; gap: 10px;
         }
+        .profile-stat-item { display: flex; align-items: center; justify-content: space-between; font-size: 12.5px; color: var(--text-secondary); }
 
-        .thumbnail-visual {
-            background-color: var(--surface-primary);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            padding: var(--space-2);
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .metric-bar-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-
-        .metric-bar-track {
-            width: 100%;
-            height: 6px;
-            background-color: var(--app-bg);
-            border-radius: var(--radius-pill);
-            overflow: hidden;
-        }
-
-        .metric-bar-fill {
-            height: 100%;
-            background-color: var(--accent-primary);
-            border-radius: var(--radius-pill);
-        }
-
-        /* =========================================================
-           5. QUICK NAVIGATION & HOVER PREVIEW PANEL
-           ========================================================= */
+        /* Quick Navigation */
         .quick-nav-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
-            gap: var(--space-2);
-            margin-bottom: var(--space-3);
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: var(--space-2); margin-bottom: var(--space-3);
         }
-
         .module-btn {
-            background-color: var(--surface-primary);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: var(--space-3);
-            text-align: left;
-            cursor: pointer;
-            transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            gap: var(--space-1);
-            font-family: inherit;
+            background: var(--surface-primary); border: 1px solid var(--border-color);
+            border-radius: var(--radius-md); padding: var(--space-3);
+            text-align: left; cursor: pointer; font-family: inherit;
+            display: flex; flex-direction: column; gap: var(--space-1);
+            transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
         }
-
-        .module-btn:hover {
-            background-color: var(--surface-soft);
-            border-color: #CBD5E8;
-        }
-
+        .module-btn:hover { background: var(--surface-soft); border-color: #CBD5E8; }
         .module-btn.active {
-            background-color: var(--accent-soft);
-            border-color: var(--accent-primary);
-            color: var(--accent-text);
-            box-shadow: var(--accent-shadow);
+            background: var(--accent-soft); border-color: var(--accent-primary);
+            color: var(--accent-text); box-shadow: var(--accent-shadow);
         }
-
-        .module-btn-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-        }
-
-        .module-btn-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .module-btn.active .module-btn-title {
-            color: var(--accent-text);
-        }
-
-        .module-btn-desc {
-            font-size: 12px;
-            font-weight: 500;
-            color: var(--text-muted);
-        }
-
-        .module-btn.active .module-btn-desc {
-            color: var(--accent-text);
-            opacity: 0.85;
-        }
+        .module-btn-top { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+        .module-btn-title { font-size: 14px; font-weight: 700; color: var(--text-primary); }
+        .module-btn.active .module-btn-title { color: var(--accent-text); }
+        .module-btn-desc { font-size: 12px; color: var(--text-muted); }
+        .module-btn.active .module-btn-desc { color: var(--accent-text); opacity: 0.85; }
 
         .preview-panel {
-            background-color: var(--surface-soft);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: var(--space-3);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: var(--space-3);
+            background: var(--surface-soft); border: 1px solid var(--border-color);
+            border-radius: var(--radius-md); padding: var(--space-3);
+            display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-3);
         }
+        .preview-content { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 240px; }
+        .preview-title { font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
 
-        .preview-content {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            flex: 1;
-            min-width: 240px;
-        }
-
-        .preview-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
+        /* Buttons */
         .btn-utility {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 14px;
-            border-radius: var(--radius-sm);
-            font-size: 13px;
-            font-weight: 600;
-            border: 1px solid var(--border-color);
-            background-color: var(--surface-primary);
-            color: var(--text-primary);
-            cursor: pointer;
-            transition: background-color 0.15s ease, border-color 0.15s ease;
-            font-family: inherit;
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 14px; border-radius: var(--radius-sm);
+            font-size: 13px; font-weight: 600; font-family: inherit;
+            border: 1px solid var(--border-color); background: var(--surface-primary);
+            color: var(--text-primary); cursor: pointer;
         }
+        .btn-utility:hover { background: var(--surface-soft); border-color: #C4D0E6; }
+        .btn-primary-accent { background: var(--accent-primary); color: #FFFFFF; border-color: var(--accent-primary); }
+        .btn-primary-accent:hover { background: var(--accent-text); border-color: var(--accent-text); }
 
-        .btn-utility:hover {
-            background-color: var(--surface-soft);
-            border-color: #C4D0E6;
-        }
-
-        .btn-primary-accent {
-            background-color: var(--accent-primary);
-            color: #FFFFFF;
-            border-color: var(--accent-primary);
-        }
-
-        .btn-primary-accent:hover {
-            background-color: var(--accent-text);
-            border-color: var(--accent-text);
-        }
-
-        /* =========================================================
-           6. PLACEHOLDER ("내용 필요") STYLING
-           ========================================================= */
+        /* Placeholder ("내용 필요") Box */
         .needs-content-box {
-            background-color: var(--surface-soft);
-            border: 1px dashed #B8C7E0;
-            border-radius: var(--radius-sm);
-            padding: var(--space-2) var(--space-3);
-            margin-top: var(--space-1);
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
+            background: var(--surface-soft); border: 1px dashed #B8C7E0;
+            border-radius: var(--radius-sm); padding: var(--space-2) var(--space-3);
+            margin-top: var(--space-1); display: flex; flex-direction: column; gap: 6px;
         }
+        .needs-content-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+        .needs-content-title { font-size: 13px; font-weight: 700; color: var(--text-primary); }
+        .needs-content-placeholder { font-size: 13px; color: var(--text-muted); }
 
-        .needs-content-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
+        /* Grids & Cards */
+        .two-col-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+        .four-topic-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-3); }
+        .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-3); }
+
+        .pitch-banner {
+            background: var(--surface-soft); border: 1px solid var(--border-color);
+            border-radius: var(--radius-md); padding: var(--space-3); margin-bottom: var(--space-3);
         }
-
-        .needs-content-title {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text-primary);
+        .topic-card, .project-card {
+            background: var(--surface-primary); border: 1px solid var(--border-color);
+            border-radius: var(--radius-md); padding: var(--space-3);
+            display: flex; flex-direction: column; justify-content: space-between; gap: var(--space-2);
         }
+        .project-card.highlighted { border-color: var(--accent-primary); box-shadow: var(--accent-shadow); }
+        .card-title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-2); }
+        .card-title { font-size: 16px; font-weight: 700; color: var(--text-primary); }
 
-        .needs-content-placeholder {
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--text-muted);
-        }
-
-        /* =========================================================
-           7. PITCH SPATIAL EFFICIENCY & UNKNOWN PROJECT SECTION
-           ========================================================= */
-        .pitch-architecture-banner {
-            background-color: var(--surface-soft);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: var(--space-3);
-            margin-bottom: var(--space-3);
-        }
-
-        .mapping-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: var(--space-3);
-        }
-
-        .mapping-card {
-            background-color: var(--surface-primary);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: var(--space-3);
-            display: flex;
-            flex-direction: column;
-            gap: var(--space-2);
-        }
-
-        .mapping-bridge {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--accent-text);
-            background-color: var(--accent-soft);
-            padding: 6px 10px;
-            border-radius: var(--radius-sm);
-        }
-
-        /* =========================================================
-           8. ABOUT & SKILLS SECTION
-           ========================================================= */
-        .two-col-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: var(--space-4);
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: var(--space-2);
-            margin-bottom: var(--space-3);
-        }
-
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); gap: var(--space-2); margin-bottom: var(--space-3); }
         .skill-item {
-            background-color: var(--surface-soft);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: var(--space-2) var(--space-3);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 13.5px;
-            font-weight: 600;
-            color: var(--text-primary);
+            background: var(--surface-soft); border: 1px solid var(--border-color);
+            border-radius: var(--radius-md); padding: var(--space-2) var(--space-3);
+            display: flex; align-items: center; gap: 10px; font-size: 13.5px; font-weight: 600;
         }
-
-        .skill-item i {
-            color: var(--accent-primary);
-            font-size: 16px;
-        }
-
-        /* =========================================================
-           9. PROJECTS GRID SECTION
-           ========================================================= */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-            gap: var(--space-3);
-        }
-
-        .project-card {
-            background-color: var(--surface-primary);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: var(--space-3);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            gap: var(--space-3);
-            transition: border-color 0.15s ease, box-shadow 0.15s ease;
-        }
-
-        .project-card.highlighted {
-            border-color: var(--accent-primary);
-            box-shadow: var(--accent-shadow);
-        }
-
-        .project-card-top {
-            display: flex;
-            flex-direction: column;
-            gap: var(--space-2);
-        }
-
-        .project-title-row {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: var(--space-2);
-        }
-
-        .project-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
+        .skill-item i { color: var(--accent-primary); font-size: 16px; }
 
         .project-detail-block {
-            background-color: var(--surface-soft);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            padding: var(--space-2);
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
+            background: var(--surface-soft); border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm); padding: var(--space-2);
+            display: flex; flex-direction: column; gap: 4px;
         }
-
-        .project-detail-label {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
+        .project-detail-label { font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
         .project-links-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: var(--space-1);
-            padding-top: var(--space-2);
-            border-top: 1px solid var(--divider-color);
+            display: flex; flex-wrap: wrap; gap: var(--space-1);
+            padding-top: var(--space-2); border-top: 1px solid var(--divider-color);
         }
 
-        /* =========================================================
-           10. LOCAL ACTIVITY HISTORY & UPDATE REPORT (RELEASE NOTES)
-           ========================================================= */
-        .history-list {
-            max-height: 240px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .history-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: var(--space-2);
-            padding: 10px 4px;
-            border-bottom: 1px solid var(--divider-color);
-        }
-
-        .history-row:last-child {
-            border-bottom: none;
-        }
-
-        .history-row-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-
-        .history-time {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-muted);
-            font-variant-numeric: tabular-nums;
-        }
-
-        /* Critical Fix: Overlay-Safe Two-Column Grid for Release Notes */
-        .release-timeline {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .release-row {
-            display: grid;
-            grid-template-columns: 20px 1fr;
-            gap: 12px;
-            align-items: stretch;
-        }
-
-        .marker-lane {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 4px;
-        }
-
+        /* Timeline (Overlay-Safe 2-Column Grid from design_EA.MD) */
+        .release-timeline { display: flex; flex-direction: column; }
+        .release-row { display: grid; grid-template-columns: 20px 1fr; gap: 12px; align-items: stretch; }
+        .marker-lane { display: flex; flex-direction: column; align-items: center; padding-top: 4px; }
         .marker-dot {
-            width: 11px;
-            height: 11px;
-            border-radius: 50%;
-            background-color: var(--accent-primary);
-            border: 2px solid var(--accent-soft);
-            flex-shrink: 0;
+            width: 11px; height: 11px; border-radius: 50%;
+            background: var(--accent-primary); border: 2px solid var(--accent-soft); flex-shrink: 0;
         }
+        .marker-line { width: 1px; flex-grow: 1; background: var(--divider-color); margin: 4px 0; }
+        .release-row:last-child .marker-line { display: none; }
+        .content-lane { padding-bottom: var(--space-3); display: flex; flex-direction: column; gap: 6px; }
+        .release-row:last-child .content-lane { padding-bottom: 0; }
+        .release-date-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+        .release-date { font-size: 13.5px; font-weight: 700; color: var(--text-primary); }
+        .release-body { font-size: 14px; color: var(--text-secondary); white-space: pre-line; }
 
-        .marker-line {
-            width: 1px;
-            flex-grow: 1;
-            background-color: var(--divider-color);
-            margin-top: 4px;
-            margin-bottom: 4px;
-        }
-
-        .release-row:last-child .marker-line {
-            display: none;
-        }
-
-        .content-lane {
-            padding-bottom: var(--space-3);
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .release-row:last-child .content-lane {
-            padding-bottom: 0;
-        }
-
-        .release-date-row {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .release-date {
-            font-size: 13.5px;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .release-body {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-secondary);
-            white-space: pre-line;
-            line-height: 1.5;
-        }
-
-        /* =========================================================
-           11. FOOTER
-           ========================================================= */
+        /* Footer */
         .app-footer {
-            background-color: var(--surface-primary);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: var(--space-3) var(--space-4);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: var(--space-2);
+            background: var(--surface-primary); border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg); padding: var(--space-3) var(--space-4);
+            display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-2);
         }
+        .footer-contacts { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-3); font-size: 13.5px; font-weight: 600; color: var(--text-secondary); }
+        .footer-contacts a:hover { color: var(--accent-text); }
 
-        .footer-contacts {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: var(--space-3);
-            font-size: 13.5px;
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
-
-        .footer-contacts a:hover {
-            color: var(--accent-text);
-        }
-
-        /* Responsive adjustments */
         @media (max-width: 900px) {
-            .summary-grid,
-            .two-col-grid {
-                grid-template-columns: 1fr;
-            }
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
+            .summary-grid, .two-col-grid, .four-topic-grid, .projects-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <!-- =========================================================
-         1. TOP APP BAR (Sticky, Minimal, No 'SE' Badge)
-         ========================================================= -->
+    <!-- 1. TOP APP BAR -->
     <header class="top-app-bar">
         <div class="top-app-bar-inner">
-            <div class="product-title">Max33 Dashboard</div>
+            <div class="product-title">HOPE77 Portfolio</div>
             <div class="header-right">
-                <span class="active-module-pill" id="header-active-pill">ACTIVE: Overview &amp; Summary</span>
+                <span class="active-module-pill" id="header-active-pill">SECTION: Profile Overview</span>
             </div>
         </div>
     </header>
 
-    <!-- =========================================================
-         MAIN CONTENT CONTAINER (max-w-7xl Vertical Stack)
-         ========================================================= -->
     <main class="app-container">
 
-        <!-- =====================================================
-             2. SUMMARY / HERO PANEL
-             ===================================================== -->
+        <!-- 2. PROFILE SUMMARY / INTRO PANEL -->
         <section class="section-card" id="summary">
             <div class="summary-grid">
                 <div class="summary-main">
                     <div class="summary-chips">
-                        <span class="chip chip-info">Gameplay Log Automation</span>
+                        <span class="chip chip-info">Workflow Efficiency</span>
                         <span class="chip chip-purple">Data Analysis &amp; arXiv Research</span>
-                        <span class="chip chip-success">Workflow Efficiency Engineer</span>
+                        <span class="chip chip-success">Automation Tool Builder</span>
                     </div>
 
                     <div>
@@ -825,23 +283,20 @@
                         </h1>
                         <p class="body-text">
                             당연한 것을 당연하지 않게 바라보며, 언제나 끊임없이 효율적으로 문제를 해결할 수 있는 방법을 고민하는 문제 해결사입니다.
-                            반복되는 수동 리소스를 자동화 도구로 전환하고, 스포츠·게임 텔레메트리와 로그 데이터를 분석해 실질적인 의사결정 지표를 도출합니다.
+                            도구를 개발하여 일의 효율성을 높일 수 있다면 주저하지 않고 아이디어를 제시하고 직접 구현하며, 데이터 분석과 논문 집필을 통해 검증된 인사이트를 도출합니다.
                         </p>
                     </div>
 
-                    <!-- 세부 자기소개 확장 영역 (내용 필요) -->
                     <div class="needs-content-box">
                         <div class="needs-content-header">
-                            <span class="needs-content-title"><i class="fas fa-pen-to-square"></i> 핵심 커리어 요약 및 비전 상세 서술</span>
+                            <span class="needs-content-title"><i class="fas fa-pen-to-square"></i> 자기소개 핵심 요약 추가 서술</span>
                             <span class="chip chip-warning">내용 필요</span>
                         </div>
-                        <p class="needs-content-placeholder">
-                            내용 필요 — 본인의 핵심 개발 철학, 지원 직무 목표, 혹은 가장 강조하고 싶은 정량적 성과(예: 업무 시간 N% 단축 등)에 대한 세부 서술을 이곳에 작성하세요.
-                        </p>
+                        <p class="needs-content-placeholder">내용 필요</p>
                     </div>
 
                     <div class="summary-owner-bar">
-                        <span class="meta-label"><i class="fas fa-user-check"></i> Owner: 장자훈 (Max33)</span>
+                        <span class="meta-label"><i class="fas fa-user"></i> 장자훈 (hope77)</span>
                         <span class="meta-label"><i class="fas fa-envelope"></i> bijabi99@gmail.com</span>
                         <a href="https://github.com/hope77-githhub" target="_blank" class="meta-label" style="color: var(--accent-text);">
                             <i class="fab fa-github"></i> github.com/hope77-githhub
@@ -849,86 +304,73 @@
                     </div>
                 </div>
 
-                <!-- Right Thumbnail + ACTIVE Status Badge -->
-                <div class="summary-thumbnail-card">
-                    <div class="thumbnail-top">
-                        <span class="meta-label">SYSTEM TELEMETRY</span>
-                        <span class="chip chip-success">ACTIVE</span>
+                <!-- Right Profile Card -->
+                <div class="summary-profile-box">
+                    <div class="card-title-row" style="align-items: center;">
+                        <span class="meta-label">CORE IDENTITY</span>
+                        <span class="chip chip-info">HOPE77</span>
                     </div>
 
-                    <div class="thumbnail-visual">
-                        <div class="metric-bar-row">
-                            <span>QA &amp; Log Automation</span>
-                            <strong>ON</strong>
+                    <div class="profile-stat-list">
+                        <div class="profile-stat-item">
+                            <span>업무 효율화 &amp; 자동화 도구 개발</span>
+                            <span class="chip chip-success">Core</span>
                         </div>
-                        <div class="metric-bar-track">
-                            <div class="metric-bar-fill" style="width: 92%;"></div>
+                        <div class="profile-stat-item">
+                            <span>데이터 분석 &amp; 학술 논문 (arXiv)</span>
+                            <span class="chip chip-purple">Verified</span>
                         </div>
-
-                        <div class="metric-bar-row" style="margin-top: 4px;">
-                            <span>Data Pipeline &amp; Research</span>
-                            <strong>arXiv</strong>
-                        </div>
-                        <div class="metric-bar-track">
-                            <div class="metric-bar-fill" style="width: 88%;"></div>
-                        </div>
-
-                        <div class="metric-bar-row" style="margin-top: 4px;">
-                            <span>Real-time UDP Telemetry</span>
-                            <strong>F1 25</strong>
-                        </div>
-                        <div class="metric-bar-track">
-                            <div class="metric-bar-fill" style="width: 85%;"></div>
+                        <div class="profile-stat-item">
+                            <span>관심 도메인 (F1 베르스타펜 &amp; 축구)</span>
+                            <span class="chip chip-info">Passion</span>
                         </div>
                     </div>
 
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span class="meta-label">Max Verstappen #33 Mindset</span>
-                        <a href="#projects" class="btn-utility" style="padding: 5px 10px; font-size: 12px;">프로젝트 이동</a>
+                        <span class="meta-label">Portfolio Navigation</span>
+                        <a href="#projects" class="btn-utility" style="padding: 5px 10px; font-size: 12px;">프로젝트 바로가기</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- =====================================================
-             3. QUICK NAVIGATION (Module Grid + Preview Panel)
-             ===================================================== -->
+        <!-- 3. QUICK NAVIGATION -->
         <section class="section-card" id="quick-navigation">
             <div class="section-header">
                 <div class="section-header-left">
-                    <h2 class="section-heading">Quick Navigation</h2>
-                    <span class="chip chip-info">6 Modules</span>
+                    <h2 class="section-heading">Portfolio Navigation</h2>
+                    <span class="chip chip-info">6 Sections</span>
                 </div>
-                <span class="meta-label">모듈을 클릭하거나 마우스를 올리면 하단 프리뷰와 활동 로그가 갱신됩니다.</span>
+                <span class="meta-label">항목을 클릭하면 해당 소개 섹션으로 이동합니다.</span>
             </div>
 
             <div class="quick-nav-grid">
                 <button type="button" class="module-btn active"
-                        data-module="Pitch &amp; Unknown Log Pipeline"
-                        data-target="#pitch-unknown-section"
-                        data-desc="축구의 공간 제어·패스 네트워크·기대득점(xG) 분석 인사이트를 Unknown 프로젝트의 로그데이터 분석 자동화 파이프라인 및 테스터 지원 도구 아키텍처로 구현한 핵심 설계 섹션입니다.">
+                        data-module="About &amp; Skills"
+                        data-target="#about-skills-section"
+                        data-desc="문제 해결사로서의 철학, F1(막스 베르스타펜) 및 축구 데이터 분석에 대한 열정, 그리고 보유 기술 스택을 소개합니다.">
                     <div class="module-btn-top">
-                        <span class="module-btn-title">01. Pitch &amp; Log Pipeline</span>
+                        <span class="module-btn-title">01. About &amp; Skills</span>
                         <span class="chip chip-info">ON</span>
                     </div>
-                    <span class="module-btn-desc">공간 효율성 &amp; Unknown 로그 자동화</span>
+                    <span class="module-btn-desc">자기소개 및 기술 스택</span>
                 </button>
 
                 <button type="button" class="module-btn"
-                        data-module="About &amp; Core Identity"
-                        data-target="#about-skills-section"
-                        data-desc="당연한 것을 당연하지 않게 바라보는 문제 해결사 장자훈의 배경, 베르스타펜(F1)과 축구 데이터에서 얻는 엔지니어링 영감, 그리고 보유 기술 스택을 소개합니다.">
+                        data-module="Unknown Architecture Insights"
+                        data-target="#pitch-unknown-section"
+                        data-desc="축구의 공간 효율성·팀워크에서 영감을 얻어 설계한 Unknown Project의 4대 핵심 아키텍처(로그 시각화, 파이프라인+영상 레코딩, 테스트 도구, CEL 필터)를 다룹니다.">
                     <div class="module-btn-top">
-                        <span class="module-btn-title">02. About &amp; Skills</span>
+                        <span class="module-btn-title">02. Architecture Insight</span>
                         <span class="chip chip-neutral">INFO</span>
                     </div>
-                    <span class="module-btn-desc">문제 해결 철학 및 기술 스택</span>
+                    <span class="module-btn-desc">공간 효율성 &amp; Unknown 설계</span>
                 </button>
 
                 <button type="button" class="module-btn"
                         data-module="COM_study (LOL-API &amp; arXiv)"
                         data-target="#project-com-study"
-                        data-desc="Riot API 기반 게임 데이터 수집·분석 자동화 파이프라인 구축 및 학술 논문(arXiv:2512.20116)으로 검증된 데이터 분석 역량을 다룹니다.">
+                        data-desc="Riot API 기반 데이터 수집·분석 자동화 파이프라인 구축 및 학술 논문(arXiv:2512.20116)으로 증명된 데이터 분석 프로젝트입니다.">
                     <div class="module-btn-top">
                         <span class="module-btn-title">03. COM_study (arXiv)</span>
                         <span class="chip chip-purple">PAPER</span>
@@ -937,150 +379,57 @@
                 </button>
 
                 <button type="button" class="module-btn"
-                        data-module="Unknown QA Automation"
+                        data-module="Personal-Project (Unknown)"
                         data-target="#project-unknown"
-                        data-desc="복잡한 시스템 환경에서 로그 자동 다운로드, CEL 기반 필터 생성, 이벤트 시각화를 통합하여 QA 수동 리소스를 혁신적으로 절감한 테스터 지원 도구입니다.">
+                        data-desc="복잡한 시스템 환경에서 QA 수동 리소스를 절감하고 휴먼 에러를 방지하기 위해 개발 중인 품질 보증 및 테스트 자동화 지원 도구입니다.">
                     <div class="module-btn-top">
                         <span class="module-btn-title">04. Unknown Project</span>
                         <span class="chip chip-info">ACTIVE</span>
                     </div>
-                    <span class="module-btn-desc">로그 분석 및 QA 테스트 자동화</span>
+                    <span class="module-btn-desc">품질 보증 및 테스트 자동화 도구</span>
                 </button>
 
                 <button type="button" class="module-btn"
-                        data-module="Race Engineer (F1 UDP)"
+                        data-module="Race Engineer (F1 Telemetry)"
                         data-target="#project-f1"
-                        data-desc="F1 게임의 실시간 UDP 텔레메트리 패킷을 파싱하여 타이어 마모, 연료, 랩타임 데이터를 시각화하고 즉각적인 레이스 전략을 보조하는 풀스택 대시보드입니다.">
+                        data-desc="F1 게임의 UDP 텔레메트리 데이터를 실시간 파싱하여 타이어 마모, 연료, 랩타임을 시각화하고 레이스 전략을 보조하는 대시보드입니다.">
                     <div class="module-btn-top">
                         <span class="module-btn-title">05. Race Engineer</span>
                         <span class="chip chip-info">ACTIVE</span>
                     </div>
-                    <span class="module-btn-desc">F1 실시간 텔레메트리 대시보드</span>
+                    <span class="module-btn-desc">F1 실시간 텔레메트리 앱</span>
                 </button>
 
                 <button type="button" class="module-btn"
                         data-module="NEIS Letter Counter"
                         data-target="#project-neis"
-                        data-desc="교사를 위한 나이스(NEIS) 맞춤형 바이트 계산 로직 및 SheetJS 기반 브라우저 내 엑셀(.xlsx) 일괄 처리 도구로, 업무 효율과 개인정보 보안을 동시에 해결했습니다.">
+                        data-desc="교사를 위한 나이스(NEIS) 맞춤형 바이트 계산기 및 SheetJS 기반 브라우저 내 엑셀 일괄 처리 도구입니다.">
                     <div class="module-btn-top">
                         <span class="module-btn-title">06. NEIS Counter</span>
                         <span class="chip chip-success">DONE</span>
                     </div>
-                    <span class="module-btn-desc">나이스 바이트 계산 &amp; 엑셀 자동화</span>
+                    <span class="module-btn-desc">나이스 글자수 계산 &amp; 엑셀 처리</span>
                 </button>
             </div>
 
-            <!-- Hover / Active Preview Panel Below Grid -->
-            <div class="preview-panel" id="nav-preview-panel">
+            <div class="preview-panel">
                 <div class="preview-content">
                     <div class="preview-title">
                         <span class="chip chip-info">PREVIEW</span>
-                        <span id="preview-module-name">01. Pitch &amp; Log Pipeline</span>
+                        <span id="preview-module-name">01. About &amp; Skills</span>
                     </div>
                     <p class="body-text" id="preview-module-desc" style="font-size: 13.5px;">
-                        축구의 공간 제어·패스 네트워크·기대득점(xG) 분석 인사이트를 Unknown 프로젝트의 로그데이터 분석 자동화 파이프라인 및 테스터 지원 도구 아키텍처로 구현한 핵심 설계 섹션입니다.
+                        문제 해결사로서의 철학, F1(막스 베르스타펜) 및 축구 데이터 분석에 대한 열정, 그리고 보유 기술 스택을 소개합니다.
                     </p>
                 </div>
-                <a href="#pitch-unknown-section" id="preview-jump-btn" class="btn-utility btn-primary-accent">
+                <a href="#about-skills-section" id="preview-jump-btn" class="btn-utility btn-primary-accent">
                     섹션으로 이동 <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
         </section>
 
-        <!-- =====================================================
-             4. PITCH SPATIAL EFFICIENCY & TEAMWORK -> UNKNOWN PROJECT
-             ===================================================== -->
-        <section class="section-card" id="pitch-unknown-section">
-            <div class="section-header">
-                <div class="section-header-left">
-                    <h2 class="section-heading">피치 위의 공간 효율성과 팀워크 — Unknown Project 아키텍처 인사이트</h2>
-                    <span class="chip chip-info">Architecture &amp; QA Automation</span>
-                </div>
-                <span class="meta-label">Sports Analytics to Log Pipeline Engineering</span>
-            </div>
-
-            <!-- Core Philosophy Narrative -->
-            <div class="pitch-architecture-banner">
-                <p class="body-text" style="color: var(--text-primary); font-weight: 600; margin-bottom: 8px;">
-                    "축구를 즐기며 경기 내 공간 제어, 패스 네트워크, 기대득점(xG) 등 스포츠 데이터와 전술적 움직임을 분석하는 것을 좋아합니다. 유기적인 팀워크와 효율적인 공간 활용은 코드 아키텍처 설계에도 영감을 줍니다."
-                </p>
-                <p class="body-text" style="font-size: 14px;">
-                    이러한 분석적 시각은 <strong>'Unknown 개발 프로젝트'의 로그데이터 분석 자동화 파이프라인 설계 및 테스터(QA) 지원 도구 개발</strong>에 그대로 투영되었습니다. 경기장 위에서 선수들의 위치와 패스 경로를 추적해 전술적 병목을 찾아내듯, 방대한 시스템·게임플레이 로그 스트림을 구조화하고 시각화하여 테스터와 개발자가 유기적으로 협업할 수 있는 자동화 환경을 구축했습니다.
-                </p>
-            </div>
-
-            <!-- 3 Pillar Mapping Cards -->
-            <div class="mapping-grid">
-                <!-- Pillar 1: 공간 제어 -> 로그 파이프라인 -->
-                <div class="mapping-card">
-                    <div class="mapping-bridge">
-                        <i class="fas fa-chess-board"></i> 피치 공간 제어 (Spatial Control)
-                        <i class="fas fa-arrow-right"></i> 로그 수집·정제 파이프라인
-                    </div>
-                    <h3 class="project-title">1. 로그데이터 분석 자동화 파이프라인 설계</h3>
-                    <p class="body-text" style="font-size: 13.5px;">
-                        축구에서 빈 공간을 선점해 불필요한 움직임을 줄이듯, 분산된 환경에서 발생하는 대용량 로그를 수동으로 다운로드하고 탐색하던 비효율적인 동선을 제거했습니다. 로그 자동 다운로드부터 파싱, 인덱싱까지 이어지는 일관된 파이프라인을 설계하여 데이터 접근 공간을 최적화했습니다.
-                    </p>
-                    <div class="needs-content-box">
-                        <div class="needs-content-header">
-                            <span class="needs-content-title">파이프라인 세부 구조 및 처리량</span>
-                            <span class="chip chip-warning">내용 필요</span>
-                        </div>
-                        <p class="needs-content-placeholder">
-                            내용 필요 — 로그 수집 주기, 파일 포맷 정제 방식, 자동 다운로드 구현 기술 및 기존 수동 작업 대비 단축된 소요 시간 등 구체적인 서술을 작성해주세요.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Pillar 2: 패스 네트워크 & xG -> CEL 필터 & 이벤트 시각화 -->
-                <div class="mapping-card">
-                    <div class="mapping-bridge">
-                        <i class="fas fa-project-diagram"></i> 패스 네트워크 &amp; 기대득점(xG)
-                        <i class="fas fa-arrow-right"></i> CEL 필터 &amp; 이벤트 시각화
-                    </div>
-                    <h3 class="project-title">2. CEL 기반 동적 필터링 및 핵심 이벤트 시각화</h3>
-                    <p class="body-text" style="font-size: 13.5px;">
-                        패스 네트워크로 볼의 흐름을 읽고 기대득점(xG)으로 결정적 찬스를 수치화하듯, 수많은 일반 로그 속에서 결함 가능성이 높은 핵심 이벤트를 선별하기 위해 <strong>CEL(Common Expression Language) 기반 필터 생성기</strong>를 도입하고, 이벤트 간 인과관계를 타임라인 대시보드로 시각화했습니다.
-                    </p>
-                    <div class="needs-content-box">
-                        <div class="needs-content-header">
-                            <span class="needs-content-title">CEL 쿼리 변환 로직 및 시각화 상세</span>
-                            <span class="chip chip-warning">내용 필요</span>
-                        </div>
-                        <p class="needs-content-placeholder">
-                            내용 필요 — 비개발 직군도 쉽게 사용할 수 있도록 설계한 CEL 필터 UI 구조, 시각화 차트 구성 방식, 이상 징후 탐지 사례에 대한 상세 서술을 작성해주세요.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Pillar 3: 유기적인 팀워크 -> 테스터 지원 도구 개발 -->
-                <div class="mapping-card">
-                    <div class="mapping-bridge">
-                        <i class="fas fa-users-gear"></i> 유기적인 팀워크 (Teamwork)
-                        <i class="fas fa-arrow-right"></i> QA 테스터 지원 도구 개발
-                    </div>
-                    <h3 class="project-title">3. 테스터(QA)-개발자 간 협업 효율 및 휴먼 에러 방지</h3>
-                    <p class="body-text" style="font-size: 13.5px;">
-                        좋은 전술이 선수 간의 원활한 콜플레이와 팀워크를 이끌어내듯, 테스터 지원 도구는 QA 엔지니어의 반복 검증 리소스를 줄이고 개발자에게는 명확한 재현 근거(로그 스냅샷·필터 조건)를 전달하는 소통 허브 역할을 수행합니다.
-                    </p>
-                    <div class="needs-content-box">
-                        <div class="needs-content-header">
-                            <span class="needs-content-title">도구 도입 후 팀 워크플로우 개선 성과</span>
-                            <span class="chip chip-warning">내용 필요</span>
-                        </div>
-                        <p class="needs-content-placeholder">
-                            내용 필요 — 테스터 지원 도구 배포 이후 QA 반복 테스트 리소스 절감률, 이슈 리포팅 정확도 향상, 팀원 피드백 등 구체적인 성과를 작성해주세요.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- =====================================================
-             5. ABOUT ME & SKILLS (With "내용 필요" Sections)
-             ===================================================== -->
+        <!-- 4. ABOUT ME & SKILLS -->
         <div class="two-col-grid" id="about-skills-section">
-            <!-- About Me Card -->
             <section class="section-card" id="about">
                 <div class="section-header">
                     <div class="section-header-left">
@@ -1089,375 +438,361 @@
                     </div>
                 </div>
 
-                <p class="body-text" style="margin-bottom: 16px;">
+                <p class="body-text" style="margin-bottom: 14px;">
                     당연한 것을 당연하지 않게 바라보며, 언제나 끊임없이 효율적으로 문제를 해결할 수 있는 방법을 고민하는 문제 해결사입니다.
-                    불편함을 그냥 지나치지 않고 자동화 스크립트나 웹 대시보드로 직접 구현해 내며, F1 레이싱(막스 베르스타펜)의 정밀한 텔레메트리 전략과 축구의 데이터 전술 분석에서 엔지니어링 영감을 얻습니다.
+                    F1의 막스 베르스타펜이 보여주는 데이터 기반의 극한 효율성과 축구의 전술 데이터를 분석하는 것을 좋아하며, 업무 현장의 비효율을 발견하면 직접 자동화 도구를 기획·개발해 해결합니다.
                 </p>
 
-                <div class="needs-content-box" style="margin-bottom: 12px;">
+                <div class="needs-content-box" style="margin-bottom: 10px;">
                     <div class="needs-content-header">
-                        <span class="needs-content-title"><i class="fas fa-graduation-cap"></i> 학력, 경력 및 주요 활동 이력</span>
+                        <span class="needs-content-title"><i class="fas fa-user-pen"></i> 자기소개 상세 서술 (배경 및 가치관)</span>
                         <span class="chip chip-warning">내용 필요</span>
                     </div>
-                    <p class="needs-content-placeholder">
-                        내용 필요 — 소속 기관/학교, 주요 교육 이수 내역, 스터디 리딩 경험 등 상세 이력을 작성해주세요.
-                    </p>
+                    <p class="needs-content-placeholder">내용 필요</p>
                 </div>
 
                 <div class="needs-content-box">
                     <div class="needs-content-header">
-                        <span class="needs-content-title"><i class="fas fa-bolt"></i> 문제 해결 사례 (Problem-Solving Episode)</span>
+                        <span class="needs-content-title"><i class="fas fa-lightbulb"></i> 효율성 개선 및 아이디어 실현 대표 사례</span>
                         <span class="chip chip-warning">내용 필요</span>
                     </div>
-                    <p class="needs-content-placeholder">
-                        내용 필요 — 일상이나 업무에서 '당연하게 여겨지던 비효율'을 발견하고 아이디어를 제시해 도구를 개발했던 대표적인 에피소드를 작성해주세요.
-                    </p>
+                    <p class="needs-content-placeholder">내용 필요</p>
                 </div>
             </section>
 
-            <!-- Skills Card -->
             <section class="section-card" id="skills">
                 <div class="section-header">
                     <div class="section-header-left">
-                        <h2 class="section-heading">Skills &amp; Tech Stack</h2>
-                        <span class="chip chip-info">Capabilities</span>
+                        <h2 class="section-heading">Skills</h2>
+                        <span class="chip chip-info">Tech Stack</span>
                     </div>
                 </div>
 
                 <div class="skills-grid">
-                    <div class="skill-item"><i class="fab fa-python"></i><span>Python</span></div>
+                    <div class="skill-item"><i class="fab fa-html5"></i><span>HTML / CSS</span></div>
                     <div class="skill-item"><i class="fab fa-js"></i><span>JavaScript</span></div>
-                    <div class="skill-item"><i class="fab fa-html5"></i><span>HTML5 / CSS3</span></div>
-                    <div class="skill-item"><i class="fas fa-database"></i><span>Data Analysis</span></div>
-                    <div class="skill-item"><i class="fas fa-filter"></i><span>CEL / Log Parsing</span></div>
-                    <div class="skill-item"><i class="fas fa-network-wired"></i><span>UDP Telemetry</span></div>
+                    <div class="skill-item"><i class="fab fa-python"></i><span>Python</span></div>
+                    <div class="skill-item"><i class="fas fa-chart-line"></i><span>Data Analysis</span></div>
+                    <div class="skill-item"><i class="fas fa-robot"></i><span>Test Automation</span></div>
+                    <div class="skill-item"><i class="fas fa-code-branch"></i><span>CEL / Telemetry</span></div>
                 </div>
 
-                <div class="needs-content-box" style="margin-bottom: 12px;">
+                <div class="needs-content-box" style="margin-bottom: 10px;">
                     <div class="needs-content-header">
-                        <span class="needs-content-title"><i class="fas fa-layer-group"></i> 프레임워크 및 라이브러리 상세</span>
+                        <span class="needs-content-title"><i class="fas fa-layer-group"></i> 세부 기술 스택 및 프레임워크</span>
                         <span class="chip chip-warning">내용 필요</span>
                     </div>
-                    <p class="needs-content-placeholder">
-                        내용 필요 — React, FastAPI/Flask, Pandas, PyTorch, SheetJS 등 실제 프로젝트에서 활용한 세부 프레임워크 및 도구 목록과 숙련도를 작성해주세요.
-                    </p>
+                    <p class="needs-content-placeholder">내용 필요</p>
                 </div>
 
                 <div class="needs-content-box">
                     <div class="needs-content-header">
-                        <span class="needs-content-title"><i class="fas fa-chart-pie"></i> 데이터 분석 및 모델링 역량 상세</span>
+                        <span class="needs-content-title"><i class="fas fa-database"></i> 데이터 분석 및 엔지니어링 상세 역량</span>
                         <span class="chip chip-warning">내용 필요</span>
                     </div>
-                    <p class="needs-content-placeholder">
-                        내용 필요 — 통계 분석, 시계열/머신러닝 모델링, 데이터 파이프라인 설계와 관련해 본인이 자신 있는 분석 기법들을 구체적으로 작성해주세요.
-                    </p>
+                    <p class="needs-content-placeholder">내용 필요</p>
                 </div>
             </section>
         </div>
 
-        <!-- =====================================================
-             6. PROJECTS SECTION (4 Core Projects + "내용 필요" Blocks)
-             ===================================================== -->
+        <!-- 5. PITCH SPATIAL EFFICIENCY & UNKNOWN PROJECT ARCHITECTURE INSIGHTS (4 TOPICS) -->
+        <section class="section-card" id="pitch-unknown-section">
+            <div class="section-header">
+                <div class="section-header-left">
+                    <h2 class="section-heading">피치 위의 공간 효율성과 팀워크 — Unknown Project 아키텍처 인사이트</h2>
+                    <span class="chip chip-info">4 Core Pillars</span>
+                </div>
+                <span class="meta-label">Log Pipeline &amp; Tester Support Engineering</span>
+            </div>
+
+            <div class="pitch-banner">
+                <p class="body-text" style="color: var(--text-primary); font-weight: 600;">
+                    "축구를 즐기며 경기 내 공간 제어, 패스 네트워크, 기대득점(xG) 등 스포츠 데이터와 전술적 움직임을 분석하는 것을 좋아합니다. 유기적인 팀워크와 효율적인 공간 활용은 코드 아키텍처 설계에도 영감을 줍니다."
+                </p>
+            </div>
+
+            <div class="four-topic-grid">
+                <!-- Topic 1 -->
+                <div class="topic-card">
+                    <div class="card-title-row">
+                        <h3 class="card-title">1. 로그 데이터의 시각화</h3>
+                        <span class="chip chip-info">Visualization</span>
+                    </div>
+                    <div class="needs-content-box">
+                        <div class="needs-content-header">
+                            <span class="needs-content-title">상세 아키텍처 및 구현 내용</span>
+                            <span class="chip chip-warning">내용 필요</span>
+                        </div>
+                        <p class="needs-content-placeholder">내용 필요</p>
+                    </div>
+                </div>
+
+                <!-- Topic 2 -->
+                <div class="topic-card">
+                    <div class="card-title-row">
+                        <h3 class="card-title">2. 로그 데이터 다운로드 및 Automation Test Pipeline 구축 + 영상 레코딩 동시 동작</h3>
+                        <span class="chip chip-purple">Pipeline &amp; Video</span>
+                    </div>
+                    <div class="needs-content-box">
+                        <div class="needs-content-header">
+                            <span class="needs-content-title">상세 아키텍처 및 구현 내용</span>
+                            <span class="chip chip-warning">내용 필요</span>
+                        </div>
+                        <p class="needs-content-placeholder">내용 필요</p>
+                    </div>
+                </div>
+
+                <!-- Topic 3 -->
+                <div class="topic-card">
+                    <div class="card-title-row">
+                        <h3 class="card-title">3. 여러 테스트 도구 개발 (팀전술 테스트 지원 도구, 이슈티켓 분석레포트 작성용 데이터 분석 도구)</h3>
+                        <span class="chip chip-success">Testing &amp; Analytics Tools</span>
+                    </div>
+                    <div class="needs-content-box">
+                        <div class="needs-content-header">
+                            <span class="needs-content-title">상세 아키텍처 및 구현 내용</span>
+                            <span class="chip chip-warning">내용 필요</span>
+                        </div>
+                        <p class="needs-content-placeholder">내용 필요</p>
+                    </div>
+                </div>
+
+                <!-- Topic 4 -->
+                <div class="topic-card">
+                    <div class="card-title-row">
+                        <h3 class="card-title">4. CEL 문법 Filter Code 지원</h3>
+                        <span class="chip chip-info">CEL Filter Engine</span>
+                    </div>
+                    <div class="needs-content-box">
+                        <div class="needs-content-header">
+                            <span class="needs-content-title">상세 아키텍처 및 구현 내용</span>
+                            <span class="chip chip-warning">내용 필요</span>
+                        </div>
+                        <p class="needs-content-placeholder">내용 필요</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. PROJECTS SECTION -->
         <section class="section-card" id="projects">
             <div class="section-header">
                 <div class="section-header-left">
-                    <h2 class="section-heading">Projects Portfolio</h2>
-                    <span class="chip chip-info">4 Core Projects</span>
+                    <h2 class="section-heading">Projects</h2>
+                    <span class="chip chip-info">4 Projects</span>
                 </div>
-                <span class="meta-label">효율성 극대화 도구 개발 및 데이터 분석 프로젝트 리스트</span>
+                <span class="meta-label">문제 해결 및 데이터 분석 프로젝트 리스트</span>
             </div>
 
             <div class="projects-grid">
-                <!-- Project 1: COM_study -->
+                <!-- Project 1 -->
                 <article class="project-card" id="project-com-study">
-                    <div class="project-card-top">
-                        <div class="project-title-row">
-                            <h3 class="project-title">COM_study (LOL-API &amp; Proj_code)</h3>
+                    <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                        <div class="card-title-row">
+                            <h3 class="card-title">COM_study (LOL-API &amp; Proj_code)</h3>
                             <span class="chip chip-success">완료</span>
                         </div>
-                        <p class="meta-label">League of Legends API 연동 및 데이터 분석 스터디 · 학술 논문 출판</p>
+                        <p class="meta-label">League of Legends API 연동 및 데이터 분석 스터디</p>
 
                         <div class="project-detail-block">
                             <div class="project-detail-label">
-                                <i class="fas fa-exclamation-circle" style="color: var(--chip-warning-text);"></i> 문제 (Problem)
+                                <i class="fas fa-exclamation-circle" style="color: var(--chip-warning-text);"></i> 문제
                             </div>
-                            <p class="body-text" style="font-size: 13.5px;">
-                                게임 데이터를 체계적으로 수집하고 의미 있는 통계를 도출할 수 있는 자동화 파이프라인 부재
-                            </p>
+                            <p class="body-text" style="font-size: 13.5px;">게임 데이터를 체계적으로 수집하고 의미 있는 통계를 도출할 수 있는 자동화 파이프라인 부재</p>
                         </div>
 
                         <div class="project-detail-block">
                             <div class="project-detail-label">
-                                <i class="fas fa-lightbulb" style="color: var(--accent-primary);"></i> 해결 (Solution)
+                                <i class="fas fa-lightbulb" style="color: var(--accent-primary);"></i> 해결
                             </div>
-                            <p class="body-text" style="font-size: 13.5px;">
-                                Riot API를 활용하여 전적/인게임 데이터를 수집하고, 재사용 가능한 모듈로 코드를 정리했습니다. 이를 통해 데이터 수집부터 분석까지의 과정을 자동화하며 아키텍처 설계 역량을 향상시켰고, 분석 결과를 논문(arXiv:2512.20116)으로 발전시켰습니다.
-                            </p>
+                            <p class="body-text" style="font-size: 13.5px;">Riot API를 활용하여 전적/인게임 데이터를 수집하고, 재사용 가능한 모듈로 코드를 정리했습니다. 이를 통해 데이터 수집부터 분석까지의 과정을 자동화하며 아키텍처 설계 역량을 향상시켰습니다.</p>
                         </div>
 
                         <div class="needs-content-box">
                             <div class="needs-content-header">
-                                <span class="needs-content-title">논문(arXiv:2512.20116) 핵심 분석 방법론 및 결과</span>
+                                <span class="needs-content-title">관련 논문(arXiv) 및 데이터 분석 상세 내용</span>
                                 <span class="chip chip-warning">내용 필요</span>
                             </div>
-                            <p class="needs-content-placeholder">
-                                내용 필요 — 수집한 데이터셋 규모, 적용한 통계/머신러닝 분석 기법, 논문에서 도출한 핵심 인사이트 및 본인의 기여도를 상세히 작성해주세요.
-                            </p>
+                            <p class="needs-content-placeholder">내용 필요</p>
                         </div>
                     </div>
 
                     <div class="project-links-row">
-                        <a href="https://github.com/hope77-githhub/Proj_code" target="_blank" class="btn-utility">
-                            <i class="fab fa-github"></i> 저장소 보기
-                        </a>
-                        <a href="https://arxiv.org/abs/2512.20116" target="_blank" class="btn-utility btn-primary-accent">
-                            <i class="fas fa-file-alt"></i> 관련 논문 (arXiv)
-                        </a>
+                        <a href="https://github.com/hope77-githhub/Proj_code" target="_blank" class="btn-utility"><i class="fab fa-github"></i> 저장소 보기</a>
+                        <a href="https://arxiv.org/abs/2512.20116" target="_blank" class="btn-utility btn-primary-accent"><i class="fas fa-file-alt"></i> 관련 논문 (arXiv)</a>
                     </div>
                 </article>
 
-                <!-- Project 2: Personal-Project (Unknown Project) -->
+                <!-- Project 2 -->
                 <article class="project-card" id="project-unknown">
-                    <div class="project-card-top">
-                        <div class="project-title-row">
-                            <h3 class="project-title">Personal-Project (Unknown QA &amp; Log Tool)</h3>
+                    <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                        <div class="card-title-row">
+                            <h3 class="card-title">Personal-Project (Unknown 개발 프로젝트)</h3>
                             <span class="chip chip-info">진행 중</span>
                         </div>
-                        <p class="meta-label">'Unknown 개발 프로젝트' 로그데이터 분석 자동화 파이프라인 및 테스터 지원 도구</p>
+                        <p class="meta-label">'Unknown 개발 프로젝트' 품질 보증 및 테스트 자동화 지원 도구</p>
 
                         <div class="project-detail-block">
                             <div class="project-detail-label">
-                                <i class="fas fa-exclamation-circle" style="color: var(--chip-warning-text);"></i> 문제 (Problem)
+                                <i class="fas fa-exclamation-circle" style="color: var(--chip-warning-text);"></i> 문제
                             </div>
-                            <p class="body-text" style="font-size: 13.5px;">
-                                복잡한 시스템 환경에서 로그 검증, 이벤트 시각화, 테스트 반복 작업에 소모되는 QA 수동 리소스가 과도함
-                            </p>
+                            <p class="body-text" style="font-size: 13.5px;">복잡한 시스템 환경에서 로그 검증, 이벤트 시각화, 테스트 반복 작업에 소모되는 QA 수동 리소스가 과도함</p>
                         </div>
 
                         <div class="project-detail-block">
                             <div class="project-detail-label">
-                                <i class="fas fa-lightbulb" style="color: var(--accent-primary);"></i> 해결 (Solution)
+                                <i class="fas fa-lightbulb" style="color: var(--accent-primary);"></i> 해결
                             </div>
-                            <p class="body-text" style="font-size: 13.5px;">
-                                축구 전술 분석(공간 제어·패스 네트워크·xG)에서 착안하여 로그 자동 다운로드, CEL 기반 필터 생성, 이벤트 시각화를 통합한 자동화 대시보드를 구축해 QA 효율을 극대화하고 휴먼 에러를 방지했습니다. (보안상 상세 아키텍처 생략)
-                            </p>
+                            <p class="body-text" style="font-size: 13.5px;">로그 자동 다운로드, CEL 기반 필터 생성, 이벤트 시각화를 통합한 자동화 대시보드를 구축하여 QA 효율을 극대화하고 휴먼 에러를 방지했습니다. (보안상 상세 아키텍처 생략)</p>
                         </div>
 
                         <div class="needs-content-box">
                             <div class="needs-content-header">
-                                <span class="needs-content-title">보안 범위 내 공개 가능한 기능 명세 및 트러블슈팅</span>
+                                <span class="needs-content-title">프로젝트 상세 성과 및 추가 서술</span>
                                 <span class="chip chip-warning">내용 필요</span>
                             </div>
-                            <p class="needs-content-placeholder">
-                                내용 필요 — 대용량 로그 렌더링 최적화, CEL 필터 파서 구현 시 겪었던 기술적 난관과 해결 과정에 대한 상세 서술을 작성해주세요.
-                            </p>
+                            <p class="needs-content-placeholder">내용 필요</p>
                         </div>
                     </div>
 
                     <div class="project-links-row">
-                        <a href="#pitch-unknown-section" class="btn-utility">
-                            <i class="fas fa-sitemap"></i> 파이프라인 설계 인사이트 보기
-                        </a>
+                        <a href="#pitch-unknown-section" class="btn-utility"><i class="fas fa-layer-group"></i> 4대 핵심 아키텍처 보기</a>
                     </div>
                 </article>
 
-                <!-- Project 3: Race Engineer (F1 Telemetry App) -->
+                <!-- Project 3 -->
                 <article class="project-card" id="project-f1">
-                    <div class="project-card-top">
-                        <div class="project-title-row">
-                            <h3 class="project-title">Race Engineer (F1 Telemetry App)</h3>
+                    <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                        <div class="card-title-row">
+                            <h3 class="card-title">Race Engineer (F1 Telemetry App)</h3>
                             <span class="chip chip-info">진행 중</span>
                         </div>
                         <p class="meta-label">F1 게임 실시간 텔레메트리 및 레이스 엔지니어링 대시보드</p>
 
                         <div class="project-detail-block">
                             <div class="project-detail-label">
-                                <i class="fas fa-exclamation-circle" style="color: var(--chip-warning-text);"></i> 문제 (Problem)
+                                <i class="fas fa-exclamation-circle" style="color: var(--chip-warning-text);"></i> 문제
                             </div>
-                            <p class="body-text" style="font-size: 13.5px;">
-                                F1 게임 플레이 중 실시간 차량 상태(타이어 마모, 연료, 랩타임 등)를 직관적으로 파악하고 레이스 전략을 세우기 어려움
-                            </p>
+                            <p class="body-text" style="font-size: 13.5px;">F1 게임 플레이 중 실시간 차량 상태(타이어 마모, 연료, 랩타임 등)를 직관적으로 파악하고 레이스 전략을 세우기 어려움</p>
                         </div>
 
                         <div class="project-detail-block">
                             <div class="project-detail-label">
-                                <i class="fas fa-lightbulb" style="color: var(--accent-primary);"></i> 해결 (Solution)
+                                <i class="fas fa-lightbulb" style="color: var(--accent-primary);"></i> 해결
                             </div>
-                            <p class="body-text" style="font-size: 13.5px;">
-                                F1 게임의 UDP 텔레메트리 데이터를 실시간으로 파싱하여 프론트엔드 대시보드에 시각화하는 풀스택 앱을 구축하고 있습니다. 실제 레이스 엔지니어처럼 데이터를 바탕으로 즉각적인 전략 수정이 가능하도록 돕습니다.
-                            </p>
+                            <p class="body-text" style="font-size: 13.5px;">F1 게임의 UDP 텔레메트리 데이터를 실시간으로 파싱하여 프론트엔드 대시보드에 시각화하는 풀스택 앱을 구축하고 있습니다. 실제 레이스 엔지니어처럼 데이터를 바탕으로 즉각적인 전략 수정이 가능하도록 돕습니다.</p>
                         </div>
 
                         <div class="needs-content-box">
                             <div class="needs-content-header">
-                                <span class="needs-content-title">UDP 패킷 파싱 구조 및 전략 알고리즘 상세</span>
+                                <span class="needs-content-title">텔레메트리 파싱 및 전략 기능 상세 서술</span>
                                 <span class="chip chip-warning">내용 필요</span>
                             </div>
-                            <p class="needs-content-placeholder">
-                                내용 필요 — 초당 수신되는 UDP 패킷 처리 방식, WebSocket 연동 구조, 피트스톱 언더컷/오버컷 및 타이어 마모 예측 로직에 대한 상세 내용을 작성해주세요.
-                            </p>
+                            <p class="needs-content-placeholder">내용 필요</p>
                         </div>
                     </div>
 
                     <div class="project-links-row">
-                        <a href="https://github.com/hope77-githhub/F125_Personal_RaceEngineer" target="_blank" class="btn-utility">
-                            <i class="fab fa-github"></i> 저장소 보기
-                        </a>
+                        <a href="https://github.com/hope77-githhub/F125_Personal_RaceEngineer" target="_blank" class="btn-utility"><i class="fab fa-github"></i> 저장소 보기</a>
                     </div>
                 </article>
 
-                <!-- Project 4: NEIS Letter Counter -->
+                <!-- Project 4 -->
                 <article class="project-card" id="project-neis">
-                    <div class="project-card-top">
-                        <div class="project-title-row">
-                            <h3 class="project-title">NEIS Letter Counter</h3>
+                    <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                        <div class="card-title-row">
+                            <h3 class="card-title">NIES Letter Counter</h3>
                             <span class="chip chip-success">완료</span>
                         </div>
                         <p class="meta-label">교사를 위한 나이스(NEIS) 맞춤형 글자수 계산기 및 엑셀 일괄 처리 도구</p>
 
                         <div class="project-detail-block">
                             <div class="project-detail-label">
-                                <i class="fas fa-exclamation-circle" style="color: var(--chip-warning-text);"></i> 문제 (Problem)
+                                <i class="fas fa-exclamation-circle" style="color: var(--chip-warning-text);"></i> 문제
                             </div>
-                            <p class="body-text" style="font-size: 13.5px;">
-                                나이스 시스템의 독특한 바이트 계산 방식(한글 3byte, 줄바꿈 2byte 등)으로 인해 학생부 작성 시 길이를 맞추기 어렵고, 여러 학생의 데이터를 일일이 복사/붙여넣기 해야 하는 비효율 발생
-                            </p>
+                            <p class="body-text" style="font-size: 13.5px;">나이스 시스템의 독특한 바이트 계산 방식(한글 3byte, 줄바꿈 2byte 등)으로 인해 학생부 작성 시 길이를 맞추기 어렵고, 여러 학생의 데이터를 일일이 복사/붙여넣기 해야 하는 비효율 발생</p>
                         </div>
 
                         <div class="project-detail-block">
                             <div class="project-detail-label">
-                                <i class="fas fa-lightbulb" style="color: var(--accent-primary);"></i> 해결 (Solution)
+                                <i class="fas fa-lightbulb" style="color: var(--accent-primary);"></i> 해결
                             </div>
-                            <p class="body-text" style="font-size: 13.5px;">
-                                나이스 기준에 정확히 맞는 바이트 계산 로직을 구현하고, Excel(.xlsx) 파일 업로드 기능을 추가하여 다수의 학생 데이터를 한 번에 처리하도록 개선했습니다. 브라우저 내에서만 동작하도록(SheetJS) 설계하여 학생 개인정보 보안 문제까지 완벽히 해결했습니다.
-                            </p>
+                            <p class="body-text" style="font-size: 13.5px;">나이스 기준에 정확히 맞는 바이트 계산 로직을 구현하고, Excel(.xlsx) 파일 업로드 기능을 추가하여 다수의 학생 데이터를 한 번에 처리하도록 개선했습니다. 브라우저 내에서만 동작하도록(SheetJS) 설계하여 학생 개인정보 보안 문제까지 완벽히 해결했습니다.</p>
                         </div>
 
                         <div class="needs-content-box">
                             <div class="needs-content-header">
-                                <span class="needs-content-title">실제 사용자 피드백 및 배포 링크/스크린샷</span>
+                                <span class="needs-content-title">구현 상세 및 활용 성과 서술</span>
                                 <span class="chip chip-warning">내용 필요</span>
                             </div>
-                            <p class="needs-content-placeholder">
-                                내용 필요 — 실제 학교 현장에서의 활용 후기, 처리 속도 개선 수치, 또는 배포된 서비스 URL 및 화면 설명을 이곳에 추가해주세요.
-                            </p>
+                            <p class="needs-content-placeholder">내용 필요</p>
                         </div>
                     </div>
 
                     <div class="project-links-row">
-                        <span class="chip chip-neutral">Client-Side Only (SheetJS)</span>
-                        <span class="chip chip-neutral">Privacy-Safe Design</span>
+                        <span class="chip chip-neutral">SheetJS (Client-Side)</span>
+                        <span class="chip chip-neutral">개인정보 보호 설계</span>
                     </div>
                 </article>
             </div>
         </section>
 
-        <!-- =====================================================
-             7. LOCAL ACTIVITY HISTORY & UPDATE REPORT (RELEASE NOTES)
-             ===================================================== -->
-        <div class="two-col-grid">
-            <!-- Local Activity History -->
-            <section class="section-card" id="activity-history">
-                <div class="section-header">
-                    <div class="section-header-left">
-                        <h2 class="section-heading">Local Activity History</h2>
-                        <span class="chip chip-neutral" id="history-count-chip">3 logs</span>
+        <!-- 7. MILESTONES & TIMELINE (Overlay-Safe 2-Column Grid) -->
+        <section class="section-card" id="milestones">
+            <div class="section-header">
+                <div class="section-header-left">
+                    <h2 class="section-heading">Project &amp; Research Milestones</h2>
+                    <span class="chip chip-purple">Timeline</span>
+                </div>
+                <span class="meta-label">주요 개발 및 연구 이력</span>
+            </div>
+
+            <div class="release-timeline">
+                <div class="release-row">
+                    <div class="marker-lane">
+                        <div class="marker-dot"></div>
+                        <div class="marker-line"></div>
                     </div>
-                    <button type="button" class="btn-utility" id="clear-history-btn" style="padding: 5px 10px; font-size: 12px;">
-                        Clear History
-                    </button>
+                    <div class="content-lane">
+                        <div class="release-date-row">
+                            <span class="release-date">Unknown Project &amp; Race Engineer 고도화</span>
+                            <span class="chip chip-info">진행 중</span>
+                        </div>
+                        <div class="release-body">내용 필요</div>
+                    </div>
                 </div>
 
-                <div class="history-list" id="history-list">
-                    <div class="history-row">
-                        <div class="history-row-left">
-                            <span class="history-time">INIT</span>
-                            <span>Max33 Dashboard 포트폴리오 세션 시작</span>
-                        </div>
-                        <span class="chip chip-info">event</span>
+                <div class="release-row">
+                    <div class="marker-lane">
+                        <div class="marker-dot"></div>
+                        <div class="marker-line"></div>
                     </div>
-                    <div class="history-row">
-                        <div class="history-row-left">
-                            <span class="history-time">LOAD</span>
-                            <span>Unknown Project 로그 자동화 아키텍처 모듈 로드</span>
+                    <div class="content-lane">
+                        <div class="release-date-row">
+                            <span class="release-date">COM_study 데이터 분석 논문 공개 (arXiv:2512.20116)</span>
+                            <span class="chip chip-success">완료</span>
                         </div>
-                        <span class="chip chip-info">event</span>
-                    </div>
-                    <div class="history-row">
-                        <div class="history-row-left">
-                            <span class="history-time">SYNC</span>
-                            <span>arXiv:2512.20116 &amp; GitHub 저장소 메타데이터 연결 완료</span>
-                        </div>
-                        <span class="chip chip-info">event</span>
+                        <div class="release-body">내용 필요</div>
                     </div>
                 </div>
-            </section>
 
-            <!-- Update Report / Release Notes (Overlay-Safe 2-Column Grid) -->
-            <section class="section-card" id="release-notes">
-                <div class="section-header">
-                    <div class="section-header-left">
-                        <h2 class="section-heading">Update Report (Release Notes)</h2>
-                        <span class="chip chip-purple">Timeline</span>
+                <div class="release-row">
+                    <div class="marker-lane">
+                        <div class="marker-dot"></div>
+                        <div class="marker-line"></div>
                     </div>
-                    <span class="meta-label">프로젝트 및 연구 마일스톤</span>
-                </div>
-
-                <div class="release-timeline">
-                    <!-- Item 1 -->
-                    <div class="release-row">
-                        <div class="marker-lane">
-                            <div class="marker-dot"></div>
-                            <div class="marker-line"></div>
+                    <div class="content-lane">
+                        <div class="release-date-row">
+                            <span class="release-date">NIES Letter Counter 개발 및 배포</span>
+                            <span class="chip chip-success">완료</span>
                         </div>
-                        <div class="content-lane">
-                            <div class="release-date-row">
-                                <span class="release-date">2026. 10 — Max33 Dashboard UI Revision</span>
-                                <span class="chip chip-info">v2.0</span>
-                            </div>
-                            <div class="release-body">엔터프라이즈 유틸리티 디자인 시스템(design_EA.MD) 적용 완료.
-피치 공간 효율성 및 패스 네트워크 인사이트 기반 Unknown Project 로그 자동화 파이프라인 섹션 통합.</div>
-                        </div>
-                    </div>
-
-                    <!-- Item 2 -->
-                    <div class="release-row">
-                        <div class="marker-lane">
-                            <div class="marker-dot"></div>
-                            <div class="marker-line"></div>
-                        </div>
-                        <div class="content-lane">
-                            <div class="release-date-row">
-                                <span class="release-date">2026 — Race Engineer &amp; Unknown QA Automation</span>
-                                <span class="chip chip-warning">진행 중</span>
-                            </div>
-                            <div class="release-body">F1 실시간 UDP 텔레메트리 대시보드 개발 및 Unknown 프로젝트 CEL 필터·로그 시각화 테스터 지원 도구 고도화 진행 중.
-[내용 필요 — 세부 릴리즈 버전 및 주요 마일스톤 일정을 추후 기입하세요]</div>
-                        </div>
-                    </div>
-
-                    <!-- Item 3 (Last Item: connector line automatically hidden) -->
-                    <div class="release-row">
-                        <div class="marker-lane">
-                            <div class="marker-dot"></div>
-                            <div class="marker-line"></div>
-                        </div>
-                        <div class="content-lane">
-                            <div class="release-date-row">
-                                <span class="release-date">2025. 12 — COM_study &amp; arXiv Paper Publication</span>
-                                <span class="chip chip-success">완료</span>
-                            </div>
-                            <div class="release-body">Riot API 데이터 수집·분석 자동화 모듈 구축 완료 및 관련 연구 논문(arXiv:2512.20116) 공개.
-나이스(NEIS) 맞춤형 바이트 계산기 및 SheetJS 엑셀 일괄 처리 도구 개발 완료.</div>
-                        </div>
+                        <div class="release-body">내용 필요</div>
                     </div>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
 
-        <!-- =====================================================
-             8. FOOTER
-             ===================================================== -->
+        <!-- 8. FOOTER / CONTACT -->
         <footer class="app-footer" id="contact">
             <div class="footer-contacts">
                 <span><i class="fas fa-envelope" style="color: var(--accent-primary);"></i> bijabi99@gmail.com</span>
@@ -1466,15 +801,12 @@
                 </a>
             </div>
             <div class="meta-label">
-                &copy; 2026 장자훈 (Max33 Dashboard). All rights reserved.
+                &copy; 2026 장자훈 (HOPE77). All rights reserved.
             </div>
         </footer>
 
     </main>
 
-    <!-- =========================================================
-         INTERACTION SCRIPT (Navigation, Preview, Activity History)
-         ========================================================= -->
     <script>
         (function () {
             const moduleButtons = document.querySelectorAll('.module-btn');
@@ -1482,54 +814,16 @@
             const previewModuleName = document.getElementById('preview-module-name');
             const previewModuleDesc = document.getElementById('preview-module-desc');
             const previewJumpBtn = document.getElementById('preview-jump-btn');
-            const historyList = document.getElementById('history-list');
-            const historyCountChip = document.getElementById('history-count-chip');
-            const clearHistoryBtn = document.getElementById('clear-history-btn');
-
-            function getCurrentTimeStr() {
-                const now = new Date();
-                const hh = String(now.getHours()).padStart(2, '0');
-                const mm = String(now.getMinutes()).padStart(2, '0');
-                const ss = String(now.getSeconds()).padStart(2, '0');
-                return `${hh}:${mm}:${ss}`;
-            }
-
-            function updateHistoryCount() {
-                const count = historyList.querySelectorAll('.history-row').length;
-                historyCountChip.textContent = `${count} logs`;
-            }
-
-            function appendActivityLog(message) {
-                const row = document.createElement('div');
-                row.className = 'history-row';
-                row.innerHTML = `
-                    <div class="history-row-left">
-                        <span class="history-time">${getCurrentTimeStr()}</span>
-                        <span>${message}</span>
-                    </div>
-                    <span class="chip chip-info">event</span>
-                `;
-                historyList.prepend(row);
-                updateHistoryCount();
-            }
 
             function updatePreview(btn) {
-                const title = btn.querySelector('.module-btn-title').textContent;
-                const desc = btn.getAttribute('data-desc');
-                const target = btn.getAttribute('data-target');
-
-                previewModuleName.textContent = title;
-                previewModuleDesc.textContent = desc;
-                previewJumpBtn.setAttribute('href', target);
+                previewModuleName.textContent = btn.querySelector('.module-btn-title').textContent;
+                previewModuleDesc.textContent = btn.getAttribute('data-desc');
+                previewJumpBtn.setAttribute('href', btn.getAttribute('data-target'));
             }
 
             moduleButtons.forEach((btn) => {
-                // Hover updates preview panel
-                btn.addEventListener('mouseenter', () => {
-                    updatePreview(btn);
-                });
+                btn.addEventListener('mouseenter', () => updatePreview(btn));
 
-                // Click sets active state, updates Top App Bar pill, highlights target card, and logs history
                 btn.addEventListener('click', () => {
                     moduleButtons.forEach((b) => {
                         b.classList.remove('active');
@@ -1542,19 +836,15 @@
 
                     btn.classList.add('active');
                     const activeChip = btn.querySelector('.chip');
-                    if (activeChip) {
+                    if (activeChip && activeChip.textContent === 'INFO') {
                         activeChip.className = 'chip chip-info';
                         activeChip.textContent = 'ON';
                     }
 
-                    const moduleLabel = btn.getAttribute('data-module');
-                    headerActivePill.textContent = `ACTIVE: ${moduleLabel}`;
+                    headerActivePill.textContent = `SECTION: ${btn.getAttribute('data-module')}`;
                     updatePreview(btn);
-                    appendActivityLog(`모듈 선택: ${moduleLabel}`);
 
-                    // Highlight target card briefly and scroll
-                    const targetSelector = btn.getAttribute('data-target');
-                    const targetEl = document.querySelector(targetSelector);
+                    const targetEl = document.querySelector(btn.getAttribute('data-target'));
                     if (targetEl) {
                         document.querySelectorAll('.project-card').forEach(c => c.classList.remove('highlighted'));
                         if (targetEl.classList.contains('project-card')) {
@@ -1563,11 +853,6 @@
                         targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }
                 });
-            });
-
-            clearHistoryBtn.addEventListener('click', () => {
-                historyList.innerHTML = '';
-                updateHistoryCount();
             });
         })();
     </script>
