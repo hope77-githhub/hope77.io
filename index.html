@@ -72,7 +72,7 @@
         .chip-warning { background: var(--chip-warning-bg); color: var(--chip-warning-text); }
         .chip-neutral { background: var(--surface-soft);    color: var(--text-secondary); border: 1px solid var(--border-color); }
 
-        /* Top App Bar */
+        /* Top App Bar & Language Toggle */
         .top-app-bar {
             position: sticky; top: 0; z-index: 100;
             background: var(--surface-primary);
@@ -81,9 +81,10 @@
         }
         .top-app-bar-inner {
             width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 var(--space-4);
-            display: flex; align-items: center; justify-content: space-between;
+            display: flex; align-items: center; justify-content: space-between; gap: var(--space-2);
         }
         .product-title { font-size: 18px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.01em; }
+        .header-right { display: flex; align-items: center; gap: var(--space-2); }
         .active-module-pill {
             background: var(--accent-soft); color: var(--accent-text);
             border: 1px solid rgba(63, 111, 219, 0.2);
@@ -92,6 +93,32 @@
         }
         .active-module-pill::before {
             content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent-primary);
+        }
+
+        /* Language Toggle Button */
+        .lang-toggle-btn {
+            display: inline-flex; align-items: center; gap: 4px;
+            background: var(--surface-soft);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-pill);
+            padding: 3px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: border-color 0.15s ease;
+        }
+        .lang-toggle-btn:hover { border-color: var(--accent-primary); }
+        .lang-opt {
+            padding: 4px 10px;
+            border-radius: var(--radius-pill);
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            transition: all 0.15s ease;
+        }
+        .lang-opt.active {
+            background: var(--accent-primary);
+            color: #FFFFFF;
+            box-shadow: 0 2px 6px rgba(63, 111, 219, 0.25);
         }
 
         /* Layout & Cards */
@@ -131,7 +158,7 @@
             border-radius: var(--radius-sm); padding: var(--space-2);
             display: flex; flex-direction: column; gap: 10px;
         }
-        .profile-stat-item { display: flex; align-items: center; justify-content: space-between; font-size: 12.5px; color: var(--text-secondary); }
+        .profile-stat-item { display: flex; align-items: center; justify-content: space-between; font-size: 12.5px; color: var(--text-secondary); gap: 8px; }
 
         /* Quick Navigation */
         .quick-nav-grid {
@@ -184,7 +211,7 @@
         }
         .needs-content-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
         .needs-content-title { font-size: 13px; font-weight: 700; color: var(--text-primary); }
-        .needs-content-placeholder { font-size: 13px; color: var(--text-muted); }
+        .needs-content-placeholder { font-size: 13px; color: var(--text-muted); white-space: pre-line; }
 
         /* Grids & Cards */
         .two-col-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
@@ -223,7 +250,7 @@
             padding-top: var(--space-2); border-top: 1px solid var(--divider-color);
         }
 
-        /* Timeline (Overlay-Safe 2-Column Grid from design_EA.MD) */
+        /* Timeline (Overlay-Safe 2-Column Grid) */
         .release-timeline { display: flex; flex-direction: column; }
         .release-row { display: grid; grid-template-columns: 20px 1fr; gap: 12px; align-items: stretch; }
         .marker-lane { display: flex; flex-direction: column; align-items: center; padding-top: 4px; }
@@ -250,6 +277,7 @@
 
         @media (max-width: 900px) {
             .summary-grid, .two-col-grid, .four-topic-grid, .projects-grid { grid-template-columns: 1fr; }
+            .active-module-pill { display: none; }
         }
     </style>
 </head>
@@ -261,6 +289,11 @@
             <div class="product-title">HOPE77 Portfolio</div>
             <div class="header-right">
                 <span class="active-module-pill" id="header-active-pill">SECTION: Profile Overview</span>
+                <!-- Automatic Translation Toggle Button -->
+                <button type="button" class="lang-toggle-btn" id="lang-toggle-btn" aria-label="Toggle Language">
+                    <span class="lang-opt active" id="lang-ko">KO</span>
+                    <span class="lang-opt" id="lang-en">EN</span>
+                </button>
             </div>
         </div>
     </header>
@@ -278,10 +311,12 @@
                     </div>
 
                     <div>
-                        <h1 class="page-heading" style="margin-bottom: 12px;">
+                        <h1 class="page-heading" style="margin-bottom: 12px;"
+                            data-en="Hello, I'm Jahoon Jang.">
                             안녕하세요, 저는 장자훈입니다.
                         </h1>
-                        <p class="body-text">
+                        <p class="body-text"
+                           data-en="I am a problem solver who questions what others take for granted and constantly seeks the most efficient ways to solve complex problems. Whenever a custom tool can boost workflow efficiency, I proactively propose ideas and build solutions—backed by data analysis and academic research.">
                             당연한 것을 당연하지 않게 바라보며, 언제나 끊임없이 효율적으로 문제를 해결할 수 있는 방법을 고민하는 문제 해결사입니다.
                             도구를 개발하여 일의 효율성을 높일 수 있다면 주저하지 않고 아이디어를 제시하고 직접 구현하며, 데이터 분석과 논문 집필을 통해 검증된 인사이트를 도출합니다.
                         </p>
@@ -289,14 +324,14 @@
 
                     <div class="needs-content-box">
                         <div class="needs-content-header">
-                            <span class="needs-content-title"><i class="fas fa-pen-to-square"></i> 자기소개 핵심 요약 추가 서술</span>
-                            <span class="chip chip-warning">내용 필요</span>
+                            <span class="needs-content-title" data-en="Additional Executive Summary"><i class="fas fa-pen-to-square"></i> 자기소개 핵심 요약 추가 서술</span>
+                            <span class="chip chip-warning" data-en="Needs Content">내용 필요</span>
                         </div>
-                        <p class="needs-content-placeholder">내용 필요</p>
+                        <p class="needs-content-placeholder" data-en="Content needed">내용 필요</p>
                     </div>
 
                     <div class="summary-owner-bar">
-                        <span class="meta-label"><i class="fas fa-user"></i> 장자훈 (hope77)</span>
+                        <span class="meta-label"><i class="fas fa-user"></i> <span data-en="Jahoon Jang (hope77)">장자훈 (hope77)</span></span>
                         <span class="meta-label"><i class="fas fa-envelope"></i> bijabi99@gmail.com</span>
                         <a href="https://github.com/hope77-githhub" target="_blank" class="meta-label" style="color: var(--accent-text);">
                             <i class="fab fa-github"></i> github.com/hope77-githhub
@@ -313,22 +348,22 @@
 
                     <div class="profile-stat-list">
                         <div class="profile-stat-item">
-                            <span>업무 효율화 &amp; 자동화 도구 개발</span>
+                            <span data-en="Workflow Efficiency &amp; Tooling">업무 효율화 &amp; 자동화 도구 개발</span>
                             <span class="chip chip-success">Core</span>
                         </div>
                         <div class="profile-stat-item">
-                            <span>데이터 분석 &amp; 학술 논문 (arXiv)</span>
+                            <span data-en="Data Analysis &amp; arXiv Paper">데이터 분석 &amp; 학술 논문 (arXiv)</span>
                             <span class="chip chip-purple">Verified</span>
                         </div>
                         <div class="profile-stat-item">
-                            <span>관심 도메인 (F1 베르스타펜 &amp; 축구)</span>
+                            <span data-en="Domains (F1 Verstappen &amp; Football)">관심 도메인 (F1 베르스타펜 &amp; 축구)</span>
                             <span class="chip chip-info">Passion</span>
                         </div>
                     </div>
 
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <span class="meta-label">Portfolio Navigation</span>
-                        <a href="#projects" class="btn-utility" style="padding: 5px 10px; font-size: 12px;">프로젝트 바로가기</a>
+                        <a href="#projects" class="btn-utility" style="padding: 5px 10px; font-size: 12px;" data-en="View Projects">프로젝트 바로가기</a>
                     </div>
                 </div>
             </div>
@@ -341,74 +376,80 @@
                     <h2 class="section-heading">Portfolio Navigation</h2>
                     <span class="chip chip-info">6 Sections</span>
                 </div>
-                <span class="meta-label">항목을 클릭하면 해당 소개 섹션으로 이동합니다.</span>
+                <span class="meta-label" data-en="Click any module below to jump to its section.">항목을 클릭하면 해당 소개 섹션으로 이동합니다.</span>
             </div>
 
             <div class="quick-nav-grid">
                 <button type="button" class="module-btn active"
                         data-module="About &amp; Skills"
                         data-target="#about-skills-section"
-                        data-desc="문제 해결사로서의 철학, F1(막스 베르스타펜) 및 축구 데이터 분석에 대한 열정, 그리고 보유 기술 스택을 소개합니다.">
+                        data-desc-ko="문제 해결사로서의 철학, F1(막스 베르스타펜) 및 축구 데이터 분석에 대한 열정, 그리고 보유 기술 스택을 소개합니다."
+                        data-desc-en="Introduces my problem-solving philosophy, passion for F1 (Max Verstappen) and football data analytics, and core technical stack.">
                     <div class="module-btn-top">
                         <span class="module-btn-title">01. About &amp; Skills</span>
                         <span class="chip chip-info">ON</span>
                     </div>
-                    <span class="module-btn-desc">자기소개 및 기술 스택</span>
+                    <span class="module-btn-desc" data-en="Profile &amp; Tech Stack">자기소개 및 기술 스택</span>
                 </button>
 
                 <button type="button" class="module-btn"
                         data-module="Unknown Architecture Insights"
                         data-target="#pitch-unknown-section"
-                        data-desc="축구의 공간 효율성·팀워크에서 영감을 얻어 설계한 Unknown Project의 4대 핵심 아키텍처(로그 시각화, 파이프라인+영상 레코딩, 테스트 도구, CEL 필터)를 다룹니다.">
+                        data-desc-ko="축구의 공간 효율성·팀워크에서 영감을 얻어 설계한 Unknown Project의 4대 핵심 아키텍처(로그 시각화, 파이프라인+영상 레코딩, 테스트 도구, CEL 필터)를 다룹니다."
+                        data-desc-en="Covers the 4 core pillars of the Unknown Project inspired by football spatial efficiency: Log Visualization, Automated Pipeline + Video Recording, Testing/Analytics Tools, and CEL Filter support.">
                     <div class="module-btn-top">
                         <span class="module-btn-title">02. Architecture Insight</span>
                         <span class="chip chip-neutral">INFO</span>
                     </div>
-                    <span class="module-btn-desc">공간 효율성 &amp; Unknown 설계</span>
+                    <span class="module-btn-desc" data-en="Spatial Efficiency &amp; Unknown Design">공간 효율성 &amp; Unknown 설계</span>
                 </button>
 
                 <button type="button" class="module-btn"
                         data-module="COM_study (LOL-API &amp; arXiv)"
                         data-target="#project-com-study"
-                        data-desc="Riot API 기반 데이터 수집·분석 자동화 파이프라인 구축 및 학술 논문(arXiv:2512.20116)으로 증명된 데이터 분석 프로젝트입니다.">
+                        data-desc-ko="Riot API 기반 데이터 수집·분석 자동화 파이프라인 구축 및 학술 논문(arXiv:2512.20116)으로 증명된 데이터 분석 프로젝트입니다."
+                        data-desc-en="An automated data collection and analysis pipeline using the Riot API, validated through a published research paper (arXiv:2512.20116).">
                     <div class="module-btn-top">
                         <span class="module-btn-title">03. COM_study (arXiv)</span>
                         <span class="chip chip-purple">PAPER</span>
                     </div>
-                    <span class="module-btn-desc">LOL-API 데이터 분석 및 논문</span>
+                    <span class="module-btn-desc" data-en="LOL-API Data Analysis &amp; Paper">LOL-API 데이터 분석 및 논문</span>
                 </button>
 
                 <button type="button" class="module-btn"
                         data-module="Personal-Project (Unknown)"
                         data-target="#project-unknown"
-                        data-desc="복잡한 시스템 환경에서 QA 수동 리소스를 절감하고 휴먼 에러를 방지하기 위해 개발 중인 품질 보증 및 테스트 자동화 지원 도구입니다.">
+                        data-desc-ko="복잡한 시스템 환경에서 QA 수동 리소스를 절감하고 휴먼 에러를 방지하기 위해 개발 중인 품질 보증 및 테스트 자동화 지원 도구입니다."
+                        data-desc-en="A QA and test automation support tool designed to drastically reduce manual verification overhead and prevent human error in complex environments.">
                     <div class="module-btn-top">
                         <span class="module-btn-title">04. Unknown Project</span>
                         <span class="chip chip-info">ACTIVE</span>
                     </div>
-                    <span class="module-btn-desc">품질 보증 및 테스트 자동화 도구</span>
+                    <span class="module-btn-desc" data-en="QA &amp; Test Automation Tool">품질 보증 및 테스트 자동화 도구</span>
                 </button>
 
                 <button type="button" class="module-btn"
                         data-module="Race Engineer (F1 Telemetry)"
                         data-target="#project-f1"
-                        data-desc="F1 게임의 UDP 텔레메트리 데이터를 실시간 파싱하여 타이어 마모, 연료, 랩타임을 시각화하고 레이스 전략을 보조하는 대시보드입니다.">
+                        data-desc-ko="F1 게임의 UDP 텔레메트리 데이터를 실시간 파싱하여 타이어 마모, 연료, 랩타임을 시각화하고 레이스 전략을 보조하는 대시보드입니다."
+                        data-desc-en="A full-stack dashboard that parses real-time F1 UDP telemetry packets to visualize tire wear, fuel, and lap times for live race strategy.">
                     <div class="module-btn-top">
                         <span class="module-btn-title">05. Race Engineer</span>
                         <span class="chip chip-info">ACTIVE</span>
                     </div>
-                    <span class="module-btn-desc">F1 실시간 텔레메트리 앱</span>
+                    <span class="module-btn-desc" data-en="Real-time F1 Telemetry App">F1 실시간 텔레메트리 앱</span>
                 </button>
 
                 <button type="button" class="module-btn"
                         data-module="NEIS Letter Counter"
                         data-target="#project-neis"
-                        data-desc="교사를 위한 나이스(NEIS) 맞춤형 바이트 계산기 및 SheetJS 기반 브라우저 내 엑셀 일괄 처리 도구입니다.">
+                        data-desc-ko="교사를 위한 나이스(NEIS) 맞춤형 바이트 계산기 및 SheetJS 기반 브라우저 내 엑셀 일괄 처리 도구입니다."
+                        data-desc-en="A custom NEIS byte calculator and client-side Excel (.xlsx) batch processor built for teachers with strict student data privacy.">
                     <div class="module-btn-top">
                         <span class="module-btn-title">06. NEIS Counter</span>
                         <span class="chip chip-success">DONE</span>
                     </div>
-                    <span class="module-btn-desc">나이스 글자수 계산 &amp; 엑셀 처리</span>
+                    <span class="module-btn-desc" data-en="NEIS Byte Counter &amp; Excel Tool">나이스 글자수 계산 &amp; 엑셀 처리</span>
                 </button>
             </div>
 
@@ -423,7 +464,7 @@
                     </p>
                 </div>
                 <a href="#about-skills-section" id="preview-jump-btn" class="btn-utility btn-primary-accent">
-                    섹션으로 이동 <i class="fas fa-arrow-right"></i>
+                    <span data-en="Jump to Section">섹션으로 이동</span> <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
         </section>
@@ -438,25 +479,26 @@
                     </div>
                 </div>
 
-                <p class="body-text" style="margin-bottom: 14px;">
+                <p class="body-text" style="margin-bottom: 14px;"
+                   data-en="I am a problem solver who questions what others take for granted and constantly seeks more efficient ways to get things done. Inspired by Max Verstappen's data-driven precision in Formula 1 and tactical analytics in football, I proactively design and build automation tools whenever I spot workflow bottlenecks.">
                     당연한 것을 당연하지 않게 바라보며, 언제나 끊임없이 효율적으로 문제를 해결할 수 있는 방법을 고민하는 문제 해결사입니다.
                     F1의 막스 베르스타펜이 보여주는 데이터 기반의 극한 효율성과 축구의 전술 데이터를 분석하는 것을 좋아하며, 업무 현장의 비효율을 발견하면 직접 자동화 도구를 기획·개발해 해결합니다.
                 </p>
 
                 <div class="needs-content-box" style="margin-bottom: 10px;">
                     <div class="needs-content-header">
-                        <span class="needs-content-title"><i class="fas fa-user-pen"></i> 자기소개 상세 서술 (배경 및 가치관)</span>
-                        <span class="chip chip-warning">내용 필요</span>
+                        <span class="needs-content-title" data-en="Detailed Background &amp; Core Values"><i class="fas fa-user-pen"></i> 자기소개 상세 서술 (배경 및 가치관)</span>
+                        <span class="chip chip-warning" data-en="Needs Content">내용 필요</span>
                     </div>
-                    <p class="needs-content-placeholder">내용 필요</p>
+                    <p class="needs-content-placeholder" data-en="Content needed">내용 필요</p>
                 </div>
 
                 <div class="needs-content-box">
                     <div class="needs-content-header">
-                        <span class="needs-content-title"><i class="fas fa-lightbulb"></i> 효율성 개선 및 아이디어 실현 대표 사례</span>
-                        <span class="chip chip-warning">내용 필요</span>
+                        <span class="needs-content-title" data-en="Key Efficiency &amp; Tooling Episodes"><i class="fas fa-lightbulb"></i> 효율성 개선 및 아이디어 실현 대표 사례</span>
+                        <span class="chip chip-warning" data-en="Needs Content">내용 필요</span>
                     </div>
-                    <p class="needs-content-placeholder">내용 필요</p>
+                    <p class="needs-content-placeholder" data-en="Content needed">내용 필요</p>
                 </div>
             </section>
 
@@ -479,18 +521,18 @@
 
                 <div class="needs-content-box" style="margin-bottom: 10px;">
                     <div class="needs-content-header">
-                        <span class="needs-content-title"><i class="fas fa-layer-group"></i> 세부 기술 스택 및 프레임워크</span>
-                        <span class="chip chip-warning">내용 필요</span>
+                        <span class="needs-content-title" data-en="Frameworks &amp; Libraries"><i class="fas fa-layer-group"></i> 세부 기술 스택 및 프레임워크</span>
+                        <span class="chip chip-warning" data-en="Needs Content">내용 필요</span>
                     </div>
-                    <p class="needs-content-placeholder">내용 필요</p>
+                    <p class="needs-content-placeholder" data-en="Content needed">내용 필요</p>
                 </div>
 
                 <div class="needs-content-box">
                     <div class="needs-content-header">
-                        <span class="needs-content-title"><i class="fas fa-database"></i> 데이터 분석 및 엔지니어링 상세 역량</span>
-                        <span class="chip chip-warning">내용 필요</span>
+                        <span class="needs-content-title" data-en="Data Analytics &amp; Engineering Capabilities"><i class="fas fa-database"></i> 데이터 분석 및 엔지니어링 상세 역량</span>
+                        <span class="chip chip-warning" data-en="Needs Content">내용 필요</span>
                     </div>
-                    <p class="needs-content-placeholder">내용 필요</p>
+                    <p class="needs-content-placeholder" data-en="Content needed">내용 필요</p>
                 </div>
             </section>
         </div>
@@ -499,14 +541,18 @@
         <section class="section-card" id="pitch-unknown-section">
             <div class="section-header">
                 <div class="section-header-left">
-                    <h2 class="section-heading">피치 위의 공간 효율성과 팀워크 — Unknown Project 아키텍처 인사이트</h2>
+                    <h2 class="section-heading"
+                        data-en="Spatial Efficiency &amp; Teamwork on the Pitch — Unknown Project Architecture Insights">
+                        피치 위의 공간 효율성과 팀워크 — Unknown Project 아키텍처 인사이트
+                    </h2>
                     <span class="chip chip-info">4 Core Pillars</span>
                 </div>
                 <span class="meta-label">Log Pipeline &amp; Tester Support Engineering</span>
             </div>
 
             <div class="pitch-banner">
-                <p class="body-text" style="color: var(--text-primary); font-weight: 600;">
+                <p class="body-text" style="color: var(--text-primary); font-weight: 600;"
+                   data-en="&quot;I enjoy playing and watching football, analyzing tactical movements and sports data such as spatial control, pass networks, and Expected Goals (xG). Organic teamwork and efficient spatial utilization directly inspire how I design software architectures.&quot;">
                     "축구를 즐기며 경기 내 공간 제어, 패스 네트워크, 기대득점(xG) 등 스포츠 데이터와 전술적 움직임을 분석하는 것을 좋아합니다. 유기적인 팀워크와 효율적인 공간 활용은 코드 아키텍처 설계에도 영감을 줍니다."
                 </p>
             </div>
@@ -515,60 +561,66 @@
                 <!-- Topic 1 -->
                 <div class="topic-card">
                     <div class="card-title-row">
-                        <h3 class="card-title">1. 로그 데이터의 시각화</h3>
+                        <h3 class="card-title" data-en="1. Visualization of Log Data">1. 로그 데이터의 시각화</h3>
                         <span class="chip chip-info">Visualization</span>
                     </div>
                     <div class="needs-content-box">
                         <div class="needs-content-header">
-                            <span class="needs-content-title">상세 아키텍처 및 구현 내용</span>
-                            <span class="chip chip-warning">내용 필요</span>
+                            <span class="needs-content-title" data-en="Detailed Architecture &amp; Implementation">상세 아키텍처 및 구현 내용</span>
+                            <span class="chip chip-warning" data-en="Needs Content">내용 필요</span>
                         </div>
-                        <p class="needs-content-placeholder">내용 필요</p>
+                        <p class="needs-content-placeholder" data-en="Content needed">내용 필요</p>
                     </div>
                 </div>
 
                 <!-- Topic 2 -->
                 <div class="topic-card">
                     <div class="card-title-row">
-                        <h3 class="card-title">2. 로그 데이터 다운로드 및 Automation Test Pipeline 구축 + 영상 레코딩 동시 동작</h3>
+                        <h3 class="card-title" data-en="2. Log Data Download &amp; Automation Test Pipeline + Concurrent Video Recording">
+                            2. 로그 데이터 다운로드 및 Automation Test Pipeline 구축 + 영상 레코딩 동시 동작
+                        </h3>
                         <span class="chip chip-purple">Pipeline &amp; Video</span>
                     </div>
                     <div class="needs-content-box">
                         <div class="needs-content-header">
-                            <span class="needs-content-title">상세 아키텍처 및 구현 내용</span>
-                            <span class="chip chip-warning">내용 필요</span>
+                            <span class="needs-content-title" data-en="Detailed Architecture &amp; Implementation">상세 아키텍처 및 구현 내용</span>
+                            <span class="chip chip-warning" data-en="Needs Content">내용 필요</span>
                         </div>
-                        <p class="needs-content-placeholder">내용 필요</p>
+                        <p class="needs-content-placeholder" data-en="Content needed">내용 필요</p>
                     </div>
                 </div>
 
                 <!-- Topic 3 -->
                 <div class="topic-card">
                     <div class="card-title-row">
-                        <h3 class="card-title">3. 여러 테스트 도구 개발 (팀전술 테스트 지원 도구, 이슈티켓 분석레포트 작성용 데이터 분석 도구)</h3>
+                        <h3 class="card-title" data-en="3. Testing &amp; Analytics Tooling (Team Tactics Test Support Tool, Issue Ticket Analysis Report Generator)">
+                            3. 여러 테스트 도구 개발 (팀전술 테스트 지원 도구, 이슈티켓 분석레포트 작성용 데이터 분석 도구)
+                        </h3>
                         <span class="chip chip-success">Testing &amp; Analytics Tools</span>
                     </div>
                     <div class="needs-content-box">
                         <div class="needs-content-header">
-                            <span class="needs-content-title">상세 아키텍처 및 구현 내용</span>
-                            <span class="chip chip-warning">내용 필요</span>
+                            <span class="needs-content-title" data-en="Detailed Architecture &amp; Implementation">상세 아키텍처 및 구현 내용</span>
+                            <span class="chip chip-warning" data-en="Needs Content">내용 필요</span>
                         </div>
-                        <p class="needs-content-placeholder">내용 필요</p>
+                        <p class="needs-content-placeholder" data-en="Content needed">내용 필요</p>
                     </div>
                 </div>
 
                 <!-- Topic 4 -->
                 <div class="topic-card">
                     <div class="card-title-row">
-                        <h3 class="card-title">4. CEL 문법 Filter Code 지원</h3>
+                        <h3 class="card-title" data-en="4. CEL (Common Expression Language) Syntax Filter Code Support">
+                            4. CEL 문법 Filter Code 지원
+                        </h3>
                         <span class="chip chip-info">CEL Filter Engine</span>
                     </div>
                     <div class="needs-content-box">
                         <div class="needs-content-header">
-                            <span class="needs-content-title">상세 아키텍처 및 구현 내용</span>
-                            <span class="chip chip-warning">내용 필요</span>
+                            <span class="needs-content-title" data-en="Detailed Architecture &amp; Implementation">상세 아키텍처 및 구현 내용</span>
+                            <span class="chip chip-warning" data-en="Needs Content">내용 필요</span>
                         </div>
-                        <p class="needs-content-placeholder">내용 필요</p>
+                        <p class="needs-content-placeholder" data-en="Content needed">내용 필요</p>
                     </div>
                 </div>
             </div>
@@ -581,7 +633,7 @@
                     <h2 class="section-heading">Projects</h2>
                     <span class="chip chip-info">4 Projects</span>
                 </div>
-                <span class="meta-label">문제 해결 및 데이터 분석 프로젝트 리스트</span>
+                <span class="meta-label" data-en="Problem-solving tool development &amp; data analysis projects">문제 해결 및 데이터 분석 프로젝트 리스트</span>
             </div>
 
             <div class="projects-grid">
@@ -590,36 +642,48 @@
                     <div style="display: flex; flex-direction: column; gap: var(--space-2);">
                         <div class="card-title-row">
                             <h3 class="card-title">COM_study (LOL-API &amp; Proj_code)</h3>
-                            <span class="chip chip-success">완료</span>
+                            <span class="chip chip-success" data-en="Completed">완료</span>
                         </div>
-                        <p class="meta-label">League of Legends API 연동 및 데이터 분석 스터디</p>
+                        <p class="meta-label" data-en="League of Legends API Integration &amp; Data Analysis Study">League of Legends API 연동 및 데이터 분석 스터디</p>
 
                         <div class="project-detail-block">
                             <div class="project-detail-label">
-                                <i class="fas fa-exclamation-circle" style="color: var(--chip-warning-text);"></i> 문제
+                                <i class="fas fa-exclamation-circle" style="color: var(--chip-warning-text);"></i>
+                                <span data-en="Problem">문제</span>
                             </div>
-                            <p class="body-text" style="font-size: 13.5px;">게임 데이터를 체계적으로 수집하고 의미 있는 통계를 도출할 수 있는 자동화 파이프라인 부재</p>
+                            <p class="body-text" style="font-size: 13.5px;"
+                               data-en="Lack of an automated pipeline to systematically collect match/in-game data and derive meaningful statistical insights.">
+                                게임 데이터를 체계적으로 수집하고 의미 있는 통계를 도출할 수 있는 자동화 파이프라인 부재
+                            </p>
                         </div>
 
                         <div class="project-detail-block">
                             <div class="project-detail-label">
-                                <i class="fas fa-lightbulb" style="color: var(--accent-primary);"></i> 해결
+                                <i class="fas fa-lightbulb" style="color: var(--accent-primary);"></i>
+                                <span data-en="Solution">해결</span>
                             </div>
-                            <p class="body-text" style="font-size: 13.5px;">Riot API를 활용하여 전적/인게임 데이터를 수집하고, 재사용 가능한 모듈로 코드를 정리했습니다. 이를 통해 데이터 수집부터 분석까지의 과정을 자동화하며 아키텍처 설계 역량을 향상시켰습니다.</p>
+                            <p class="body-text" style="font-size: 13.5px;"
+                               data-en="Built reusable modules utilizing the Riot API to collect match and in-game data, automating the entire workflow from data ingestion to statistical analysis while strengthening software architecture skills.">
+                                Riot API를 활용하여 전적/인게임 데이터를 수집하고, 재사용 가능한 모듈로 코드를 정리했습니다. 이를 통해 데이터 수집부터 분석까지의 과정을 자동화하며 아키텍처 설계 역량을 향상시켰습니다.
+                            </p>
                         </div>
 
                         <div class="needs-content-box">
                             <div class="needs-content-header">
-                                <span class="needs-content-title">관련 논문(arXiv) 및 데이터 분석 상세 내용</span>
-                                <span class="chip chip-warning">내용 필요</span>
+                                <span class="needs-content-title" data-en="arXiv Paper &amp; Data Analysis Details">관련 논문(arXiv) 및 데이터 분석 상세 내용</span>
+                                <span class="chip chip-warning" data-en="Needs Content">내용 필요</span>
                             </div>
-                            <p class="needs-content-placeholder">내용 필요</p>
+                            <p class="needs-content-placeholder" data-en="Content needed">내용 필요</p>
                         </div>
                     </div>
 
                     <div class="project-links-row">
-                        <a href="https://github.com/hope77-githhub/Proj_code" target="_blank" class="btn-utility"><i class="fab fa-github"></i> 저장소 보기</a>
-                        <a href="https://arxiv.org/abs/2512.20116" target="_blank" class="btn-utility btn-primary-accent"><i class="fas fa-file-alt"></i> 관련 논문 (arXiv)</a>
+                        <a href="https://github.com/hope77-githhub/Proj_code" target="_blank" class="btn-utility">
+                            <i class="fab fa-github"></i> <span data-en="Repository">저장소 보기</span>
+                        </a>
+                        <a href="https://arxiv.org/abs/2512.20116" target="_blank" class="btn-utility btn-primary-accent">
+                            <i class="fas fa-file-alt"></i> <span data-en="Paper (arXiv)">관련 논문 (arXiv)</span>
+                        </a>
                     </div>
                 </article>
 
@@ -627,36 +691,45 @@
                 <article class="project-card" id="project-unknown">
                     <div style="display: flex; flex-direction: column; gap: var(--space-2);">
                         <div class="card-title-row">
-                            <h3 class="card-title">Personal-Project (Unknown 개발 프로젝트)</h3>
-                            <span class="chip chip-info">진행 중</span>
+                            <h3 class="card-title" data-en="Personal-Project (Unknown Dev Project)">Personal-Project (Unknown 개발 프로젝트)</h3>
+                            <span class="chip chip-info" data-en="In Progress">진행 중</span>
                         </div>
-                        <p class="meta-label">'Unknown 개발 프로젝트' 품질 보증 및 테스트 자동화 지원 도구</p>
+                        <p class="meta-label" data-en="Quality Assurance &amp; Test Automation Support Tool for 'Unknown Project'">'Unknown 개발 프로젝트' 품질 보증 및 테스트 자동화 지원 도구</p>
 
                         <div class="project-detail-block">
                             <div class="project-detail-label">
-                                <i class="fas fa-exclamation-circle" style="color: var(--chip-warning-text);"></i> 문제
+                                <i class="fas fa-exclamation-circle" style="color: var(--chip-warning-text);"></i>
+                                <span data-en="Problem">문제</span>
                             </div>
-                            <p class="body-text" style="font-size: 13.5px;">복잡한 시스템 환경에서 로그 검증, 이벤트 시각화, 테스트 반복 작업에 소모되는 QA 수동 리소스가 과도함</p>
+                            <p class="body-text" style="font-size: 13.5px;"
+                               data-en="Excessive manual QA resources consumed by log verification, event visualization, and repetitive testing in a complex system environment.">
+                                복잡한 시스템 환경에서 로그 검증, 이벤트 시각화, 테스트 반복 작업에 소모되는 QA 수동 리소스가 과도함
+                            </p>
                         </div>
 
                         <div class="project-detail-block">
                             <div class="project-detail-label">
-                                <i class="fas fa-lightbulb" style="color: var(--accent-primary);"></i> 해결
+                                <i class="fas fa-lightbulb" style="color: var(--accent-primary);"></i>
+                                <span data-en="Solution">해결</span>
                             </div>
-                            <p class="body-text" style="font-size: 13.5px;">로그 자동 다운로드, CEL 기반 필터 생성, 이벤트 시각화를 통합한 자동화 대시보드를 구축하여 QA 효율을 극대화하고 휴먼 에러를 방지했습니다. (보안상 상세 아키텍처 생략)</p>
+                            <p class="body-text" style="font-size: 13.5px;"
+                               data-en="Built an integrated automation suite featuring automated log downloading, CEL-based filter generation, and event visualization—maximizing QA efficiency and preventing human error. (Detailed internal architecture omitted for security)">
+                                로그 자동 다운로드, CEL 기반 필터 생성, 이벤트 시각화를 통합한 자동화 대시보드를 구축하여 QA 효율을 극대화하고 휴먼 에러를 방지했습니다. (보안상 상세 아키텍처 생략)</p>
                         </div>
 
                         <div class="needs-content-box">
                             <div class="needs-content-header">
-                                <span class="needs-content-title">프로젝트 상세 성과 및 추가 서술</span>
-                                <span class="chip chip-warning">내용 필요</span>
+                                <span class="needs-content-title" data-en="Project Outcomes &amp; Additional Details">프로젝트 상세 성과 및 추가 서술</span>
+                                <span class="chip chip-warning" data-en="Needs Content">내용 필요</span>
                             </div>
-                            <p class="needs-content-placeholder">내용 필요</p>
+                            <p class="needs-content-placeholder" data-en="Content needed">내용 필요</p>
                         </div>
                     </div>
 
                     <div class="project-links-row">
-                        <a href="#pitch-unknown-section" class="btn-utility"><i class="fas fa-layer-group"></i> 4대 핵심 아키텍처 보기</a>
+                        <a href="#pitch-unknown-section" class="btn-utility">
+                            <i class="fas fa-layer-group"></i> <span data-en="View 4 Core Architecture Pillars">4대 핵심 아키텍처 보기</span>
+                        </a>
                     </div>
                 </article>
 
@@ -665,35 +738,45 @@
                     <div style="display: flex; flex-direction: column; gap: var(--space-2);">
                         <div class="card-title-row">
                             <h3 class="card-title">Race Engineer (F1 Telemetry App)</h3>
-                            <span class="chip chip-info">진행 중</span>
+                            <span class="chip chip-info" data-en="In Progress">진행 중</span>
                         </div>
-                        <p class="meta-label">F1 게임 실시간 텔레메트리 및 레이스 엔지니어링 대시보드</p>
+                        <p class="meta-label" data-en="Real-Time F1 Game Telemetry &amp; Race Engineering Dashboard">F1 게임 실시간 텔레메트리 및 레이스 엔지니어링 대시보드</p>
 
                         <div class="project-detail-block">
                             <div class="project-detail-label">
-                                <i class="fas fa-exclamation-circle" style="color: var(--chip-warning-text);"></i> 문제
+                                <i class="fas fa-exclamation-circle" style="color: var(--chip-warning-text);"></i>
+                                <span data-en="Problem">문제</span>
                             </div>
-                            <p class="body-text" style="font-size: 13.5px;">F1 게임 플레이 중 실시간 차량 상태(타이어 마모, 연료, 랩타임 등)를 직관적으로 파악하고 레이스 전략을 세우기 어려움</p>
+                            <p class="body-text" style="font-size: 13.5px;"
+                               data-en="Difficulty intuitively monitoring real-time vehicle states (tire wear, fuel load, lap times) and formulating live race strategies while driving.">
+                                F1 게임 플레이 중 실시간 차량 상태(타이어 마모, 연료, 랩타임 등)를 직관적으로 파악하고 레이스 전략을 세우기 어려움
+                            </p>
                         </div>
 
                         <div class="project-detail-block">
                             <div class="project-detail-label">
-                                <i class="fas fa-lightbulb" style="color: var(--accent-primary);"></i> 해결
+                                <i class="fas fa-lightbulb" style="color: var(--accent-primary);"></i>
+                                <span data-en="Solution">해결</span>
                             </div>
-                            <p class="body-text" style="font-size: 13.5px;">F1 게임의 UDP 텔레메트리 데이터를 실시간으로 파싱하여 프론트엔드 대시보드에 시각화하는 풀스택 앱을 구축하고 있습니다. 실제 레이스 엔지니어처럼 데이터를 바탕으로 즉각적인 전략 수정이 가능하도록 돕습니다.</p>
+                            <p class="body-text" style="font-size: 13.5px;"
+                               data-en="Developing a full-stack application that parses F1 UDP telemetry packets in real time and visualizes them on an interactive dashboard, enabling immediate data-driven strategy adjustments just like a real race engineer.">
+                                F1 게임의 UDP 텔레메트리 데이터를 실시간으로 파싱하여 프론트엔드 대시보드에 시각화하는 풀스택 앱을 구축하고 있습니다. 실제 레이스 엔지니어처럼 데이터를 바탕으로 즉각적인 전략 수정이 가능하도록 돕습니다.
+                            </p>
                         </div>
 
                         <div class="needs-content-box">
                             <div class="needs-content-header">
-                                <span class="needs-content-title">텔레메트리 파싱 및 전략 기능 상세 서술</span>
-                                <span class="chip chip-warning">내용 필요</span>
+                                <span class="needs-content-title" data-en="Telemetry Parsing &amp; Strategy Features">텔레메트리 파싱 및 전략 기능 상세 서술</span>
+                                <span class="chip chip-warning" data-en="Needs Content">내용 필요</span>
                             </div>
-                            <p class="needs-content-placeholder">내용 필요</p>
+                            <p class="needs-content-placeholder" data-en="Content needed">내용 필요</p>
                         </div>
                     </div>
 
                     <div class="project-links-row">
-                        <a href="https://github.com/hope77-githhub/F125_Personal_RaceEngineer" target="_blank" class="btn-utility"><i class="fab fa-github"></i> 저장소 보기</a>
+                        <a href="https://github.com/hope77-githhub/F125_Personal_RaceEngineer" target="_blank" class="btn-utility">
+                            <i class="fab fa-github"></i> <span data-en="Repository">저장소 보기</span>
+                        </a>
                     </div>
                 </article>
 
@@ -702,49 +785,57 @@
                     <div style="display: flex; flex-direction: column; gap: var(--space-2);">
                         <div class="card-title-row">
                             <h3 class="card-title">NIES Letter Counter</h3>
-                            <span class="chip chip-success">완료</span>
+                            <span class="chip chip-success" data-en="Completed">완료</span>
                         </div>
-                        <p class="meta-label">교사를 위한 나이스(NEIS) 맞춤형 글자수 계산기 및 엑셀 일괄 처리 도구</p>
+                        <p class="meta-label" data-en="Custom NEIS Byte Calculator &amp; Excel Batch Processor for Teachers">교사를 위한 나이스(NEIS) 맞춤형 글자수 계산기 및 엑셀 일괄 처리 도구</p>
 
                         <div class="project-detail-block">
                             <div class="project-detail-label">
-                                <i class="fas fa-exclamation-circle" style="color: var(--chip-warning-text);"></i> 문제
+                                <i class="fas fa-exclamation-circle" style="color: var(--chip-warning-text);"></i>
+                                <span data-en="Problem">문제</span>
                             </div>
-                            <p class="body-text" style="font-size: 13.5px;">나이스 시스템의 독특한 바이트 계산 방식(한글 3byte, 줄바꿈 2byte 등)으로 인해 학생부 작성 시 길이를 맞추기 어렵고, 여러 학생의 데이터를 일일이 복사/붙여넣기 해야 하는 비효율 발생</p>
+                            <p class="body-text" style="font-size: 13.5px;"
+                               data-en="NEIS's unique byte-counting rules (3 bytes per Korean character, 2 bytes per line break) made it tedious for teachers to fit student record limits and manually copy-paste data for multiple students.">
+                                나이스 시스템의 독특한 바이트 계산 방식(한글 3byte, 줄바꿈 2byte 등)으로 인해 학생부 작성 시 길이를 맞추기 어렵고, 여러 학생의 데이터를 일일이 복사/붙여넣기 해야 하는 비효율 발생
+                            </p>
                         </div>
 
                         <div class="project-detail-block">
                             <div class="project-detail-label">
-                                <i class="fas fa-lightbulb" style="color: var(--accent-primary);"></i> 해결
+                                <i class="fas fa-lightbulb" style="color: var(--accent-primary);"></i>
+                                <span data-en="Solution">해결</span>
                             </div>
-                            <p class="body-text" style="font-size: 13.5px;">나이스 기준에 정확히 맞는 바이트 계산 로직을 구현하고, Excel(.xlsx) 파일 업로드 기능을 추가하여 다수의 학생 데이터를 한 번에 처리하도록 개선했습니다. 브라우저 내에서만 동작하도록(SheetJS) 설계하여 학생 개인정보 보안 문제까지 완벽히 해결했습니다.</p>
+                            <p class="body-text" style="font-size: 13.5px;"
+                               data-en="Implemented exact NEIS byte-calculation logic and added Excel (.xlsx) batch upload via SheetJS. By processing everything 100% client-side in the browser, it simultaneously solved workflow inefficiency and student data privacy concerns.">
+                                나이스 기준에 정확히 맞는 바이트 계산 로직을 구현하고, Excel(.xlsx) 파일 업로드 기능을 추가하여 다수의 학생 데이터를 한 번에 처리하도록 개선했습니다. 브라우저 내에서만 동작하도록(SheetJS) 설계하여 학생 개인정보 보안 문제까지 완벽히 해결했습니다.
+                            </p>
                         </div>
 
                         <div class="needs-content-box">
                             <div class="needs-content-header">
-                                <span class="needs-content-title">구현 상세 및 활용 성과 서술</span>
-                                <span class="chip chip-warning">내용 필요</span>
+                                <span class="needs-content-title" data-en="Implementation Details &amp; Impact">구현 상세 및 활용 성과 서술</span>
+                                <span class="chip chip-warning" data-en="Needs Content">내용 필요</span>
                             </div>
-                            <p class="needs-content-placeholder">내용 필요</p>
+                            <p class="needs-content-placeholder" data-en="Content needed">내용 필요</p>
                         </div>
                     </div>
 
                     <div class="project-links-row">
                         <span class="chip chip-neutral">SheetJS (Client-Side)</span>
-                        <span class="chip chip-neutral">개인정보 보호 설계</span>
+                        <span class="chip chip-neutral" data-en="Privacy-Safe Design">개인정보 보호 설계</span>
                     </div>
                 </article>
             </div>
         </section>
 
-        <!-- 7. MILESTONES & TIMELINE (Overlay-Safe 2-Column Grid) -->
+        <!-- 7. MILESTONES & TIMELINE -->
         <section class="section-card" id="milestones">
             <div class="section-header">
                 <div class="section-header-left">
                     <h2 class="section-heading">Project &amp; Research Milestones</h2>
                     <span class="chip chip-purple">Timeline</span>
                 </div>
-                <span class="meta-label">주요 개발 및 연구 이력</span>
+                <span class="meta-label" data-en="Key Development &amp; Research History">주요 개발 및 연구 이력</span>
             </div>
 
             <div class="release-timeline">
@@ -755,10 +846,10 @@
                     </div>
                     <div class="content-lane">
                         <div class="release-date-row">
-                            <span class="release-date">Unknown Project &amp; Race Engineer 고도화</span>
-                            <span class="chip chip-info">진행 중</span>
+                            <span class="release-date" data-en="Advancing Unknown Project &amp; Race Engineer">Unknown Project &amp; Race Engineer 고도화</span>
+                            <span class="chip chip-info" data-en="In Progress">진행 중</span>
                         </div>
-                        <div class="release-body">내용 필요</div>
+                        <div class="release-body" data-en="Content needed">내용 필요</div>
                     </div>
                 </div>
 
@@ -769,10 +860,10 @@
                     </div>
                     <div class="content-lane">
                         <div class="release-date-row">
-                            <span class="release-date">COM_study 데이터 분석 논문 공개 (arXiv:2512.20116)</span>
-                            <span class="chip chip-success">완료</span>
+                            <span class="release-date" data-en="Published COM_study Data Analysis Paper (arXiv:2512.20116)">COM_study 데이터 분석 논문 공개 (arXiv:2512.20116)</span>
+                            <span class="chip chip-success" data-en="Completed">완료</span>
                         </div>
-                        <div class="release-body">내용 필요</div>
+                        <div class="release-body" data-en="Content needed">내용 필요</div>
                     </div>
                 </div>
 
@@ -783,10 +874,10 @@
                     </div>
                     <div class="content-lane">
                         <div class="release-date-row">
-                            <span class="release-date">NIES Letter Counter 개발 및 배포</span>
-                            <span class="chip chip-success">완료</span>
+                            <span class="release-date" data-en="Developed &amp; Deployed NIES Letter Counter">NIES Letter Counter 개발 및 배포</span>
+                            <span class="chip chip-success" data-en="Completed">완료</span>
                         </div>
-                        <div class="release-body">내용 필요</div>
+                        <div class="release-body" data-en="Content needed">내용 필요</div>
                     </div>
                 </div>
             </div>
@@ -807,19 +898,95 @@
 
     </main>
 
+    <!-- NAVIGATION & HYBRID AUTO-TRANSLATION SCRIPT -->
     <script>
         (function () {
+            let currentLang = 'ko';
             const moduleButtons = document.querySelectorAll('.module-btn');
             const headerActivePill = document.getElementById('header-active-pill');
             const previewModuleName = document.getElementById('preview-module-name');
             const previewModuleDesc = document.getElementById('preview-module-desc');
             const previewJumpBtn = document.getElementById('preview-jump-btn');
+            const langToggleBtn = document.getElementById('lang-toggle-btn');
+            const langKoBadge = document.getElementById('lang-ko');
+            const langEnBadge = document.getElementById('lang-en');
+
+            // Store original Korean HTML/text on initial load
+            const translatableElements = document.querySelectorAll('[data-en], .needs-content-placeholder, .release-body');
+            translatableElements.forEach((el) => {
+                el.dataset.originalKo = el.innerHTML.trim();
+            });
+
+            // Automatic live translation via Google GTX API for user-edited Korean content
+            async function translateKoreanToEnglish(text) {
+                try {
+                    const url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=ko&tl=en&dt=t&q=' + encodeURIComponent(text);
+                    const res = await fetch(url);
+                    const data = await res.json();
+                    return data[0].map(item => item[0]).join('');
+                } catch (e) {
+                    return text;
+                }
+            }
+
+            async function applyLanguage(lang) {
+                currentLang = lang;
+                document.documentElement.lang = lang;
+
+                langKoBadge.classList.toggle('active', lang === 'ko');
+                langEnBadge.classList.toggle('active', lang === 'en');
+
+                for (const el of translatableElements) {
+                    if (lang === 'ko') {
+                        el.innerHTML = el.dataset.originalKo;
+                    } else {
+                        const rawKoText = el.textContent.trim();
+                        const presetEn = el.getAttribute('data-en');
+
+                        // If user replaced "내용 필요" with custom Korean text, auto-translate it via API
+                        const isEditedPlaceholder =
+                            (el.classList.contains('needs-content-placeholder') || el.classList.contains('release-body')) &&
+                            rawKoText !== '내용 필요' &&
+                            presetEn === 'Content needed';
+
+                        if (isEditedPlaceholder) {
+                            if (!el.dataset.cachedAutoEn) {
+                                el.textContent = 'Translating...';
+                                el.dataset.cachedAutoEn = await translateKoreanToEnglish(rawKoText);
+                            }
+                            el.textContent = el.dataset.cachedAutoEn;
+                        } else if (presetEn) {
+                            // Preserve leading icons if present
+                            const iconEl = el.querySelector('i');
+                            if (iconEl) {
+                                el.innerHTML = iconEl.outerHTML + ' ' + presetEn;
+                            } else {
+                                el.innerHTML = presetEn;
+                            }
+                        }
+                    }
+                }
+
+                // Update Preview Panel description in active language
+                const activeBtn = document.querySelector('.module-btn.active');
+                if (activeBtn) {
+                    updatePreview(activeBtn);
+                }
+            }
 
             function updatePreview(btn) {
                 previewModuleName.textContent = btn.querySelector('.module-btn-title').textContent;
-                previewModuleDesc.textContent = btn.getAttribute('data-desc');
+                const desc = currentLang === 'en'
+                    ? btn.getAttribute('data-desc-en')
+                    : btn.getAttribute('data-desc-ko');
+                previewModuleDesc.textContent = desc;
                 previewJumpBtn.setAttribute('href', btn.getAttribute('data-target'));
             }
+
+            langToggleBtn.addEventListener('click', () => {
+                const nextLang = currentLang === 'ko' ? 'en' : 'ko';
+                applyLanguage(nextLang);
+            });
 
             moduleButtons.forEach((btn) => {
                 btn.addEventListener('mouseenter', () => updatePreview(btn));
