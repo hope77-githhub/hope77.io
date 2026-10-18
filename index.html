@@ -4,820 +4,120 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOPE77 Portfolio — 장자훈</title>
+
+    <!-- Typography & Fonts: Inter, JetBrains Mono, Pretendard, FontAwesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- DESIGN-coinbase.md 권장 대체 폰트: Inter (Display/Sans) & JetBrains Mono (Mono) + 한글 Pretendard -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <style>
-        /* ==========================================================================
-           1. Design Tokens (DESIGN-coinbase.md)
-           ========================================================================== */
-        :root {
-            /* Colors */
-            --color-primary: #0052ff;
-            --color-primary-active: #003ecc;
-            --color-primary-disabled: #a8b8cc;
-            --color-ink: #0a0b0d;
-            --color-body: #5b616e;
-            --color-body-strong: #0a0b0d;
-            --color-muted: #7c828a;
-            --color-muted-soft: #a8acb3;
-            --color-hairline: #dee1e6;
-            --color-hairline-soft: #eef0f3;
-            --color-canvas: #ffffff;
-            --color-surface-soft: #f7f7f7;
-            --color-surface-card: #ffffff;
-            --color-surface-strong: #eef0f3;
-            --color-surface-dark: #0a0b0d;
-            --color-surface-dark-elevated: #16181c;
-            --color-on-primary: #ffffff;
-            --color-on-dark: #ffffff;
-            --color-on-dark-soft: #a8acb3;
-            --color-semantic-up: #05b169;
-            --color-semantic-down: #cf202f;
-            --color-accent-yellow: #f4b000;
-
-            /* Font Families */
-            --font-display: 'Coinbase Display', 'Inter', 'Pretendard', -apple-system, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            --font-sans: 'Coinbase Sans', 'Inter', 'Pretendard', -apple-system, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            --font-mono: 'Coinbase Mono', 'JetBrains Mono', monospace;
-
-            /* Border Radius Scale */
-            --rounded-none: 0px;
-            --rounded-xs: 4px;
-            --rounded-sm: 8px;
-            --rounded-md: 12px;
-            --rounded-lg: 16px;
-            --rounded-xl: 24px;
-            --rounded-pill: 100px;
-            --rounded-full: 9999px;
-
-            /* Spacing System (Base unit: 4px) */
-            --space-xxs: 4px;
-            --space-xs: 8px;
-            --space-sm: 12px;
-            --space-base: 16px;
-            --space-md: 20px;
-            --space-lg: 24px;
-            --space-xl: 32px;
-            --space-xxl: 48px;
-            --space-section: 96px;
-
-            /* Single Shadow Tier */
-            --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.04);
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
-        body {
-            background-color: var(--color-canvas);
-            color: var(--color-ink);
-            font-family: var(--font-sans);
-            font-size: 16px;
-            font-weight: 400;
-            line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
-        }
-        a { color: inherit; text-decoration: none; }
-
-        /* ==========================================================================
-           2. Typography (Display weight stays at 400, negative tracking on display)
-           ========================================================================== */
-        .page-heading {
-            font-family: var(--font-display);
-            font-size: clamp(40px, 5vw, 64px); /* display-xl -> mobile 40px */
-            font-weight: 400;
-            line-height: 1.08;
-            letter-spacing: -1.6px;
-            color: var(--color-on-dark);
-        }
-        .section-heading {
-            font-family: var(--font-sans);
-            font-size: clamp(26px, 3vw, 36px); /* display-sm / title-lg */
-            font-weight: 400;
-            line-height: 1.13;
-            letter-spacing: -0.5px;
-            color: var(--color-ink);
-        }
-        .body-text {
-            font-family: var(--font-sans);
-            font-size: 16px; /* body-md */
-            font-weight: 400;
-            line-height: 1.5;
-            color: var(--color-body);
-        }
-        .meta-label {
-            font-family: var(--font-sans);
-            font-size: 13px; /* caption */
-            font-weight: 400;
-            line-height: 1.5;
-            color: var(--color-muted);
-        }
-
-        /* ==========================================================================
-           3. Badges & Pills (badge-pill & semantic text-only colors)
-           ========================================================================== */
-        .chip {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 12px;
-            border-radius: var(--rounded-pill);
-            font-family: var(--font-sans);
-            font-size: 12px; /* caption-strong */
-            font-weight: 600;
-            line-height: 1.5;
-            letter-spacing: 0;
-            white-space: nowrap;
-            background: var(--color-surface-strong);
-            color: var(--color-ink);
-        }
-        /* Coinbase Principle: No secondary brand fills; semantic-up/down are text-color only */
-        .chip-success {
-            background: var(--color-surface-strong);
-            color: var(--color-semantic-up);
-            font-family: var(--font-mono);
-        }
-        .chip-info {
-            background: var(--color-surface-strong);
-            color: var(--color-primary);
-        }
-        .chip-purple {
-            background: var(--color-surface-strong);
-            color: var(--color-ink);
-        }
-        .chip-warning {
-            background: var(--color-surface-strong);
-            color: var(--color-ink);
-        }
-        .chip-warning::before {
-            content: "";
-            width: 6px;
-            height: 6px;
-            border-radius: var(--rounded-full);
-            background-color: var(--color-accent-yellow);
-            display: inline-block;
-        }
-        .chip-neutral {
-            background: var(--color-surface-strong);
-            color: var(--color-body);
-        }
-
-        /* ==========================================================================
-           4. Top Navigation (top-nav-light: height 64px, canvas bg)
-           ========================================================================== */
-        .top-app-bar {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: var(--color-canvas);
-            border-bottom: 1px solid var(--color-hairline);
-            height: 64px;
-            display: flex;
-            align-items: center;
-        }
-        .top-app-bar-inner {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 var(--space-lg);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: var(--space-sm);
-        }
-        .product-title {
-            font-family: var(--font-display);
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--color-primary); /* Coinbase Blue wordmark */
-            letter-spacing: -0.5px;
-        }
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: var(--space-sm);
-        }
-        .active-module-pill {
-            background: var(--color-surface-strong);
-            color: var(--color-ink);
-            padding: 6px 14px;
-            border-radius: var(--rounded-pill);
-            font-family: var(--font-mono);
-            font-size: 12px;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .active-module-pill::before {
-            content: "";
-            width: 7px;
-            height: 7px;
-            border-radius: var(--rounded-full);
-            background: var(--color-primary);
-        }
-
-        /* Language Toggle Button (Pill Geometry) */
-        .lang-toggle-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 2px;
-            background: var(--color-surface-strong);
-            border: none;
-            border-radius: var(--rounded-pill);
-            padding: 4px;
-            height: 36px;
-            cursor: pointer;
-            font-family: var(--font-sans);
-        }
-        .lang-opt {
-            padding: 4px 12px;
-            border-radius: var(--rounded-pill);
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--color-body);
-            transition: background-color 0.15s ease, color 0.15s ease;
-        }
-        .lang-opt.active {
-            background: var(--color-primary);
-            color: var(--color-on-primary);
-        }
-
-        /* ==========================================================================
-           5. Page Rhythm & Layout Containers
-           ========================================================================== */
-        .app-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Section Band Wrappers for Editorial Rhythm */
-        .band-dark {
-            background-color: var(--color-surface-dark);
-            color: var(--color-on-dark);
-            padding: var(--space-section) 0;
-        }
-        .band-light {
-            background-color: var(--color-canvas);
-            color: var(--color-ink);
-            padding: var(--space-section) 0;
-            border-bottom: 1px solid var(--color-hairline-soft);
-        }
-        .band-soft {
-            background-color: var(--color-surface-soft);
-            color: var(--color-ink);
-            padding: var(--space-section) 0;
-            border-bottom: 1px solid var(--color-hairline);
-        }
-        .band-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 var(--space-lg);
-        }
-
-        .section-card {
-            background: var(--color-canvas);
-            border: 1px solid var(--color-hairline);
-            border-radius: var(--rounded-xl);
-            padding: var(--space-xl);
-        }
-        .section-header {
-            display: flex;
-            align-items: baseline;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: var(--space-sm);
-            margin-bottom: var(--space-xl);
-            padding-bottom: var(--space-base);
-            border-bottom: 1px solid var(--color-hairline);
-        }
-        .section-header-left {
-            display: flex;
-            align-items: center;
-            gap: var(--space-sm);
-            flex-wrap: wrap;
-        }
-
-        /* ==========================================================================
-           6. Hero / Profile Summary (hero-band-dark + product-ui-card-dark)
-           ========================================================================== */
-        #summary.section-card {
-            background: transparent;
-            border: none;
-            border-radius: 0;
-            padding: 0;
-        }
-        .summary-grid {
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: var(--space-xxl);
-            align-items: center;
-        }
-        .summary-main {
-            display: flex;
-            flex-direction: column;
-            gap: var(--space-lg);
-        }
-        .summary-chips {
-            display: flex;
-            flex-wrap: wrap;
-            gap: var(--space-xs);
-        }
-        /* Badges inside dark hero */
-        .band-dark .summary-main .chip {
-            background: var(--color-surface-dark-elevated);
-            color: var(--color-on-dark);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-        }
-        .band-dark .summary-main .body-text {
-            color: var(--color-on-dark-soft);
-            font-size: 18px;
-        }
-        .band-dark .summary-main .needs-content-box {
-            background: var(--color-surface-dark-elevated);
-            border-color: rgba(255, 255, 255, 0.16);
-        }
-        .band-dark .summary-main .needs-content-title {
-            color: var(--color-on-dark);
-        }
-        .band-dark .summary-main .needs-content-placeholder {
-            color: var(--color-on-dark-soft);
-        }
-        .summary-owner-bar {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: var(--space-lg);
-            padding-top: var(--space-base);
-            border-top: 1px solid rgba(255, 255, 255, 0.12);
-        }
-        .band-dark .summary-owner-bar .meta-label {
-            color: var(--color-on-dark-soft);
-        }
-
-        /* Floating Product-UI Mockup Card inside Dark Hero */
-        .summary-profile-box {
-            background: var(--color-surface-dark-elevated);
-            color: var(--color-on-dark);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: var(--rounded-xl);
-            padding: var(--space-xl);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            gap: var(--space-lg);
-        }
-        .summary-profile-box .meta-label {
-            color: var(--color-on-dark-soft);
-            font-family: var(--font-mono);
-            letter-spacing: 0.5px;
-        }
-        .profile-stat-list {
-            background: var(--color-surface-dark);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: var(--rounded-lg);
-            padding: var(--space-base) var(--space-md);
-            display: flex;
-            flex-direction: column;
-        }
-        .profile-stat-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 14px;
-            color: var(--color-on-dark);
-            padding: var(--space-sm) 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            gap: 8px;
-        }
-        .profile-stat-item:last-child {
-            border-bottom: none;
-        }
-        .summary-profile-box .chip {
-            background: rgba(255, 255, 255, 0.08);
-            color: var(--color-on-dark);
-        }
-        .summary-profile-box .chip-success {
-            color: var(--color-semantic-up);
-        }
-
-        /* ==========================================================================
-           7. Quick Navigation & Preview Panel
-           ========================================================================== */
-        .quick-nav-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: var(--space-lg);
-            margin-bottom: var(--space-xl);
-        }
-        .module-btn {
-            background: var(--color-canvas);
-            border: 1px solid var(--color-hairline);
-            border-radius: var(--rounded-xl);
-            padding: var(--space-lg);
-            text-align: left;
-            cursor: pointer;
-            font-family: var(--font-sans);
-            display: flex;
-            flex-direction: column;
-            gap: var(--space-xs);
-            transition: box-shadow 0.2s ease, border-color 0.2s ease;
-        }
-        .module-btn:hover {
-            box-shadow: var(--shadow-soft);
-        }
-        .module-btn.active {
-            background: var(--color-surface-dark);
-            border-color: var(--color-surface-dark);
-            color: var(--color-on-dark);
-        }
-        .module-btn-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            margin-bottom: var(--space-xxs);
-        }
-        .module-btn-title {
-            font-family: var(--font-mono);
-            font-size: 16px;
-            font-weight: 500;
-            color: var(--color-ink);
-        }
-        .module-btn.active .module-btn-title {
-            color: var(--color-on-dark);
-        }
-        .module-btn-desc {
-            font-size: 14px;
-            color: var(--color-body);
-        }
-        .module-btn.active .module-btn-desc {
-            color: var(--color-on-dark-soft);
-        }
-        .module-btn.active .chip {
-            background: var(--color-primary);
-            color: var(--color-on-primary);
-        }
-
-        .preview-panel {
-            background: var(--color-surface-soft);
-            border: 1px solid var(--color-hairline);
-            border-radius: var(--rounded-xl);
-            padding: var(--space-lg) var(--space-xl);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: var(--space-lg);
-        }
-        .preview-content {
-            display: flex;
-            flex-direction: column;
-            gap: var(--space-xs);
-            flex: 1;
-            min-width: 240px;
-        }
-        .preview-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--color-ink);
-            display: flex;
-            align-items: center;
-            gap: var(--space-sm);
-        }
-
-        /* ==========================================================================
-           8. Buttons (All CTAs use {rounded.pill} 100px)
-           ========================================================================== */
-        .btn-utility {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px 20px;
-            height: 44px;
-            border-radius: var(--rounded-pill);
-            font-family: var(--font-sans);
-            font-size: 16px; /* typography.button */
-            font-weight: 600;
-            line-height: 1.15;
-            border: none;
-            background: var(--color-surface-strong); /* button-secondary-light */
-            color: var(--color-ink);
-            cursor: pointer;
-            transition: background-color 0.15s ease;
-        }
-        .btn-utility:active {
-            background: var(--color-hairline);
-        }
-        .btn-primary-accent {
-            background: var(--color-primary); /* button-primary */
-            color: var(--color-on-primary);
-        }
-        .btn-primary-accent:hover,
-        .btn-primary-accent:active {
-            background: var(--color-primary-active);
-            color: var(--color-on-primary);
-        }
-
-        /* ==========================================================================
-           9. Placeholder ("내용 필요") Box
-           ========================================================================== */
-        .needs-content-box {
-            background: var(--color-surface-soft);
-            border: 1px dashed var(--color-hairline);
-            border-radius: var(--rounded-lg);
-            padding: var(--space-base) var(--space-md);
-            margin-top: var(--space-xs);
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .needs-content-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-        }
-        .needs-content-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--color-ink);
-        }
-        .needs-content-placeholder {
-            font-size: 14px;
-            color: var(--color-muted);
-            white-space: pre-line;
-        }
-
-        /* ==========================================================================
-           10. Feature & Project Grids (rounded.xl: 24px, padding: 32px)
-           ========================================================================== */
-        .two-col-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: var(--space-lg);
-        }
-        .four-topic-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: var(--space-lg);
-        }
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: var(--space-lg);
-        }
-
-        /* Featured Dark Banner (pricing-tier-featured style) */
-        .pitch-banner {
-            background: var(--color-surface-dark);
-            color: var(--color-on-dark);
-            border-radius: var(--rounded-xl);
-            padding: var(--space-xl);
-            margin-bottom: var(--space-xl);
-        }
-        .pitch-banner .body-text {
-            color: var(--color-on-dark) !important;
-            font-family: var(--font-display);
-            font-size: 20px;
-            font-weight: 400 !important;
-            line-height: 1.45;
-            letter-spacing: -0.3px;
-        }
-
-        .topic-card,
-        .project-card {
-            background: var(--color-canvas);
-            border: 1px solid var(--color-hairline);
-            border-radius: var(--rounded-xl);
-            padding: var(--space-xl);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            gap: var(--space-md);
-            transition: box-shadow 0.2s ease, border-color 0.2s ease;
-        }
-        .topic-card:hover,
-        .project-card:hover {
-            box-shadow: var(--shadow-soft);
-        }
-        .project-card.highlighted {
-            border: 2px solid var(--color-primary);
-            box-shadow: var(--shadow-soft);
-        }
-        .card-title-row {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: var(--space-base);
-        }
-        .card-title {
-            font-family: var(--font-sans);
-            font-size: 18px; /* title-md */
-            font-weight: 600;
-            line-height: 1.33;
-            color: var(--color-ink);
-        }
-
-        /* Skills Grid with asset-icon-circular (32px, rounded.full) */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: var(--space-sm);
-            margin-bottom: var(--space-lg);
-        }
-        .skill-item {
-            background: var(--color-canvas);
-            border: 1px solid var(--color-hairline);
-            border-radius: var(--rounded-lg);
-            padding: var(--space-sm) var(--space-base);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--color-ink);
-        }
-        .skill-item i {
-            width: 32px;
-            height: 32px;
-            border-radius: var(--rounded-full);
-            background: var(--color-surface-strong);
-            color: var(--color-ink);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            flex-shrink: 0;
-        }
-
-        .project-detail-block {
-            background: var(--color-surface-soft);
-            border: 1px solid var(--color-hairline-soft);
-            border-radius: var(--rounded-lg);
-            padding: var(--space-base);
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .project-detail-label {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--color-ink);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .project-links-row {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: var(--space-xs);
-            padding-top: var(--space-base);
-            border-top: 1px solid var(--color-hairline);
-        }
-
-        /* ==========================================================================
-           11. Milestones Timeline (Clean Hairline Rows)
-           ========================================================================== */
-        .release-timeline {
-            display: flex;
-            flex-direction: column;
-        }
-        .release-row {
-            display: grid;
-            grid-template-columns: 24px 1fr;
-            gap: 16px;
-            align-items: stretch;
-        }
-        .marker-lane {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 6px;
-        }
-        .marker-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: var(--rounded-full);
-            background: var(--color-primary);
-            flex-shrink: 0;
-        }
-        .marker-line {
-            width: 1px;
-            flex-grow: 1;
-            background: var(--color-hairline);
-            margin: 6px 0;
-        }
-        .release-row:last-child .marker-line {
-            display: none;
-        }
-        .content-lane {
-            padding-bottom: var(--space-xl);
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .release-row:last-child .content-lane {
-            padding-bottom: 0;
-        }
-        .release-date-row {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-        .release-date {
-            font-size: 18px; /* title-md */
-            font-weight: 600;
-            color: var(--color-ink);
-        }
-        .release-body {
-            font-size: 15px;
-            color: var(--color-body);
-            white-space: pre-line;
-        }
-
-        /* ==========================================================================
-           12. Footer (footer-light + legal-band)
-           ========================================================================== */
-        .app-footer {
-            background: var(--color-canvas);
-            border-top: 1px solid var(--color-hairline);
-            padding: 64px 0;
-        }
-        .footer-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 var(--space-lg);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: var(--space-lg);
-        }
-        .footer-contacts {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: var(--space-xl);
-            font-size: 14px; /* body-sm */
-            font-weight: 500;
-            color: var(--color-body);
-        }
-        .footer-contacts a:hover {
-            color: var(--color-primary);
-        }
-
-        /* ==========================================================================
-           13. Responsive Breakpoints (DESIGN-coinbase.md: 1024px, 640px)
-           ========================================================================== */
-        @media (max-width: 1024px) {
-            .summary-grid,
-            .two-col-grid,
-            .four-topic-grid,
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-            .quick-nav-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .active-module-pill {
-                display: none;
-            }
-        }
-
-        @media (max-width: 640px) {
-            :root {
-                --space-section: 64px;
-            }
-            .quick-nav-grid {
-                grid-template-columns: 1fr;
-            }
-            .section-card,
-            .topic-card,
-            .project-card,
-            .summary-profile-box {
-                padding: var(--space-lg);
-            }
-        }
-    </style>
+    <!-- Modular Stylesheets (유지보수가 용이하도록 역할별 분리) -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/log-console.css">
 </head>
 <body>
 
-    <!-- 1. TOP APP BAR (top-nav-light: 64px) -->
+    <!-- ==========================================================================
+         0. INITIAL LOG INGESTION & TELEMETRY STREAM OVERLAY
+         (로그 데이터/파이프라인 전문가 면모를 보여주는 첫 진입 부트스트랩 연출 콘솔)
+         ========================================================================== -->
+    <div class="log-stream-overlay" id="log-stream-overlay">
+        <div class="terminal-window">
+            <!-- Terminal Title Bar -->
+            <div class="terminal-header">
+                <div class="terminal-controls">
+                    <span class="term-dot term-dot-red"></span>
+                    <span class="term-dot term-dot-yellow"></span>
+                    <span class="term-dot term-dot-green"></span>
+                </div>
+                <div class="terminal-title">
+                    <i class="fas fa-terminal"></i>
+                    <span>hope77@data-pipeline-node-01: ~/portfolio/stream</span>
+                    <span class="terminal-title-tag">LIVE TELEMETRY</span>
+                </div>
+                <div class="terminal-actions">
+                    <button type="button" class="btn-term-action btn-term-skip" id="btn-term-skip">
+                        <i class="fas fa-forward"></i> <span>스킵 (Skip to Portfolio)</span>
+                    </button>
+                    <button type="button" class="btn-term-action" id="btn-term-replay" title="Replay Stream">
+                        <i class="fas fa-rotate-right"></i>
+                    </button>
+                    <button type="button" class="btn-term-action" id="btn-term-close" title="Close Terminal">
+                        <i class="fas fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Telemetry Metrics Bar -->
+            <div class="terminal-metrics-bar">
+                <div class="metric-group">
+                    <div class="metric-item">
+                        <span>PIPELINE:</span>
+                        <span class="metric-val" id="term-status-tag">STREAMING</span>
+                    </div>
+                    <div class="metric-item">
+                        <span>EVENTS PROCESSED:</span>
+                        <span class="metric-val" id="term-event-counter">0</span>
+                    </div>
+                    <div class="metric-item">
+                        <span>THROUGHPUT:</span>
+                        <span class="metric-val">54.2k / sec</span>
+                    </div>
+                    <div class="metric-item">
+                        <span>LATENCY (p99):</span>
+                        <span class="metric-val">3.4ms</span>
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <span style="font-size: 11px;">SYNC:</span>
+                    <div class="progress-track">
+                        <div class="progress-fill" id="term-progress-fill"></div>
+                    </div>
+                    <span class="progress-pct" id="term-progress-pct">0%</span>
+                </div>
+            </div>
+
+            <!-- Terminal Body (Real-time log stream) -->
+            <div class="terminal-body" id="terminal-log-body">
+                <!-- Log entries will be rendered dynamically by js/log-streamer.js -->
+            </div>
+
+            <!-- Terminal Footer -->
+            <div class="terminal-footer">
+                <div class="terminal-footer-hint">
+                    <i class="fas fa-keyboard"></i>
+                    <span><kbd>ESC</kbd> 키를 누르면 즉시 포트폴리오 메인 화면으로 이동합니다.</span>
+                </div>
+                <div>
+                    <span>HOST: <strong>hope77-githhub.io</strong> (SSL / HTTP2)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==========================================================================
+         1. TOP APP BAR (Sticky Header)
+         ========================================================================== -->
     <header class="top-app-bar">
         <div class="top-app-bar-inner">
-            <div class="product-title">HOPE77 Portfolio</div>
+            <div class="product-title">
+                <span>HOPE77 Portfolio</span>
+                <span class="product-title-badge">Data &amp; Automation</span>
+            </div>
             <div class="header-right">
+                <!-- Log Ingestion Console Toggle Button -->
+                <button type="button" class="btn-log-console-toggle" id="btn-header-log-console" title="View Ingestion Logs">
+                    <span class="live-dot"></span>
+                    <span>Pipeline Logs</span>
+                </button>
+
                 <span class="active-module-pill" id="header-active-pill">SECTION: Profile Overview</span>
-                <!-- Automatic Translation Toggle Button -->
+
+                <!-- Multilingual Translation Toggle Button -->
                 <button type="button" class="lang-toggle-btn" id="lang-toggle-btn" aria-label="Toggle Language">
                     <span class="lang-opt active" id="lang-ko">KO</span>
                     <span class="lang-opt" id="lang-en">EN</span>
@@ -828,7 +128,9 @@
 
     <main class="app-container">
 
-        <!-- 2. PROFILE SUMMARY / INTRO PANEL (Full-bleed Dark Hero + Floating Product-UI Card) -->
+        <!-- ==========================================================================
+             2. PROFILE SUMMARY / HERO SECTION
+             ========================================================================== -->
         <div class="band-dark">
             <div class="band-inner">
                 <section class="section-card" id="summary">
@@ -869,7 +171,7 @@
                             </div>
                         </div>
 
-                        <!-- Right Profile Card (product-ui-card-dark) -->
+                        <!-- Right Profile Mockup Card -->
                         <div class="summary-profile-box">
                             <div class="card-title-row" style="align-items: center;">
                                 <span class="meta-label">CORE IDENTITY</span>
@@ -901,7 +203,9 @@
             </div>
         </div>
 
-        <!-- 3. QUICK NAVIGATION (White Editorial Canvas) -->
+        <!-- ==========================================================================
+             3. QUICK NAVIGATION & DYNAMIC PREVIEW PANEL
+             ========================================================================== -->
         <div class="band-light">
             <div class="band-inner">
                 <section id="quick-navigation">
@@ -1005,7 +309,9 @@
             </div>
         </div>
 
-        <!-- 4. ABOUT ME & SKILLS (Soft Gray Elevation Band) -->
+        <!-- ==========================================================================
+             4. ABOUT ME & SKILLS
+             ========================================================================== -->
         <div class="band-soft">
             <div class="band-inner">
                 <div class="two-col-grid" id="about-skills-section">
@@ -1077,7 +383,9 @@
             </div>
         </div>
 
-        <!-- 5. PITCH SPATIAL EFFICIENCY & UNKNOWN PROJECT ARCHITECTURE INSIGHTS (White Editorial Canvas) -->
+        <!-- ==========================================================================
+             5. PITCH SPATIAL EFFICIENCY & UNKNOWN PROJECT ARCHITECTURE INSIGHTS
+             ========================================================================== -->
         <div class="band-light">
             <div class="band-inner">
                 <section id="pitch-unknown-section">
@@ -1170,7 +478,9 @@
             </div>
         </div>
 
-        <!-- 6. PROJECTS SECTION (Soft Gray Elevation Band) -->
+        <!-- ==========================================================================
+             6. PROJECTS SECTION
+             ========================================================================== -->
         <div class="band-soft">
             <div class="band-inner">
                 <section id="projects">
@@ -1183,7 +493,7 @@
                     </div>
 
                     <div class="projects-grid">
-                        <!-- Project 1 -->
+                        <!-- Project 1: COM_study -->
                         <article class="project-card" id="project-com-study">
                             <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
                                 <div class="card-title-row">
@@ -1233,7 +543,7 @@
                             </div>
                         </article>
 
-                        <!-- Project 2 -->
+                        <!-- Project 2: Unknown Project -->
                         <article class="project-card" id="project-unknown">
                             <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
                                 <div class="card-title-row">
@@ -1260,7 +570,8 @@
                                     </div>
                                     <p class="body-text" style="font-size: 14px;"
                                        data-en="Built an integrated automation suite featuring automated log downloading, CEL-based filter generation, and event visualization—maximizing QA efficiency and preventing human error. (Detailed internal architecture omitted for security)">
-                                        로그 자동 다운로드, CEL 기반 필터 생성, 이벤트 시각화를 통합한 자동화 대시보드를 구축하여 QA 효율을 극대화하고 휴먼 에러를 방지했습니다. (보안상 상세 아키텍처 생략)</p>
+                                        로그 자동 다운로드, CEL 기반 필터 생성, 이벤트 시각화를 통합한 자동화 대시보드를 구축하여 QA 효율을 극대화하고 휴먼 에러를 방지했습니다. (보안상 상세 아키텍처 생략)
+                                    </p>
                                 </div>
 
                                 <div class="needs-content-box">
@@ -1279,7 +590,7 @@
                             </div>
                         </article>
 
-                        <!-- Project 3 -->
+                        <!-- Project 3: Race Engineer -->
                         <article class="project-card" id="project-f1">
                             <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
                                 <div class="card-title-row">
@@ -1326,7 +637,7 @@
                             </div>
                         </article>
 
-                        <!-- Project 4 -->
+                        <!-- Project 4: NIES Letter Counter -->
                         <article class="project-card" id="project-neis">
                             <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
                                 <div class="card-title-row">
@@ -1376,7 +687,9 @@
             </div>
         </div>
 
-        <!-- 7. MILESTONES & TIMELINE (White Editorial Canvas) -->
+        <!-- ==========================================================================
+             7. MILESTONES & TIMELINE
+             ========================================================================== -->
         <div class="band-light">
             <div class="band-inner">
                 <section class="section-card" id="milestones">
@@ -1435,7 +748,9 @@
             </div>
         </div>
 
-        <!-- 8. FOOTER / CONTACT (footer-light + legal-band) -->
+        <!-- ==========================================================================
+             8. FOOTER / CONTACT
+             ========================================================================== -->
         <footer class="app-footer" id="contact">
             <div class="footer-inner">
                 <div class="footer-contacts">
@@ -1452,130 +767,10 @@
 
     </main>
 
-    <!-- NAVIGATION & HYBRID AUTO-TRANSLATION SCRIPT (원본 기능 100% 보존) -->
-    <script>
-        (function () {
-            let currentLang = 'ko';
-            const moduleButtons = document.querySelectorAll('.module-btn');
-            const headerActivePill = document.getElementById('header-active-pill');
-            const previewModuleName = document.getElementById('preview-module-name');
-            const previewModuleDesc = document.getElementById('preview-module-desc');
-            const previewJumpBtn = document.getElementById('preview-jump-btn');
-            const langToggleBtn = document.getElementById('lang-toggle-btn');
-            const langKoBadge = document.getElementById('lang-ko');
-            const langEnBadge = document.getElementById('lang-en');
-
-            // Store original Korean HTML/text on initial load
-            const translatableElements = document.querySelectorAll('[data-en], .needs-content-placeholder, .release-body');
-            translatableElements.forEach((el) => {
-                el.dataset.originalKo = el.innerHTML.trim();
-            });
-
-            // Automatic live translation via Google GTX API for user-edited Korean content
-            async function translateKoreanToEnglish(text) {
-                try {
-                    const url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=ko&tl=en&dt=t&q=' + encodeURIComponent(text);
-                    const res = await fetch(url);
-                    const data = await res.json();
-                    return data[0].map(item => item[0]).join('');
-                } catch (e) {
-                    return text;
-                }
-            }
-
-            async function applyLanguage(lang) {
-                currentLang = lang;
-                document.documentElement.lang = lang;
-
-                langKoBadge.classList.toggle('active', lang === 'ko');
-                langEnBadge.classList.toggle('active', lang === 'en');
-
-                for (const el of translatableElements) {
-                    if (lang === 'ko') {
-                        el.innerHTML = el.dataset.originalKo;
-                    } else {
-                        const rawKoText = el.textContent.trim();
-                        const presetEn = el.getAttribute('data-en');
-
-                        // If user replaced "내용 필요" with custom Korean text, auto-translate it via API
-                        const isEditedPlaceholder =
-                            (el.classList.contains('needs-content-placeholder') || el.classList.contains('release-body')) &&
-                            rawKoText !== '내용 필요' &&
-                            presetEn === 'Content needed';
-
-                        if (isEditedPlaceholder) {
-                            if (!el.dataset.cachedAutoEn) {
-                                el.textContent = 'Translating...';
-                                el.dataset.cachedAutoEn = await translateKoreanToEnglish(rawKoText);
-                            }
-                            el.textContent = el.dataset.cachedAutoEn;
-                        } else if (presetEn) {
-                            // Preserve leading icons if present
-                            const iconEl = el.querySelector('i');
-                            if (iconEl) {
-                                el.innerHTML = iconEl.outerHTML + ' ' + presetEn;
-                            } else {
-                                el.innerHTML = presetEn;
-                            }
-                        }
-                    }
-                }
-
-                // Update Preview Panel description in active language
-                const activeBtn = document.querySelector('.module-btn.active');
-                if (activeBtn) {
-                    updatePreview(activeBtn);
-                }
-            }
-
-            function updatePreview(btn) {
-                previewModuleName.textContent = btn.querySelector('.module-btn-title').textContent;
-                const desc = currentLang === 'en'
-                    ? btn.getAttribute('data-desc-en')
-                    : btn.getAttribute('data-desc-ko');
-                previewModuleDesc.textContent = desc;
-                previewJumpBtn.setAttribute('href', btn.getAttribute('data-target'));
-            }
-
-            langToggleBtn.addEventListener('click', () => {
-                const nextLang = currentLang === 'ko' ? 'en' : 'ko';
-                applyLanguage(nextLang);
-            });
-
-            moduleButtons.forEach((btn) => {
-                btn.addEventListener('mouseenter', () => updatePreview(btn));
-
-                btn.addEventListener('click', () => {
-                    moduleButtons.forEach((b) => {
-                        b.classList.remove('active');
-                        const chip = b.querySelector('.chip');
-                        if (chip && chip.textContent === 'ON') {
-                            chip.className = 'chip chip-neutral';
-                            chip.textContent = 'INFO';
-                        }
-                    });
-
-                    btn.classList.add('active');
-                    const activeChip = btn.querySelector('.chip');
-                    if (activeChip && activeChip.textContent === 'INFO') {
-                        activeChip.className = 'chip chip-info';
-                        activeChip.textContent = 'ON';
-                    }
-
-                    headerActivePill.textContent = `SECTION: ${btn.getAttribute('data-module')}`;
-                    updatePreview(btn);
-
-                    const targetEl = document.querySelector(btn.getAttribute('data-target'));
-                    if (targetEl) {
-                        document.querySelectorAll('.project-card').forEach(c => c.classList.remove('highlighted'));
-                        if (targetEl.classList.contains('project-card')) {
-                            targetEl.classList.add('highlighted');
-                        }
-                        targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
-                });
-            });
-        })();
-    </script>
+    <!-- Modular Scripts (각 기능별로 분리되어 유지보수가 용이함) -->
+    <script src="js/log-streamer.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
