@@ -1,45 +1,53 @@
 /* ==========================================================================
-   Components & Interactive Elements
+   Components & Interactive Elements — Toss Design System (TDS)
+   Specification: toss.md (Viva Republica / TDS Mobile)
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   1. Badges & Pills
+   1. Badges, Pills & Chips (TDS Chip & Badge Specs)
    -------------------------------------------------------------------------- */
 .chip {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 4px 12px;
+    padding: 6px 14px;
+    height: 32px;
     border-radius: var(--rounded-pill);
     font-family: var(--font-sans);
-    font-size: 12px;
+    font-size: 13px; /* TDS label-s */
     font-weight: 600;
-    line-height: 1.5;
-    letter-spacing: 0;
+    line-height: 1;
+    letter-spacing: -0.01em;
     white-space: nowrap;
-    background: var(--color-surface-strong);
-    color: var(--color-ink);
+    background: var(--color-surface-strong); /* grey-100 */
+    color: var(--color-body); /* grey-700 */
+    border: 1px solid transparent;
+    transition: all 0.15s var(--ease-tds);
 }
 
 .chip-success {
-    background: var(--color-surface-strong);
-    color: var(--color-semantic-up);
+    background: #e6f9f0; /* washed green */
+    color: var(--color-semantic-up); /* green-500: #04b069 */
     font-family: var(--font-mono);
+    border-color: rgba(4, 176, 105, 0.2);
 }
 
 .chip-info {
-    background: var(--color-surface-strong);
-    color: var(--color-primary);
+    background: var(--color-primary-weak); /* blue-50: #e8f3ff */
+    color: var(--color-primary); /* blue-500: #3182f6 */
+    border-color: rgba(49, 130, 246, 0.2);
 }
 
 .chip-purple {
-    background: var(--color-surface-strong);
-    color: var(--color-ink);
+    background: #f1edff;
+    color: #6941c6;
+    border-color: rgba(105, 65, 198, 0.2);
 }
 
 .chip-warning {
-    background: var(--color-surface-strong);
-    color: var(--color-ink);
+    background: #fff8e6;
+    color: #b54708;
+    border-color: rgba(255, 195, 66, 0.3);
 }
 
 .chip-warning::before {
@@ -52,27 +60,30 @@
 }
 
 .chip-neutral {
-    background: var(--color-surface-strong);
+    background: var(--color-surface-strong); /* grey-100 */
     color: var(--color-body);
+    border-color: var(--color-hairline);
 }
 
 /* --------------------------------------------------------------------------
-   2. Top App Bar
+   2. Top App Bar (TDS Sticky Header)
    -------------------------------------------------------------------------- */
 .top-app-bar {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: var(--color-canvas);
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--color-hairline);
-    height: 64px;
+    height: 58px;
     display: flex;
     align-items: center;
 }
 
 .top-app-bar-inner {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1140px;
     margin: 0 auto;
     padding: 0 var(--space-lg);
     display: flex;
@@ -83,21 +94,25 @@
 
 .product-title {
     font-family: var(--font-display);
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--color-primary);
-    letter-spacing: -0.5px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-ink); /* grey-900 */
+    letter-spacing: -0.02em;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+}
+
+.product-title i {
+    color: var(--color-primary); /* TDS Blue */
 }
 
 .product-title-badge {
     font-size: 11px;
-    padding: 2px 8px;
+    padding: 3px 8px;
     border-radius: var(--rounded-pill);
-    background: rgba(0, 82, 255, 0.1);
-    color: var(--color-primary);
+    background: var(--color-primary-weak); /* #e8f3ff */
+    color: var(--color-primary); /* #3182f6 */
     font-family: var(--font-mono);
     font-weight: 600;
 }
@@ -109,8 +124,8 @@
 }
 
 .active-module-pill {
-    background: var(--color-surface-strong);
-    color: var(--color-ink);
+    background: var(--color-surface-strong); /* grey-100 */
+    color: var(--color-body-strong);
     padding: 6px 14px;
     border-radius: var(--rounded-pill);
     font-family: var(--font-mono);
@@ -119,12 +134,13 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    border: 1px solid var(--color-hairline);
 }
 
 .active-module-pill::before {
     content: "";
-    width: 7px;
-    height: 7px;
+    width: 6px;
+    height: 6px;
     border-radius: var(--rounded-full);
     background: var(--color-primary);
 }
@@ -134,30 +150,31 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: var(--color-surface-dark);
-    color: #38bdf8;
+    background: var(--color-surface-dark); /* grey-900 */
+    color: #e5e8eb;
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: var(--rounded-pill);
-    padding: 5px 12px;
+    padding: 5px 14px;
     height: 36px;
     font-family: var(--font-mono);
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
-    transition: background 0.15s ease, border-color 0.15s ease;
+    transition: all 0.15s var(--ease-tds);
 }
 
 .btn-log-console-toggle:hover {
-    background: #16181c;
-    border-color: #38bdf8;
+    background: #242c38;
+    color: var(--color-primary);
+    border-color: var(--color-primary);
 }
 
 .btn-log-console-toggle .live-dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background-color: #10b981;
-    box-shadow: 0 0 6px #10b981;
+    background-color: var(--color-semantic-up); /* green-500 */
+    box-shadow: 0 0 6px var(--color-semantic-up);
     animation: pulse-dot 1.8s infinite;
 }
 
@@ -166,31 +183,31 @@
     50% { opacity: 0.4; transform: scale(0.85); }
 }
 
-/* Language Toggle Button */
+/* Language Toggle Button (TDS Segmented Pill) */
 .lang-toggle-btn {
     display: inline-flex;
     align-items: center;
     gap: 2px;
-    background: var(--color-surface-strong);
-    border: none;
+    background: var(--color-surface-strong); /* grey-100 */
+    border: 1px solid var(--color-hairline);
     border-radius: var(--rounded-pill);
-    padding: 4px;
+    padding: 3px;
     height: 36px;
     cursor: pointer;
     font-family: var(--font-sans);
 }
 
 .lang-opt {
-    padding: 4px 12px;
+    padding: 4px 10px;
     border-radius: var(--rounded-pill);
     font-size: 12px;
     font-weight: 600;
     color: var(--color-body);
-    transition: background-color 0.15s ease, color 0.15s ease;
+    transition: background-color 0.15s var(--ease-tds), color 0.15s var(--ease-tds);
 }
 
 .lang-opt.active {
-    background: var(--color-primary);
+    background: var(--color-primary); /* TDS Blue */
     color: var(--color-on-primary);
 }
 
@@ -204,12 +221,12 @@
     padding: 0;
 }
 
-/* Master Hero Terminal Log Window */
+/* Master Hero Terminal Log Window (TDS Dark Container) */
 .hero-log-window {
-    background: var(--color-surface-dark-elevated);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: var(--rounded-xl);
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
+    background: var(--color-surface-dark); /* grey-900: #191f28 */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--rounded-2xl); /* 24px */
+    box-shadow: var(--shadow-elevated);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -217,7 +234,7 @@
 
 /* Window Header Bar */
 .hero-log-header {
-    background: #0e1015;
+    background: #11161f;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     padding: 12px 20px;
     display: flex;
@@ -248,8 +265,8 @@
 }
 
 .hero-header-tag {
-    background: rgba(0, 82, 255, 0.15);
-    color: #58a6ff;
+    background: rgba(49, 130, 246, 0.15);
+    color: var(--color-primary); /* TDS Blue */
     padding: 2px 8px;
     border-radius: var(--rounded-pill);
     font-size: 11px;
@@ -262,15 +279,15 @@
     gap: 8px;
     font-family: var(--font-mono);
     font-size: 11px;
-    color: #10b981;
+    color: var(--color-semantic-up);
 }
 
 .hero-header-right .live-dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background-color: #10b981;
-    box-shadow: 0 0 6px #10b981;
+    background-color: var(--color-semantic-up);
+    box-shadow: 0 0 6px var(--color-semantic-up);
     animation: pulse-dot 1.8s infinite;
 }
 
@@ -297,7 +314,7 @@
 }
 
 .hero-meta-key {
-    color: #79c0ff;
+    color: #6bb0ff;
     font-weight: 600;
 }
 
@@ -325,15 +342,15 @@
     gap: 8px;
     font-family: var(--font-mono);
     font-size: 13px;
-    color: #58a6ff;
-    margin-bottom: 6px;
+    color: var(--color-primary);
+    margin-bottom: 4px;
 }
 
 .hero-prompt-line .prompt-cursor {
     display: inline-block;
     width: 7px;
     height: 14px;
-    background: #58a6ff;
+    background: var(--color-primary);
     animation: blink-cursor 1s infinite;
 }
 
@@ -344,7 +361,7 @@
 }
 
 .band-dark .summary-main .chip {
-    background: #0e1015;
+    background: #11161f;
     color: var(--color-on-dark);
     border: 1px solid rgba(255, 255, 255, 0.12);
     font-family: var(--font-mono);
@@ -353,19 +370,19 @@
 
 .hero-text-block {
     position: relative;
-    border-left: 2px solid var(--color-primary);
+    border-left: 3px solid var(--color-primary);
     padding-left: 16px;
     margin-top: 4px;
 }
 
 .band-dark .summary-main .body-text {
     color: var(--color-on-dark-soft);
-    font-size: 17px;
+    font-size: 15px;
     line-height: 1.6;
 }
 
 .band-dark .summary-main .needs-content-box {
-    background: #0e1015;
+    background: #11161f;
     border: 1px dashed rgba(255, 255, 255, 0.16);
 }
 
@@ -385,7 +402,7 @@
     align-items: center;
     gap: var(--space-lg);
     padding-top: var(--space-base);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .band-dark .summary-owner-bar .meta-label {
@@ -396,7 +413,7 @@
 
 /* Floating Product-UI Mockup Card inside Dark Hero */
 .summary-profile-box {
-    background: #0e1015;
+    background: #11161f;
     color: var(--color-on-dark);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--rounded-xl);
@@ -416,7 +433,7 @@
 .profile-stat-list {
     background: var(--color-surface-dark);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: var(--rounded-lg);
+    border-radius: var(--rounded-md);
     padding: var(--space-base) var(--space-md);
     display: flex;
     flex-direction: column;
@@ -447,7 +464,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   4. Quick Navigation & Preview Panel
+   4. Quick Navigation & Preview Panel (TDS Style)
    -------------------------------------------------------------------------- */
 .quick-nav-grid {
     display: grid;
@@ -459,7 +476,7 @@
 .module-btn {
     background: var(--color-canvas);
     border: 1px solid var(--color-hairline);
-    border-radius: var(--rounded-xl);
+    border-radius: var(--rounded-lg); /* 16px */
     padding: var(--space-lg);
     text-align: left;
     cursor: pointer;
@@ -467,17 +484,21 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-xs);
-    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    transition: all 0.2s var(--ease-tds);
+    box-shadow: var(--shadow-1);
 }
 
 .module-btn:hover {
     box-shadow: var(--shadow-soft);
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
 }
 
 .module-btn.active {
-    background: var(--color-surface-dark);
+    background: var(--color-surface-dark); /* grey-900 */
     border-color: var(--color-surface-dark);
     color: var(--color-on-dark);
+    box-shadow: var(--shadow-soft);
 }
 
 .module-btn-top {
@@ -490,8 +511,8 @@
 
 .module-btn-title {
     font-family: var(--font-mono);
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 15px;
+    font-weight: 600;
     color: var(--color-ink);
 }
 
@@ -500,8 +521,9 @@
 }
 
 .module-btn-desc {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--color-body);
+    line-height: 1.45;
 }
 
 .module-btn.active .module-btn-desc {
@@ -511,12 +533,13 @@
 .module-btn.active .chip {
     background: var(--color-primary);
     color: var(--color-on-primary);
+    border-color: transparent;
 }
 
 .preview-panel {
-    background: var(--color-surface-soft);
+    background: var(--color-surface-soft); /* grey-50 */
     border: 1px solid var(--color-hairline);
-    border-radius: var(--rounded-xl);
+    border-radius: var(--rounded-lg); /* 16px */
     padding: var(--space-lg) var(--space-xl);
     display: flex;
     align-items: center;
@@ -534,8 +557,8 @@
 }
 
 .preview-title {
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 17px;
+    font-weight: 700;
     color: var(--color-ink);
     display: flex;
     align-items: center;
@@ -543,49 +566,56 @@
 }
 
 /* --------------------------------------------------------------------------
-   5. Buttons (Rounded Pill 100px)
+   5. Buttons (TDS Button Grammar: XL/L/M/S & Full Pill)
    -------------------------------------------------------------------------- */
 .btn-utility {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 12px 20px;
+    padding: 10px 18px;
     height: 44px;
-    border-radius: var(--rounded-pill);
+    border-radius: var(--rounded-pill); /* 999px Full Pill */
     font-family: var(--font-sans);
-    font-size: 16px;
+    font-size: 15px; /* TDS label-m */
     font-weight: 600;
-    line-height: 1.15;
-    border: none;
-    background: var(--color-surface-strong);
-    color: var(--color-ink);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    border: 1px solid transparent;
+    background: var(--color-surface-strong); /* grey-100 */
+    color: var(--color-ink); /* grey-900 */
     cursor: pointer;
-    transition: background-color 0.15s ease;
+    transition: all 0.15s var(--ease-tds);
+}
+
+.btn-utility:hover {
+    background: #e5e8eb;
+    color: var(--color-ink);
 }
 
 .btn-utility:active {
-    background: var(--color-hairline);
+    transform: scale(0.98);
 }
 
 .btn-primary-accent {
-    background: var(--color-primary);
+    background: var(--color-primary); /* TDS Blue: #3182f6 */
     color: var(--color-on-primary);
+    border-color: var(--color-primary);
 }
 
-.btn-primary-accent:hover,
-.btn-primary-accent:active {
-    background: var(--color-primary-active);
+.btn-primary-accent:hover {
+    background: var(--color-primary-active); /* blue-600: #1b64da */
+    border-color: var(--color-primary-active);
     color: var(--color-on-primary);
 }
 
 /* --------------------------------------------------------------------------
-   6. Placeholder ("내용 필요") Box
+   6. Placeholder ("내용 필요") Box (TDS Staged Block)
    -------------------------------------------------------------------------- */
 .needs-content-box {
-    background: var(--color-surface-soft);
-    border: 1px dashed var(--color-hairline);
-    border-radius: var(--rounded-lg);
+    background: var(--color-surface-soft); /* grey-50 */
+    border: 1px dashed var(--color-grey-300);
+    border-radius: var(--rounded-md); /* 12px */
     padding: var(--space-base) var(--space-md);
     margin-top: var(--space-xs);
     display: flex;
@@ -601,13 +631,13 @@
 }
 
 .needs-content-title {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     color: var(--color-ink);
 }
 
 .needs-content-placeholder {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--color-muted);
     white-space: pre-line;
 }
@@ -634,43 +664,46 @@
 }
 
 .pitch-banner {
-    background: var(--color-surface-dark);
+    background: var(--color-surface-dark); /* grey-900 */
     color: var(--color-on-dark);
-    border-radius: var(--rounded-xl);
+    border-radius: var(--rounded-xl); /* 20px */
     padding: var(--space-xl);
     margin-bottom: var(--space-xl);
 }
 
 .pitch-banner .body-text {
     color: var(--color-on-dark) !important;
-    font-family: var(--font-display);
-    font-size: 20px;
-    font-weight: 400 !important;
-    line-height: 1.45;
-    letter-spacing: -0.3px;
+    font-family: var(--font-sans);
+    font-size: 18px;
+    font-weight: 500 !important;
+    line-height: 1.55;
+    letter-spacing: -0.015em;
 }
 
 .topic-card,
 .project-card {
     background: var(--color-canvas);
     border: 1px solid var(--color-hairline);
-    border-radius: var(--rounded-xl);
+    border-radius: var(--rounded-xl); /* 20px */
     padding: var(--space-xl);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: var(--space-md);
-    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    transition: all 0.2s var(--ease-tds);
+    box-shadow: var(--shadow-1);
 }
 
 .topic-card:hover,
 .project-card:hover {
     box-shadow: var(--shadow-soft);
+    border-color: #cbd5e1;
+    transform: translateY(-2px);
 }
 
 .project-card.highlighted {
     border: 2px solid var(--color-primary);
-    box-shadow: var(--shadow-soft);
+    box-shadow: 0 4px 20px rgba(49, 130, 246, 0.15);
 }
 
 .card-title-row {
@@ -682,16 +715,17 @@
 
 .card-title {
     font-family: var(--font-sans);
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 1.33;
+    font-size: 18px; /* TDS title-1 */
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
     color: var(--color-ink);
 }
 
 /* Skills Grid */
 .skills-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     gap: var(--space-sm);
     margin-bottom: var(--space-lg);
 }
@@ -699,33 +733,34 @@
 .skill-item {
     background: var(--color-canvas);
     border: 1px solid var(--color-hairline);
-    border-radius: var(--rounded-lg);
+    border-radius: var(--rounded-md); /* 12px */
     padding: var(--space-sm) var(--space-base);
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     font-size: 14px;
     font-weight: 600;
     color: var(--color-ink);
+    box-shadow: var(--shadow-1);
 }
 
 .skill-item i {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     border-radius: var(--rounded-full);
-    background: var(--color-surface-strong);
-    color: var(--color-ink);
+    background: var(--color-primary-weak); /* #e8f3ff */
+    color: var(--color-primary); /* #3182f6 */
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
+    font-size: 13px;
     flex-shrink: 0;
 }
 
 .project-detail-block {
     background: var(--color-surface-soft);
     border: 1px solid var(--color-hairline-soft);
-    border-radius: var(--rounded-lg);
+    border-radius: var(--rounded-md);
     padding: var(--space-base);
     display: flex;
     flex-direction: column;
@@ -734,7 +769,7 @@
 
 .project-detail-label {
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--color-ink);
     display: flex;
     align-items: center;
@@ -776,7 +811,7 @@
     width: 10px;
     height: 10px;
     border-radius: var(--rounded-full);
-    background: var(--color-primary);
+    background: var(--color-primary); /* TDS Blue */
     flex-shrink: 0;
 }
 
@@ -810,13 +845,13 @@
 }
 
 .release-date {
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 17px;
+    font-weight: 700;
     color: var(--color-ink);
 }
 
 .release-body {
-    font-size: 15px;
+    font-size: 14px;
     color: var(--color-body);
     white-space: pre-line;
 }
@@ -827,11 +862,11 @@
 .app-footer {
     background: var(--color-canvas);
     border-top: 1px solid var(--color-hairline);
-    padding: 64px 0;
+    padding: 56px 0;
 }
 
 .footer-inner {
-    max-width: 1200px;
+    max-width: 1140px;
     margin: 0 auto;
     padding: 0 var(--space-lg);
     display: flex;
@@ -875,7 +910,7 @@
 
 @media (max-width: 640px) {
     :root {
-        --space-section: 64px;
+        --space-section: 56px;
     }
     .quick-nav-grid {
         grid-template-columns: 1fr;
@@ -895,16 +930,17 @@
 
 /* ==========================================================================
    11. "장자훈's Log" — Timeline Log Registry & Expandable Payload System
+   (TDS Palette Refinement: 유지하되 토스 감성으로 정교화)
    ========================================================================== */
 
 /* Log Dashboard Metrics Banner */
 .log-dashboard-banner {
-    background: #0d1117;
-    border: 1px solid #30363d;
-    border-radius: var(--rounded-xl);
+    background: var(--color-surface-dark); /* grey-900 */
+    border: 1px solid #28303f;
+    border-radius: var(--rounded-xl); /* 20px */
     padding: var(--space-lg) var(--space-xl);
     margin-bottom: var(--space-xl);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    box-shadow: var(--shadow-elevated);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -920,9 +956,9 @@
 
 .log-dashboard-title {
     font-family: var(--font-mono);
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 700;
-    color: #58a6ff;
+    color: var(--color-primary); /* TDS Blue: #3182f6 */
     display: flex;
     align-items: center;
     gap: 10px;
@@ -932,15 +968,16 @@
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: #238636;
-    box-shadow: 0 0 8px #2ea043;
+    background-color: var(--color-semantic-up); /* green-500 */
+    box-shadow: 0 0 8px var(--color-semantic-up);
     animation: pulse-dot 1.8s infinite;
 }
 
 .log-dashboard-desc {
     font-size: 13px;
-    color: #8b949e;
+    color: var(--color-on-dark-soft);
     font-family: var(--font-sans);
+    line-height: 1.5;
 }
 
 .log-metrics-grid {
@@ -951,8 +988,8 @@
 }
 
 .log-stat-card {
-    background: #161b22;
-    border: 1px solid #21262d;
+    background: #11161f;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: var(--rounded-md);
     padding: 8px 16px;
     display: flex;
@@ -969,7 +1006,7 @@
 
 .log-stat-lbl {
     font-size: 11px;
-    color: #8b949e;
+    color: var(--color-on-dark-soft);
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -1003,7 +1040,7 @@
     font-weight: 600;
     color: var(--color-body);
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: all 0.15s var(--ease-tds);
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -1015,7 +1052,7 @@
 }
 
 .log-filter-btn.active {
-    background: var(--color-surface-dark);
+    background: var(--color-surface-dark); /* grey-900 */
     border-color: var(--color-surface-dark);
     color: var(--color-on-dark);
 }
@@ -1040,10 +1077,10 @@
 }
 
 .btn-log-ctrl {
-    background: var(--color-surface-strong);
+    background: var(--color-surface-strong); /* grey-100 */
     border: 1px solid var(--color-hairline);
     border-radius: var(--rounded-pill);
-    padding: 6px 12px;
+    padding: 6px 14px;
     font-size: 12px;
     font-weight: 600;
     color: var(--color-ink);
@@ -1051,11 +1088,11 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    transition: background 0.15s ease;
+    transition: all 0.15s var(--ease-tds);
 }
 
 .btn-log-ctrl:hover {
-    background: var(--color-hairline);
+    background: #e5e8eb;
 }
 
 /* Timeline Log Registry Feed */
@@ -1066,27 +1103,28 @@
     position: relative;
 }
 
-/* Individual Log Card */
+/* Individual Log Card (TDS Clean White Card) */
 .log-stream-card {
     background: var(--color-canvas);
     border: 1px solid var(--color-hairline);
-    border-radius: var(--rounded-xl);
+    border-radius: var(--rounded-xl); /* 20px */
     padding: var(--space-lg) var(--space-xl);
-    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+    transition: all 0.2s var(--ease-tds);
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
     position: relative;
+    box-shadow: var(--shadow-1);
 }
 
 .log-stream-card:hover {
     box-shadow: var(--shadow-soft);
-    border-color: #a8b8cc;
+    border-color: #cbd5e1;
 }
 
 .log-stream-card.highlighted {
     border: 2px solid var(--color-primary);
-    box-shadow: 0 4px 20px rgba(0, 82, 255, 0.12);
+    box-shadow: 0 4px 20px rgba(49, 130, 246, 0.15);
 }
 
 /* Card Header Line */
@@ -1109,9 +1147,9 @@
 }
 
 .log-ts-badge {
-    background: #0d1117;
-    color: #58a6ff;
-    padding: 2px 10px;
+    background: var(--color-primary-weak); /* #e8f3ff */
+    color: var(--color-primary); /* #3182f6 */
+    padding: 3px 10px;
     border-radius: var(--rounded-xs);
     font-size: 12px;
     font-weight: 600;
@@ -1121,9 +1159,9 @@
 }
 
 .log-tag-badge {
-    background: var(--color-surface-strong);
+    background: var(--color-surface-strong); /* grey-100 */
     color: var(--color-ink);
-    padding: 2px 8px;
+    padding: 3px 8px;
     border-radius: var(--rounded-xs);
     font-size: 11px;
     font-weight: 600;
@@ -1143,8 +1181,9 @@
 
 .log-project-title {
     font-family: var(--font-sans);
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 19px; /* TDS title-1 */
+    font-weight: 700;
+    letter-spacing: -0.015em;
     color: var(--color-ink);
     display: flex;
     align-items: center;
@@ -1153,7 +1192,7 @@
 }
 
 .log-summary-text {
-    font-size: 15px;
+    font-size: 14.5px;
     line-height: 1.6;
     color: var(--color-body);
 }
@@ -1164,25 +1203,25 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 10px 16px;
-    background: var(--color-surface-soft);
+    padding: 11px 16px;
+    background: var(--color-surface-soft); /* grey-50 */
     border: 1px solid var(--color-hairline);
-    border-radius: var(--rounded-md);
+    border-radius: var(--rounded-md); /* 12px */
     cursor: pointer;
     font-family: var(--font-mono);
     font-size: 13px;
     font-weight: 600;
-    color: var(--color-primary);
-    transition: background 0.15s ease, border-color 0.15s ease;
+    color: var(--color-primary); /* TDS Blue */
+    transition: all 0.15s var(--ease-tds);
 }
 
 .log-expand-btn:hover {
-    background: #eef3ff;
-    border-color: #b8d0ff;
+    background: var(--color-primary-weak); /* #e8f3ff */
+    border-color: rgba(49, 130, 246, 0.3);
 }
 
 .log-expand-btn .toggle-icon {
-    transition: transform 0.3s ease;
+    transition: transform 0.3s var(--ease-tds);
 }
 
 .log-stream-card.is-expanded .log-expand-btn .toggle-icon {
@@ -1190,9 +1229,9 @@
 }
 
 .log-stream-card.is-expanded .log-expand-btn {
-    background: #0d1117;
-    color: #58a6ff;
-    border-color: #30363d;
+    background: #11161f;
+    color: #6bb0ff;
+    border-color: #28303f;
 }
 
 /* Expandable Drawer (The Project Details) */
@@ -1202,7 +1241,7 @@
     gap: var(--space-lg);
     padding-top: var(--space-base);
     border-top: 1px solid var(--color-hairline);
-    animation: drawer-fade-down 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: drawer-fade-down 0.3s var(--ease-snappy);
 }
 
 .log-stream-card.is-expanded .log-payload-drawer {
@@ -1220,23 +1259,23 @@
     }
 }
 
-/* JSON / Telemetry Structured Metadata View */
+/* JSON / Telemetry Structured Metadata View (TDS Dark Log Block) */
 .log-json-block {
-    background: #0d1117;
-    border: 1px solid #30363d;
-    border-radius: var(--rounded-lg);
+    background: #11161f;
+    border: 1px solid #28303f;
+    border-radius: var(--rounded-md); /* 12px */
     padding: 14px 18px;
     font-family: var(--font-mono);
     font-size: 12.5px;
     line-height: 1.6;
-    color: #c9d1d9;
+    color: #e5e8eb;
     overflow-x: auto;
 }
 
-.log-json-block .jk { color: #79c0ff; } /* JSON Key */
+.log-json-block .jk { color: #6bb0ff; } /* JSON Key: Toss light blue */
 .log-json-block .js { color: #a5d6ff; } /* JSON String */
-.log-json-block .jn { color: #f2cc60; } /* JSON Number */
-.log-json-block .jb { color: #ff7b72; } /* JSON Bool */
+.log-json-block .jn { color: var(--color-accent-yellow); } /* JSON Number */
+.log-json-block .jb { color: var(--color-semantic-down); } /* JSON Bool */
 
 /* Problem & Resolution Detail Box */
 .log-incident-grid {
@@ -1252,9 +1291,9 @@
 }
 
 .log-incident-box {
-    background: var(--color-surface-soft);
-    border: 1px solid var(--color-hairline-soft);
-    border-radius: var(--rounded-lg);
+    background: var(--color-surface-soft); /* grey-50 */
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-md); /* 12px */
     padding: var(--space-base);
     display: flex;
     flex-direction: column;
