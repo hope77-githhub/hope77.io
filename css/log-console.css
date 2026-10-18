@@ -137,6 +137,37 @@
     color: #ffffff;
 }
 
+.btn-term-enter {
+    background: #05b169;
+    color: #ffffff;
+    border-color: #05b169;
+    display: none;
+    font-weight: 700;
+    box-shadow: 0 0 12px rgba(5, 177, 105, 0.4);
+    animation: pulse-enter 1.8s infinite;
+}
+
+.btn-term-enter.show {
+    display: inline-flex;
+}
+
+.btn-term-enter:hover {
+    background: #049356;
+    border-color: #049356;
+    color: #ffffff;
+}
+
+@keyframes pulse-enter {
+    0%, 100% {
+        box-shadow: 0 0 8px rgba(5, 177, 105, 0.4);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 16px rgba(5, 177, 105, 0.8);
+        transform: scale(1.02);
+    }
+}
+
 /* Terminal Sub-header / Metrics Bar */
 .terminal-metrics-bar {
     background: #11151c;

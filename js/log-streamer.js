@@ -9,77 +9,77 @@
 (function (window) {
     'use strict';
 
-    // Specialized realistic log sequences reflecting the candidate's real projects
+    // Realistic log sequences reflecting Jahoon Jang's real data engineering & tool-building projects
     const LOG_SEQUENCE = [
         {
             level: 'INFO',
             tag: 'sys:kernel',
-            msg: 'Bootstrapping <span class="highlight">HOPE77 Data & Automation Pipeline</span> v2.4.0 (Node: <span class="accent">seoul-dc-01</span>)...',
-            duration: 80,
-            progress: 10,
-            events: 1200
+            msg: 'Starting <span class="highlight">장자훈\'s Log (HOPE77 Data &amp; Tooling Pipeline)</span> v2.5.0...',
+            duration: 280,
+            progress: 12,
+            events: 1850
         },
         {
             level: 'DEBUG',
             tag: 'alloc:buffer',
-            msg: 'Allocated telemetry ring-buffer memory pool [<span class="accent">capacity: 65,536 slots</span>, lock-free queue initialized].',
-            duration: 100,
-            progress: 22,
-            events: 3400
+            msg: 'Initializing ring-buffer telemetry pool [<span class="accent">capacity: 65,536 slots</span>, lock-free queue ready].',
+            duration: 300,
+            progress: 25,
+            events: 3920
         },
         {
             level: 'INGEST',
             tag: 'stream:riot-api',
-            msg: 'Ingesting LOL match dataset & player metrics (<span class="highlight">arXiv:2512.20116</span>)... <span class="success-text">2,400 match nodes indexed</span>.',
-            duration: 120,
-            progress: 38,
-            events: 5800
+            msg: 'Ingesting LOL match dataset &amp; telemetry (<span class="highlight">arXiv:2512.20116</span>)... <span class="success-text">2,400 match nodes indexed</span>.',
+            duration: 350,
+            progress: 42,
+            events: 6410
         },
         {
             level: 'INGEST',
             tag: 'telemetry:f1-udp',
-            msg: 'Binding UDP socket [<span class="accent">PORT 20777</span>] for Race Engineer live telemetry parser (tire wear, fuel, sector deltas)... <span class="success-text">READY</span>.',
-            duration: 110,
-            progress: 52,
-            events: 7900
+            msg: 'Binding UDP socket [<span class="accent">PORT 20777</span>] for Race Engineer real-time parser (tire wear, fuel, telemetry deltas)... <span class="success-text">STREAM READY</span>.',
+            duration: 320,
+            progress: 58,
+            events: 8940
         },
         {
             level: 'FILTER',
             tag: 'engine:cel',
-            msg: 'Compiling Common Expression Language (CEL) AST filter tree for <span class="highlight">Unknown QA Pipeline</span>... <span class="success-text">128 rules validated</span>.',
-            duration: 130,
-            progress: 68,
-            events: 9800
+            msg: 'Compiling Common Expression Language (CEL) AST filter tree for <span class="highlight">Unknown QA Pipeline</span>... <span class="success-text">128 filter conditions validated</span>.',
+            duration: 360,
+            progress: 72,
+            events: 10830
         },
         {
             level: 'PIPELINE',
             tag: 'etl:sanitizer',
-            msg: 'Executing client-side SheetJS memory sandbox (NEIS letter counter, zero server leak)... <span class="success-text">PRIVACY SAFE</span>.',
-            duration: 100,
-            progress: 82,
-            events: 11400
+            msg: 'Verifying client-side SheetJS memory sandbox (NEIS letter counter, zero server data leakage)... <span class="success-text">PRIVACY SAFE</span>.',
+            duration: 300,
+            progress: 84,
+            events: 12450
         },
         {
             level: 'PIPELINE',
             tag: 'sync:arch',
-            msg: 'Aggregating 4 core architecture pillars: <span class="highlight">[Log Viz, Video Sync Pipeline, Analytics Tools, CEL Filters]</span>.',
-            duration: 110,
-            progress: 92,
-            events: 13200
+            msg: 'Ingesting 4 Core Architecture Pillars: <span class="highlight">[Log Viz, Video Sync Pipeline, Test Tools, CEL Filters]</span>.',
+            duration: 320,
+            progress: 94,
+            events: 13900
         },
         {
             level: 'METRIC',
             tag: 'perf:benchmark',
-            msg: 'Pipeline sync benchmark: <span class="accent">54,200 events/sec</span> | Latency p99: <span class="accent">3.4ms</span> | Dropped packets: <span class="success-text">0</span>.',
-            duration: 90,
+            msg: 'Benchmark synced: <span class="accent">54,200 logs/sec</span> | Latency p99: <span class="accent">3.4ms</span> | Dropped packets: <span class="success-text">0</span>.',
+            duration: 280,
             progress: 98,
             events: 14200
         },
         {
             level: 'SUCCESS',
             tag: 'render:dom',
-            msg: '<span class="success-text">Hydration complete!</span> Portfolio payload verified. Unveiling workspace for recruiter session.',
-            duration: 160,
+            msg: '<span class="success-text">✔ All logs ingested successfully!</span> System initialized. Ready to explore <span class="highlight">장자훈\'s Project Logs</span>.',
+            duration: 400,
             progress: 100,
             events: 14200
         }
@@ -94,20 +94,24 @@
             this.eventCounter = document.getElementById('term-event-counter');
             this.statusTag = document.getElementById('term-status-tag');
             this.skipBtn = document.getElementById('btn-term-skip');
+            this.enterBtn = document.getElementById('btn-term-enter');
             this.closeBtn = document.getElementById('btn-term-close');
             this.replayBtn = document.getElementById('btn-term-replay');
 
             this.currentIndex = 0;
             this.timer = null;
             this.isCompleted = false;
-            this.autoCloseTimer = null;
 
             this.initEvents();
         }
 
         initEvents() {
             if (this.skipBtn) {
-                this.skipBtn.addEventListener('click', () => this.skip());
+                this.skipBtn.addEventListener('click', () => this.skipAndEnter());
+            }
+
+            if (this.enterBtn) {
+                this.enterBtn.addEventListener('click', () => this.hideOverlay());
             }
 
             if (this.closeBtn) {
@@ -118,13 +122,24 @@
                 this.replayBtn.addEventListener('click', () => this.start(true));
             }
 
-            // Keyboard shortcut: ESC to skip/close
-            window.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && this.overlay && !this.overlay.classList.contains('hidden')) {
-                    if (!this.isCompleted) {
-                        this.skip();
-                    } else {
+            // Click outside the terminal window to enter main page
+            if (this.overlay) {
+                this.overlay.addEventListener('click', (e) => {
+                    if (e.target === this.overlay) {
                         this.hideOverlay();
+                    }
+                });
+            }
+
+            // Keyboard shortcut: ESC or Enter to enter/skip
+            window.addEventListener('keydown', (e) => {
+                if (this.overlay && !this.overlay.classList.contains('hidden')) {
+                    if (e.key === 'Escape' || e.key === 'Enter') {
+                        if (!this.isCompleted) {
+                            this.skipAndEnter();
+                        } else {
+                            this.hideOverlay();
+                        }
                     }
                 }
             });
@@ -141,16 +156,12 @@
         }
 
         start(force = false) {
-            // Check if already viewed in this session
-            const hasSeen = sessionStorage.getItem('hope77_log_pipeline_seen');
-            if (hasSeen && !force) {
-                // Instantly hide overlay if user already experienced it in current browser session
-                this.hideOverlay(true);
-                return;
-            }
-
             if (this.overlay) {
                 this.overlay.classList.remove('hidden');
+            }
+
+            if (this.enterBtn) {
+                this.enterBtn.classList.remove('show');
             }
 
             this.currentIndex = 0;
@@ -169,7 +180,7 @@
 
             const item = LOG_SEQUENCE[this.currentIndex];
             this.renderRow(item);
-            this.updateMetrics(item.progress, item.events, item.progress === 100 ? 'COMPLETED' : 'STREAMING');
+            this.updateMetrics(item.progress, item.events, item.progress === 100 ? 'READY' : 'STREAMING');
 
             this.currentIndex++;
             this.timer = setTimeout(() => {
@@ -222,7 +233,7 @@
             }
             if (this.statusTag) {
                 this.statusTag.textContent = status;
-                if (status === 'COMPLETED') {
+                if (status === 'READY') {
                     this.statusTag.style.color = '#34d399';
                 } else {
                     this.statusTag.style.color = '#58a6ff';
@@ -230,7 +241,7 @@
             }
         }
 
-        skip() {
+        skipAndEnter() {
             clearTimeout(this.timer);
             // Render remaining rows quickly
             while (this.currentIndex < LOG_SEQUENCE.length) {
@@ -239,49 +250,47 @@
                 this.currentIndex++;
             }
             const lastItem = LOG_SEQUENCE[LOG_SEQUENCE.length - 1];
-            this.updateMetrics(100, lastItem.events, 'COMPLETED');
-            this.onComplete(true);
+            this.updateMetrics(100, lastItem.events, 'READY');
+            this.onComplete(false); // Do not auto-close, let user see or click
+            setTimeout(() => {
+                this.hideOverlay();
+            }, 300);
         }
 
-        onComplete(immediate = false) {
+        onComplete(autoClose = false) {
             this.isCompleted = true;
-            sessionStorage.setItem('hope77_log_pipeline_seen', 'true');
 
-            // Add final cursor line
+            // Show interactive Enter CTA button
+            if (this.enterBtn) {
+                this.enterBtn.classList.add('show');
+            }
+
+            // Add final ready prompt line
             if (this.body && !this.body.querySelector('.term-cursor-row')) {
                 const cursorRow = document.createElement('div');
                 cursorRow.className = 'term-cursor-row';
-                cursorRow.innerHTML = '<span class="log-tag" style="color: #4ade80;">hope77@portfolio:~$</span> <span class="term-cursor"></span>';
+                cursorRow.innerHTML = '<span class="log-tag" style="color: #4ade80;">hope77@jang-log:~$</span> <span style="color: #cbd5e1;">ready --open-portfolio</span> <span class="term-cursor"></span>';
                 this.body.appendChild(cursorRow);
                 this.body.scrollTop = this.body.scrollHeight;
             }
 
-            // Close automatically after brief showcase
-            const delay = immediate ? 300 : 750;
-            this.autoCloseTimer = setTimeout(() => {
-                this.hideOverlay();
-            }, delay);
+            // NOTE: Do NOT automatically close! Let user view the logs and click or press Enter.
+            if (autoClose) {
+                setTimeout(() => {
+                    this.hideOverlay();
+                }, 1000);
+            }
         }
 
-        hideOverlay(instant = false) {
-            clearTimeout(this.autoCloseTimer);
+        hideOverlay() {
             if (!this.overlay) return;
-
-            if (instant) {
-                this.overlay.style.transition = 'none';
-                this.overlay.classList.add('hidden');
-                setTimeout(() => {
-                    this.overlay.style.transition = '';
-                }, 50);
-            } else {
-                this.overlay.classList.add('hidden');
-            }
+            this.overlay.classList.add('hidden');
         }
 
         showModal() {
             if (!this.overlay) return;
             this.overlay.classList.remove('hidden');
-            if (!this.isCompleted || this.body.children.length === 0) {
+            if (!this.isCompleted || (this.body && this.body.children.length === 0)) {
                 this.start(true);
             }
         }

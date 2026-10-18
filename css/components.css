@@ -753,3 +753,391 @@
         padding: var(--space-lg);
     }
 }
+
+/* ==========================================================================
+   11. "장자훈's Log" — Timeline Log Registry & Expandable Payload System
+   ========================================================================== */
+
+/* Log Dashboard Metrics Banner */
+.log-dashboard-banner {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: var(--rounded-xl);
+    padding: var(--space-lg) var(--space-xl);
+    margin-bottom: var(--space-xl);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-lg);
+}
+
+.log-dashboard-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.log-dashboard-title {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 700;
+    color: #58a6ff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.log-pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #238636;
+    box-shadow: 0 0 8px #2ea043;
+    animation: pulse-dot 1.8s infinite;
+}
+
+.log-dashboard-desc {
+    font-size: 13px;
+    color: #8b949e;
+    font-family: var(--font-sans);
+}
+
+.log-metrics-grid {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+}
+
+.log-stat-card {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: var(--rounded-md);
+    padding: 8px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.log-stat-val {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    font-weight: 700;
+    color: #f0f6fc;
+}
+
+.log-stat-lbl {
+    font-size: 11px;
+    color: #8b949e;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Log Stream Filter Toolbar */
+.log-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+    padding-bottom: var(--space-base);
+    border-bottom: 1px solid var(--color-hairline);
+}
+
+.log-filter-group {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.log-filter-btn {
+    background: var(--color-canvas);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-pill);
+    padding: 6px 14px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-body);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.log-filter-btn:hover {
+    border-color: var(--color-primary);
+    color: var(--color-ink);
+}
+
+.log-filter-btn.active {
+    background: var(--color-surface-dark);
+    border-color: var(--color-surface-dark);
+    color: var(--color-on-dark);
+}
+
+.log-filter-btn .badge-count {
+    background: var(--color-surface-strong);
+    color: var(--color-ink);
+    padding: 1px 6px;
+    border-radius: var(--rounded-pill);
+    font-size: 10px;
+}
+
+.log-filter-btn.active .badge-count {
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+}
+
+.log-actions-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-log-ctrl {
+    background: var(--color-surface-strong);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-pill);
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-ink);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.15s ease;
+}
+
+.btn-log-ctrl:hover {
+    background: var(--color-hairline);
+}
+
+/* Timeline Log Registry Feed */
+.log-stream-feed {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    position: relative;
+}
+
+/* Individual Log Card */
+.log-stream-card {
+    background: var(--color-canvas);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-xl);
+    padding: var(--space-lg) var(--space-xl);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    position: relative;
+}
+
+.log-stream-card:hover {
+    box-shadow: var(--shadow-soft);
+    border-color: #a8b8cc;
+}
+
+.log-stream-card.highlighted {
+    border: 2px solid var(--color-primary);
+    box-shadow: 0 4px 20px rgba(0, 82, 255, 0.12);
+}
+
+/* Card Header Line */
+.log-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed var(--color-hairline);
+}
+
+.log-header-left {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-family: var(--font-mono);
+}
+
+.log-ts-badge {
+    background: #0d1117;
+    color: #58a6ff;
+    padding: 2px 10px;
+    border-radius: var(--rounded-xs);
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.log-tag-badge {
+    background: var(--color-surface-strong);
+    color: var(--color-ink);
+    padding: 2px 8px;
+    border-radius: var(--rounded-xs);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.log-service-name {
+    color: var(--color-muted);
+    font-size: 12px;
+}
+
+/* Card Summary Block */
+.log-card-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.log-project-title {
+    font-family: var(--font-sans);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--color-ink);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.log-summary-text {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-body);
+}
+
+/* Interactive Payload Expand Button */
+.log-expand-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 16px;
+    background: var(--color-surface-soft);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-md);
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-primary);
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.log-expand-btn:hover {
+    background: #eef3ff;
+    border-color: #b8d0ff;
+}
+
+.log-expand-btn .toggle-icon {
+    transition: transform 0.3s ease;
+}
+
+.log-stream-card.is-expanded .log-expand-btn .toggle-icon {
+    transform: rotate(180deg);
+}
+
+.log-stream-card.is-expanded .log-expand-btn {
+    background: #0d1117;
+    color: #58a6ff;
+    border-color: #30363d;
+}
+
+/* Expandable Drawer (The Project Details) */
+.log-payload-drawer {
+    display: none;
+    flex-direction: column;
+    gap: var(--space-lg);
+    padding-top: var(--space-base);
+    border-top: 1px solid var(--color-hairline);
+    animation: drawer-fade-down 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.log-stream-card.is-expanded .log-payload-drawer {
+    display: flex;
+}
+
+@keyframes drawer-fade-down {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* JSON / Telemetry Structured Metadata View */
+.log-json-block {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: var(--rounded-lg);
+    padding: 14px 18px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: #c9d1d9;
+    overflow-x: auto;
+}
+
+.log-json-block .jk { color: #79c0ff; } /* JSON Key */
+.log-json-block .js { color: #a5d6ff; } /* JSON String */
+.log-json-block .jn { color: #f2cc60; } /* JSON Number */
+.log-json-block .jb { color: #ff7b72; } /* JSON Bool */
+
+/* Problem & Resolution Detail Box */
+.log-incident-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+}
+
+@media (max-width: 768px) {
+    .log-incident-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.log-incident-box {
+    background: var(--color-surface-soft);
+    border: 1px solid var(--color-hairline-soft);
+    border-radius: var(--rounded-lg);
+    padding: var(--space-base);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.log-incident-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-ink);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Project Action Links Row */
+.log-actions-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-base);
+    padding-top: var(--space-sm);
+    border-top: 1px dashed var(--color-hairline);
+}

@@ -82,10 +82,17 @@
 
             const targetEl = document.querySelector(targetSelector);
             if (targetEl) {
-                document.querySelectorAll('.project-card').forEach(c => c.classList.remove('highlighted'));
-                if (targetEl.classList.contains('project-card')) {
+                document.querySelectorAll('.project-card, .log-stream-card').forEach(c => c.classList.remove('highlighted'));
+                
+                // If targeting a log card, expand it automatically so details are visible
+                if (targetEl.classList.contains('log-stream-card')) {
+                    targetEl.style.display = 'flex';
+                    targetEl.classList.add('is-expanded');
+                    targetEl.classList.add('highlighted');
+                } else if (targetEl.classList.contains('project-card')) {
                     targetEl.classList.add('highlighted');
                 }
+                
                 targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }

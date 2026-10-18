@@ -2,13 +2,13 @@
  * ==========================================================================
  * HOPE77 Portfolio — Application Main Entry Point
  * ==========================================================================
- * Orchestrates LogStreamer, NavigationModule, and I18nModule.
+ * Orchestrates LogStreamer, NavigationModule, ProjectLogsModule, and I18nModule.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
     'use strict';
 
-    // 1. Initialize Log Streamer Engine & Telemetry Console
+    // 1. Initialize Log Streamer Engine & Telemetry Console (Intro Page)
     const streamer = new window.LogStreamer();
 
     // Start initial ingestion stream
@@ -22,10 +22,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 2. Initialize Navigation & Preview Module
+    // 2. Initialize "장자훈's Log" Project Timeline Registry & Payload Inspector
+    const projectLogs = new window.ProjectLogsModule();
+    window.projectLogs = projectLogs;
+
+    // 3. Initialize Navigation & Preview Module
     const navigation = new window.NavigationModule();
 
-    // 3. Initialize i18n & Translation Module
+    // 4. Initialize i18n & Translation Module
     const i18n = new window.I18nModule((newLang) => {
         // Refresh active preview panel text on language switch
         navigation.refreshActivePreview();
