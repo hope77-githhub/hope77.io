@@ -575,3 +575,506 @@
         opacity: 1;
     }
 }
+
+/* ==========================================================================
+   Netflix "Drive to Survive" — F1 World Record Pit Stop Experience
+   ========================================================================== */
+
+/* Main Pit Stop Arena Theater */
+.pitstop-arena {
+    flex: 1;
+    background: radial-gradient(circle at 50% 15%, #001e3c 0%, #000c18 80%, #000810 100%);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px 28px;
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+    font-family: var(--font-display);
+}
+
+/* Subtle Animated Carbon Weave Grid Background */
+.pitstop-arena::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(27, 106, 238, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(27, 106, 238, 0.05) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+}
+
+/* Top Telemetry Strip */
+.pitstop-hud-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    z-index: 2;
+}
+
+.pitstop-race-status {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.race-pos-tag {
+    background: #ffd600; /* F1 P1 Gold */
+    color: #000000;
+    font-weight: 800;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    letter-spacing: 0.05em;
+}
+
+.race-lap-info {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: #b0c4de;
+    letter-spacing: 0.05em;
+}
+
+/* Pit Gantry Start Lights (5 Red -> 5 Green) */
+.gantry-box {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 6px 14px;
+    border-radius: 9999px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.gantry-bulb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #252830;
+    transition: all 0.2s var(--ease-snappy);
+}
+
+.gantry-bulb.red {
+    background: #db0a40;
+    box-shadow: 0 0 12px #db0a40, 0 0 20px rgba(219, 10, 64, 0.6);
+}
+
+.gantry-bulb.green {
+    background: #00c853;
+    box-shadow: 0 0 14px #00c853, 0 0 24px rgba(0, 200, 83, 0.8);
+    animation: gantry-green-pulse 0.5s infinite alternate;
+}
+
+@keyframes gantry-green-pulse {
+    from { transform: scale(1); filter: brightness(1); }
+    to { transform: scale(1.15); filter: brightness(1.3); }
+}
+
+/* Main 3-Column Arena Grid */
+.pitstop-grid {
+    display: grid;
+    grid-template-columns: 240px 1fr 240px;
+    gap: 20px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    margin: 16px 0;
+}
+
+/* 1. Left Card: Team Radio & Driver Comms */
+.radio-hud-card {
+    background: rgba(0, 22, 43, 0.7);
+    border: 1px solid rgba(27, 106, 238, 0.3);
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 8px 20px rgba(0, 15, 30, 0.4);
+    backdrop-filter: blur(8px);
+}
+
+.radio-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.radio-channel-name {
+    font-size: 11px;
+    font-weight: 800;
+    color: #82b1ff;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.radio-equalizer {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 14px;
+}
+
+.radio-bar {
+    width: 3px;
+    background: #db0a40;
+    border-radius: 2px;
+    animation: radio-wave 0.8s infinite ease-in-out;
+}
+
+.radio-bar:nth-child(1) { height: 40%; animation-delay: 0.1s; }
+.radio-bar:nth-child(2) { height: 90%; animation-delay: 0.3s; }
+.radio-bar:nth-child(3) { height: 60%; animation-delay: 0.2s; }
+.radio-bar:nth-child(4) { height: 100%; animation-delay: 0.4s; }
+
+@keyframes radio-wave {
+    0%, 100% { transform: scaleY(0.4); }
+    50% { transform: scaleY(1); }
+}
+
+.radio-quote-box {
+    background: rgba(0, 10, 20, 0.6);
+    border-radius: 8px;
+    padding: 10px 12px;
+    border-left: 3px solid #1b6aee;
+}
+
+.radio-speaker {
+    font-size: 10px;
+    font-weight: 800;
+    color: #ffd600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+}
+
+.radio-message {
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: #ffffff;
+    font-family: var(--font-sans);
+    font-style: italic;
+}
+
+/* 2. Center Stage: F1 Car Chassis & 4-Wheel Crew HUD */
+.car-chassis-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 10px 0;
+}
+
+.chassis-wrapper {
+    position: relative;
+    width: 260px;
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Sleek F1 Silhouette Graphic */
+.f1-car-graphic {
+    width: 200px;
+    height: 180px;
+    filter: drop-shadow(0 0 18px rgba(27, 106, 238, 0.3));
+    transition: transform 0.25s var(--ease-snappy);
+}
+
+.car-chassis-stage.is-jacking .f1-car-graphic {
+    transform: translateY(-4px) scale(1.02);
+}
+
+.car-chassis-stage.is-released .f1-car-graphic {
+    transform: translateY(0) scale(1);
+    animation: car-rev 0.3s infinite alternate;
+}
+
+@keyframes car-rev {
+    from { transform: translateY(0); }
+    to { transform: translateY(-1.5px); }
+}
+
+/* 4 Individual Wheel Nodes */
+.wheel-node {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    font-family: var(--font-mono);
+}
+
+.wheel-node.fl { top: 12px; left: 8px; }
+.wheel-node.fr { top: 12px; right: 8px; }
+.wheel-node.rl { bottom: 12px; left: 8px; }
+.wheel-node.rr { bottom: 12px; right: 8px; }
+
+.wheel-tyre-pill {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 8px;
+    border-radius: 9999px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all 0.25s var(--ease-snappy);
+}
+
+.wheel-tyre-pill.medium {
+    background: rgba(255, 214, 0, 0.15);
+    color: #ffd600;
+    border-color: rgba(255, 214, 0, 0.4);
+}
+
+.wheel-tyre-pill.swapping {
+    background: rgba(27, 106, 238, 0.25);
+    color: #82b1ff;
+    border-color: #1b6aee;
+    animation: wheel-spin 0.4s infinite linear;
+}
+
+@keyframes wheel-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.wheel-tyre-pill.soft-locked {
+    background: rgba(219, 10, 64, 0.3);
+    color: #ffffff;
+    border-color: #db0a40;
+    box-shadow: 0 0 10px rgba(219, 10, 64, 0.6);
+}
+
+.wheel-status-tag {
+    font-size: 9px;
+    font-weight: 800;
+    color: #8e9192;
+    letter-spacing: 0.05em;
+}
+
+.wheel-status-tag.locked {
+    color: #00c853;
+}
+
+/* Jack Status Indicators */
+.jack-status-hud {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #b0c4de;
+    margin-top: 8px;
+    font-family: var(--font-mono);
+}
+
+.jack-badge {
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.jack-badge.active {
+    background: #00c853;
+    color: #000000;
+    font-weight: 800;
+}
+
+/* 3. Right Card: World Record Stopwatch & Speed Telemetry */
+.stopwatch-hud-card {
+    background: rgba(0, 22, 43, 0.7);
+    border: 1px solid rgba(27, 106, 238, 0.3);
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 15, 30, 0.4);
+    backdrop-filter: blur(8px);
+}
+
+.stopwatch-label {
+    font-size: 11px;
+    font-weight: 800;
+    color: #82b1ff;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.stopwatch-time-digits {
+    font-family: var(--font-mono);
+    font-size: 38px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    text-shadow: 0 0 16px rgba(255, 255, 255, 0.3);
+}
+
+.stopwatch-time-digits.record-done {
+    color: #00c853;
+    text-shadow: 0 0 20px rgba(0, 200, 83, 0.7);
+}
+
+.stopwatch-record-badge {
+    font-size: 10px;
+    font-weight: 800;
+    background: rgba(0, 200, 83, 0.2);
+    color: #00c853;
+    border: 1px solid rgba(0, 200, 83, 0.4);
+    padding: 3px 10px;
+    border-radius: 9999px;
+    letter-spacing: 0.05em;
+}
+
+.pit-speed-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 6px 10px;
+    background: rgba(0, 10, 20, 0.5);
+    border-radius: 6px;
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: #b0c4de;
+}
+
+.speed-number {
+    color: #ffd600;
+    font-weight: 800;
+}
+
+/* Bottom Action & ENTER Section */
+.pitstop-bottom-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    z-index: 2;
+}
+
+/* Ready State Enter CTA */
+.pitstop-enter-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    animation: enter-pop 0.3s var(--ease-snappy);
+}
+
+@keyframes enter-pop {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.btn-pitstop-enter {
+    background: #db0a40 !important;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 9999px;
+    padding: 13px 40px;
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(219, 10, 64, 0.5), 0 0 30px rgba(219, 10, 64, 0.3);
+    transition: all 150ms var(--ease-snappy);
+    animation: pitstop-cta-pulse 1.6s infinite;
+}
+
+.btn-pitstop-enter:hover {
+    background: #c2073a !important;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 6px 26px rgba(219, 10, 64, 0.7);
+}
+
+@keyframes pitstop-cta-pulse {
+    0%, 100% {
+        box-shadow: 0 4px 20px rgba(219, 10, 64, 0.5);
+    }
+    50% {
+        box-shadow: 0 4px 32px rgba(219, 10, 64, 0.85), 0 0 40px rgba(219, 10, 64, 0.4);
+    }
+}
+
+.enter-key-hint {
+    font-size: 12px;
+    color: #b0c4de;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.enter-key-hint kbd {
+    background: #ffffff;
+    color: #000000;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 800;
+}
+
+/* In-Progress Skip Button */
+.btn-pitstop-skip {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #b0c4de;
+    border-radius: 9999px;
+    padding: 7px 20px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 150ms var(--ease-snappy);
+}
+
+.btn-pitstop-skip:hover {
+    background: rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .pitstop-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+    .radio-hud-card, .stopwatch-hud-card {
+        width: 100%;
+    }
+    .chassis-wrapper {
+        width: 220px;
+        height: 180px;
+    }
+}
+

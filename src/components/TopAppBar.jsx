@@ -13,16 +13,16 @@ export default function TopAppBar({ onOpenTerminal, activeSection = "장자훈's
           <span className="product-title-badge">Log Stream &amp; Observability</span>
         </div>
         <div className="header-right">
-          {/* Log Ingestion Console Reopen Button */}
+          {/* Pit Wall & Telemetry Overlay Reopen Button */}
           <button
             type="button"
             className="btn-log-console-toggle"
             id="btn-header-log-console"
-            title="View Ingestion Terminal"
+            title="View Pit Wall & Live Telemetry"
             onClick={onOpenTerminal}
           >
             <span className="live-dot"></span>
-            <span>Pipeline Logs</span>
+            <span>Pit Wall Live</span>
           </button>
 
           <span className="active-module-pill" id="header-active-pill">

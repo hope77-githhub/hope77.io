@@ -1,132 +1,105 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { LOG_SEQUENCE } from '../data/logSequenceData';
+import { getVisitorSequence } from '../utils/visitorCounter';
 
 export default function LogStreamOverlay({ isOpen, onClose }) {
-  // Mode: 'stream' | 'login'
-  const [mode, setMode] = useState('stream');
+  // Mode: 'pitstop' | 'login'
+  const [mode, setMode] = useState('pitstop');
 
-  // Stream state
-  const [logs, setLogs] = useState([]);
-  const [progress, setProgress] = useState(0);
-  const [events, setEvents] = useState(0);
-  const [status, setStatus] = useState('STREAMING');
-  const [isDone, setIsDone] = useState(false);
-  const terminalBodyRef = useRef(null);
+  // Pit Stop Simulation States
+  // phases: 'approaching' -> 'jacking' -> 'swapping' -> 'released' -> 'ready'
+  const [phase, setPhase] = useState('approaching');
+  const [stopwatchTime, setStopwatchTime] = useState('0.00');
+  const [speedVal, setSpeedVal] = useState('80 km/h (LIMITER)');
+  const [jacksActive, setJacksActive] = useState(false);
+  const [gantryState, setGantryState] = useState('red'); // 'red' | 'green'
+
   const timeoutsRef = useRef([]);
+  const timerIntervalRef = useRef(null);
 
-  // Login simulation state
-  const [visitorNumber, setVisitorNumber] = useState(1);
+  // Persistent Visitor Counter (Increments strictly on page load/reload)
+  const [visitorNumber] = useState(getVisitorSequence);
+
+  // Login Simulation States
   const [typedId, setTypedId] = useState('');
   const [typedPw, setTypedPw] = useState('');
   const [focusedField, setFocusedField] = useState('id'); // 'id' | 'pw' | 'none'
   const [loginBtnState, setLoginBtnState] = useState('idle'); // 'idle' | 'pressed' | 'verifying' | 'success'
 
-  const clearAllTimeouts = () => {
+  const clearAllTimers = () => {
     timeoutsRef.current.forEach((id) => clearTimeout(id));
     timeoutsRef.current = [];
+    if (timerIntervalRef.current) {
+      clearInterval(timerIntervalRef.current);
+      timerIntervalRef.current = null;
+    }
   };
 
-  // 방문자 카운트: 페이지 접속 및 새로고침할 때마다 1씩 자동 누적 증가
-  useEffect(() => {
-    try {
-      const storageKey = 'hope77_persistent_visitor_seq';
-      const stored = localStorage.getItem(storageKey);
+  // Run the Netflix "Drive to Survive" Pit Stop Sequence
+  const startPitStopSequence = () => {
+    clearAllTimers();
+    setMode('pitstop');
+    setPhase('approaching');
+    setStopwatchTime('0.00');
+    setSpeedVal('80 km/h (LIMITER)');
+    setJacksActive(false);
+    setGantryState('red');
 
-      if (!stored) {
-        // 첫 진입: 1번째로 저장
-        localStorage.setItem(storageKey, '1');
-        setVisitorNumber(1);
-      } else {
-        // 기존에 방문한 기록이 있으면 새로고침/재방문 시 1씩 증가
-        let currentCount = parseInt(stored, 10);
-        if (isNaN(currentCount) || currentCount < 1) {
-          currentCount = 1;
+    // 1. Phase 1: Car stops in the pit box, jacks lift car (t = 800ms)
+    const t1 = setTimeout(() => {
+      setPhase('jacking');
+      setJacksActive(true);
+      setSpeedVal('0 km/h (BOXED)');
+
+      // Start rapid stopwatch ticking
+      let startTime = Date.now();
+      timerIntervalRef.current = setInterval(() => {
+        const elapsed = (Date.now() - startTime) / 1000;
+        if (elapsed >= 1.82) {
+          setStopwatchTime('1.82');
+          if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
         } else {
-          currentCount += 1;
+          setStopwatchTime(elapsed.toFixed(2));
         }
-        localStorage.setItem(storageKey, currentCount.toString());
-        setVisitorNumber(currentCount);
-      }
-    } catch {
-      setVisitorNumber(1);
-    }
-  }, []);
+      }, 35);
+    }, 800);
+    timeoutsRef.current.push(t1);
 
-  const startStreaming = (isReplay = false) => {
-    clearAllTimeouts();
-    setMode('stream');
-    setLogs([]);
-    setProgress(0);
-    setEvents(0);
-    setStatus('STREAMING');
-    setIsDone(false);
+    // 2. Phase 2: Wheel guns engage and swap tires to Red Softs (t = 1300ms)
+    const t2 = setTimeout(() => {
+      setPhase('swapping');
+    }, 1300);
+    timeoutsRef.current.push(t2);
 
-    let accumulatedDelay = isReplay ? 100 : 250;
+    // 3. Phase 3: Wheels secured, Jacks down, Gantry lights GREEN! (t = 2100ms)
+    const t3 = setTimeout(() => {
+      setPhase('released');
+      setJacksActive(false);
+      setGantryState('green');
+      setStopwatchTime('1.82');
+      setSpeedVal('LAUNCH (295 km/h)');
+      if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
+    }, 2100);
+    timeoutsRef.current.push(t3);
 
-    LOG_SEQUENCE.forEach((item, index) => {
-      accumulatedDelay += item.duration;
-      const timeoutId = setTimeout(() => {
-        const timestamp = new Date().toISOString().substring(11, 23);
-        setLogs((prev) => [
-          ...prev,
-          {
-            id: index,
-            level: item.level,
-            tag: item.tag,
-            msg: item.msg,
-            timestamp
-          }
-        ]);
-        setProgress(item.progress);
-        setEvents(item.events);
-
-        if (index === LOG_SEQUENCE.length - 1) {
-          setStatus('INGESTED');
-          setIsDone(true);
-        }
-      }, accumulatedDelay);
-
-      timeoutsRef.current.push(timeoutId);
-    });
+    // 4. Phase 4: Pit stop complete, show Big Enter Call To Action (t = 2800ms)
+    const t4 = setTimeout(() => {
+      setPhase('ready');
+    }, 2800);
+    timeoutsRef.current.push(t4);
   };
 
   useEffect(() => {
     if (isOpen) {
-      startStreaming(false);
+      startPitStopSequence();
     } else {
-      clearAllTimeouts();
+      clearAllTimers();
     }
-    return () => clearAllTimeouts();
+    return () => clearAllTimers();
   }, [isOpen]);
 
-  // Auto-scroll terminal log body
-  useEffect(() => {
-    if (mode === 'stream' && terminalBodyRef.current) {
-      terminalBodyRef.current.scrollTop = terminalBodyRef.current.scrollHeight;
-    }
-  }, [logs, mode]);
-
-  // Handle Enter & ESC keys
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (!isOpen) return;
-      if (e.key === 'Enter') {
-        if (mode === 'stream') {
-          handleStartLoginFlow();
-        } else if (mode === 'login') {
-          onClose();
-        }
-      } else if (e.key === 'Escape') {
-        onClose();
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, mode, isDone]);
-
-  // Start the interactive login simulation flow
-  const handleStartLoginFlow = () => {
-    clearAllTimeouts();
+  // Transition to the Interactive Login Simulation Flow
+  const handleProceedToLogin = () => {
+    clearAllTimers();
     setMode('login');
     setTypedId('');
     setTypedPw('');
@@ -141,10 +114,10 @@ export default function LogStreamOverlay({ isOpen, onClose }) {
       if (currentIdIndex < fullId.length) {
         currentIdIndex++;
         setTypedId(fullId.substring(0, currentIdIndex));
-        const idTimer = setTimeout(typeIdInterval, 35);
+        const idTimer = setTimeout(typeIdInterval, 30);
         timeoutsRef.current.push(idTimer);
       } else {
-        // Move to Password field
+        // Switch focus to password
         const pwSwitchTimer = setTimeout(() => {
           setFocusedField('pw');
           let currentPwIndex = 0;
@@ -152,56 +125,64 @@ export default function LogStreamOverlay({ isOpen, onClose }) {
             if (currentPwIndex < fullPw.length) {
               currentPwIndex++;
               setTypedPw(fullPw.substring(0, currentPwIndex));
-              const pwTimer = setTimeout(typePwInterval, 40);
+              const pwTimer = setTimeout(typePwInterval, 35);
               timeoutsRef.current.push(pwTimer);
             } else {
-              // Both typed! Trigger auto-click login
+              // Auto click login
               triggerAutoLogin();
             }
           };
           typePwInterval();
-        }, 220);
+        }, 200);
         timeoutsRef.current.push(pwSwitchTimer);
       }
     };
 
-    // Begin typing ID after a short pause
-    const initTimer = setTimeout(typeIdInterval, 180);
+    const initTimer = setTimeout(typeIdInterval, 150);
     timeoutsRef.current.push(initTimer);
   };
 
   const triggerAutoLogin = () => {
     setFocusedField('none');
 
-    // 1. Press effect on button
     const pressTimer = setTimeout(() => {
       setLoginBtnState('pressed');
 
-      // 2. Verifying loader state
       const verifyTimer = setTimeout(() => {
         setLoginBtnState('verifying');
 
-        // 3. Success state
         const successTimer = setTimeout(() => {
           setLoginBtnState('success');
 
-          // 4. Enter main view
           const enterTimer = setTimeout(() => {
             onClose();
           }, 450);
           timeoutsRef.current.push(enterTimer);
-        }, 600);
+        }, 550);
         timeoutsRef.current.push(successTimer);
-      }, 160);
+      }, 150);
       timeoutsRef.current.push(verifyTimer);
-    }, 250);
+    }, 200);
     timeoutsRef.current.push(pressTimer);
   };
 
-  const handleReplay = (e) => {
-    e.stopPropagation();
-    startStreaming(true);
-  };
+  // Keyboard Navigation: Enter & Escape
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!isOpen) return;
+      if (e.key === 'Enter') {
+        if (mode === 'pitstop') {
+          handleProceedToLogin();
+        } else if (mode === 'login') {
+          onClose();
+        }
+      } else if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, mode, phase]);
 
   if (!isOpen) return null;
 
@@ -213,9 +194,10 @@ export default function LogStreamOverlay({ isOpen, onClose }) {
     >
       <div
         className="terminal-window"
+        style={{ height: '600px', maxWidth: '960px' }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Terminal Header (Clean Mac Light Style) */}
+        {/* Terminal Header Bar */}
         <div className="terminal-header">
           <div className="terminal-controls">
             <span
@@ -231,133 +213,267 @@ export default function LogStreamOverlay({ isOpen, onClose }) {
             ></span>
             <span
               className="term-dot term-dot-green"
-              onClick={handleReplay}
+              onClick={() => startPitStopSequence()}
               style={{ cursor: 'pointer' }}
-              title="Replay Stream"
+              title="Replay Pit Stop"
             ></span>
           </div>
+
           <div className="terminal-title">
-            <i className="fas fa-terminal"></i>
+            <i className="fas fa-flag-checkered"></i>
             <span>
               {mode === 'login'
-                ? 'hope77@jang-log-system: ~/auth/session'
-                : 'hope77@jang-log-system: ~/stream/boot'}
+                ? 'RED BULL RACING // DRIVER SESSION AUTH'
+                : 'NETFLIX DRIVE TO SURVIVE // RED BULL PIT STOP (1.82s)'}
             </span>
             <span className="terminal-title-tag">
-              {mode === 'login' ? 'TDS AUTH' : 'LIVE INGESTION'}
+              {mode === 'login' ? `VISITOR #${visitorNumber}` : 'PIT WALL LIVE'}
             </span>
           </div>
+
           <div className="terminal-actions">
-            {mode === 'stream' && (
+            {mode === 'pitstop' && (
               <button
                 type="button"
-                className="btn-term-action btn-term-enter"
-                id="btn-term-enter"
-                onClick={handleStartLoginFlow}
+                className="btn-term-action"
+                onClick={handleProceedToLogin}
+                title="Skip to Login"
               >
-                <i className="fas fa-rocket"></i>{' '}
-                <span>🚀 메인 화면 진입하기</span>
+                <span>⏩ Skip to Enter</span>
               </button>
             )}
             <button
               type="button"
               className="btn-term-action"
-              id="btn-term-replay"
-              title="Replay Stream"
-              onClick={handleReplay}
+              onClick={() => startPitStopSequence()}
+              title="Replay"
             >
               <i className="fas fa-rotate-right"></i>
             </button>
             <button
               type="button"
               className="btn-term-action"
-              id="btn-term-close"
-              title="Close Terminal"
               onClick={onClose}
+              title="Close"
             >
               <i className="fas fa-xmark"></i>
             </button>
           </div>
         </div>
 
-        {/* MODE 1: Log Stream Engine (Light Terminal) */}
-        {mode === 'stream' && (
-          <>
-            {/* Telemetry Metrics Bar */}
-            <div className="terminal-metrics-bar">
-              <div className="metric-group">
-                <div className="metric-item">
-                  <span>PIPELINE:</span>
-                  <span className="metric-val" id="term-status-tag">{status}</span>
-                </div>
-                <div className="metric-item">
-                  <span>EVENTS PROCESSED:</span>
-                  <span className="metric-val" id="term-event-counter">
-                    {events.toLocaleString()}
-                  </span>
-                </div>
-                <div className="metric-item">
-                  <span>THROUGHPUT:</span>
-                  <span className="metric-val">54.2k / sec</span>
-                </div>
-                <div className="metric-item">
-                  <span>LATENCY (p99):</span>
-                  <span className="metric-val">3.4ms</span>
-                </div>
+        {/* MODE 1: Netflix Drive to Survive F1 Pit Stop Experience */}
+        {mode === 'pitstop' && (
+          <div className="pitstop-arena">
+            {/* Top Race & Telemetry Strip */}
+            <div className="pitstop-hud-top">
+              <div className="pitstop-race-status">
+                <span className="race-pos-tag">🏆 P1 LEADER</span>
+                <span className="race-lap-info">LAP 48/57 // GAP TO P2: +1.428s</span>
               </div>
-              <div className="progress-container">
-                <span style={{ fontSize: '11px' }}>SYNC:</span>
-                <div className="progress-track">
-                  <div
-                    className="progress-fill"
-                    id="term-progress-fill"
-                    style={{ width: `${progress}%` }}
-                  ></div>
-                </div>
-                <span className="progress-pct" id="term-progress-pct">
-                  {progress}%
-                </span>
+
+              {/* 5-Bulb Gantry Pit Lights */}
+              <div className="gantry-box" title="Pit Gantry Lights">
+                <span className={`gantry-bulb ${gantryState === 'red' ? 'red' : ''}`}></span>
+                <span className={`gantry-bulb ${gantryState === 'red' ? 'red' : ''}`}></span>
+                <span className={`gantry-bulb ${gantryState === 'red' ? 'red' : ''}`}></span>
+                <span className={`gantry-bulb ${gantryState === 'green' ? 'green' : ''}`}></span>
+                <span className={`gantry-bulb ${gantryState === 'green' ? 'green' : ''}`}></span>
+              </div>
+
+              <div style={{ fontSize: '12px', color: '#82b1ff', fontFamily: 'var(--font-mono)' }}>
+                <span>ORACLE RED BULL RACING RB20</span>
               </div>
             </div>
 
-            {/* Terminal Log Body */}
-            <div className="terminal-body" id="terminal-log-body" ref={terminalBodyRef}>
-              {logs.map((log) => (
-                <div key={log.id} className="terminal-line">
-                  <span className="log-ts">[{log.timestamp}]</span>
-                  <span className={`log-badge log-${log.level.toLowerCase()}`}>
-                    {log.level}
-                  </span>
-                  <span className="log-source">[{log.tag}]</span>
-                  <span
-                    className="log-msg"
-                    dangerouslySetInnerHTML={{ __html: log.msg }}
-                  ></span>
+            {/* Main 3-Column Arena */}
+            <div className="pitstop-grid">
+              {/* 1. Left: Team Radio Card */}
+              <div className="radio-hud-card">
+                <div className="radio-header">
+                  <div className="radio-channel-name">
+                    <i className="fas fa-radio"></i>
+                    <span>TEAM RADIO (CH-01)</span>
+                  </div>
+                  <div className="radio-equalizer">
+                    <span className="radio-bar"></span>
+                    <span className="radio-bar"></span>
+                    <span className="radio-bar"></span>
+                    <span className="radio-bar"></span>
+                  </div>
                 </div>
-              ))}
-              {!isDone && (
-                <div className="terminal-line" style={{ color: 'var(--color-primary)' }}>
-                  <span className="prompt-cursor"></span>
+
+                <div className="radio-quote-box">
+                  <div className="radio-speaker">
+                    {phase === 'released' || phase === 'ready'
+                      ? '🎙️ CHRISTIAN HORNER (PRINCIPAL)'
+                      : '🎙️ GP (CHIEF RACE ENGINEER)'}
+                  </div>
+                  <div className="radio-message">
+                    {phase === 'approaching' && '"Box now, Max! Soft compound ready. We need a sub-2s stop to keep P1!"'}
+                    {phase === 'jacking' && '"Car in the box! Jacks up, wheel guns engaged!"'}
+                    {phase === 'swapping' && '"Wheels swapped, torque lock confirmed! Ready to drop!"'}
+                    {(phase === 'released' || phase === 'ready') && '"1.82 SECONDS! World record pit stop! Pit limiter off, hammer time, Max!"'}
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: '#8e9192', fontFamily: 'var(--font-mono)' }}>
+                  <span>TARGET: SUB 2.0s</span>
+                  <span style={{ color: '#00c853', fontWeight: 800 }}>AUDIO ACTIVE</span>
+                </div>
+              </div>
+
+              {/* 2. Center: F1 Chassis & 4-Wheel Crew HUD */}
+              <div className={`car-chassis-stage ${jacksActive ? 'is-jacking' : ''} ${phase === 'released' || phase === 'ready' ? 'is-released' : ''}`}>
+                <div className="chassis-wrapper">
+                  {/* F1 Car Silhouette Top-Down SVG */}
+                  <svg className="f1-car-graphic" viewBox="0 0 160 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    {/* Rear Wing */}
+                    <rect x="35" y="190" width="90" height="14" rx="3" fill="#001224" stroke="#db0a40" strokeWidth="2" />
+                    {/* Rear Diffuser */}
+                    <path d="M50 185 L110 185 L115 204 L45 204 Z" fill="#0a192f" />
+                    {/* Main Chassis Body */}
+                    <path d="M60 55 L100 55 L108 120 L115 180 L45 180 L52 120 Z" fill="#001830" stroke="#1b6aee" strokeWidth="1.5" />
+                    {/* Sidepods */}
+                    <path d="M42 95 Q38 140 45 170 L55 170 Q50 135 52 95 Z" fill="#001020" stroke="#db0a40" strokeWidth="1" />
+                    <path d="M118 95 Q122 140 115 170 L105 170 Q110 135 108 95 Z" fill="#001020" stroke="#db0a40" strokeWidth="1" />
+                    {/* Red Bull Engine Cover Racing Stripe */}
+                    <path d="M78 40 L82 40 L84 165 L76 165 Z" fill="#db0a40" />
+                    {/* Yellow Bull Nose Horn */}
+                    <circle cx="80" cy="35" r="4" fill="#ffd600" />
+                    {/* Cockpit Halo */}
+                    <ellipse cx="80" cy="85" rx="14" ry="18" fill="none" stroke="#ffd600" strokeWidth="3" />
+                    {/* Driver Helmet #1 */}
+                    <circle cx="80" cy="90" r="7" fill="#001e3c" stroke="#db0a40" strokeWidth="1.5" />
+                    <text x="80" y="93" fontSize="8" fontWeight="800" fill="#ffffff" textAnchor="middle" fontFamily="sans-serif">1</text>
+                    {/* Front Nose Cone */}
+                    <path d="M72 55 L88 55 L84 20 L76 20 Z" fill="#001224" stroke="#1b6aee" strokeWidth="1" />
+                    {/* Front Wing */}
+                    <rect x="25" y="16" width="110" height="10" rx="3" fill="#001224" stroke="#db0a40" strokeWidth="2" />
+                  </svg>
+
+                  {/* Front-Left Wheel */}
+                  <div className="wheel-node fl">
+                    <span className={`wheel-tyre-pill ${phase === 'approaching' ? 'medium' : phase === 'jacking' || phase === 'swapping' ? 'swapping' : 'soft-locked'}`}>
+                      {phase === 'approaching' ? '🟡 MED' : phase === 'jacking' ? '⚡ GUN' : '🔴 SOFT'}
+                    </span>
+                    <span className={`wheel-status-tag ${phase === 'released' || phase === 'ready' ? 'locked' : ''}`}>
+                      {phase === 'released' || phase === 'ready' ? '✓ LOCKED' : 'FL WHEEL'}
+                    </span>
+                  </div>
+
+                  {/* Front-Right Wheel */}
+                  <div className="wheel-node fr">
+                    <span className={`wheel-tyre-pill ${phase === 'approaching' ? 'medium' : phase === 'jacking' || phase === 'swapping' ? 'swapping' : 'soft-locked'}`}>
+                      {phase === 'approaching' ? '🟡 MED' : phase === 'jacking' ? '⚡ GUN' : '🔴 SOFT'}
+                    </span>
+                    <span className={`wheel-status-tag ${phase === 'released' || phase === 'ready' ? 'locked' : ''}`}>
+                      {phase === 'released' || phase === 'ready' ? '✓ LOCKED' : 'FR WHEEL'}
+                    </span>
+                  </div>
+
+                  {/* Rear-Left Wheel */}
+                  <div className="wheel-node rl">
+                    <span className={`wheel-tyre-pill ${phase === 'approaching' ? 'medium' : phase === 'jacking' || phase === 'swapping' ? 'swapping' : 'soft-locked'}`}>
+                      {phase === 'approaching' ? '🟡 MED' : phase === 'jacking' ? '⚡ GUN' : '🔴 SOFT'}
+                    </span>
+                    <span className={`wheel-status-tag ${phase === 'released' || phase === 'ready' ? 'locked' : ''}`}>
+                      {phase === 'released' || phase === 'ready' ? '✓ LOCKED' : 'RL WHEEL'}
+                    </span>
+                  </div>
+
+                  {/* Rear-Right Wheel */}
+                  <div className="wheel-node rr">
+                    <span className={`wheel-tyre-pill ${phase === 'approaching' ? 'medium' : phase === 'jacking' || phase === 'swapping' ? 'swapping' : 'soft-locked'}`}>
+                      {phase === 'approaching' ? '🟡 MED' : phase === 'jacking' ? '⚡ GUN' : '🔴 SOFT'}
+                    </span>
+                    <span className={`wheel-status-tag ${phase === 'released' || phase === 'ready' ? 'locked' : ''}`}>
+                      {phase === 'released' || phase === 'ready' ? '✓ LOCKED' : 'RR WHEEL'}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Jack Telemetry Status */}
+                <div className="jack-status-hud">
+                  <span>JACKS:</span>
+                  <span className={`jack-badge ${jacksActive ? 'active' : ''}`}>
+                    {jacksActive ? '⬆️ LIFTED' : phase === 'released' || phase === 'ready' ? '⬇️ RELEASED' : 'STANDBY'}
+                  </span>
+                  <span>WHEEL NUTS:</span>
+                  <span style={{ color: phase === 'released' || phase === 'ready' ? '#00c853' : '#ffd600', fontWeight: 800 }}>
+                    {phase === 'released' || phase === 'ready' ? 'TORQUE 100%' : 'FASTENING...'}
+                  </span>
+                </div>
+              </div>
+
+              {/* 3. Right: Pit Stopwatch & Telemetry Card */}
+              <div className="stopwatch-hud-card">
+                <div className="stopwatch-label">
+                  <i className="fas fa-stopwatch" style={{ color: '#db0a40', marginRight: '6px' }}></i>
+                  <span>PIT STOP TIME</span>
+                </div>
+
+                <div className={`stopwatch-time-digits ${phase === 'released' || phase === 'ready' ? 'record-done' : ''}`}>
+                  {stopwatchTime}s
+                </div>
+
+                {(phase === 'released' || phase === 'ready') ? (
+                  <span className="stopwatch-record-badge">
+                    ⚡ 1.82s WORLD RECORD PACE
+                  </span>
+                ) : (
+                  <span style={{ fontSize: '11px', color: '#b0c4de', fontFamily: 'var(--font-mono)' }}>
+                    TARGET: &lt; 2.00s
+                  </span>
+                )}
+
+                <div className="pit-speed-strip">
+                  <span>PIT SPEED:</span>
+                  <span className="speed-number">{speedVal}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Action Area: Enter CTA or Skip */}
+            <div className="pitstop-bottom-bar">
+              {phase === 'ready' ? (
+                <div className="pitstop-enter-wrap">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#ffd600', fontSize: '13px', fontWeight: 800 }}>
+                    <i className="fas fa-trophy"></i>
+                    <span>피트스탑 완료! 1.82초 신기록 달성</span>
+                  </div>
+                  <button
+                    type="button"
+                    className="btn-pitstop-enter"
+                    id="btn-pitstop-enter-cta"
+                    onClick={handleProceedToLogin}
+                  >
+                    <i className="fas fa-rocket"></i>
+                    <span>ENTER THE COCKPIT // 입장하기 (Enter)</span>
+                  </button>
+                  <div className="enter-key-hint">
+                    <kbd>Enter</kbd> 키를 누르거나 버튼을 누르면 사용자 인증 후 메인 화면으로 진입합니다.
+                  </div>
+                </div>
+              ) : (
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', color: '#b0c4de' }}>
+                    <span className="toss-loader-dot" style={{ background: '#db0a40' }}></span>
+                    <span>피트스탑 진행 중... 타이어 교체 및 텔레메트리 동기화</span>
+                  </div>
+                  <button
+                    type="button"
+                    className="btn-pitstop-skip"
+                    onClick={handleProceedToLogin}
+                  >
+                    <span>⏩ 바로 입장하기 (Skip)</span>
+                  </button>
                 </div>
               )}
             </div>
-
-            {/* Terminal Footer */}
-            <div className="terminal-footer">
-              <div className="terminal-footer-hint">
-                <i className="fas fa-keyboard"></i>
-                <span>
-                  <kbd>Enter</kbd> 키를 누르면 인증 로그인 화면을 거쳐 장자훈's Log로 입장합니다.
-                </span>
-              </div>
-              <div style={{ color: 'var(--color-outline-variant)' }}>
-                <i className="fas fa-scroll"></i> <span>창 내부 스크롤을 통해 전체 로그 히스토리를 확인하실 수 있습니다.</span>
-              </div>
-            </div>
-          </>
+          </div>
         )}
 
-        {/* MODE 2: Interactive TDS Login Simulation (Toss White Card) */}
+        {/* MODE 2: Interactive TDS / Red Bull Login Simulation */}
         {mode === 'login' && (
           <div className="toss-login-panel">
             <div className="toss-login-card">
