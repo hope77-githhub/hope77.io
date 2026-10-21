@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { getVisitorSequence } from '../utils/visitorCounter';
+import rb20CarImage from '../assets/rb20_cropped.png';
 
 export default function LogStreamOverlay({ isOpen, onClose }) {
   // Mode: 'pitstop' | 'login'
@@ -322,148 +323,65 @@ export default function LogStreamOverlay({ isOpen, onClose }) {
                 </div>
               </div>
 
-              {/* 2. Center: Realistic F1 Livery & Direct Wheel Mounting HUD */}
+              {/* 2. Center: Authentic Red Bull Racing RB20 Livery & Direct Wheel Mounting HUD */}
               <div className={`car-chassis-stage ${jacksActive ? 'is-jacking' : ''} ${phase === 'released' || phase === 'ready' ? 'is-released' : ''}`}>
                 <div className="chassis-wrapper">
-                  {/* Detailed Red Bull Racing RB20 / RB21 Realistic Livery Graphic */}
-                  <svg className="f1-car-graphic" viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                      <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#001224" />
-                        <stop offset="50%" stopColor="#001c38" />
-                        <stop offset="100%" stopColor="#001224" />
-                      </linearGradient>
-                      <linearGradient id="carbonGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stopColor="#1e222b" />
-                        <stop offset="100%" stopColor="#0c0e12" />
-                      </linearGradient>
-                    </defs>
-
-                    {/* Front Suspension Wishbone Arms (connecting to front wheels) */}
-                    <line x1="72" y1="56" x2="36" y2="58" stroke="#3a404d" strokeWidth="3" strokeLinecap="round" />
-                    <line x1="72" y1="68" x2="36" y2="64" stroke="#252a33" strokeWidth="2.5" strokeLinecap="round" />
-                    <line x1="128" y1="56" x2="164" y2="58" stroke="#3a404d" strokeWidth="3" strokeLinecap="round" />
-                    <line x1="128" y1="68" x2="164" y2="64" stroke="#252a33" strokeWidth="2.5" strokeLinecap="round" />
-
-                    {/* Rear Suspension Wishbone Arms (connecting to rear wheels) */}
-                    <line x1="68" y1="230" x2="32" y2="238" stroke="#3a404d" strokeWidth="3" strokeLinecap="round" />
-                    <line x1="72" y1="246" x2="32" y2="244" stroke="#252a33" strokeWidth="2.5" strokeLinecap="round" />
-                    <line x1="132" y1="230" x2="168" y2="238" stroke="#3a404d" strokeWidth="3" strokeLinecap="round" />
-                    <line x1="128" y1="246" x2="168" y2="244" stroke="#252a33" strokeWidth="2.5" strokeLinecap="round" />
-
-                    {/* Rear Wing Structure */}
-                    <rect x="42" y="260" width="116" height="18" rx="4" fill="url(#carbonGrad)" stroke="#1b6aee" strokeWidth="1.5" />
-                    {/* Upper DRS Flap in Red Bull Red */}
-                    <rect x="46" y="262" width="108" height="6" rx="2" fill="#db0a40" />
-                    {/* DRS Center Actuator Pod */}
-                    <rect x="97" y="258" width="6" height="14" rx="2" fill="#ffd600" />
-                    {/* Rear Rain Safety Flashing LED */}
-                    <circle cx="100" cy="275" r="3.5" fill="#ff1744">
-                      <animate attributeName="opacity" values="1;0.3;1" dur="0.6s" repeatCount="indefinite" />
-                    </circle>
-
-                    {/* Floor & Aerodynamic Diffuser Channels */}
-                    <path d="M48 115 L152 115 L160 250 L40 250 Z" fill="#080c14" stroke="#101826" strokeWidth="1" />
-
-                    {/* Sculpted Sidepods with Undercut Radiator Inlets */}
-                    <path d="M52 118 Q42 165 50 220 L66 220 Q62 160 66 118 Z" fill="url(#bodyGrad)" stroke="#db0a40" strokeWidth="1.5" />
-                    <path d="M148 118 Q158 165 150 220 L134 220 Q138 160 134 118 Z" fill="url(#bodyGrad)" stroke="#db0a40" strokeWidth="1.5" />
-
-                    {/* Main Monocoque Chassis Body */}
-                    <path d="M78 50 L122 50 L126 120 L134 235 L66 235 L74 120 Z" fill="url(#bodyGrad)" stroke="#1b6aee" strokeWidth="1" />
-
-                    {/* Red Bull Charging Bull Livery on Engine Cover */}
-                    {/* Left & Right Yellow Sun Discs */}
-                    <circle cx="82" cy="178" r="14" fill="#ffd600" />
-                    <circle cx="118" cy="178" r="14" fill="#ffd600" />
-
-                    {/* Red Bull Silhouettes Lunging Across the Sun */}
-                    <path d="M72 176 Q80 166 90 178 Q84 186 76 182 Z" fill="#db0a40" />
-                    <path d="M128 176 Q120 166 110 178 Q116 186 124 182 Z" fill="#db0a40" />
-
-                    {/* Engine Cover Shark Fin Dorsal Spine */}
-                    <line x1="100" y1="135" x2="100" y2="255" stroke="#db0a40" strokeWidth="2.5" />
-
-                    {/* Cockpit Halo Aerodynamic Safety Structure */}
-                    <path d="M84 92 C84 80 116 80 116 92 C116 115 104 122 100 130 C96 122 84 115 84 92 Z" fill="#0a121f" stroke="#ffd600" strokeWidth="2.5" />
-
-                    {/* Max Verstappen Helmet (#1) */}
-                    <circle cx="100" cy="104" r="9" fill="#001830" stroke="#db0a40" strokeWidth="2" />
-                    {/* Golden Mirrored Visor */}
-                    <path d="M94 100 Q100 96 106 100 L104 104 Q100 101 96 104 Z" fill="#ffd600" />
-
-                    {/* Aerodynamic Wing Mirrors */}
-                    <rect x="48" y="102" width="12" height="4" rx="1.5" fill="#001020" stroke="#db0a40" strokeWidth="1" />
-                    <rect x="140" y="102" width="12" height="4" rx="1.5" fill="#001020" stroke="#db0a40" strokeWidth="1" />
-
-                    {/* Tapered Front Nose Cone */}
-                    <path d="M86 50 L114 50 L108 22 L92 22 Z" fill="url(#bodyGrad)" stroke="#1b6aee" strokeWidth="1" />
-                    {/* Nose Racing Stripe */}
-                    <line x1="100" y1="22" x2="100" y2="60" stroke="#db0a40" strokeWidth="3" />
-                    {/* Nose Tip Yellow Accent */}
-                    <path d="M92 22 L108 22 L105 15 L95 15 Z" fill="#ffd600" />
-
-                    {/* Driver Number 1 Badge */}
-                    <rect x="94" y="32" width="12" height="12" rx="3" fill="#ffffff" />
-                    <text x="100" y="42" fontSize="10" fontWeight="900" fill="#db0a40" textAnchor="middle" fontFamily="sans-serif">1</text>
-
-                    {/* Multi-Element Carbon Front Wing */}
-                    <path d="M18 16 L182 16 L184 26 L16 26 Z" fill="url(#carbonGrad)" stroke="#db0a40" strokeWidth="2" />
-                    <line x1="30" y1="21" x2="170" y2="21" stroke="#ffd600" strokeWidth="1.5" />
-                    {/* Front Wing Endplates */}
-                    <rect x="14" y="10" width="5" height="24" rx="2" fill="#db0a40" />
-                    <rect x="181" y="10" width="5" height="24" rx="2" fill="#db0a40" />
-                  </svg>
+                  {/* Authentic Red Bull Racing RB20 Car Livery from 레드불리버리.png */}
+                  <img
+                    src={rb20CarImage}
+                    alt="Oracle Red Bull Racing RB20 Livery"
+                    className="f1-car-real-image"
+                  />
 
                   {/* 4 Realistic Wheels with Direct Mounting & "빙글빙글" Spin Animation */}
                   {/* Front-Left Wheel */}
-                  <div className={`f1-wheel-wrapper fl ${phase === 'swapping' ? 'is-mounting is-spinning' : phase === 'released' || phase === 'ready' ? 'is-locked' : ''}`}>
+                  <div className={`f1-wheel-wrapper fl ${phase === 'jacking' ? 'is-unmounting' : ''} ${phase === 'swapping' ? 'is-mounting is-spinning' : ''} ${phase === 'released' || phase === 'ready' ? 'is-locked' : ''}`}>
                     <div className="f1-realistic-tyre">
                       <div className="f1-wheel-rim">
                         <div className="f1-wheel-spokes"></div>
                         <div className="f1-center-nut"></div>
                       </div>
                     </div>
-                    <span className={`wheel-torque-badge ${phase === 'swapping' ? 'spinning' : phase === 'released' || phase === 'ready' ? 'locked' : ''}`}>
+                    <span className={`wheel-torque-badge ${phase === 'swapping' ? 'spinning' : ''} ${phase === 'released' || phase === 'ready' ? 'locked' : ''}`}>
                       {phase === 'swapping' ? '⚡ FASTENING' : phase === 'released' || phase === 'ready' ? '✓ LOCKED' : 'ON HUB'}
                     </span>
                   </div>
 
                   {/* Front-Right Wheel */}
-                  <div className={`f1-wheel-wrapper fr ${phase === 'swapping' ? 'is-mounting is-spinning' : phase === 'released' || phase === 'ready' ? 'is-locked' : ''}`}>
+                  <div className={`f1-wheel-wrapper fr ${phase === 'jacking' ? 'is-unmounting' : ''} ${phase === 'swapping' ? 'is-mounting is-spinning' : ''} ${phase === 'released' || phase === 'ready' ? 'is-locked' : ''}`}>
                     <div className="f1-realistic-tyre">
                       <div className="f1-wheel-rim">
                         <div className="f1-wheel-spokes"></div>
                         <div className="f1-center-nut"></div>
                       </div>
                     </div>
-                    <span className={`wheel-torque-badge ${phase === 'swapping' ? 'spinning' : phase === 'released' || phase === 'ready' ? 'locked' : ''}`}>
+                    <span className={`wheel-torque-badge ${phase === 'swapping' ? 'spinning' : ''} ${phase === 'released' || phase === 'ready' ? 'locked' : ''}`}>
                       {phase === 'swapping' ? '⚡ FASTENING' : phase === 'released' || phase === 'ready' ? '✓ LOCKED' : 'ON HUB'}
                     </span>
                   </div>
 
                   {/* Rear-Left Wheel */}
-                  <div className={`f1-wheel-wrapper rl ${phase === 'swapping' ? 'is-mounting is-spinning' : phase === 'released' || phase === 'ready' ? 'is-locked' : ''}`}>
+                  <div className={`f1-wheel-wrapper rl ${phase === 'jacking' ? 'is-unmounting' : ''} ${phase === 'swapping' ? 'is-mounting is-spinning' : ''} ${phase === 'released' || phase === 'ready' ? 'is-locked' : ''}`}>
                     <div className="f1-realistic-tyre">
                       <div className="f1-wheel-rim">
                         <div className="f1-wheel-spokes"></div>
                         <div className="f1-center-nut"></div>
                       </div>
                     </div>
-                    <span className={`wheel-torque-badge ${phase === 'swapping' ? 'spinning' : phase === 'released' || phase === 'ready' ? 'locked' : ''}`}>
+                    <span className={`wheel-torque-badge ${phase === 'swapping' ? 'spinning' : ''} ${phase === 'released' || phase === 'ready' ? 'locked' : ''}`}>
                       {phase === 'swapping' ? '⚡ FASTENING' : phase === 'released' || phase === 'ready' ? '✓ LOCKED' : 'ON HUB'}
                     </span>
                   </div>
 
                   {/* Rear-Right Wheel */}
-                  <div className={`f1-wheel-wrapper rr ${phase === 'swapping' ? 'is-mounting is-spinning' : phase === 'released' || phase === 'ready' ? 'is-locked' : ''}`}>
+                  <div className={`f1-wheel-wrapper rr ${phase === 'jacking' ? 'is-unmounting' : ''} ${phase === 'swapping' ? 'is-mounting is-spinning' : ''} ${phase === 'released' || phase === 'ready' ? 'is-locked' : ''}`}>
                     <div className="f1-realistic-tyre">
                       <div className="f1-wheel-rim">
                         <div className="f1-wheel-spokes"></div>
                         <div className="f1-center-nut"></div>
                       </div>
                     </div>
-                    <span className={`wheel-torque-badge ${phase === 'swapping' ? 'spinning' : phase === 'released' || phase === 'ready' ? 'locked' : ''}`}>
+                    <span className={`wheel-torque-badge ${phase === 'swapping' ? 'spinning' : ''} ${phase === 'released' || phase === 'ready' ? 'locked' : ''}`}>
                       {phase === 'swapping' ? '⚡ FASTENING' : phase === 'released' || phase === 'ready' ? '✓ LOCKED' : 'ON HUB'}
                     </span>
                   </div>
