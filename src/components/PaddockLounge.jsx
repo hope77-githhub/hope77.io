@@ -21,9 +21,6 @@ export default function PaddockLounge() {
   const [mySpeech, setMySpeech] = useState('');
   const speechTimeoutRef = useRef(null);
 
-  // Click ripple animation state
-  const [ripples, setRipples] = useState([]);
-
   // Other players (multi-tab sync + simulated paddock drivers)
   const [otherDrivers, setOtherDrivers] = useState({
     1: {
@@ -51,24 +48,36 @@ export default function PaddockLounge() {
   // Chat input
   const [chatText, setChatText] = useState('');
 
-  // Mini Telemetry Log
+  // Default filter is CHAT as requested
+  const [logFilter, setLogFilter] = useState('CHAT');
+
+  // Mini Log data (Initial logs)
   const [miniLogs, setMiniLogs] = useState([
     {
-      id: 'init-1',
+      id: 'init-chat-1',
       time: getCurrentTimeStr(),
-      type: 'JOIN',
-      user: `사용자 #${visitorNum}`,
-      detail: '패독 라운지에 접속했습니다. (키보드 방향키 또는 바닥 클릭으로 이동)',
+      type: 'CHAT',
+      user: '사용자 #1 (Verstappen)',
+      isSelf: false,
+      detail: '패독 라운지에 오신 것을 환영합니다! 오늘 세션 타임 멋지네요.',
     },
     {
-      id: 'init-2',
+      id: 'init-chat-2',
       time: getCurrentTimeStr(),
-      type: 'EVENT',
-      user: 'SYSTEM',
-      detail: 'ORACLE RED BULL RACING 텔레메트리 세션 동기화 완료.',
+      type: 'CHAT',
+      user: '사용자 #2 (Checo)',
+      isSelf: false,
+      detail: '각 구역으로 이동해서 스페이스바를 누르면 특별한 액션이 발동돼요!',
+    },
+    {
+      id: 'init-join',
+      time: getCurrentTimeStr(),
+      type: 'JOIN',
+      user: `사용자 #${visitorNum} (나)`,
+      isSelf: true,
+      detail: '패독 라운지에 접속했습니다. (WASD 또는 방향키로 이동)',
     },
   ]);
-  const [logFilter, setLogFilter] = useState('ALL');
 
   function getCurrentTimeStr() {
     const now = new Date();
@@ -78,8 +87,8 @@ export default function PaddockLounge() {
     return `${h}:${m}:${s}`;
   }
 
-  // Append entry to mini telemetry log
-  const addMiniLog = (type, user, detail) => {
+  // Append entry to mini log
+  const addMiniLog = (type, user, detail, isSelf = false) => {
     setMiniLogs((prev) => {
       const next = [
         ...prev,
@@ -88,6 +97,7 @@ export default function PaddockLounge() {
           time: getCurrentTimeStr(),
           type,
           user,
+          isSelf,
           detail,
         },
       ];
@@ -97,21 +107,56 @@ export default function PaddockLounge() {
     });
   };
 
-  // Determine which zone coordinates are currently in
-  const getZoneName = (x, y, w, h) => {
-    if (x < 150 && y < 120) return '[🔴 1번 피트 박스]';
-    if (x > w - 150 && y < 120) return '[🏆 P1 우승 포디움]';
-    if (y > h - 60) return '[🏁 체커 피니시 라인]';
-    if (Math.abs(x - w / 2) < 90 && Math.abs(y - h / 2) < 50) return '[📡 핏 월 텔레메트리]';
-    return '[패독 그라운드]';
+  // Determine current active zone based on position
+  const getActiveZone = (x, y) => {
+    const arena = arenaRef.current;
+    const w = arena ? arena.clientWidth : 540;
+    const h = arena ? arena.clientHeight : 360;
+
+    // 1. Pit Box (Top-Left)
+    if (x <= 155 && y <= 125) {
+      return {
+        id: 'pitbox',
+        name: '🔴 1번 피트 박스',
+        prompt: '피트스탑 타이어 교체',
+      };
+    }
+    // 2. P1 Winner Podium (Top-Right)
+    if (x >= w - 155 && y <= 125) {
+      return {
+        id: 'podium',
+        name: '🏆 P1 우승 포디움',
+        prompt: '포디움 점령하기',
+      };
+    }
+    // 3. Turbo Booster Pad (Bottom-Right)
+    if (x >= w - 155 && y >= h - 145) {
+      return {
+        id: 'booster',
+        name: '⚡ 터보 부스터 존',
+        prompt: '터보 부스터 발동',
+      };
+    }
+    // 4. Pit Wall Lounge (Bottom-Left)
+    if (x <= 155 && y >= h - 145) {
+      return {
+        id: 'pitwall',
+        name: '📡 핏 월 라운지',
+        prompt: '피트 크루 하이파이브',
+      };
+    }
+
+    return null;
   };
+
+  const currentZone = getActiveZone(myPos.x, myPos.y);
 
   // Auto-scroll mini log to bottom
   useEffect(() => {
     if (logContainerRef.current) {
       logContainerRef.current.scrollTop = logContainerRef.current.scrollHeight;
     }
-  }, [miniLogs]);
+  }, [miniLogs, logFilter]);
 
   // Setup BroadcastChannel for real-time multi-tab communication
   useEffect(() => {
@@ -133,7 +178,7 @@ export default function PaddockLounge() {
         if (!msg || msg.userNum === visitorNum) return;
 
         if (msg.type === 'JOIN') {
-          addMiniLog('JOIN', `사용자 #${msg.userNum}`, '다른 탭에서 패독에 입장했습니다.');
+          addMiniLog('JOIN', `사용자 #${msg.userNum}`, '다른 탭에서 패독에 입장했습니다.', false);
           setOtherDrivers((prev) => ({
             ...prev,
             [msg.userNum]: {
@@ -147,6 +192,7 @@ export default function PaddockLounge() {
             },
           }));
         } else if (msg.type === 'MOVE') {
+          // Update avatar position only; do NOT add other users' movements to private MOVE log
           setOtherDrivers((prev) => ({
             ...prev,
             [msg.userNum]: {
@@ -159,12 +205,6 @@ export default function PaddockLounge() {
               isBoosted: !!msg.isBoosted,
             },
           }));
-          // Throttle movement logs from other tabs
-          const now = Date.now();
-          if (now - lastLogMoveTimeRef.current > 2500) {
-            addMiniLog('MOVE', `사용자 #${msg.userNum}`, `(X: ${Math.round(msg.x)}, Y: ${Math.round(msg.y)}) 구역으로 이동 중`);
-            lastLogMoveTimeRef.current = now;
-          }
         } else if (msg.type === 'CHAT') {
           setOtherDrivers((prev) => ({
             ...prev,
@@ -173,7 +213,7 @@ export default function PaddockLounge() {
               speech: msg.text,
             },
           }));
-          addMiniLog('CHAT', `사용자 #${msg.userNum}`, `"${msg.text}"`);
+          addMiniLog('CHAT', `사용자 #${msg.userNum}`, `"${msg.text}"`, false);
         } else if (msg.type === 'BOOST') {
           setOtherDrivers((prev) => ({
             ...prev,
@@ -182,7 +222,7 @@ export default function PaddockLounge() {
               isBoosted: true,
             },
           }));
-          addMiniLog('BOOST', `사용자 #${msg.userNum}`, '⚡ 터보 부스터 가동!');
+          addMiniLog('EVENT', `사용자 #${msg.userNum}`, '⚡ 터보 부스터 가동!', false);
         }
       };
     } catch (err) {
@@ -203,7 +243,6 @@ export default function PaddockLounge() {
     const interval = setInterval(() => {
       setOtherDrivers((prev) => {
         const next = { ...prev };
-        // Randomly nudge driver 1 or 2
         const targetId = Math.random() > 0.5 ? 1 : 2;
         if (next[targetId]) {
           const dx = (Math.random() - 0.5) * 40;
@@ -221,7 +260,6 @@ export default function PaddockLounge() {
         return next;
       });
 
-      // Stop moving after 400ms
       setTimeout(() => {
         setOtherDrivers((prev) => {
           const next = { ...prev };
@@ -245,7 +283,7 @@ export default function PaddockLounge() {
     }, 250);
   };
 
-  // Move user by offset delta (dx, dy)
+  // Move user by offset delta (dx, dy) — Strictly WASD & Arrow Keys
   const moveByDelta = (dx, dy) => {
     const arena = arenaRef.current;
     const w = arena ? arena.clientWidth : 540;
@@ -273,16 +311,113 @@ export default function PaddockLounge() {
       });
     }
 
-    // Throttled log entry
+    // Private movement log (Only current user's movement)
     const now = Date.now();
     if (now - lastLogMoveTimeRef.current > 1200) {
-      const zone = getZoneName(nextX, nextY, w, h);
-      addMiniLog('MOVE', `사용자 #${visitorNum}`, `(X: ${Math.round(nextX)}, Y: ${Math.round(nextY)}) ${zone} 로 이동`);
+      const zone = getActiveZone(nextX, nextY);
+      const zoneLabel = zone ? `[${zone.name}]` : '[패독 그라운드]';
+      addMiniLog(
+        'MOVE',
+        `사용자 #${visitorNum} (나)`,
+        `(X: ${Math.round(nextX)}, Y: ${Math.round(nextY)}) ${zoneLabel} 구역으로 이동`,
+        true
+      );
       lastLogMoveTimeRef.current = now;
     }
   };
 
-  // Keyboard navigation listener (Arrow keys & WASD)
+  // Spacebar Interaction Trigger (Triggered when standing in a zone and pressing Spacebar)
+  const handleSpacebarAction = () => {
+    const zone = getActiveZone(myPos.x, myPos.y);
+
+    if (zone?.id === 'podium') {
+      // 1. P1 Podium Celebration
+      const shout = '🏆 P1 우승 포디움 점령! 샴페인 세레머니!';
+      setMySpeech(shout);
+      if (speechTimeoutRef.current) clearTimeout(speechTimeoutRef.current);
+      speechTimeoutRef.current = setTimeout(() => setMySpeech(''), 4500);
+
+      addMiniLog('EVENT', `사용자 #${visitorNum} (나)`, '🏆 [P1 우승 포디움]을 점령했습니다! (Space)', true);
+
+      if (channelRef.current) {
+        channelRef.current.postMessage({
+          type: 'CHAT',
+          userNum: visitorNum,
+          text: shout,
+        });
+      }
+    } else if (zone?.id === 'booster') {
+      // 2. Turbo Boost Activation
+      setIsBoosted(true);
+      const shout = '⚡ 터보 부스터 최대 출력 가동! (속도 2배)';
+      setMySpeech(shout);
+      if (speechTimeoutRef.current) clearTimeout(speechTimeoutRef.current);
+      speechTimeoutRef.current = setTimeout(() => setMySpeech(''), 4500);
+
+      addMiniLog('EVENT', `사용자 #${visitorNum} (나)`, '⚡ [터보 부스터 존]에서 부스터를 발동했습니다! (Space)', true);
+
+      if (channelRef.current) {
+        channelRef.current.postMessage({
+          type: 'BOOST',
+          userNum: visitorNum,
+        });
+      }
+
+      setTimeout(() => {
+        setIsBoosted(false);
+      }, 4000);
+    } else if (zone?.id === 'pitbox') {
+      // 3. Pit Box Tyre Change
+      const shout = '🔴 소프트 타이어 체결 완료! 1.82s 박스 아웃!';
+      setMySpeech(shout);
+      if (speechTimeoutRef.current) clearTimeout(speechTimeoutRef.current);
+      speechTimeoutRef.current = setTimeout(() => setMySpeech(''), 4500);
+
+      addMiniLog('EVENT', `사용자 #${visitorNum} (나)`, '🔴 [1번 피트 박스]에서 타이어를 교체했습니다! (Space)', true);
+
+      if (channelRef.current) {
+        channelRef.current.postMessage({
+          type: 'CHAT',
+          userNum: visitorNum,
+          text: shout,
+        });
+      }
+    } else if (zone?.id === 'pitwall') {
+      // 4. Pit Wall High-Five
+      const shout = '🤝 피트 크루 & 전략팀과 하이파이브!';
+      setMySpeech(shout);
+      if (speechTimeoutRef.current) clearTimeout(speechTimeoutRef.current);
+      speechTimeoutRef.current = setTimeout(() => setMySpeech(''), 4500);
+
+      addMiniLog('EVENT', `사용자 #${visitorNum} (나)`, '🤝 [핏 월 라운지]에서 크루와 하이파이브를 나눴습니다! (Space)', true);
+
+      if (channelRef.current) {
+        channelRef.current.postMessage({
+          type: 'CHAT',
+          userNum: visitorNum,
+          text: shout,
+        });
+      }
+    } else {
+      // 5. Open Paddock cheer
+      const shout = '🏎️ 부르릉! 레이스 질주 준비 완료!';
+      setMySpeech(shout);
+      if (speechTimeoutRef.current) clearTimeout(speechTimeoutRef.current);
+      speechTimeoutRef.current = setTimeout(() => setMySpeech(''), 4500);
+
+      addMiniLog('EVENT', `사용자 #${visitorNum} (나)`, '🏎️ 패독에서 엔진 레브를 올렸습니다. (Space)', true);
+
+      if (channelRef.current) {
+        channelRef.current.postMessage({
+          type: 'CHAT',
+          userNum: visitorNum,
+          text: shout,
+        });
+      }
+    }
+  };
+
+  // Keyboard navigation & Spacebar listener (WASD, Arrows, Space)
   useEffect(() => {
     const handleKeyDown = (e) => {
       // Don't intercept if user is typing in chat input
@@ -291,53 +426,31 @@ export default function PaddockLounge() {
       let dx = 0;
       let dy = 0;
 
-      if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') dy -= 1;
-      else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') dy += 1;
-      else if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') dx -= 1;
-      else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') dx += 1;
-      else return;
-
-      e.preventDefault();
-      moveByDelta(dx, dy);
+      if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
+        dy -= 1;
+        e.preventDefault();
+        moveByDelta(dx, dy);
+      } else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
+        dy += 1;
+        e.preventDefault();
+        moveByDelta(dx, dy);
+      } else if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+        dx -= 1;
+        e.preventDefault();
+        moveByDelta(dx, dy);
+      } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+        dx += 1;
+        e.preventDefault();
+        moveByDelta(dx, dy);
+      } else if (e.code === 'Space' || e.key === ' ') {
+        e.preventDefault();
+        handleSpacebarAction();
+      }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [myPos, isBoosted, visitorNum]);
-
-  // Click on Arena floor to move character to target point
-  const handleArenaClick = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const targetX = Math.round(e.clientX - rect.left);
-    const targetY = Math.round(e.clientY - rect.top);
-
-    // Add click ripple
-    const newRipple = { id: Date.now(), x: targetX, y: targetY };
-    setRipples((prev) => [...prev.slice(-3), newRipple]);
-
-    const w = rect.width;
-    const h = rect.height;
-    const clampedX = Math.max(30, Math.min(w - 30, targetX));
-    const clampedY = Math.max(40, Math.min(h - 35, targetY));
-
-    setDirection(clampedX < myPos.x ? 'left' : 'right');
-    setMyPos({ x: clampedX, y: clampedY });
-    triggerMovementState();
-
-    if (channelRef.current) {
-      channelRef.current.postMessage({
-        type: 'MOVE',
-        userNum: visitorNum,
-        x: clampedX,
-        y: clampedY,
-        direction: clampedX < myPos.x ? 'left' : 'right',
-        isBoosted,
-      });
-    }
-
-    const zone = getZoneName(clampedX, clampedY, w, h);
-    addMiniLog('MOVE', `사용자 #${visitorNum}`, `(X: ${clampedX}, Y: ${clampedY}) ${zone} 로 이동`);
-  };
 
   // Submit chat message
   const handleSendChat = (e) => {
@@ -351,7 +464,7 @@ export default function PaddockLounge() {
       setMySpeech('');
     }, 4500);
 
-    addMiniLog('CHAT', `사용자 #${visitorNum}`, `"${trimmed}"`);
+    addMiniLog('CHAT', `사용자 #${visitorNum} (나)`, `"${trimmed}"`, true);
 
     if (channelRef.current) {
       channelRef.current.postMessage({
@@ -372,7 +485,7 @@ export default function PaddockLounge() {
       setMySpeech('');
     }, 4500);
 
-    addMiniLog('CHAT', `사용자 #${visitorNum}`, `"${text}"`);
+    addMiniLog('CHAT', `사용자 #${visitorNum} (나)`, `"${text}"`, true);
 
     if (channelRef.current) {
       channelRef.current.postMessage({
@@ -383,78 +496,26 @@ export default function PaddockLounge() {
     }
   };
 
-  // Activate Turbo Booster (speed x2 + glowing flame aura)
-  const handleActivateBoost = () => {
-    setIsBoosted(true);
-    addMiniLog('BOOST', `사용자 #${visitorNum}`, '⚡ 터보 부스터 발동! (이동속도 2배, 3.5초 유지)');
-
-    if (channelRef.current) {
-      channelRef.current.postMessage({
-        type: 'BOOST',
-        userNum: visitorNum,
-      });
-    }
-
-    setTimeout(() => {
-      setIsBoosted(false);
-    }, 3500);
-  };
-
-  // Teleport to Pit Box zone
-  const handleTeleportPitbox = () => {
-    setMyPos({ x: 80, y: 70 });
-    setDirection('right');
-    triggerMovementState();
-    addMiniLog('EVENT', `사용자 #${visitorNum}`, '🎯 [🔴 1번 피트 박스]로 순간이동했습니다.');
-
-    if (channelRef.current) {
-      channelRef.current.postMessage({
-        type: 'MOVE',
-        userNum: visitorNum,
-        x: 80,
-        y: 70,
-        direction: 'right',
-      });
-    }
-  };
-
-  // Teleport to P1 Podium zone
-  const handleTeleportPodium = () => {
-    const arena = arenaRef.current;
-    const w = arena ? arena.clientWidth : 540;
-    const targetX = w - 80;
-    setMyPos({ x: targetX, y: 70 });
-    setDirection('left');
-    triggerMovementState();
-    handleQuickShout('🏆 P1 포디움 정상에 올랐습니다!');
-    addMiniLog('EVENT', `사용자 #${visitorNum}`, '🏆 [P1 우승 포디움]으로 점프했습니다.');
-
-    if (channelRef.current) {
-      channelRef.current.postMessage({
-        type: 'MOVE',
-        userNum: visitorNum,
-        x: targetX,
-        y: 70,
-        direction: 'left',
-      });
-    }
-  };
-
-  // High-five nearby driver
-  const handleHighFive = () => {
-    handleQuickShout('🤝 레이스 엔지니어 & 크루들과 하이파이브!');
-    addMiniLog('EVENT', `사용자 #${visitorNum}`, '🤝 피트 크루와 열정적인 하이파이브를 나눴습니다.');
-  };
-
-  // Clear Mini Telemetry Log
+  // Clear mini log
   const handleClearLog = () => {
     setMiniLogs([]);
   };
 
-  // Filtered mini logs
+  // Filtered mini logs (Private MOVE: only current player's movements)
   const filteredLogs = miniLogs.filter((log) => {
-    if (logFilter === 'ALL') return true;
-    return log.type === logFilter;
+    if (logFilter === 'CHAT') {
+      return log.type === 'CHAT';
+    }
+    if (logFilter === 'MOVE') {
+      // Private: only show the currently controlled player's movements
+      return log.type === 'MOVE' && log.isSelf;
+    }
+    if (logFilter === 'EVENT') {
+      return log.type === 'EVENT' || log.type === 'BOOST' || log.type === 'JOIN';
+    }
+    // ALL: Show events, chats, and private movements
+    if (log.type === 'MOVE') return log.isSelf;
+    return true;
   });
 
   return (
@@ -473,8 +534,8 @@ export default function PaddockLounge() {
             </div>
             <p className="paddock-desc">
               {t(
-                '2D 미니 드라이버 캐릭터로 패독을 자유롭게 이동하고, 실시간 로그 기록과 채팅을 즐겨보세요! (키보드 방향키 또는 바닥 클릭)',
-                'Explore the 2D Red Bull paddock, chat with fellow visitors, and watch real-time movement telemetry logs! (Use Arrow keys or Click ground)'
+                'WASD 또는 방향키로 2D 미니 드라이버를 조작하고, 구역 이동 후 스페이스바를 눌러 액션을 실행해보세요!',
+                'Control your 2D mini driver with WASD or Arrow keys. Move to any zone and press Spacebar to activate actions!'
               )}
             </p>
           </div>
@@ -489,42 +550,58 @@ export default function PaddockLounge() {
 
         {/* 2-Column Grid */}
         <div className="paddock-grid">
-          {/* Column 1: 2D Interactive Paddock Canvas Arena */}
+          {/* Column 1: 2D Interactive Paddock Canvas Arena (Keyboard Only) */}
           <div className="paddock-arena-card">
             {/* Arena Top Telemetry Bar */}
             <div className="arena-top-bar">
               <div className="arena-status-indicator">
                 <span className="live-pulse-dot"></span>
-                <span>PADDOCK SIMULATOR LIVE // ORACLE RB20</span>
+                <span>PADDOCK SIMULATOR LIVE // KEYBOARD ONLY</span>
               </div>
               <div className="arena-controls-hint">
                 <span>조작:</span>
+                <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>
+                <span>/</span>
                 <kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd>
-                <span>/ 바닥 터치 이동</span>
+                <span>&amp;</span>
+                <kbd>SPACE</kbd>
+                <span>액션</span>
               </div>
             </div>
 
-            {/* Clickable Floor */}
+            {/* Walkable Floor (Keyboard Controlled Only — No mouse-click movement) */}
             <div
               className="paddock-arena-canvas"
               ref={arenaRef}
-              onClick={handleArenaClick}
-              title="클릭하여 캐릭터를 해당 위치로 이동하세요"
+              title="WASD 및 방향키로 캐릭터를 조작하세요"
             >
-              {/* Floor Zones */}
-              <div className="paddock-zone zone-pitbox"></div>
-              <div className="paddock-zone zone-podium"></div>
-              <div className="paddock-zone zone-telemetry-center"></div>
-              <div className="paddock-zone zone-chequered-line"></div>
+              {/* Floor Zone 1: Pit Box (Top-Left) */}
+              <div className={`paddock-zone zone-pitbox ${currentZone?.id === 'pitbox' ? 'is-active' : ''}`}>
+                <span>🔴 1번 피트 박스</span>
+                <span className="zone-action-hint">[Space] 타이어 교체</span>
+              </div>
 
-              {/* Click Ripple Animation */}
-              {ripples.map((rip) => (
-                <div
-                  key={rip.id}
-                  className="arena-click-ripple"
-                  style={{ left: `${rip.x}px`, top: `${rip.y}px` }}
-                />
-              ))}
+              {/* Floor Zone 2: P1 Winner Podium (Top-Right) */}
+              <div className={`paddock-zone zone-podium ${currentZone?.id === 'podium' ? 'is-active' : ''}`}>
+                <span>🏆 P1 포디움</span>
+                <span className="zone-action-hint">[Space] 포디움 점령</span>
+              </div>
+
+              {/* Floor Zone 3: Turbo Booster (Bottom-Right) */}
+              <div className={`paddock-zone zone-booster ${currentZone?.id === 'booster' ? 'is-active' : ''}`}>
+                <span>⚡ 터보 부스터</span>
+                <span className="zone-action-hint">[Space] 2배 속도</span>
+              </div>
+
+              {/* Floor Zone 4: Pit Wall Lounge (Bottom-Left) */}
+              <div className={`paddock-zone zone-pitwall ${currentZone?.id === 'pitwall' ? 'is-active' : ''}`}>
+                <span>📡 핏 월 라운지</span>
+                <span className="zone-action-hint">[Space] 하이파이브</span>
+              </div>
+
+              {/* Center Pit Wall Marker & Chequered Line */}
+              <div className="zone-telemetry-center">ORACLE RB20</div>
+              <div className="zone-chequered-line"></div>
 
               {/* Other Drivers (Simulated & Multi-tab Sync) */}
               {Object.values(otherDrivers).map((drv) => (
@@ -542,7 +619,7 @@ export default function PaddockLounge() {
                 />
               ))}
 
-              {/* My 2D Character */}
+              {/* My 2D Character (With Spacebar Interaction Prompt) */}
               <MiniDriver2D
                 x={myPos.x}
                 y={myPos.y}
@@ -552,48 +629,12 @@ export default function PaddockLounge() {
                 isSelf={true}
                 visitorNum={visitorNum}
                 speech={mySpeech}
+                interactionPrompt={currentZone ? currentZone.prompt : null}
               />
-
-              {/* Touch Mobile D-Pad */}
-              <div
-                className="arena-dpad"
-                onClick={(e) => e.stopPropagation()}
-                title="모바일 방향키 컨트롤러"
-              >
-                <button
-                  type="button"
-                  className="dpad-btn dpad-up"
-                  onClick={() => moveByDelta(0, -1)}
-                >
-                  ▲
-                </button>
-                <button
-                  type="button"
-                  className="dpad-btn dpad-left"
-                  onClick={() => moveByDelta(-1, 0)}
-                >
-                  ◄
-                </button>
-                <div className="dpad-btn dpad-center">RB</div>
-                <button
-                  type="button"
-                  className="dpad-btn dpad-right"
-                  onClick={() => moveByDelta(1, 0)}
-                >
-                  ►
-                </button>
-                <button
-                  type="button"
-                  className="dpad-btn dpad-down"
-                  onClick={() => moveByDelta(0, 1)}
-                >
-                  ▼
-                </button>
-              </div>
             </div>
           </div>
 
-          {/* Column 2: Chat & Action Controls + Telemetry Mini Log */}
+          {/* Column 2: Chat & Zone Mission Guide + mini log */}
           <div className="paddock-controls-card">
             {/* 1. Chat Form */}
             <form className="paddock-chat-form" onSubmit={handleSendChat}>
@@ -611,37 +652,33 @@ export default function PaddockLounge() {
               </button>
             </form>
 
-            {/* 2. Quick Action Chips */}
-            <div className="paddock-quick-actions">
-              <span className="quick-action-label">
-                <i className="fas fa-bolt" style={{ color: '#db0a40' }}></i>
-                <span>인터랙티브 액션 &amp; 원클릭 챗</span>
-              </span>
-              <div className="quick-chips-row">
-                <button
-                  type="button"
-                  className="btn-quick-chip boost"
-                  onClick={handleActivateBoost}
-                  title="3.5초간 이동속도 2배 및 불꽃 오라"
-                >
-                  ⚡ 터보 부스터
-                </button>
-                <button
-                  type="button"
-                  className="btn-quick-chip teleport"
-                  onClick={handleTeleportPitbox}
-                  title="1번 피트 박스로 순간이동"
-                >
-                  🎯 피트박스
-                </button>
-                <button
-                  type="button"
-                  className="btn-quick-chip teleport"
-                  onClick={handleTeleportPodium}
-                  title="P1 우승 포디움으로 순간이동"
-                >
-                  🏆 포디움 점령
-                </button>
+            {/* 2. Spacebar Zone Mission Guide (Keyboard Interactive instead of mouse clicking) */}
+            <div className="paddock-zone-guide">
+              <div className="zone-guide-header">
+                <span>구역 이동 후 <kbd>SPACE</kbd> 키를 누르면 액션 실행</span>
+                <span style={{ color: '#db0a40' }}>🎮 KEYBOARD ACTION</span>
+              </div>
+              <div className="zone-guide-grid">
+                <div className={`zone-guide-item ${currentZone?.id === 'podium' ? 'is-current' : ''}`}>
+                  <span className="zone-guide-item-title">🏆 P1 포디움</span>
+                  <span className="zone-guide-item-desc">우측 상단 이동 후 Space → 포디움 점령</span>
+                </div>
+                <div className={`zone-guide-item ${currentZone?.id === 'booster' ? 'is-current' : ''}`}>
+                  <span className="zone-guide-item-title">⚡ 터보 부스터</span>
+                  <span className="zone-guide-item-desc">우측 하단 이동 후 Space → 4초간 2배 속도</span>
+                </div>
+                <div className={`zone-guide-item ${currentZone?.id === 'pitbox' ? 'is-current' : ''}`}>
+                  <span className="zone-guide-item-title">🔴 1번 피트 박스</span>
+                  <span className="zone-guide-item-desc">좌측 상단 이동 후 Space → 타이어 교체</span>
+                </div>
+                <div className={`zone-guide-item ${currentZone?.id === 'pitwall' ? 'is-current' : ''}`}>
+                  <span className="zone-guide-item-title">📡 핏 월 라운지</span>
+                  <span className="zone-guide-item-desc">좌측 하단 이동 후 Space → 크루 하이파이브</span>
+                </div>
+              </div>
+
+              {/* Quick Speech Chips */}
+              <div className="quick-chips-row" style={{ marginTop: '4px' }}>
                 <button
                   type="button"
                   className="btn-quick-chip"
@@ -663,32 +700,25 @@ export default function PaddockLounge() {
                 >
                   🔥 "1.82s 피트스탑!"
                 </button>
-                <button
-                  type="button"
-                  className="btn-quick-chip"
-                  onClick={handleHighFive}
-                >
-                  🤝 하이파이브
-                </button>
               </div>
             </div>
 
-            {/* 3. Real-Time Mini Telemetry Log */}
+            {/* 3. mini log (Default screen: CHAT, Private MOVE) */}
             <div className="paddock-minilog-wrap">
               <div className="minilog-header">
                 <div className="minilog-title">
                   <i className="fas fa-terminal"></i>
-                  <span>실시간 활동 미니 로그 (TELEMETRY)</span>
+                  <span>mini log</span>
                 </div>
                 <div className="minilog-filters">
-                  {['ALL', 'MOVE', 'CHAT', 'EVENT'].map((f) => (
+                  {['CHAT', 'MOVE', 'EVENT', 'ALL'].map((f) => (
                     <button
                       key={f}
                       type="button"
                       className={`btn-log-filter ${logFilter === f ? 'active' : ''}`}
                       onClick={() => setLogFilter(f)}
                     >
-                      {f}
+                      {f === 'MOVE' ? 'MOVE (PRIVATE)' : f}
                     </button>
                   ))}
                   <button
@@ -706,7 +736,11 @@ export default function PaddockLounge() {
               <div className="minilog-body" ref={logContainerRef}>
                 {filteredLogs.length === 0 ? (
                   <div style={{ color: '#8e9192', textAlign: 'center', padding: '16px 0' }}>
-                    기록된 활동 로그가 없습니다.
+                    {logFilter === 'MOVE'
+                      ? '기록된 내 이동 로그가 없습니다. (WASD 또는 방향키로 이동해보세요)'
+                      : logFilter === 'CHAT'
+                      ? '기록된 채팅 메시지가 없습니다. 상단에서 메시지를 입력해보세요!'
+                      : '기록된 활동 로그가 없습니다.'}
                   </div>
                 ) : (
                   filteredLogs.map((log) => (

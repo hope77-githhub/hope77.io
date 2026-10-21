@@ -14,6 +14,7 @@ export default function MiniDriver2D({
   visitorNum = 1,
   speech = '',
   customColor = null,
+  interactionPrompt = null,
 }) {
   // Suit / Helmet color theme (Default Red Bull Racing Navy & Crimson)
   const helmetColor = customColor ? customColor.helmet : '#001e3c';
@@ -42,6 +43,19 @@ export default function MiniDriver2D({
         >
           <span className="speech-text">{speech}</span>
           <div className="speech-arrow"></div>
+        </div>
+      )}
+
+      {/* Spacebar Interaction Prompt when standing in an interactive zone */}
+      {interactionPrompt && isSelf && (
+        <div
+          className="mini-interaction-prompt"
+          style={{
+            transform: `scaleX(${direction === 'left' ? -1 : 1})`,
+          }}
+        >
+          <kbd>SPACE</kbd>
+          <span>{interactionPrompt}</span>
         </div>
       )}
 
