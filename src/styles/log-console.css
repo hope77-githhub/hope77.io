@@ -140,6 +140,45 @@
     color: #ffffff;
 }
 
+/* Race Start (Enter) Top Action Button - Replaces Skip to Enter */
+.btn-term-race-start {
+    background: #db0a40 !important; /* Red Bull Primary Red */
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    color: #ffffff !important;
+    border-radius: 9999px;
+    padding: 6px 16px;
+    font-size: 12px;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(219, 10, 64, 0.45);
+    transition: all 150ms var(--ease-snappy);
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+    animation: btn-race-start-pulse 2s infinite ease-in-out;
+}
+
+.btn-term-race-start:hover {
+    background: #c2073a !important;
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 4px 16px rgba(219, 10, 64, 0.7);
+}
+
+.btn-term-race-start i {
+    color: #ffd600; /* Red Bull Gold Accent */
+}
+
+@keyframes btn-race-start-pulse {
+    0%, 100% {
+        box-shadow: 0 2px 10px rgba(219, 10, 64, 0.4);
+    }
+    50% {
+        box-shadow: 0 2px 18px rgba(219, 10, 64, 0.85), 0 0 12px rgba(255, 214, 0, 0.35);
+    }
+}
+
 /* Primary Enter Button (Red Bull Signature Full Pill CTA) */
 .btn-term-enter {
     background: #db0a40 !important; /* Red Bull Primary Red */
@@ -1176,6 +1215,35 @@
     font-family: var(--font-mono);
     font-size: 11px;
     font-weight: 800;
+}
+
+/* In-Progress Race Start Button */
+.btn-pitstop-race-start {
+    background: #db0a40 !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    color: #ffffff !important;
+    border-radius: 9999px;
+    padding: 7px 20px;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    box-shadow: 0 2px 12px rgba(219, 10, 64, 0.45);
+    transition: all 150ms var(--ease-snappy);
+    font-family: var(--font-display);
+    animation: btn-race-start-pulse 2s infinite ease-in-out;
+}
+
+.btn-pitstop-race-start:hover {
+    background: #c2073a !important;
+    transform: translateY(-1px) scale(1.03);
+    box-shadow: 0 4px 18px rgba(219, 10, 64, 0.75);
+}
+
+.btn-pitstop-race-start i {
+    color: #ffd600;
 }
 
 /* In-Progress Skip Button */

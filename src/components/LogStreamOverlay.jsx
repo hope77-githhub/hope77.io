@@ -6,6 +6,9 @@ export default function LogStreamOverlay({ isOpen, onClose }) {
   // Mode: 'pitstop' | 'login'
   const [mode, setMode] = useState('pitstop');
 
+  // Target Pit Stop Duration (randomized between 2.00s and 4.00s on each entry)
+  const [targetPitTime, setTargetPitTime] = useState('2.40');
+
   // Pit Stop Simulation States
   // phases: 'approaching' -> 'jacking' -> 'swapping' -> 'released' -> 'ready'
   const [phase, setPhase] = useState('approaching');
@@ -35,9 +38,15 @@ export default function LogStreamOverlay({ isOpen, onClose }) {
     }
   };
 
-  // Run the Netflix "Drive to Survive" Pit Stop Sequence
+  // Run the Pit Stop Sequence with randomized duration between 2.0s and 4.0s
   const startPitStopSequence = () => {
     clearAllTimers();
+
+    // Generate random pit stop duration between 2.00s and 4.00s (e.g. 2.14, 2.78, 3.45)
+    const randomSec = +(2.0 + Math.random() * 2.0).toFixed(2);
+    const randomSecStr = randomSec.toFixed(2);
+    setTargetPitTime(randomSecStr);
+
     setMode('pitstop');
     setPhase('approaching');
     setStopwatchTime('0.00');
@@ -45,47 +54,59 @@ export default function LogStreamOverlay({ isOpen, onClose }) {
     setJacksActive(false);
     setGantryState('red');
 
-    // 1. Phase 1: Car stops in the pit box, jacks lift car (t = 800ms)
+    const totalStationaryMs = randomSec * 1000;
+    const boxEntryDelayMs = 600;
+
+    // 1. Phase 1: Car stops in the pit box, jacks lift car
     const t1 = setTimeout(() => {
       setPhase('jacking');
       setJacksActive(true);
       setSpeedVal('0 km/h (BOXED)');
 
       // Start rapid stopwatch ticking
-      let startTime = Date.now();
+      const startTime = Date.now();
       timerIntervalRef.current = setInterval(() => {
         const elapsed = (Date.now() - startTime) / 1000;
-        if (elapsed >= 1.82) {
-          setStopwatchTime('1.82');
-          if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
+        if (elapsed >= randomSec) {
+          setStopwatchTime(randomSecStr);
+          if (timerIntervalRef.current) {
+            clearInterval(timerIntervalRef.current);
+            timerIntervalRef.current = null;
+          }
         } else {
           setStopwatchTime(elapsed.toFixed(2));
         }
-      }, 35);
-    }, 800);
+      }, 30);
+    }, boxEntryDelayMs);
     timeoutsRef.current.push(t1);
 
-    // 2. Phase 2: Wheel guns engage and swap tires to Red Softs (t = 1300ms)
+    // 2. Phase 2: Wheel guns engage and swap tires ("빙글빙글" high speed spin)
+    const swappingDelayMs = boxEntryDelayMs + Math.min(500, Math.round(totalStationaryMs * 0.25));
     const t2 = setTimeout(() => {
       setPhase('swapping');
-    }, 1300);
+    }, swappingDelayMs);
     timeoutsRef.current.push(t2);
 
-    // 3. Phase 3: Wheels secured, Jacks down, Gantry lights GREEN! (t = 2100ms)
+    // 3. Phase 3: Wheels secured, Jacks down, Gantry lights GREEN!
+    const releaseTimeMs = boxEntryDelayMs + totalStationaryMs;
     const t3 = setTimeout(() => {
       setPhase('released');
       setJacksActive(false);
       setGantryState('green');
-      setStopwatchTime('1.82');
+      setStopwatchTime(randomSecStr);
       setSpeedVal('LAUNCH (295 km/h)');
-      if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
-    }, 2100);
+      if (timerIntervalRef.current) {
+        clearInterval(timerIntervalRef.current);
+        timerIntervalRef.current = null;
+      }
+    }, releaseTimeMs);
     timeoutsRef.current.push(t3);
 
-    // 4. Phase 4: Pit stop complete, show Big Enter Call To Action (t = 2800ms)
+    // 4. Phase 4: Pit stop complete, show Big Enter Call To Action
+    const readyTimeMs = releaseTimeMs + 500;
     const t4 = setTimeout(() => {
       setPhase('ready');
-    }, 2800);
+    }, readyTimeMs);
     timeoutsRef.current.push(t4);
   };
 
@@ -225,7 +246,7 @@ export default function LogStreamOverlay({ isOpen, onClose }) {
             <span>
               {mode === 'login'
                 ? 'RED BULL RACING // DRIVER SESSION AUTH'
-                : 'NETFLIX DRIVE TO SURVIVE // RED BULL PIT STOP (1.82s)'}
+                : 'ORACLE RED BULL RACING // PIT STOP'}
             </span>
             <span className="terminal-title-tag">
               {mode === 'login' ? `VISITOR #${visitorNumber}` : 'PIT WALL LIVE'}
@@ -236,11 +257,12 @@ export default function LogStreamOverlay({ isOpen, onClose }) {
             {mode === 'pitstop' && (
               <button
                 type="button"
-                className="btn-term-action"
+                className="btn-term-race-start"
                 onClick={handleProceedToLogin}
-                title="Skip to Login"
+                title="Race Start (Enter)"
               >
-                <span>⏩ Skip to Enter</span>
+                <i className="fas fa-flag-checkered"></i>
+                <span>Race Start (Enter)</span>
               </button>
             )}
             <button
@@ -262,7 +284,7 @@ export default function LogStreamOverlay({ isOpen, onClose }) {
           </div>
         </div>
 
-        {/* MODE 1: Netflix Drive to Survive F1 Pit Stop Experience */}
+        {/* MODE 1: Oracle Red Bull Racing F1 Pit Stop Experience */}
         {mode === 'pitstop' && (
           <div className="pitstop-arena">
             {/* Top Race & Telemetry Strip */}
@@ -312,13 +334,13 @@ export default function LogStreamOverlay({ isOpen, onClose }) {
                   <div className="radio-message">
                     {phase === 'approaching' && '"Box now, Max! Soft compound ready. Hit your marks!"'}
                     {phase === 'jacking' && '"Car lifted! Old wheels off, slotting new tyres onto the hub!"'}
-                    {phase === 'swapping' && '"Wheel guns spinning — torque fastening at 1.82s pace!"'}
-                    {(phase === 'released' || phase === 'ready') && '"1.82 SECONDS! World record pit stop! Pit limiter off, hammer time, Max!"'}
+                    {phase === 'swapping' && '"Wheel guns spinning — torque fastening on all four corners!"'}
+                    {(phase === 'released' || phase === 'ready') && `"${targetPitTime} SECONDS! Clean stop! Pit limiter off, hammer time, Max!"`}
                   </div>
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: '#8e9192', fontFamily: 'var(--font-mono)' }}>
-                  <span>TARGET: SUB 2.0s</span>
+                  <span>TARGET: 2.0s ~ 4.0s</span>
                   <span style={{ color: '#00c853', fontWeight: 800 }}>AUDIO ACTIVE</span>
                 </div>
               </div>
@@ -413,11 +435,11 @@ export default function LogStreamOverlay({ isOpen, onClose }) {
 
                 {(phase === 'released' || phase === 'ready') ? (
                   <span className="stopwatch-record-badge">
-                    ⚡ 1.82s WORLD RECORD PACE
+                    ⚡ {targetPitTime}s FAST PIT STOP
                   </span>
                 ) : (
                   <span style={{ fontSize: '11px', color: '#b0c4de', fontFamily: 'var(--font-mono)' }}>
-                    TARGET: &lt; 2.00s
+                    TARGET: 2.0s ~ 4.0s
                   </span>
                 )}
 
@@ -428,13 +450,13 @@ export default function LogStreamOverlay({ isOpen, onClose }) {
               </div>
             </div>
 
-            {/* Bottom Action Area: Enter CTA or Skip */}
+            {/* Bottom Action Area: Enter CTA or Race Start */}
             <div className="pitstop-bottom-bar">
               {phase === 'ready' ? (
                 <div className="pitstop-enter-wrap">
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#ffd600', fontSize: '13px', fontWeight: 800 }}>
-                    <i className="fas fa-trophy"></i>
-                    <span>피트스탑 완료! 1.82초 신기록 달성</span>
+                    <i className="fas fa-flag-checkered"></i>
+                    <span>피트스탑 완료! {targetPitTime}초 달성</span>
                   </div>
                   <button
                     type="button"
@@ -442,8 +464,8 @@ export default function LogStreamOverlay({ isOpen, onClose }) {
                     id="btn-pitstop-enter-cta"
                     onClick={handleProceedToLogin}
                   >
-                    <i className="fas fa-rocket"></i>
-                    <span>ENTER THE COCKPIT // 입장하기 (Enter)</span>
+                    <i className="fas fa-flag-checkered"></i>
+                    <span>Race Start (Enter)</span>
                   </button>
                   <div className="enter-key-hint">
                     <kbd>Enter</kbd> 키를 누르거나 버튼을 누르면 사용자 인증 후 메인 화면으로 진입합니다.
@@ -457,10 +479,12 @@ export default function LogStreamOverlay({ isOpen, onClose }) {
                   </div>
                   <button
                     type="button"
-                    className="btn-pitstop-skip"
+                    className="btn-pitstop-race-start"
                     onClick={handleProceedToLogin}
+                    title="Race Start (Enter)"
                   >
-                    <span>⏩ 바로 입장하기 (Skip)</span>
+                    <i className="fas fa-flag-checkered"></i>
+                    <span>Race Start (Enter)</span>
                   </button>
                 </div>
               )}
