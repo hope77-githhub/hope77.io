@@ -1,67 +1,77 @@
-# 장자훈's Log (HOPE77 Portfolio) — Structure & Maintenance Guide
+# 🏁 장자훈's Log (HOPE77 Portfolio)
 
-GitHub Pages (`https://hope77-githhub.io`) 호스팅을 위해 구축된 **토스 디자인 시스템(TDS) 기반 로그 옵저버빌리티 포트폴리오**입니다.
+> **"당연한 것에 질문을 던지고, 직접 도구를 만들어 비효율을 해결합니다."**  
+> F1 레이싱의 속도감과 시스템 엔지니어링의 로그 옵저버빌리티를 결합한 장자훈(hope77)의 인터랙티브 포트폴리오 웹사이트입니다.
 
----
-
-## 🎨 디자인 시스템: 토스 디자인 시스템 (TDS, toss.md)
-
-- **Brand Color:** Toss Blue (`#3182F6`), Pressed Blue (`#1B64DA`), Brand Weak (`#E8F3FF`)
-- **Greyscale:** `grey-900` (`#191F28`, primary text/dark surface, never pure black), `grey-800` (`#333D4B`), `grey-700` (`#4E5968`), `grey-200` (`#E5E8EB`), `grey-100` (`#F2F4F6`), `grey-50` (`#F9FAFB`)
-- **Typography:** Pretendard Variable & JetBrains Mono (TDS Type Ramp: Display Bold, Title SemiBold, Body Regular)
-- **Geometry:** 공격적이지만 단정한 둥근 모서리 (`12px` ~ `24px` + `999px Full Pill`) 및 섬세한 Navy-900 기반 그림자 (`elevation`)
-- **Log Engine:** 첫 진입 로그 스트리밍, Hero 시스템 로그 콘솔 윈도우, "장자훈's Log" 시간대별 아코디언 페이로드 시스템 완전 유지
+[![Live Demo](https://img.shields.io/badge/Demo-Live_Portfolio-db0a40?style=for-the-badge&logo=google-chrome&logoColor=white)](https://hope77-githhub.github.io)
+[![License: MIT](https://img.shields.io/badge/License-MIT-001e3c?style=for-the-badge)](LICENSE)
 
 ---
 
-## 📁 프로젝트 디렉토리 구조
+## 🏎️ 이 포트폴리오의 특별한 경험들
 
-```text
-portfolio/
-├── index.html                   # "장자훈's Log" 타임라인 피드 및 메인 마크업 (내용 수정용)
-├── README.md                    # 유지보수 및 파일 설명 가이드
-├── toss.md                      # 토스 디자인 시스템(TDS) 명세서
-├── css/
-│   ├── variables.css            # TDS 디자인 토큰 (토스 블루, 그레이스케일, 곡률, 그림자)
-│   ├── base.css                 # 리셋, TDS 타이포그래피, 섹션 밴드
-│   ├── components.css           # TDS 칩, 버튼, 카드, 장자훈's Log 아코디언 피드
-│   ├── log-console.css          # 첫 진입 로그 스트리밍 터미널 오버레이 (TDS 다크 팔레트)
-│   └── style.css                # 전체 CSS를 모아둔 마스터 스타일시트
-└── js/
-    ├── log-streamer.js          # 첫 진입 로그 스트리밍 & 실시간 터미널 제어 엔진
-    ├── project-logs.js          # "장자훈's Log" 타임라인 피드, 아코디언 토글 & 필터 엔진
-    ├── navigation.js            # 상단 퀵 네비게이션 & 프리뷰 패널 동기화 모듈
-    ├── i18n.js                  # 한/영 언어 전환 및 실시간 자동 번역 (Google GTX API)
-    └── main.js                  # 전체 모듈을 초기화하고 연결하는 진입점
+단순한 이력서 나열을 넘어, 방문자가 직접 만져보고 조작할 수 있는 다양한 인터랙티브 요소들을 담았습니다.
+
+### 1. ⏱️ F1 피트스탑 & 세션 로그인 인트로
+- **실제 F1 RB20 리버리 & 타이어 탈착 연출**: 페이지에 처음 들어오면 F1 서킷 피트레인으로 초대됩니다.
+- **매 진입마다 달라지는 랜덤 피트스탑 시간 (2.0s ~ 4.0s)**: 스톱워치가 실시간으로 카운팅되며, 초고속 휠 건 회전("빙글빙글")과 함께 새로운 소프트 타이어가 머신에 체결됩니다.
+- **방문자 세션 인증**: 내가 몇 번째 방문자인지(예: `당신은 7번째 사용자입니다`)를 아이디로 입력받고 자동 인증 후 콕핏으로 진입하는 유쾌한 플로우를 제공합니다.
+
+### 2. 🎮 Red Bull Paddock Lounge (2D 미니 드라이버 게임)
+- **키보드로 즐기는 2D 미니 드라이버**: 3D 엔진 없이 순수 2D 벡터/CSS로 제작된 귀여운 F1 드라이버 캐릭터를 <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> 또는 방향키로 조작할 수 있습니다.
+- **60fps 부드러운 연속 이동**: 방향키를 꾹 누르고 있으면 OS 딜레이 없이 60fps로 매끄럽게 패독을 글라이딩합니다.
+- **스페이스바(<kbd>SPACE</kbd>) 구역 미션**:
+  - 🏆 **P1 포디움 구역**: 포디움 정상에 올라 스페이스바를 누르면 샴페인 우승 세레머니!
+  - ⚡ **터보 부스터 존**: 스페이스바를 누르면 4초 동안 이동 속도가 2배 빨라지며 강렬한 불꽃 오라가 점화됩니다.
+  - 🔴 **1번 피트 박스**: 피트 크루들과의 소프트 타이어 교체 액션!
+  - 📡 **핏 월 라운지**: 레이스 엔지니어 및 팀 크루와 하이파이브!
+- **실시간 대화 & 다중 탭 동기화**:
+  - 채팅 메시지를 입력하면 캐릭터 머리 위에 통통 튀는 만화풍 말풍선이 뜹니다.
+  - 브라우저 내장 `BroadcastChannel` 기반으로 다른 탭이나 창에서 접속한 사용자들과 실시간으로 움직임과 대화가 동기화됩니다.
+- **mini log**:
+  - 기본 `CHAT` 화면으로 접속자들의 대화가 실시간 공유됩니다.
+  - `MOVE (PRIVATE)` 탭에서는 다른 접속자의 움직임에 방해받지 않고 오직 내 캐릭터의 이동 기록만 안전하게 열람할 수 있습니다.
+
+### 3. 📊 로그 옵저버빌리티 기반의 프로젝트 아카이브
+엔지니어링 결과물을 시스템 로그 페이로드 형태로 구조화하여 투명하게 공개합니다:
+- **LoL SNA 음성 커뮤니케이션 연구 (arXiv:2512.20116)**: Riot API와 Discord 음성 데이터를 보간법으로 동기화하고 RoBERTa 및 동적 사회연결망(SNA)으로 분석한 학술 논문.
+- **Unknown QA 자동화 플랫폼**: 데이터 스키마 기반 로그 검증 및 영상-로그 원클릭 동기화 도구.
+- **AI Race Engineer**: F1 UDP 실시간 텔레메트리 파싱 및 음성 피드백 레이스 전략 코치.
+- **NEIS 글자수 계산기 & 엑셀 중복 탐지기**: 100% 클라이언트 메모리 기반의 나이스 규격 글자수 계산 및 학교 실무 보조 도구.
+
+### 4. 🌐 글로벌 다국어 지원 (KO / EN)
+- 상단 앱 바의 언어 토글 버튼 하나로 모든 프로필과 프로젝트 상세 설명, UI 라벨을 한국어와 영어로 즉시 전환할 수 있습니다.
+
+---
+
+## 💻 로컬에서 실행해보기
+
+본 프로젝트는 최신 React 및 Vite 기반으로 제작되었습니다.
+
+```bash
+# 1. 저장소 클론
+git clone https://github.com/hope77-githhub/hope77.io.git
+cd portfolio
+
+# 2. 의존성 패키지 설치
+npm install
+
+# 3. 로컬 개발 서버 시작
+npm run dev
+```
+
+브라우저에서 `http://localhost:5173`으로 접속하면 바로 확인하실 수 있습니다.
+
+```bash
+# 프로덕션 빌드
+npm run build
 ```
 
 ---
 
-## 🚀 주요 기능 및 사용자 경험
+## 📬 Contact & Author
 
-1. **첫 진입 로그 스트리밍 콘솔 (Bootstrapping Telemetry Stream)**
-   - 실제 프로젝트 기반의 시스템 로그가 안정적인 속도로 출력됩니다.
-   - 100% 완료 시 자동으로 닫히지 않고 **[🚀 장자훈's Log 메인 화면 진입하기 (Enter)]** 버튼이 나타나며 대기합니다.
-   - `Enter` 키, `ESC` 키, 창 바깥 클릭, 또는 `스킵` 버튼으로 언제든지 즉시 메인 페이지로 진입할 수 있습니다.
-   - 상단 헤더의 **[Pipeline Logs]** 버튼을 통해 언제든 터미널을 다시 열어 전체 로그를 검토하고 재실행할 수 있습니다.
-
-2. **상단 Hero 시스템 로그 콘솔 윈도우**
-   - 토스 다크 캔버스(`grey-900: #191F28`) 위에 3색 윈도우 도트와 실시간 메타데이터 스트립을 갖춘 정교한 콘솔 디자인.
-   - 터미널 프롬프트 라인(`hope77@kernel:~$`)과 텔레메트리 HUD 모니터링 카드 탑재.
-
-3. **메인 화면: "장자훈's Log" (시간대별 프로젝트 로그 적재 피드)**
-   - 각 프로젝트와 아키텍처 이력이 **시간대별 시스템 로그(Chronological Log Record)** 형태로 적재되어 쌓여 있습니다.
-   - **[로그 상세 페이로드 열기 (+ Inspect Payload)]** 버튼을 누르면:
-     - 정교한 **JSON 구조화 메타데이터 블록**이 표시됩니다.
-     - **문제 정의(Problem Incident)** 와 **해결 방안(Resolution Strategy)** 이 분리되어 노출됩니다.
-     - 세부 내용 및 논문/GitHub 저장소 바로가기 버튼이 나타납니다.
-   - 상단 툴바의 **필터 버튼**(`ALL`, `PROJECTS`, `ARCHITECTURE`, `RESEARCH`, `ABOUT`)과 **[전체 펼치기 / 전체 접기]** 버튼으로 손쉽게 탐색할 수 있습니다.
-
----
-
-## 🛠️ 유지보수 및 내용 수정 가이드
-
-- **프로젝트 상세 내용 및 링크 수정:** [`index.html`](file:///C:/Users/jahjang/python/portfolio/index.html)
-- **첫 진입 로그 시퀀스 변경:** [`js/log-streamer.js`](file:///C:/Users/jahjang/python/portfolio/js/log-streamer.js)의 `LOG_SEQUENCE` 배열
-- **타임라인 피드 상호작용 제어:** [`js/project-logs.js`](file:///C:/Users/jahjang/python/portfolio/js/project-logs.js)
-- **TDS 디자인 토큰 변경:** [`css/variables.css`](file:///C:/Users/jahjang/python/portfolio/css/variables.css)
+- **Author:** 장자훈 (Jang Ja Hun / HOPE77)
+- **Email:** `contact@hope77.io`
+- **GitHub:** [https://github.com/hope77-githhub](https://github.com/hope77-githhub)
+- **Live Website:** [https://hope77-githhub.github.io](https://hope77-githhub.github.io)

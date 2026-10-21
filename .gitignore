@@ -5,6 +5,10 @@ node_modules/
 # Production build
 dist/
 
+# Local backup directories & raw assets
+backup-*/
+*.jpg
+
 # Local env files
 .env
 .env.local
