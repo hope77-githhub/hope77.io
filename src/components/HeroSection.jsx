@@ -49,7 +49,7 @@ export default function HeroSection() {
   ];
 
   return (
-    <div className="band-light band-hero-light">
+    <div className="band-hero-racing">
       <div className="band-inner">
         <section className="hero-log-window" id="summary">
           {/* Terminal Window Header Bar */}
@@ -97,7 +97,7 @@ export default function HeroSection() {
                 </div>
 
                 <div className="summary-chips">
-                  <span className="chip chip-info">
+                  <span className="chip chip-secondary">
                     <i className="fas fa-stream"></i> Data &amp; Log Pipeline
                   </span>
                   <span className="chip chip-purple">
@@ -168,7 +168,7 @@ export default function HeroSection() {
                   </div>
                   <div className="profile-stat-item">
                     <span>{t('관심 도메인 (F1 베르스타펜 & 축구)', 'Domains (F1 Verstappen & Football)')}</span>
-                    <span className="chip chip-info">Passion</span>
+                    <span className="chip chip-secondary">Passion</span>
                   </div>
                 </div>
 

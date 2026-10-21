@@ -28,7 +28,7 @@ export default function QuickNavigation({ onSelectModule }) {
           <div className="section-header">
             <div className="section-header-left">
               <h2 className="section-heading">Log Index &amp; Module Directory</h2>
-              <span className="chip chip-info">{MODULES_NAV_DATA.length} Modules</span>
+              <span className="chip chip-secondary">{MODULES_NAV_DATA.length} Modules</span>
             </div>
             <span className="meta-label">
               {t(
@@ -78,7 +78,7 @@ export default function QuickNavigation({ onSelectModule }) {
           <div className="preview-panel">
             <div className="preview-content">
               <div className="preview-title">
-                <span className="chip chip-info">PREVIEW</span>
+                <span className="chip chip-secondary">PREVIEW</span>
                 <span id="preview-module-name" style={{ fontFamily: 'var(--font-mono)' }}>
                   {previewItem.id}. {previewItem.name}
                 </span>

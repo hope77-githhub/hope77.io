@@ -78,13 +78,14 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--color-hairline);
-    height: 60px;
+    background: rgba(0, 18, 36, 0.96); /* Red Bull Deep Racing Navy */
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 2px solid var(--color-primary); /* #db0a40 Red Bull Racing Line */
+    height: 62px;
     display: flex;
     align-items: center;
+    box-shadow: 0 4px 20px rgba(0, 15, 30, 0.35);
 }
 
 .top-app-bar-inner {
@@ -102,7 +103,7 @@
     font-family: var(--font-display);
     font-size: 18px;
     font-weight: 800;
-    color: #000000;
+    color: #ffffff;
     letter-spacing: -0.02em;
     display: flex;
     align-items: center;
@@ -117,8 +118,9 @@
     font-size: 11px;
     padding: 3px 10px;
     border-radius: var(--rounded-pill);
-    background: var(--color-primary-weak);
-    color: var(--color-primary);
+    background: rgba(27, 106, 238, 0.2); /* Technical Blue Tint */
+    color: #82b1ff;                       /* Electric Blue */
+    border: 1px solid rgba(27, 106, 238, 0.4);
     font-family: var(--font-mono);
     font-weight: 700;
     letter-spacing: 0.03em;
@@ -131,8 +133,8 @@
 }
 
 .active-module-pill {
-    background: var(--color-surface-container);
-    color: var(--color-on-surface);
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
     padding: 6px 14px;
     border-radius: var(--rounded-pill);
     font-family: var(--font-mono);
@@ -141,7 +143,7 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    border: 1px solid var(--color-hairline);
+    border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .active-module-pill::before {
@@ -150,6 +152,7 @@
     height: 6px;
     border-radius: var(--rounded-full);
     background: var(--color-primary);
+    box-shadow: 0 0 6px var(--color-primary);
 }
 
 /* Pipeline Log Ingestion Reopen Button */
@@ -157,9 +160,9 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: var(--color-tertiary); /* #001e3c Red Bull Racing Navy */
+    background: rgba(255, 255, 255, 0.1);
     color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: var(--rounded-pill); /* 9999px Full Pill */
     padding: 6px 16px;
     height: 38px;
@@ -172,10 +175,10 @@
 }
 
 .btn-log-console-toggle:hover {
-    background: #001529;
+    background: rgba(219, 10, 64, 0.25);
     border-color: var(--color-primary);
     color: #ffffff;
-    box-shadow: 0 4px 12px rgba(0, 30, 60, 0.25);
+    box-shadow: 0 0 14px rgba(219, 10, 64, 0.5);
 }
 
 .btn-log-console-toggle .live-dot {
@@ -197,8 +200,8 @@
     display: inline-flex;
     align-items: center;
     gap: 2px;
-    background: var(--color-surface-container);
-    border: 1px solid var(--color-hairline);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: var(--rounded-pill);
     padding: 3px;
     height: 38px;
@@ -211,7 +214,7 @@
     border-radius: var(--rounded-pill);
     font-size: 12px;
     font-weight: 700;
-    color: var(--color-on-surface-variant);
+    color: #b0c4de;
     transition: background-color var(--dur-snappy) var(--ease-snappy), color var(--dur-snappy) var(--ease-snappy);
 }
 
@@ -438,30 +441,30 @@
     text-transform: none;
 }
 
-/* Floating Telemetry HUD Card inside Light Hero */
+/* Floating Telemetry HUD Card inside Hero (Red Bull Deep Racing Navy) */
 .summary-profile-box {
-    background: var(--color-surface-container); /* #f8f8f8 */
-    color: #000000;
-    border: 1px solid rgba(0, 15, 30, 0.08);
+    background: linear-gradient(145deg, #001224 0%, #001e3c 100%);
+    color: #ffffff;
+    border: 1px solid rgba(27, 106, 238, 0.35);
     border-radius: var(--rounded-lg); /* 16px */
     padding: 24px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 18px;
-    box-shadow: var(--elevation-sm);
+    box-shadow: 0 12px 28px rgba(0, 15, 30, 0.35);
 }
 
 .summary-profile-box .card-title-row .meta-label {
-    color: var(--color-primary);
+    color: #82b1ff; /* Electric Blue */
     font-family: var(--font-mono);
     font-weight: 800;
     letter-spacing: 0.5px;
 }
 
 .profile-stat-list {
-    background: #ffffff;
-    border: 1px solid var(--color-hairline);
+    background: rgba(0, 15, 30, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--rounded-md); /* 8px */
     padding: 8px 16px;
     display: flex;
@@ -475,9 +478,9 @@
     font-size: 13.5px;
     font-family: var(--font-display);
     font-weight: 600;
-    color: #000000;
+    color: #ffffff;
     padding: 10px 0;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     gap: 10px;
 }
 
@@ -497,7 +500,7 @@
 
 .module-btn {
     background: #ffffff;
-    border: 1px solid rgba(0, 15, 30, 0.08);
+    border: 1px solid rgba(0, 30, 60, 0.12);
     border-radius: var(--rounded-lg); /* 16px */
     padding: var(--space-md);
     text-align: left;
@@ -511,8 +514,8 @@
 }
 
 .module-btn:hover {
-    box-shadow: var(--elevation-md);
-    border-color: var(--color-primary);
+    box-shadow: 0 8px 18px rgba(27, 106, 238, 0.15);
+    border-color: var(--color-secondary); /* #1b6aee Technical Blue */
     transform: translateY(-2px);
 }
 
@@ -534,7 +537,7 @@
     font-family: var(--font-display);
     font-size: 15px;
     font-weight: 700;
-    color: #000000;
+    color: #001e3c; /* Deep Racing Navy */
 }
 
 .module-btn.active .module-btn-title {
@@ -558,8 +561,8 @@
 }
 
 .preview-panel {
-    background: var(--color-surface-container); /* #f8f8f8 */
-    border: 1px solid rgba(0, 15, 30, 0.08);
+    background: linear-gradient(135deg, #001224 0%, #001e3c 100%);
+    border: 1px solid rgba(27, 106, 238, 0.35);
     border-radius: var(--rounded-lg); /* 16px */
     padding: var(--space-md) var(--space-lg);
     display: flex;
@@ -567,7 +570,8 @@
     justify-content: space-between;
     flex-wrap: wrap;
     gap: var(--space-md);
-    box-shadow: var(--elevation-sm);
+    box-shadow: 0 8px 24px rgba(0, 15, 30, 0.25);
+    color: #ffffff;
 }
 
 .preview-content {
@@ -581,10 +585,14 @@
 .preview-title {
     font-size: 16px;
     font-weight: 800;
-    color: #000000;
+    color: #ffffff;
     display: flex;
     align-items: center;
     gap: var(--space-sm);
+}
+
+.preview-panel .body-text {
+    color: #b0c4de !important;
 }
 
 /* --------------------------------------------------------------------------
@@ -802,13 +810,14 @@
     height: 10px;
     border-radius: var(--rounded-full);
     background: var(--color-primary); /* #db0a40 */
+    box-shadow: 0 0 8px rgba(219, 10, 64, 0.5);
     flex-shrink: 0;
 }
 
 .marker-line {
     width: 1px;
     flex-grow: 1;
-    background: var(--color-hairline);
+    background: rgba(27, 106, 238, 0.2); /* Technical Blue subtle line */
     margin: 6px 0;
 }
 
@@ -837,7 +846,7 @@
 .release-date {
     font-size: 17px;
     font-weight: 800;
-    color: #000000;
+    color: #001e3c; /* Red Bull Deep Racing Navy */
     font-family: var(--font-display);
 }
 
@@ -848,12 +857,13 @@
 }
 
 /* --------------------------------------------------------------------------
-   8. Footer
+   8. Footer (Red Bull Midnight Racing Navy)
    -------------------------------------------------------------------------- */
 .app-footer {
-    background: #ffffff;
-    border-top: 1px solid var(--color-hairline);
+    background: #001224;
+    border-top: 2px solid var(--color-primary); /* #db0a40 Red Bull Racing Line */
     padding: 48px 0;
+    color: #ffffff;
 }
 
 .footer-inner {
@@ -874,11 +884,20 @@
     gap: var(--space-lg);
     font-size: 14px;
     font-weight: 600;
-    color: var(--color-on-surface-variant);
+    color: #b0c4de;
+}
+
+.footer-contacts a {
+    color: #82b1ff;
+    transition: color var(--dur-snappy) var(--ease-snappy);
 }
 
 .footer-contacts a:hover {
-    color: var(--color-primary);
+    color: #ffffff;
+}
+
+.app-footer .meta-label {
+    color: #8e9192;
 }
 
 /* --------------------------------------------------------------------------
@@ -920,14 +939,14 @@
    10. "장자훈's Log" — Timeline Log Registry & Expandable Payload System
    ========================================================================== */
 
-/* Log Dashboard Metrics Banner */
+/* Log Dashboard Metrics Banner (Red Bull Racing Observability Banner) */
 .log-dashboard-banner {
-    background: #ffffff;
-    border: 1px solid rgba(0, 15, 30, 0.08);
+    background: linear-gradient(135deg, #001224 0%, #001e3c 100%);
+    border: 1px solid rgba(27, 106, 238, 0.35);
     border-radius: var(--rounded-lg); /* 16px */
     padding: var(--space-md) var(--space-lg);
     margin-bottom: var(--space-lg);
-    box-shadow: var(--elevation-sm);
+    box-shadow: 0 8px 24px rgba(0, 15, 30, 0.25);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -945,7 +964,7 @@
     font-family: var(--font-display);
     font-size: 18px;
     font-weight: 800;
-    color: var(--color-primary); /* #db0a40 Red Bull Red */
+    color: #ffffff;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -963,7 +982,7 @@
 
 .log-dashboard-desc {
     font-size: 14px;
-    color: var(--color-on-surface-variant);
+    color: #b0c4de;
     font-family: var(--font-sans);
     line-height: 1.5;
 }
@@ -976,8 +995,8 @@
 }
 
 .log-stat-card {
-    background: var(--color-surface-container); /* #f8f8f8 */
-    border: 1px solid var(--color-hairline);
+    background: rgba(0, 15, 30, 0.75);
+    border: 1px solid rgba(27, 106, 238, 0.35);
     border-radius: var(--rounded-md);          /* 8px */
     padding: 8px 16px;
     display: flex;
@@ -989,12 +1008,12 @@
     font-family: var(--font-mono);
     font-size: 16px;
     font-weight: 800;
-    color: #000000;
+    color: #ffffff;
 }
 
 .log-stat-lbl {
     font-size: 11px;
-    color: var(--color-outline-variant);
+    color: #82b1ff; /* Electric Blue */
     text-transform: uppercase;
     font-weight: 700;
     letter-spacing: 0.05em;
@@ -1138,15 +1157,16 @@
 }
 
 .log-ts-badge {
-    background: var(--color-primary-weak);
-    color: var(--color-primary);
+    background: var(--color-secondary-container); /* #e3f0ff */
+    color: var(--color-secondary);                /* #1b6aee Red Bull Technical Blue */
     padding: 3px 12px;
-    border-radius: var(--rounded-pill); /* 9999px Full Pill */
+    border-radius: var(--rounded-pill);           /* 9999px Full Pill */
     font-size: 12px;
     font-weight: 700;
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    border: 1px solid rgba(27, 106, 238, 0.25);
 }
 
 .log-tag-badge {
