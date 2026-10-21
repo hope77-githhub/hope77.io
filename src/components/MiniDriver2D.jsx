@@ -24,7 +24,7 @@ export default function MiniDriver2D({
 
   return (
     <div
-      className={`mini-driver-wrapper ${isMoving ? 'is-walking' : 'is-idle'} ${
+      className={`mini-driver-wrapper ${isSelf ? 'is-self-driver' : ''} ${isMoving ? 'is-walking' : 'is-idle'} ${
         isBoosted ? 'is-boosted' : ''
       }`}
       style={{

@@ -387,7 +387,12 @@
     position: absolute;
     z-index: 15;
     pointer-events: none;
-    transition: left 0.12s linear, top 0.12s linear;
+    will-change: left, top;
+}
+
+/* Remote other drivers get a smooth interpolation transition */
+.mini-driver-wrapper:not(.is-self-driver) {
+    transition: left 0.1s linear, top 0.1s linear;
 }
 
 /* Idle Breathing Bounce */

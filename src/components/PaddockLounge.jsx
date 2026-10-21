@@ -8,8 +8,6 @@ export default function PaddockLounge() {
   const visitorNum = getVisitorSequence();
 
   const arenaRef = useRef(null);
-  const moveTimerRef = useRef(null);
-  const lastLogMoveTimeRef = useRef(0);
   const logContainerRef = useRef(null);
   const channelRef = useRef(null);
 
@@ -20,6 +18,17 @@ export default function PaddockLounge() {
   const [isBoosted, setIsBoosted] = useState(false);
   const [mySpeech, setMySpeech] = useState('');
   const speechTimeoutRef = useRef(null);
+
+  // Smooth Game Loop Refs (60fps continuous movement when holding keys)
+  const myPosRef = useRef({ x: 230, y: 160 });
+  const keysDownRef = useRef(new Set());
+  const isBoostedRef = useRef(false);
+  const lastBroadcastTimeRef = useRef(0);
+  const lastLogMoveTimeRef = useRef(0);
+
+  useEffect(() => {
+    isBoostedRef.current = isBoosted;
+  }, [isBoosted]);
 
   // Other players (multi-tab sync + simulated paddock drivers)
   const [otherDrivers, setOtherDrivers] = useState({
@@ -274,61 +283,10 @@ export default function PaddockLounge() {
     return () => clearInterval(interval);
   }, []);
 
-  // Set Moving Helper
-  const triggerMovementState = () => {
-    setIsMoving(true);
-    if (moveTimerRef.current) clearTimeout(moveTimerRef.current);
-    moveTimerRef.current = setTimeout(() => {
-      setIsMoving(false);
-    }, 250);
-  };
-
-  // Move user by offset delta (dx, dy) — Strictly WASD & Arrow Keys
-  const moveByDelta = (dx, dy) => {
-    const arena = arenaRef.current;
-    const w = arena ? arena.clientWidth : 540;
-    const h = arena ? arena.clientHeight : 360;
-
-    const speed = isBoosted ? 32 : 18;
-    const nextX = Math.max(30, Math.min(w - 30, myPos.x + dx * speed));
-    const nextY = Math.max(40, Math.min(h - 35, myPos.y + dy * speed));
-
-    if (dx < 0) setDirection('left');
-    else if (dx > 0) setDirection('right');
-
-    setMyPos({ x: nextX, y: nextY });
-    triggerMovementState();
-
-    // Broadcast movement to other tabs
-    if (channelRef.current) {
-      channelRef.current.postMessage({
-        type: 'MOVE',
-        userNum: visitorNum,
-        x: nextX,
-        y: nextY,
-        direction: dx < 0 ? 'left' : 'right',
-        isBoosted,
-      });
-    }
-
-    // Private movement log (Only current user's movement)
-    const now = Date.now();
-    if (now - lastLogMoveTimeRef.current > 1200) {
-      const zone = getActiveZone(nextX, nextY);
-      const zoneLabel = zone ? `[${zone.name}]` : '[패독 그라운드]';
-      addMiniLog(
-        'MOVE',
-        `사용자 #${visitorNum} (나)`,
-        `(X: ${Math.round(nextX)}, Y: ${Math.round(nextY)}) ${zoneLabel} 구역으로 이동`,
-        true
-      );
-      lastLogMoveTimeRef.current = now;
-    }
-  };
-
   // Spacebar Interaction Trigger (Triggered when standing in a zone and pressing Spacebar)
   const handleSpacebarAction = () => {
-    const zone = getActiveZone(myPos.x, myPos.y);
+    const currentPos = myPosRef.current;
+    const zone = getActiveZone(currentPos.x, currentPos.y);
 
     if (zone?.id === 'podium') {
       // 1. P1 Podium Celebration
@@ -417,40 +375,132 @@ export default function PaddockLounge() {
     }
   };
 
-  // Keyboard navigation & Spacebar listener (WASD, Arrows, Space)
+  // Keyboard navigation & Spacebar listener (Continuous 60fps Game Loop)
   useEffect(() => {
     const handleKeyDown = (e) => {
       // Don't intercept if user is typing in chat input
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
 
-      let dx = 0;
-      let dy = 0;
-
-      if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
-        dy -= 1;
+      const key = e.key.toLowerCase();
+      if (
+        key === 'arrowup' ||
+        key === 'w' ||
+        key === 'arrowdown' ||
+        key === 's' ||
+        key === 'arrowleft' ||
+        key === 'a' ||
+        key === 'arrowright' ||
+        key === 'd'
+      ) {
         e.preventDefault();
-        moveByDelta(dx, dy);
-      } else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
-        dy += 1;
-        e.preventDefault();
-        moveByDelta(dx, dy);
-      } else if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
-        dx -= 1;
-        e.preventDefault();
-        moveByDelta(dx, dy);
-      } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
-        dx += 1;
-        e.preventDefault();
-        moveByDelta(dx, dy);
+        keysDownRef.current.add(key);
       } else if (e.code === 'Space' || e.key === ' ') {
         e.preventDefault();
         handleSpacebarAction();
       }
     };
 
+    const handleKeyUp = (e) => {
+      const key = e.key.toLowerCase();
+      keysDownRef.current.delete(key);
+    };
+
+    const handleBlur = () => {
+      keysDownRef.current.clear();
+      setIsMoving(false);
+    };
+
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [myPos, isBoosted, visitorNum]);
+    window.addEventListener('keyup', handleKeyUp);
+    window.addEventListener('blur', handleBlur);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+      window.removeEventListener('blur', handleBlur);
+    };
+  }, [visitorNum]);
+
+  // Continuous 60fps Movement Loop via requestAnimationFrame
+  useEffect(() => {
+    let animId = null;
+    let lastTime = performance.now();
+
+    const loop = (currentTime) => {
+      const dt = Math.min((currentTime - lastTime) / 1000, 0.05); // cap at 50ms
+      lastTime = currentTime;
+
+      const keys = keysDownRef.current;
+      let dx = 0;
+      let dy = 0;
+
+      if (keys.has('arrowup') || keys.has('w')) dy -= 1;
+      if (keys.has('arrowdown') || keys.has('s')) dy += 1;
+      if (keys.has('arrowleft') || keys.has('a')) dx -= 1;
+      if (keys.has('arrowright') || keys.has('d')) dx += 1;
+
+      if (dx !== 0 || dy !== 0) {
+        // Diagonal normalization
+        if (dx !== 0 && dy !== 0) {
+          dx *= 0.7071;
+          dy *= 0.7071;
+        }
+
+        const speed = isBoostedRef.current ? 340 : 180;
+        const arena = arenaRef.current;
+        const w = arena ? arena.clientWidth : 540;
+        const h = arena ? arena.clientHeight : 360;
+
+        const currentPos = myPosRef.current;
+        const nextX = Math.max(30, Math.min(w - 30, currentPos.x + dx * speed * dt));
+        const nextY = Math.max(40, Math.min(h - 35, currentPos.y + dy * speed * dt));
+
+        myPosRef.current = { x: nextX, y: nextY };
+        setMyPos({ x: nextX, y: nextY });
+
+        if (dx < 0) setDirection('left');
+        else if (dx > 0) setDirection('right');
+
+        setIsMoving(true);
+
+        const now = Date.now();
+        // Broadcast sync to other tabs (throttled to 75ms)
+        if (now - lastBroadcastTimeRef.current > 75) {
+          if (channelRef.current) {
+            channelRef.current.postMessage({
+              type: 'MOVE',
+              userNum: visitorNum,
+              x: nextX,
+              y: nextY,
+              direction: dx < 0 ? 'left' : 'right',
+              isBoosted: isBoostedRef.current,
+            });
+          }
+          lastBroadcastTimeRef.current = now;
+        }
+
+        // Private movement log (throttled to 1400ms while continuously walking)
+        if (now - lastLogMoveTimeRef.current > 1400) {
+          const zone = getActiveZone(nextX, nextY);
+          const zoneLabel = zone ? `[${zone.name}]` : '[패독 그라운드]';
+          addMiniLog(
+            'MOVE',
+            `사용자 #${visitorNum} (나)`,
+            `(X: ${Math.round(nextX)}, Y: ${Math.round(nextY)}) ${zoneLabel} 구역으로 이동 중`,
+            true
+          );
+          lastLogMoveTimeRef.current = now;
+        }
+      } else {
+        setIsMoving(false);
+      }
+
+      animId = requestAnimationFrame(loop);
+    };
+
+    animId = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(animId);
+  }, [visitorNum]);
 
   // Submit chat message
   const handleSendChat = (e) => {
