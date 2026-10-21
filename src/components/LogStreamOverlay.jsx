@@ -350,7 +350,7 @@ export default function LogStreamOverlay({ isOpen, onClose }) {
                   <kbd>Enter</kbd> 키를 누르면 인증 로그인 화면을 거쳐 장자훈's Log로 입장합니다.
                 </span>
               </div>
-              <div style={{ color: '#6b7684' }}>
+              <div style={{ color: 'var(--color-outline-variant)' }}>
                 <i className="fas fa-scroll"></i> <span>창 내부 스크롤을 통해 전체 로그 히스토리를 확인하실 수 있습니다.</span>
               </div>
             </div>
@@ -365,9 +365,9 @@ export default function LogStreamOverlay({ isOpen, onClose }) {
                 <div className="toss-login-icon-wrap">
                   <i className="fas fa-shield-halved"></i>
                 </div>
-                <h3 className="toss-login-title">보안 세션 로그인</h3>
+                <h3 className="toss-login-title">보안 세션 인증 (Session Auth)</h3>
                 <p className="toss-login-desc">
-                  장자훈's Log 환경에 접속하기 위해 인증을 진행해요.
+                  장자훈's Log 고성능 파이프라인 접속을 위한 인증을 진행합니다.
                 </p>
               </div>
 

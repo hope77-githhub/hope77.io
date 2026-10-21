@@ -117,8 +117,8 @@ export default function ProjectLogCard({ project, isExpanded, onToggle }) {
                         {pillar.chipText}
                       </span>
                     </div>
-                    <div className="needs-content-box" style={{ background: '#ffffff', border: '1px solid #e5e8eb' }}>
-                      <p className="body-text" style={{ fontSize: '14px', margin: 0, color: 'var(--color-grey-700)', lineHeight: '1.6' }}>
+                    <div className="needs-content-box" style={{ background: '#ffffff', border: '1px solid var(--color-hairline)' }}>
+                      <p className="body-text" style={{ fontSize: '14px', margin: 0, color: 'var(--color-on-surface-variant)', lineHeight: '1.6' }}>
                         {lang === 'en' ? pillar.descEn : pillar.descKo}
                       </p>
                     </div>
@@ -145,15 +145,15 @@ export default function ProjectLogCard({ project, isExpanded, onToggle }) {
 
               <div className="two-col-grid">
                 {project.needsContentBoxes.slice(0, 2).map((box, idx) => (
-                  <div key={idx} className="needs-content-box" style={{ background: '#ffffff', border: '1px solid #e5e8eb' }}>
+                  <div key={idx} className="needs-content-box" style={{ background: '#ffffff', border: '1px solid var(--color-hairline)' }}>
                     <div className="needs-content-header" style={{ marginBottom: '8px' }}>
-                      <span className="needs-content-title" style={{ color: '#191f28' }}>
+                      <span className="needs-content-title" style={{ color: '#000000', fontWeight: 800 }}>
                         <i className={box.icon} style={{ color: 'var(--color-primary)' }}></i>{' '}
                         {lang === 'en' ? box.titleEn : box.titleKo}
                       </span>
                       <span className="chip chip-info">Profile</span>
                     </div>
-                    <p className="body-text" style={{ fontSize: '14px', margin: 0, color: 'var(--color-grey-700)', lineHeight: '1.6' }}>
+                    <p className="body-text" style={{ fontSize: '14px', margin: 0, color: 'var(--color-on-surface-variant)', lineHeight: '1.6' }}>
                       {lang === 'en' ? box.contentEn : box.contentKo}
                     </p>
                   </div>
@@ -162,15 +162,15 @@ export default function ProjectLogCard({ project, isExpanded, onToggle }) {
 
               <div className="two-col-grid" style={{ marginTop: '12px' }}>
                 {project.needsContentBoxes.slice(2, 4).map((box, idx) => (
-                  <div key={idx} className="needs-content-box" style={{ background: '#ffffff', border: '1px solid #e5e8eb' }}>
+                  <div key={idx} className="needs-content-box" style={{ background: '#ffffff', border: '1px solid var(--color-hairline)' }}>
                     <div className="needs-content-header" style={{ marginBottom: '8px' }}>
-                      <span className="needs-content-title" style={{ color: '#191f28' }}>
+                      <span className="needs-content-title" style={{ color: '#000000', fontWeight: 800 }}>
                         <i className={box.icon} style={{ color: 'var(--color-primary)' }}></i>{' '}
                         {lang === 'en' ? box.titleEn : box.titleKo}
                       </span>
                       <span className="chip chip-info">Technical</span>
                     </div>
-                    <p className="body-text" style={{ fontSize: '14px', margin: 0, color: 'var(--color-grey-700)', lineHeight: '1.6' }}>
+                    <p className="body-text" style={{ fontSize: '14px', margin: 0, color: 'var(--color-on-surface-variant)', lineHeight: '1.6' }}>
                       {lang === 'en' ? box.contentEn : box.contentKo}
                     </p>
                   </div>
@@ -238,9 +238,9 @@ export default function ProjectLogCard({ project, isExpanded, onToggle }) {
 
               {/* Detailed Implementations List (Populated from contents.md) */}
               {project.details && (
-                <div className="needs-content-box" style={{ background: '#ffffff', border: '1px solid #e5e8eb', padding: '20px' }}>
+                <div className="needs-content-box" style={{ background: '#ffffff', border: '1px solid var(--color-hairline)', padding: '20px' }}>
                   <div className="needs-content-header" style={{ marginBottom: '12px' }}>
-                    <span className="needs-content-title" style={{ color: '#191f28' }}>
+                    <span className="needs-content-title" style={{ color: '#000000', fontWeight: 800 }}>
                       <i className="fas fa-cubes" style={{ color: 'var(--color-primary)' }}></i>{' '}
                       {lang === 'en' ? project.detailsTitleEn : project.detailsTitleKo}
                     </span>
@@ -257,20 +257,20 @@ export default function ProjectLogCard({ project, isExpanded, onToggle }) {
                           flexDirection: 'column',
                           gap: '3px',
                           padding: '10px 14px',
-                          background: '#f9fafb',
-                          borderRadius: '10px',
-                          border: '1px solid #f2f4f6'
+                          background: 'var(--color-surface-container)',
+                          borderRadius: '8px',
+                          border: '1px solid var(--color-hairline)'
                         }}
                       >
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <span style={{ color: 'var(--color-primary)', fontWeight: 700, fontSize: '13px' }}>
+                          <span style={{ color: 'var(--color-primary)', fontWeight: 800, fontSize: '13px' }}>
                             {idx + 1}.
                           </span>
-                          <strong style={{ color: '#191f28', fontSize: '14px' }}>
+                          <strong style={{ color: '#000000', fontSize: '14px', fontWeight: 700 }}>
                             {lang === 'en' ? item.titleEn : item.titleKo}
                           </strong>
                         </div>
-                        <p style={{ margin: 0, color: 'var(--color-grey-700)', fontSize: '13.5px', lineHeight: '1.55', paddingLeft: '20px' }}>
+                        <p style={{ margin: 0, color: 'var(--color-on-surface-variant)', fontSize: '13.5px', lineHeight: '1.55', paddingLeft: '20px' }}>
                           {lang === 'en' ? item.descEn : item.descKo}
                         </p>
                       </div>

@@ -193,9 +193,9 @@ export default function HeroSection() {
             </div>
 
             {/* Middle Section: Core Skills Grid */}
-            <div style={{ marginTop: '36px', paddingTop: '28px', borderTop: '1px solid #e5e8eb' }}>
+            <div style={{ marginTop: '36px', paddingTop: '28px', borderTop: '1px solid var(--color-hairline)' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-                <span style={{ fontSize: '14px', fontWeight: 700, color: '#191f28', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ fontSize: '14px', fontWeight: 800, color: '#000000', display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <i className="fas fa-code" style={{ color: 'var(--color-primary)' }}></i>
                   {t('보유 기술 스택 (Technical Skills)', 'Technical Skills')}
                 </span>
@@ -212,9 +212,9 @@ export default function HeroSection() {
             </div>
 
             {/* Bottom Section: 4 About Me & Engineering Philosophy Cards */}
-            <div style={{ paddingTop: '24px', borderTop: '1px solid #e5e8eb' }}>
+            <div style={{ paddingTop: '24px', borderTop: '1px solid var(--color-hairline)' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-                <span style={{ fontSize: '14px', fontWeight: 700, color: '#191f28', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ fontSize: '14px', fontWeight: 800, color: '#000000', display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <i className="fas fa-id-card" style={{ color: 'var(--color-primary)' }}></i>
                   {t('엔지니어 프로필 & 철학 (About Me)', 'About Me & Engineering Philosophy')}
                 </span>
@@ -226,9 +226,9 @@ export default function HeroSection() {
                     key={idx}
                     className="needs-content-box"
                     style={{
-                      background: '#f9fafb',
-                      border: '1px solid #e5e8eb',
-                      borderRadius: '14px',
+                      background: 'var(--color-surface-container)',
+                      border: '1px solid var(--color-hairline)',
+                      borderRadius: '12px',
                       padding: '18px 20px',
                       display: 'flex',
                       flexDirection: 'column',
@@ -236,7 +236,7 @@ export default function HeroSection() {
                     }}
                   >
                     <div className="needs-content-header" style={{ marginBottom: '4px' }}>
-                      <span className="needs-content-title" style={{ color: '#191f28', fontSize: '14px', fontWeight: 700 }}>
+                      <span className="needs-content-title" style={{ color: '#000000', fontSize: '14px', fontWeight: 800 }}>
                         <i className={block.icon} style={{ color: 'var(--color-primary)' }}></i>{' '}
                         {t(block.titleKo, block.titleEn)}
                       </span>
@@ -244,7 +244,7 @@ export default function HeroSection() {
                         {block.badgeText}
                       </span>
                     </div>
-                    <p className="body-text" style={{ fontSize: '13.5px', margin: 0, color: 'var(--color-grey-700)', lineHeight: '1.6' }}>
+                    <p className="body-text" style={{ fontSize: '13.5px', margin: 0, color: 'var(--color-on-surface-variant)', lineHeight: '1.6' }}>
                       {t(block.descKo, block.descEn)}
                     </p>
                   </div>
