@@ -1,0 +1,719 @@
+/* ==========================================================================
+   Red Bull Paddock Lounge — 2D Mini Game & Live Telemetry Chat Section
+   Specification: Red Bull Athletic-Maximalist Design (Navy, Red, Yellow)
+   ========================================================================== */
+
+.paddock-section {
+    padding: 48px 0 64px 0;
+    position: relative;
+    border-top: 1px solid var(--color-hairline);
+    background: #ffffff;
+}
+
+.paddock-header-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.paddock-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.paddock-title-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.paddock-title {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 800;
+    color: #000000;
+    letter-spacing: -0.02em;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.paddock-title i {
+    color: var(--color-primary); /* #db0a40 */
+}
+
+.paddock-desc {
+    font-size: 13px;
+    color: var(--color-on-surface-variant);
+    margin: 0;
+}
+
+.paddock-chips {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* Main 2-Column Grid Layout */
+.paddock-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 24px;
+    align-items: stretch;
+}
+
+/* ==========================================================================
+   Column 1: 2D Mini Game Arena (Interactive Paddock Floor)
+   ========================================================================== */
+.paddock-arena-card {
+    background: #001224; /* Deep Red Bull Racing Navy */
+    border: 1px solid rgba(27, 106, 238, 0.3);
+    border-radius: var(--rounded-lg);
+    box-shadow: 0 8px 30px rgba(0, 15, 30, 0.25);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-height: 420px;
+}
+
+/* Arena Top Telemetry Bar */
+.arena-top-bar {
+    background: rgba(0, 30, 60, 0.8);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #b0c4de;
+    font-family: var(--font-mono);
+}
+
+.arena-status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.live-pulse-dot {
+    width: 8px;
+    height: 8px;
+    background: #00c853;
+    border-radius: 50%;
+    animation: live-pulse 1.4s infinite;
+}
+
+@keyframes live-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0, 200, 83, 0.7); }
+    50% { box-shadow: 0 0 0 6px rgba(0, 200, 83, 0); }
+}
+
+.arena-controls-hint {
+    font-size: 11px;
+    color: #8e9192;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.arena-controls-hint kbd {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+/* The Clickable & Walkable Arena Floor */
+.paddock-arena-canvas {
+    position: relative;
+    flex: 1;
+    width: 100%;
+    min-height: 360px;
+    background-color: #001224;
+    background-image:
+        radial-gradient(circle at 50% 50%, rgba(27, 106, 238, 0.15) 0%, transparent 70%),
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 100% 100%, 36px 36px, 36px 36px;
+    cursor: crosshair;
+    overflow: hidden;
+    user-select: none;
+}
+
+/* Interactive Zones Painted on Floor */
+.paddock-zone {
+    position: absolute;
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 6px 10px;
+    pointer-events: none;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Zone 1: Pit Box */
+.zone-pitbox {
+    top: 20px;
+    left: 20px;
+    width: 120px;
+    height: 90px;
+    background: rgba(219, 10, 64, 0.08);
+    border-color: rgba(219, 10, 64, 0.4);
+    color: #ff6b8a;
+}
+
+.zone-pitbox::after {
+    content: "🔴 PIT BOX #1";
+    font-weight: 800;
+}
+
+/* Zone 2: P1 Winner Podium */
+.zone-podium {
+    top: 20px;
+    right: 20px;
+    width: 120px;
+    height: 90px;
+    background: rgba(255, 214, 0, 0.08);
+    border-color: rgba(255, 214, 0, 0.4);
+    color: #ffd600;
+}
+
+.zone-podium::after {
+    content: "🏆 P1 PODIUM";
+    font-weight: 800;
+}
+
+/* Zone 3: Finish Line Chequered Strip */
+.zone-chequered-line {
+    bottom: 24px;
+    left: 15%;
+    right: 15%;
+    height: 14px;
+    background: repeating-linear-gradient(
+        90deg,
+        #ffffff 0, #ffffff 14px,
+        #000000 14px, #000000 28px
+    );
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 4px;
+    opacity: 0.8;
+}
+
+/* Zone 4: Center Telemetry Screen Marker */
+.zone-telemetry-center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90px;
+    height: 48px;
+    background: rgba(27, 106, 238, 0.12);
+    border-color: rgba(27, 106, 238, 0.4);
+    color: #82b1ff;
+    border-radius: 6px;
+}
+
+.zone-telemetry-center::after {
+    content: "📡 PIT WALL";
+    font-weight: 800;
+}
+
+/* Click Ripple Indicator */
+.arena-click-ripple {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #ffd600;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    animation: click-ripple-anim 0.45s ease-out forwards;
+    pointer-events: none;
+    z-index: 5;
+}
+
+@keyframes click-ripple-anim {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(2.2); opacity: 0; }
+}
+
+/* On-Screen Mobile D-Pad Overlay */
+.arena-dpad {
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    display: grid;
+    grid-template-columns: repeat(3, 32px);
+    grid-template-rows: repeat(3, 32px);
+    gap: 4px;
+    z-index: 20;
+    opacity: 0.85;
+}
+
+.dpad-btn {
+    background: rgba(0, 30, 60, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    border-radius: 6px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    transition: background 100ms;
+}
+
+.dpad-btn:active {
+    background: #db0a40;
+    transform: scale(0.92);
+}
+
+.dpad-up    { grid-column: 2; grid-row: 1; }
+.dpad-left  { grid-column: 1; grid-row: 2; }
+.dpad-down  { grid-column: 2; grid-row: 3; }
+.dpad-right { grid-column: 3; grid-row: 2; }
+.dpad-center {
+    grid-column: 2;
+    grid-row: 2;
+    background: rgba(219, 10, 64, 0.4);
+    border-color: #db0a40;
+    font-size: 10px;
+    color: #ffd600;
+}
+
+/* ==========================================================================
+   2D Mini Driver Character & Animations
+   ========================================================================== */
+.mini-driver-wrapper {
+    position: absolute;
+    z-index: 15;
+    pointer-events: none;
+    transition: left 0.12s linear, top 0.12s linear;
+}
+
+/* Idle Breathing Bounce */
+.mini-driver-wrapper.is-idle .mini-driver-svg {
+    animation: mini-idle-bob 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes mini-idle-bob {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-2px); }
+}
+
+/* Walking Energetic Bounce */
+.mini-driver-wrapper.is-walking .mini-driver-svg {
+    animation: mini-walk-bounce 0.18s infinite alternate;
+}
+
+.mini-driver-wrapper.is-walking .mini-driver-legs rect.leg-left {
+    animation: leg-swing-left 0.18s infinite alternate;
+}
+
+.mini-driver-wrapper.is-walking .mini-driver-legs rect.leg-right {
+    animation: leg-swing-right 0.18s infinite alternate;
+}
+
+@keyframes mini-walk-bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-4px); }
+}
+
+@keyframes leg-swing-left {
+    0% { transform: translateY(-2px); }
+    100% { transform: translateY(2px); }
+}
+
+@keyframes leg-swing-right {
+    0% { transform: translateY(2px); }
+    100% { transform: translateY(-2px); }
+}
+
+/* Boost Nitro Aura & Trail */
+.mini-driver-wrapper.is-boosted .mini-driver-svg {
+    filter: drop-shadow(0 0 8px #db0a40) drop-shadow(0 0 16px #ffd600);
+}
+
+.mini-boost-trail {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(219, 10, 64, 0.8) 0%, rgba(255, 214, 0, 0.3) 60%, transparent 100%);
+    animation: boost-pulse 0.25s infinite alternate;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes boost-pulse {
+    0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+    100% { transform: translate(-50%, -50%) scale(1.6); opacity: 0.3; }
+}
+
+/* Floating Name Tag Above Character */
+.mini-name-badge {
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    padding: 2px 7px;
+    border-radius: 9999px;
+    font-size: 10px;
+    font-weight: 800;
+    font-family: var(--font-mono);
+    line-height: 1;
+    pointer-events: none;
+    z-index: 20;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.mini-name-badge.is-self {
+    background: #db0a40;
+    color: #ffffff;
+    border: 1px solid #ffd600;
+    box-shadow: 0 0 8px rgba(219, 10, 64, 0.8);
+}
+
+.mini-name-badge:not(.is-self) {
+    background: rgba(0, 20, 45, 0.85);
+    color: #82b1ff;
+    border: 1px solid rgba(130, 177, 255, 0.4);
+}
+
+/* Floating Comic Speech Bubble */
+.mini-speech-bubble {
+    position: absolute;
+    top: -64px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ffffff;
+    color: #000000;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    max-width: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    pointer-events: none;
+    z-index: 30;
+    animation: speech-pop 0.25s var(--ease-snappy);
+    font-family: var(--font-sans);
+}
+
+@keyframes speech-pop {
+    0% { transform: translateX(-50%) scale(0.6); opacity: 0; }
+    100% { transform: translateX(-50%) scale(1); opacity: 1; }
+}
+
+.speech-arrow {
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #ffffff;
+}
+
+/* ==========================================================================
+   Column 2: Chat & Action Controls + Telemetry Mini Log
+   ========================================================================== */
+.paddock-controls-card {
+    background: #ffffff;
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-lg);
+    box-shadow: 0 4px 20px rgba(0, 15, 30, 0.08);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 16px;
+    justify-content: space-between;
+}
+
+/* Chat Input Bar */
+.paddock-chat-form {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+}
+
+.paddock-chat-input {
+    flex: 1;
+    background: #f8f8f8;
+    border: 1px solid #dcdcdc;
+    border-radius: 9999px;
+    padding: 9px 16px;
+    font-size: 13px;
+    color: #000000;
+    outline: none;
+    font-family: var(--font-sans);
+    transition: border-color 150ms var(--ease-snappy), box-shadow 150ms var(--ease-snappy);
+}
+
+.paddock-chat-input:focus {
+    border-color: #db0a40;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(219, 10, 64, 0.15);
+}
+
+.btn-paddock-send {
+    background: #db0a40;
+    color: #ffffff;
+    border: none;
+    border-radius: 9999px;
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: background 150ms var(--ease-snappy), transform 100ms;
+}
+
+.btn-paddock-send:hover {
+    background: #c2073a;
+    transform: translateY(-1px);
+}
+
+.btn-paddock-send:active {
+    transform: translateY(0);
+}
+
+/* Quick Shout & Interactive Action Buttons */
+.paddock-quick-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.quick-action-label {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--color-on-surface-variant);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.quick-chips-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.btn-quick-chip {
+    background: #f0f4f9;
+    border: 1px solid #d5e0ee;
+    color: #001e3c;
+    border-radius: 9999px;
+    padding: 5px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 120ms var(--ease-snappy);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.btn-quick-chip:hover {
+    background: #e1ebf7;
+    border-color: #1b6aee;
+    color: #1b6aee;
+    transform: translateY(-1px);
+}
+
+.btn-quick-chip.boost {
+    background: #fff0f3;
+    border-color: rgba(219, 10, 64, 0.3);
+    color: #db0a40;
+}
+
+.btn-quick-chip.boost:hover {
+    background: #db0a40;
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(219, 10, 64, 0.4);
+}
+
+.btn-quick-chip.teleport {
+    background: #fff9e6;
+    border-color: rgba(255, 214, 0, 0.5);
+    color: #b78103;
+}
+
+.btn-quick-chip.teleport:hover {
+    background: #ffd600;
+    color: #000000;
+}
+
+/* Mini Telemetry Log Container */
+.paddock-minilog-wrap {
+    display: flex;
+    flex-direction: column;
+    background: #001224; /* Red Bull Deep Navy Log */
+    border: 1px solid rgba(27, 106, 238, 0.3);
+    border-radius: 12px;
+    overflow: hidden;
+    height: 200px;
+}
+
+.minilog-header {
+    background: rgba(0, 30, 60, 0.9);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.minilog-title {
+    font-size: 11px;
+    font-weight: 800;
+    color: #ffd600;
+    font-family: var(--font-mono);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.minilog-filters {
+    display: flex;
+    gap: 4px;
+}
+
+.btn-log-filter {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #8e9192;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: var(--font-mono);
+}
+
+.btn-log-filter.active {
+    background: #db0a40;
+    color: #ffffff;
+    border-color: #db0a40;
+}
+
+.minilog-clear-btn {
+    background: transparent;
+    border: none;
+    color: #8e9192;
+    cursor: pointer;
+    font-size: 11px;
+    padding: 2px 6px;
+    transition: color 150ms;
+}
+
+.minilog-clear-btn:hover {
+    color: #ffffff;
+}
+
+/* Scrolling Log Body */
+.minilog-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px 12px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    scroll-behavior: smooth;
+}
+
+.minilog-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    animation: minilog-entry 0.15s ease-out;
+    word-break: break-all;
+}
+
+@keyframes minilog-entry {
+    from { opacity: 0; transform: translateX(-4px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.log-time {
+    color: #6c757d;
+    font-size: 10px;
+    flex-shrink: 0;
+}
+
+.log-badge-mini {
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 9px;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+.badge-move   { background: rgba(27, 106, 238, 0.2); color: #82b1ff; }
+.badge-chat   { background: rgba(0, 200, 83, 0.2); color: #00e676; }
+.badge-boost  { background: rgba(219, 10, 64, 0.25); color: #ff5252; }
+.badge-event  { background: rgba(255, 214, 0, 0.2); color: #ffd600; }
+.badge-join   { background: rgba(124, 58, 237, 0.25); color: #b388ff; }
+
+.log-user-name {
+    font-weight: 800;
+    color: #ffffff;
+    flex-shrink: 0;
+}
+
+.log-detail {
+    color: #cfd8dc;
+    flex: 1;
+}
+
+.log-detail.chat-msg {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* Responsive Rules */
+@media (max-width: 900px) {
+    .paddock-grid {
+        grid-template-columns: 1fr;
+    }
+    .paddock-arena-card {
+        min-height: 380px;
+    }
+    .paddock-arena-canvas {
+        min-height: 320px;
+    }
+}

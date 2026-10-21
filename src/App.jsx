@@ -4,6 +4,7 @@ import LogStreamOverlay from './components/LogStreamOverlay';
 import TopAppBar from './components/TopAppBar';
 import HeroSection from './components/HeroSection';
 import QuickNavigation from './components/QuickNavigation';
+import PaddockLounge from './components/PaddockLounge';
 import ProjectLogsFeed from './components/ProjectLogsFeed';
 import MilestonesSection from './components/MilestonesSection';
 import AppFooter from './components/AppFooter';
@@ -18,6 +19,13 @@ export default function App() {
     setActiveSection(moduleName);
     if (targetSelector === '#summary') {
       const el = document.getElementById('summary');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      return;
+    }
+    if (targetSelector === '#paddock-lounge') {
+      const el = document.getElementById('paddock-lounge');
       if (el) {
         el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
@@ -50,13 +58,16 @@ export default function App() {
         {/* 3. Quick Navigation & Preview */}
         <QuickNavigation onSelectModule={handleSelectModule} />
 
-        {/* 4. Project Logs Feed (Timeline Registry) */}
+        {/* 4. Real-time 2D Mini Game Character Paddock Lounge & Chat */}
+        <PaddockLounge />
+
+        {/* 5. Project Logs Feed (Timeline Registry) */}
         <ProjectLogsFeed ref={projectLogsRef} />
 
-        {/* 5. Milestones & Timeline */}
+        {/* 6. Milestones & Timeline */}
         <MilestonesSection />
 
-        {/* 6. Footer */}
+        {/* 7. Footer */}
         <AppFooter />
       </main>
     </LanguageProvider>
