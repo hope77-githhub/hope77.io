@@ -3,7 +3,7 @@
 > **"당연한 것에 질문을 던지고, 직접 도구를 만들어 비효율을 해결합니다."**  
 > F1 레이싱의 속도감과 시스템 엔지니어링의 로그 옵저버빌리티를 결합한 장자훈(hope77)의 인터랙티브 포트폴리오 웹사이트입니다.
 
-[![Live Demo](https://img.shields.io/badge/Demo-Live_Portfolio-db0a40?style=for-the-badge&logo=google-chrome&logoColor=white)](hope77-githhub.github.io/hope77.io/)
+[![Live Demo](https://img.shields.io/badge/Demo-Live_Portfolio-db0a40?style=for-the-badge&logo=google-chrome&logoColor=white)]([hope77-githhub.github.io/hope77.io/](https://hope77-githhub.github.io/hope77.io/))
 [![License: MIT](https://img.shields.io/badge/License-MIT-001e3c?style=for-the-badge)](LICENSE)
 
 ---
