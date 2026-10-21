@@ -765,40 +765,41 @@
     font-style: italic;
 }
 
-/* 2. Center Stage: F1 Car Chassis & 4-Wheel Crew HUD */
+/* 2. Center Stage: Realistic F1 Car Chassis & Direct Wheel Mounting HUD */
 .car-chassis-stage {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     position: relative;
-    padding: 10px 0;
+    padding: 6px 0;
 }
 
 .chassis-wrapper {
     position: relative;
-    width: 260px;
-    height: 220px;
+    width: 290px;
+    height: 290px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* Sleek F1 Silhouette Graphic */
+/* Realistic F1 RB20 Graphic */
 .f1-car-graphic {
-    width: 200px;
-    height: 180px;
-    filter: drop-shadow(0 0 18px rgba(27, 106, 238, 0.3));
+    width: 220px;
+    height: 280px;
+    filter: drop-shadow(0 0 20px rgba(0, 15, 30, 0.7)) drop-shadow(0 0 10px rgba(27, 106, 238, 0.25));
     transition: transform 0.25s var(--ease-snappy);
+    z-index: 2;
 }
 
 .car-chassis-stage.is-jacking .f1-car-graphic {
-    transform: translateY(-4px) scale(1.02);
+    transform: translateY(-5px) scale(1.02);
 }
 
 .car-chassis-stage.is-released .f1-car-graphic {
     transform: translateY(0) scale(1);
-    animation: car-rev 0.3s infinite alternate;
+    animation: car-rev 0.25s infinite alternate;
 }
 
 @keyframes car-rev {
@@ -806,68 +807,180 @@
     to { transform: translateY(-1.5px); }
 }
 
-/* 4 Individual Wheel Nodes */
-.wheel-node {
+/* Realistic F1 Wheel Component (Direct Tire Installation & High-Speed Nut Spin) */
+.f1-wheel-wrapper {
     position: absolute;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3px;
-    font-family: var(--font-mono);
+    gap: 4px;
+    z-index: 10;
+    transition: transform 0.25s var(--ease-snappy);
 }
 
-.wheel-node.fl { top: 12px; left: 8px; }
-.wheel-node.fr { top: 12px; right: 8px; }
-.wheel-node.rl { bottom: 12px; left: 8px; }
-.wheel-node.rr { bottom: 12px; right: 8px; }
+/* 4 Wheel Positions relative to chassis suspension */
+.f1-wheel-wrapper.fl { top: 46px; left: 16px; }
+.f1-wheel-wrapper.fr { top: 46px; right: 16px; }
+.f1-wheel-wrapper.rl { bottom: 48px; left: 10px; }
+.f1-wheel-wrapper.rr { bottom: 48px; right: 10px; }
 
-.wheel-tyre-pill {
+/* Wheel Mounting Slide-In Animation (직접 타이어 장착) */
+.f1-wheel-wrapper.fl.is-mounting,
+.f1-wheel-wrapper.rl.is-mounting {
+    animation: mount-slide-left 0.4s var(--ease-snappy) forwards;
+}
+
+.f1-wheel-wrapper.fr.is-mounting,
+.f1-wheel-wrapper.rr.is-mounting {
+    animation: mount-slide-right 0.4s var(--ease-snappy) forwards;
+}
+
+@keyframes mount-slide-left {
+    from { transform: translateX(-35px) scale(0.9); opacity: 0.4; }
+    to { transform: translateX(0) scale(1); opacity: 1; }
+}
+
+@keyframes mount-slide-right {
+    from { transform: translateX(35px) scale(0.9); opacity: 0.4; }
+    to { transform: translateX(0) scale(1); opacity: 1; }
+}
+
+/* Realistic Rubber Tyre & Rim Body */
+.f1-realistic-tyre {
+    width: 32px;
+    height: 56px;
+    background: radial-gradient(circle at 50% 50%, #20222a 0%, #0d0e12 90%);
+    border-radius: 6px;
+    position: relative;
+    border: 2px solid #2c303c;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
     display: flex;
     align-items: center;
-    gap: 5px;
-    padding: 3px 8px;
-    border-radius: 9999px;
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 0.05em;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    transition: all 0.25s var(--ease-snappy);
+    justify-content: center;
+    overflow: hidden;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.wheel-tyre-pill.medium {
-    background: rgba(255, 214, 0, 0.15);
-    color: #ffd600;
-    border-color: rgba(255, 214, 0, 0.4);
+/* Pirelli Red Soft Sidewall Stripe */
+.f1-realistic-tyre::before {
+    content: "";
+    position: absolute;
+    inset: 3px;
+    border-radius: 4px;
+    border: 1.5px solid #db0a40; /* Pirelli Red Soft */
+    opacity: 0.95;
+    pointer-events: none;
 }
 
-.wheel-tyre-pill.swapping {
-    background: rgba(27, 106, 238, 0.25);
-    color: #82b1ff;
-    border-color: #1b6aee;
-    animation: wheel-spin 0.4s infinite linear;
+/* Inner OZ Racing Wheel Rim */
+.f1-wheel-rim {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #383e4a 0%, #15181e 85%);
+    border: 1.5px solid #8e9192;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 5px #000000;
 }
 
-@keyframes wheel-spin {
+/* Multi-Spokes */
+.f1-wheel-spokes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.f1-wheel-spokes::before,
+.f1-wheel-spokes::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    right: 10%;
+    height: 1.5px;
+    background: #6b7484;
+    transform: translateY(-50%);
+}
+
+.f1-wheel-spokes::after {
+    transform: translateY(-50%) rotate(90deg);
+}
+
+/* Center Lock Nut */
+.f1-center-nut {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ffd600; /* Red Bull Center Nut Gold/Yellow */
+    border: 1px solid #ffffff;
+    z-index: 2;
+    transition: all 0.2s ease;
+}
+
+/* "빙글빙글" Wheel Gun Rapid Spin Animation */
+.is-spinning .f1-wheel-rim {
+    animation: wheel-gun-rapid-spin 0.1s infinite linear;
+}
+
+.is-spinning .f1-realistic-tyre {
+    border-color: #ffd600;
+    box-shadow: 0 0 16px rgba(255, 214, 0, 0.7);
+}
+
+@keyframes wheel-gun-rapid-spin {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
 
-.wheel-tyre-pill.soft-locked {
-    background: rgba(219, 10, 64, 0.3);
-    color: #ffffff;
-    border-color: #db0a40;
-    box-shadow: 0 0 10px rgba(219, 10, 64, 0.6);
+/* Spinning Wheel Gun Socket & Sparks */
+.is-spinning .f1-wheel-wrapper::after {
+    content: "";
+    position: absolute;
+    top: 14px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px dashed #ffd600;
+    animation: wheel-gun-rapid-spin 0.2s infinite linear;
+    pointer-events: none;
 }
 
-.wheel-status-tag {
+/* Torque Locked State (100% Locked) */
+.is-locked .f1-center-nut {
+    background: #00c853;
+    box-shadow: 0 0 10px #00c853;
+}
+
+.is-locked .f1-realistic-tyre {
+    border-color: #00c853;
+    box-shadow: 0 0 12px rgba(0, 200, 83, 0.5);
+}
+
+.wheel-torque-badge {
     font-size: 9px;
     font-weight: 800;
+    font-family: var(--font-mono);
     color: #8e9192;
     letter-spacing: 0.05em;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    white-space: nowrap;
 }
 
-.wheel-status-tag.locked {
+.wheel-torque-badge.spinning {
+    color: #ffd600;
+    border-color: #ffd600;
+}
+
+.wheel-torque-badge.locked {
     color: #00c853;
+    border-color: rgba(0, 200, 83, 0.4);
 }
 
 /* Jack Status Indicators */
