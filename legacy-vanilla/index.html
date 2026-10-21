@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>장자훈's Log (HOPE77) — Data Pipeline & Engineering Portfolio</title>
+
+    <!-- Typography & Fonts: Inter, JetBrains Mono, Pretendard, FontAwesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Modular Stylesheets -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/log-console.css">
+</head>
+<body>
+
+    <!-- ==========================================================================
+         0. INITIAL LOG INGESTION & TELEMETRY STREAM OVERLAY
+         (첫 진입 시 로그 데이터 파이프라인의 실시간 부트스트랩 연출 콘솔)
+         ========================================================================== -->
+    <div class="log-stream-overlay" id="log-stream-overlay">
+        <div class="terminal-window">
+            <!-- Terminal Title Bar -->
+            <div class="terminal-header">
+                <div class="terminal-controls">
+                    <span class="term-dot term-dot-red"></span>
+                    <span class="term-dot term-dot-yellow"></span>
+                    <span class="term-dot term-dot-green"></span>
+                </div>
+                <div class="terminal-title">
+                    <i class="fas fa-terminal"></i>
+                    <span>hope77@jang-log-system: ~/stream/boot</span>
+                    <span class="terminal-title-tag">LIVE INGESTION</span>
+                </div>
+                <div class="terminal-actions">
+                    <!-- Appears when streaming reaches 100% -->
+                    <button type="button" class="btn-term-action btn-term-enter" id="btn-term-enter">
+                        <i class="fas fa-rocket"></i> <span>🚀 장자훈's Log 메인 화면 진입하기 (Enter)</span>
+                    </button>
+                    <button type="button" class="btn-term-action btn-term-skip" id="btn-term-skip">
+                        <i class="fas fa-forward"></i> <span>스킵하고 바로 입장 (Skip &amp; Enter)</span>
+                    </button>
+                    <button type="button" class="btn-term-action" id="btn-term-replay" title="Replay Stream">
+                        <i class="fas fa-rotate-right"></i>
+                    </button>
+                    <button type="button" class="btn-term-action" id="btn-term-close" title="Close Terminal">
+                        <i class="fas fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Telemetry Metrics Bar -->
+            <div class="terminal-metrics-bar">
+                <div class="metric-group">
+                    <div class="metric-item">
+                        <span>PIPELINE:</span>
+                        <span class="metric-val" id="term-status-tag">STREAMING</span>
+                    </div>
+                    <div class="metric-item">
+                        <span>EVENTS PROCESSED:</span>
+                        <span class="metric-val" id="term-event-counter">0</span>
+                    </div>
+                    <div class="metric-item">
+                        <span>THROUGHPUT:</span>
+                        <span class="metric-val">54.2k / sec</span>
+                    </div>
+                    <div class="metric-item">
+                        <span>LATENCY (p99):</span>
+                        <span class="metric-val">3.4ms</span>
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <span style="font-size: 11px;">SYNC:</span>
+                    <div class="progress-track">
+                        <div class="progress-fill" id="term-progress-fill"></div>
+                    </div>
+                    <span class="progress-pct" id="term-progress-pct">0%</span>
+                </div>
+            </div>
+
+            <!-- Terminal Body (Real-time log stream) -->
+            <div class="terminal-body" id="terminal-log-body">
+                <!-- Log entries will be rendered dynamically by js/log-streamer.js -->
+            </div>
+
+            <!-- Terminal Footer -->
+            <div class="terminal-footer">
+                <div class="terminal-footer-hint">
+                    <i class="fas fa-keyboard"></i>
+                    <span><kbd>Enter</kbd> 또는 <kbd>ESC</kbd> 키를 누르거나 화면을 클릭하면 장자훈's Log 메인 화면으로 이동합니다.</span>
+                </div>
+                <div style="color: #636e88;">
+                    <i class="fas fa-scroll"></i> <span>창 내부 스크롤을 통해 전체 로그 히스토리를 확인하실 수 있습니다.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==========================================================================
+         1. TOP APP BAR (Sticky Header)
+         ========================================================================== -->
+    <header class="top-app-bar">
+        <div class="top-app-bar-inner">
+            <div class="product-title">
+                <i class="fas fa-terminal" style="font-size: 16px; color: var(--color-primary);"></i>
+                <span>장자훈's Log</span>
+                <span class="product-title-badge">Log Stream &amp; Observability</span>
+            </div>
+            <div class="header-right">
+                <!-- Log Ingestion Console Reopen Button -->
+                <button type="button" class="btn-log-console-toggle" id="btn-header-log-console" title="View Ingestion Terminal">
+                    <span class="live-dot"></span>
+                    <span>Pipeline Logs</span>
+                </button>
+
+                <span class="active-module-pill" id="header-active-pill">SECTION: 장자훈's Log</span>
+
+                <!-- Multilingual Translation Toggle Button -->
+                <button type="button" class="lang-toggle-btn" id="lang-toggle-btn" aria-label="Toggle Language">
+                    <span class="lang-opt active" id="lang-ko">KO</span>
+                    <span class="lang-opt" id="lang-en">EN</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="app-container">
+
+        <!-- ==========================================================================
+             2. HERO / PROFILE SUMMARY (Terminal Log Console Window)
+             ========================================================================== -->
+        <div class="band-dark">
+            <div class="band-inner">
+                <section class="hero-log-window" id="summary">
+                    <!-- Terminal Window Header Bar -->
+                    <div class="hero-log-header">
+                        <div class="hero-header-left">
+                            <div class="hero-window-dots">
+                                <span class="term-dot term-dot-red"></span>
+                                <span class="term-dot term-dot-yellow"></span>
+                                <span class="term-dot term-dot-green"></span>
+                            </div>
+                            <div class="hero-header-title">
+                                <i class="fas fa-terminal"></i>
+                                <span>node:seoul-dc-01 // identity.hope77.init()</span>
+                                <span class="hero-header-tag">RUNTIME: PRODUCTION</span>
+                            </div>
+                        </div>
+                        <div class="hero-header-right">
+                            <span class="live-dot"></span>
+                            <span>NODE ONLINE (200 OK)</span>
+                        </div>
+                    </div>
+
+                    <!-- Metadata Substrip -->
+                    <div class="hero-log-substrip">
+                        <div class="hero-meta-items">
+                            <span><span class="hero-meta-key">SERVICE:</span> hope77.portfolio</span>
+                            <span><span class="hero-meta-key">ENGINEER:</span> 장자훈 (Jahoon Jang)</span>
+                            <span><span class="hero-meta-key">ROLE:</span> Problem Solver &amp; Tool Builder</span>
+                            <span><span class="hero-meta-key">BUFFER:</span> 65,536 slots</span>
+                        </div>
+                        <div>
+                            <span>UPTIME: <strong style="color: var(--color-semantic-up);">99.99%</strong></span>
+                        </div>
+                    </div>
+
+                    <!-- Main Body inside Terminal -->
+                    <div class="hero-log-body">
+                        <div class="summary-grid">
+                            <div class="summary-main">
+                                <div class="hero-prompt-line">
+                                    <span style="color: var(--color-semantic-up);">hope77@kernel:~$</span>
+                                    <span>cat /etc/identity/profile.log</span>
+                                    <span class="prompt-cursor"></span>
+                                </div>
+
+                                <div class="summary-chips">
+                                    <span class="chip chip-info"><i class="fas fa-stream"></i> Data &amp; Log Pipeline</span>
+                                    <span class="chip chip-purple"><i class="fas fa-book-open"></i> arXiv Research &amp; Analytics</span>
+                                    <span class="chip chip-success"><i class="fas fa-hammer"></i> Automation Tool Builder</span>
+                                </div>
+
+                                <div class="hero-text-block">
+                                    <h1 class="page-heading" style="margin-bottom: 16px; font-size: clamp(34px, 4.5vw, 54px);"
+                                        data-en="Jahoon's Log — Problem Solver &amp; Tool Builder.">
+                                        장자훈's Log — 문제 해결사 &amp; 도구 개발자
+                                    </h1>
+                                    <p class="body-text"
+                                       data-en="I am a problem solver who questions what others take for granted and constantly seeks the most efficient ways to solve complex problems. Whenever a custom tool can boost workflow efficiency, I proactively propose ideas and build solutions—backed by telemetry data analysis and academic research.">
+                                        당연한 것을 당연하지 않게 바라보며, 언제나 끊임없이 효율적으로 문제를 해결할 수 있는 방법을 고민하는 문제 해결사입니다.
+                                        도구를 개발하여 일의 효율성을 높일 수 있다면 주저하지 않고 아이디어를 제시하고 직접 구현하며, 데이터 분석과 논문 집필을 통해 검증된 인사이트를 도출합니다.
+                                    </p>
+                                </div>
+
+                                <div class="needs-content-box">
+                                    <div class="needs-content-header">
+                                        <span class="needs-content-title" data-en="Additional Executive Summary"><i class="fas fa-pen-to-square"></i> 자기소개 핵심 요약 추가 서술</span>
+                                        <span class="chip chip-warning" data-en="Needs Content">내용 필요</span>
+                                    </div>
+                                    <p class="needs-content-placeholder" data-en="Content needed">내용 필요</p>
+                                </div>
+
+                                <div class="summary-owner-bar">
+                                    <span class="meta-label"><i class="fas fa-user"></i> <span data-en="Jahoon Jang (hope77)">장자훈 (hope77)</span></span>
+                                    <span class="meta-label"><i class="fas fa-envelope"></i> bijabi99@gmail.com</span>
+                                    <a href="https://github.com/hope77-githhub" target="_blank" class="meta-label" style="color: var(--color-primary); font-weight: 600;">
+                                        <i class="fab fa-github"></i> github.com/hope77-githhub
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Right Profile Mockup Card -->
+                            <div class="summary-profile-box">
+                                <div class="card-title-row" style="align-items: center;">
+                                    <span class="meta-label" style="color: #6bb0ff;">TELEMETRY HUD</span>
+                                    <span class="chip chip-info" style="background: var(--color-primary); color: var(--color-on-primary);">NODE ACTIVE</span>
+                                </div>
+
+                                <div class="profile-stat-list">
+                                    <div class="profile-stat-item">
+                                        <span data-en="Workflow Efficiency &amp; Tooling">업무 효율화 &amp; 자동화 도구 개발</span>
+                                        <span class="chip chip-success">Core</span>
+                                    </div>
+                                    <div class="profile-stat-item">
+                                        <span data-en="Data Analysis &amp; arXiv Paper">데이터 분석 &amp; 학술 논문 (arXiv)</span>
+                                        <span class="chip chip-purple">Verified</span>
+                                    </div>
+                                    <div class="profile-stat-item">
+                                        <span data-en="Domains (F1 Verstappen &amp; Football)">관심 도메인 (F1 베르스타펜 &amp; 축구)</span>
+                                        <span class="chip chip-info">Passion</span>
+                                    </div>
+                                </div>
+
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 8px;">
+                                    <span class="meta-label">Quick Jump</span>
+                                    <a href="#project-logs-section" class="btn-utility btn-primary-accent" style="height: 40px; padding: 0 18px; font-size: 14px;" data-en="Explore Project Logs">프로젝트 로그 보기</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- ==========================================================================
+             3. QUICK NAVIGATION & DYNAMIC PREVIEW PANEL
+             ========================================================================== -->
+        <div class="band-light">
+            <div class="band-inner">
+                <section id="quick-navigation">
+                    <div class="section-header">
+                        <div class="section-header-left">
+                            <h2 class="section-heading">Log Index &amp; Module Directory</h2>
+                            <span class="chip chip-info">6 Modules</span>
+                        </div>
+                        <span class="meta-label" data-en="Click any log module below to jump directly to its detailed log payload.">항목을 클릭하면 해당 로그의 상세 페이로드로 자동 스크롤 및 펼쳐집니다.</span>
+                    </div>
+
+                    <div class="quick-nav-grid">
+                        <button type="button" class="module-btn active"
+                                data-module="About &amp; Skills"
+                                data-target="#log-entry-about"
+                                data-desc-ko="문제 해결사로서의 철학, F1(막스 베르스타펜) 및 축구 데이터 분석에 대한 열정, 그리고 보유 기술 스택을 소개합니다."
+                                data-desc-en="Introduces my problem-solving philosophy, passion for F1 (Max Verstappen) and football data analytics, and core technical stack.">
+                            <div class="module-btn-top">
+                                <span class="module-btn-title">01. About &amp; Skills</span>
+                                <span class="chip chip-info">ON</span>
+                            </div>
+                            <span class="module-btn-desc" data-en="Profile &amp; Tech Stack">자기소개 및 기술 스택</span>
+                        </button>
+
+                        <button type="button" class="module-btn"
+                                data-module="Unknown Architecture Insights"
+                                data-target="#log-entry-architecture"
+                                data-desc-ko="축구의 공간 효율성·팀워크에서 영감을 얻어 설계한 Unknown Project의 4대 핵심 아키텍처(로그 시각화, 파이프라인+영상 레코딩, 테스트 도구, CEL 필터)를 다룹니다."
+                                data-desc-en="Covers the 4 core pillars of the Unknown Project inspired by football spatial efficiency: Log Visualization, Automated Pipeline + Video Recording, Testing/Analytics Tools, and CEL Filter support.">
+                            <div class="module-btn-top">
+                                <span class="module-btn-title">02. Architecture Insight</span>
+                                <span class="chip chip-neutral">INFO</span>
+                            </div>
+                            <span class="module-btn-desc" data-en="Spatial Efficiency &amp; Unknown Design">공간 효율성 &amp; Unknown 설계</span>
+                        </button>
+
+                        <button type="button" class="module-btn"
+                                data-module="COM_study (LOL-API &amp; arXiv)"
+                                data-target="#log-entry-com-study"
+                                data-desc-ko="Riot API 기반 데이터 수집·분석 자동화 파이프라인 구축 및 학술 논문(arXiv:2512.20116)으로 증명된 데이터 분석 프로젝트입니다."
+                                data-desc-en="An automated data collection and analysis pipeline using the Riot API, validated through a published research paper (arXiv:2512.20116).">
+                            <div class="module-btn-top">
+                                <span class="module-btn-title">03. COM_study (arXiv)</span>
+                                <span class="chip chip-purple">PAPER</span>
+                            </div>
+                            <span class="module-btn-desc" data-en="LOL-API Data Analysis &amp; Paper">LOL-API 데이터 분석 및 논문</span>
+                        </button>
+
+                        <button type="button" class="module-btn"
+                                data-module="Personal-Project (Unknown)"
+                                data-target="#log-entry-unknown"
+                                data-desc-ko="복잡한 시스템 환경에서 QA 수동 리소스를 절감하고 휴먼 에러를 방지하기 위해 개발 중인 품질 보증 및 테스트 자동화 지원 도구입니다."
+                                data-desc-en="A QA and test automation support tool designed to drastically reduce manual verification overhead and prevent human error in complex environments.">
+                            <div class="module-btn-top">
+                                <span class="module-btn-title">04. Unknown Project</span>
+                                <span class="chip chip-info">ACTIVE</span>
+                            </div>
+                            <span class="module-btn-desc" data-en="QA &amp; Test Automation Tool">품질 보증 및 테스트 자동화 도구</span>
+                        </button>
+
+                        <button type="button" class="module-btn"
+                                data-module="Race Engineer (F1 Telemetry)"
+                                data-target="#log-entry-f1"
+                                data-desc-ko="F1 게임의 UDP 텔레메트리 데이터를 실시간 파싱하여 타이어 마모, 연료, 랩타임을 시각화하고 레이스 전략을 보조하는 대시보드입니다."
+                                data-desc-en="A full-stack dashboard that parses real-time F1 UDP telemetry packets to visualize tire wear, fuel, and lap times for live race strategy.">
+                            <div class="module-btn-top">
+                                <span class="module-btn-title">05. Race Engineer</span>
+                                <span class="chip chip-info">ACTIVE</span>
+                            </div>
+                            <span class="module-btn-desc" data-en="Real-time F1 Telemetry App">F1 실시간 텔레메트리 앱</span>
+                        </button>
+
+                        <button type="button" class="module-btn"
+                                data-module="NEIS Letter Counter"
+                                data-target="#log-entry-neis"
+                                data-desc-ko="교사를 위한 나이스(NEIS) 맞춤형 바이트 계산기 및 SheetJS 기반 브라우저 내 엑셀 일괄 처리 도구입니다."
+                                data-desc-en="A custom NEIS byte calculator and client-side Excel (.xlsx) batch processor built for teachers with strict student data privacy.">
+                            <div class="module-btn-top">
+                                <span class="module-btn-title">06. NEIS Counter</span>
+                                <span class="chip chip-success">DONE</span>
+                            </div>
+                            <span class="module-btn-desc" data-en="NEIS Byte Counter &amp; Excel Tool">나이스 글자수 계산 &amp; 엑셀 처리</span>
+                        </button>
+                    </div>
+
+                    <div class="preview-panel">
+                        <div class="preview-content">
+                            <div class="preview-title">
+                                <span class="chip chip-info">PREVIEW</span>
+                                <span id="preview-module-name" style="font-family: var(--font-mono);">01. About &amp; Skills</span>
+                            </div>
+                            <p class="body-text" id="preview-module-desc" style="font-size: 15px;">
+                                문제 해결사로서의 철학, F1(막스 베르스타펜) 및 축구 데이터 분석에 대한 열정, 그리고 보유 기술 스택을 소개합니다.
+                            </p>
+                        </div>
+                        <a href="#log-entry-about" id="preview-jump-btn" class="btn-utility btn-primary-accent">
+                            <span data-en="Inspect Log Details">로그 상세 열기</span> <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- ==========================================================================
+             4. "장자훈's Log" — TIMELINE LOG REGISTRY & EXPANDABLE PAYLOAD FEED
+             (시간대별로 프로젝트 로그가 적재되어 쌓여있고 클릭해서 더 보기를 누르면 상세 정보 노출)
+             ========================================================================== -->
+        <div class="band-soft" id="project-logs-section">
+            <div class="band-inner">
+                <section>
+                    <!-- Log Dashboard Observability Header Banner -->
+                    <div class="log-dashboard-banner">
+                        <div class="log-dashboard-left">
+                            <div class="log-dashboard-title">
+                                <span class="log-pulse-dot"></span>
+                                <span>장자훈's Log Registry &amp; Timeline Stream</span>
+                            </div>
+                            <p class="log-dashboard-desc"
+                               data-en="Chronological log repository recording system tool builds, telemetry parsing, and research publications. Click 'Inspect Payload' to view detailed project architectures.">
+                               시간대별로 수행한 업무 효율화 도구 개발, 텔레메트리 파싱, 학술 논문 및 아키텍처 로그 기록입니다. <strong>[로그 상세 페이로드 열기]</strong>를 누르면 세부 프로젝트 정보가 노출됩니다.
+                            </p>
+                        </div>
+                        <div class="log-metrics-grid">
+                            <div class="log-stat-card">
+                                <span class="log-stat-val">8 Entries</span>
+                                <span class="log-stat-lbl">Ingested Logs</span>
+                            </div>
+                            <div class="log-stat-card">
+                                <span class="log-stat-val">4 Projects</span>
+                                <span class="log-stat-lbl">Production &amp; QA</span>
+                            </div>
+                            <div class="log-stat-card">
+                                <span class="log-stat-val">1 Paper</span>
+                                <span class="log-stat-lbl">arXiv:2512.20116</span>
+                            </div>
+                            <div class="log-stat-card">
+                                <span class="log-stat-val">0 Errors</span>
+                                <span class="log-stat-lbl">Pipeline Health</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Log Filter Toolbar -->
+                    <div class="log-toolbar">
+                        <div class="log-filter-group">
+                            <button type="button" class="log-filter-btn active" data-filter="all">
+                                <span>전체 로그 ALL</span>
+                                <span class="badge-count">8</span>
+                            </button>
+                            <button type="button" class="log-filter-btn" data-filter="projects">
+                                <span>프로젝트 PROJECTS</span>
+                                <span class="badge-count">4</span>
+                            </button>
+                            <button type="button" class="log-filter-btn" data-filter="architecture">
+                                <span>아키텍처 ARCH</span>
+                                <span class="badge-count">4</span>
+                            </button>
+                            <button type="button" class="log-filter-btn" data-filter="research">
+                                <span>연구 &amp; 논문 RESEARCH</span>
+                                <span class="badge-count">1</span>
+                            </button>
+                            <button type="button" class="log-filter-btn" data-filter="profile">
+                                <span>엔지니어 프로필 ABOUT</span>
+                                <span class="badge-count">1</span>
+                            </button>
+                        </div>
+                        <div class="log-actions-group">
+                            <button type="button" class="btn-log-ctrl" id="btn-logs-expand-all">
+                                <i class="fas fa-angles-down"></i> <span data-en="Expand All">전체 로그 펼치기</span>
+                            </button>
+                            <button type="button" class="btn-log-ctrl" id="btn-logs-collapse-all">
+                                <i class="fas fa-angles-up"></i> <span data-en="Collapse All">전체 접기</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- The Stream of Log Cards -->
+                    <div class="log-stream-feed">
+
+                        <!-- ==========================================================
+                             LOG ITEM 1: Personal-Project (Unknown QA Pipeline)
+                             ========================================================== -->
+                        <article class="log-stream-card" id="log-entry-unknown" data-category="projects architecture">
+                            <div class="log-card-header">
+                                <div class="log-header-left">
+                                    <span class="log-ts-badge"><i class="fas fa-clock"></i> 2026.03 - PRESENT</span>
+                                    <span class="log-tag-badge">PROJECT</span>
+                                    <span class="log-tag-badge" style="color: var(--color-primary);">QA_TEST_AUTOMATION</span>
+                                    <span class="log-service-name">service.unknown.qa_suite</span>
+                                </div>
+                                <span class="chip chip-info" data-en="In Progress">진행 중 (ACTIVE)</span>
+                            </div>
+
+                            <div class="log-card-summary">
+                                <h3 class="log-project-title" data-en="Personal-Project (Unknown Dev Project) — QA &amp; Test Automation Suite">
+                                    Personal-Project (Unknown 개발 프로젝트) — QA &amp; 테스트 자동화 지원 도구
+                                </h3>
+                                <p class="log-summary-text"
+                                   data-en="A mission-critical QA automation suite engineered to drastically eliminate manual log verification overhead, CEL filter generation, and repetitive test runs in complex system environments.">
+                                    복잡한 시스템 환경에서 로그 검증, 이벤트 시각화, 테스트 반복 작업에 소모되는 QA 수동 리소스를 절감하고 휴먼 에러를 방지하기 위해 개발 중인 품질 보증 및 테스트 자동화 지원 도구입니다.
+                                </p>
+                            </div>
+
+                            <!-- Expand Button -->
+                            <button type="button" class="log-expand-btn">
+                                <span><i class="fas fa-magnifying-glass"></i> <span data-en="Inspect Log Details &amp; Project Payload">로그 상세 페이로드 &amp; 프로젝트 분석 열기</span></span>
+                                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+                            </button>
+
+                            <!-- Expandable Payload Details -->
+                            <div class="log-payload-drawer">
+                                <!-- Structured JSON Metadata Box -->
+                                <pre class="log-json-block"><code>{
+  <span class="jk">"timestamp"</span>: <span class="js">"2026-03-01T09:00:00Z"</span>,
+  <span class="jk">"service"</span>: <span class="js">"Unknown-QA-Automation-Platform"</span>,
+  <span class="jk">"domain"</span>: <span class="js">"Test Automation &amp; Log Telemetry"</span>,
+  <span class="jk">"core_modules"</span>: [
+    <span class="js">"Automated_Log_Downloader"</span>,
+    <span class="js">"CEL_Filter_Syntax_Engine"</span>,
+    <span class="js">"Concurrent_Video_Recording_Pipeline"</span>,
+    <span class="js">"Issue_Ticket_Report_Generator"</span>
+  ],
+  <span class="jk">"runtime_status"</span>: <span class="js">"Active Development"</span>
+}</code></pre>
+
+                                <!-- Problem & Resolution Grid -->
+                                <div class="log-incident-grid">
+                                    <div class="log-incident-box">
+                                        <span class="log-incident-title">
+                                            <i class="fas fa-triangle-exclamation" style="color: var(--color-semantic-down);"></i>
+                                            <span data-en="Problem Incident">문제 정의 (Problem Incident)</span>
+                                        </span>
+                                        <p class="body-text" style="font-size: 14px;"
+                                           data-en="Excessive manual QA resources consumed by log verification, event visualization, and repetitive testing in a complex system environment.">
+                                            복잡한 시스템 환경에서 로그 검증, 이벤트 시각화, 테스트 반복 작업에 소모되는 QA 수동 리소스가 과도함
+                                        </p>
+                                    </div>
+                                    <div class="log-incident-box">
+                                        <span class="log-incident-title">
+                                            <i class="fas fa-circle-check" style="color: var(--color-semantic-up);"></i>
+                                            <span data-en="Resolution Strategy">해결 방안 (Resolution Strategy)</span>
+                                        </span>
+                                        <p class="body-text" style="font-size: 14px;"
+                                           data-en="Built an integrated automation suite featuring automated log downloading, CEL-based filter generation, and event visualization—maximizing QA efficiency and preventing human error.">
+                                            로그 자동 다운로드, CEL 기반 필터 생성, 이벤트 시각화를 통합한 자동화 대시보드를 구축하여 QA 효율을 극대화하고 휴먼 에러를 방지했습니다. (보안상 상세 아키텍처 생략)
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Placeholder Content Box -->
+                                <div class="needs-content-box">
+                                    <div class="needs-content-header">
+                                        <span class="needs-content-title" data-en="Project Outcomes &amp; Additional Details">
+                                            <i class="fas fa-pen-to-square"></i> 프로젝트 상세 성과 및 추가 서술
+                                        </span>
+                                        <span class="chip chip-warning" data-en="Needs Content">내용 필요</span>
+                                    </div>
+                                    <p class="needs-content-placeholder" data-en="Content needed">내용 필요</p>
+                                </div>
+
+                                <!-- Action Buttons -->
+                                <div class="log-actions-footer">
+                                    <a href="#log-entry-architecture" class="btn-utility btn-primary-accent" style="height: 38px; font-size: 13px;">
+                                        <i class="fas fa-cubes"></i> <span data-en="View 4 Core Architecture Pillars">연계 아키텍처 인사이트 보기</span>
+                                    </a>
+                                    <span class="meta-label">ID: LOG-PROJ-UNKNOWN-001</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- ==========================================================
+                             LOG ITEM 2: COM_study (LOL-API & arXiv:2512.20116)
+                             ========================================================== -->
+                        <article class="log-stream-card" id="log-entry-com-study" data-category="projects research">
+                            <div class="log-card-header">
+                                <div class="log-header-left">
+                                    <span class="log-ts-badge"><i class="fas fa-clock"></i> 2025.12 - 2026.01</span>
+                                    <span class="log-tag-badge">RESEARCH</span>
+                                    <span class="log-tag-badge" style="color: #8a63f8;">ARXIV_PAPER</span>
+                                    <span class="log-service-name">service.com_study.riot_api</span>
+                                </div>
+                                <span class="chip chip-success" data-en="Completed">검증 완료 (PUBLISHED)</span>
+                            </div>
+
+                            <div class="log-card-summary">
+                                <h3 class="log-project-title">
+                                    COM_study (LOL-API &amp; Proj_code) — 데이터 분석 파이프라인 및 학술 논문
+                                </h3>
+                                <p class="log-summary-text"
+                                   data-en="Built an automated pipeline utilizing the Riot API to collect and analyze in-game telemetry data, validated through a peer-reviewed research paper published on arXiv (arXiv:2512.20116).">
+                                    Riot API를 활용한 데이터 수집·분석 자동화 파이프라인을 구축하고, 통계 분석을 통해 학술 논문(arXiv:2512.20116)으로 연구 성과를 공식 등재한 데이터 엔지니어링 프로젝트입니다.
+                                </p>
+                            </div>
+
+                            <button type="button" class="log-expand-btn">
+                                <span><i class="fas fa-magnifying-glass"></i> <span data-en="Inspect Log Details &amp; Research Payload">로그 상세 페이로드 &amp; 논문 데이터 열기</span></span>
+                                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+                            </button>
+
+                            <div class="log-payload-drawer">
+                                <pre class="log-json-block"><code>{
+  <span class="jk">"timestamp"</span>: <span class="js">"2025-12-15T14:20:00Z"</span>,
+  <span class="jk">"publication"</span>: <span class="js">"arXiv:2512.20116"</span>,
+  <span class="jk">"dataset_source"</span>: <span class="js">"Riot Games Official Match History API"</span>,
+  <span class="jk">"pipeline_architecture"</span>: <span class="js">"Modular Ingestion -> ETL Cleansing -> Statistical Analysis"</span>,
+  <span class="jk">"repository"</span>: <span class="js">"https://github.com/hope77-githhub/Proj_code"</span>,
+  <span class="jk">"peer_reviewed"</span>: <span class="jb">true</span>
+}</code></pre>
+
+                                <div class="log-incident-grid">
+                                    <div class="log-incident-box">
+                                        <span class="log-incident-title">
+                                            <i class="fas fa-triangle-exclamation" style="color: var(--color-semantic-down);"></i>
+                                            <span data-en="Problem Incident">문제 정의 (Problem Incident)</span>
+                                        </span>
+                                        <p class="body-text" style="font-size: 14px;"
+                                           data-en="Lack of an automated pipeline to systematically collect match/in-game data and derive meaningful statistical insights.">
+                                            게임 데이터를 체계적으로 수집하고 의미 있는 통계를 도출할 수 있는 자동화 파이프라인 부재
+                                        </p>
+                                    </div>
+                                    <div class="log-incident-box">
+                                        <span class="log-incident-title">
+                                            <i class="fas fa-circle-check" style="color: var(--color-semantic-up);"></i>
+                                            <span data-en="Resolution Strategy">해결 방안 (Resolution Strategy)</span>
+                                        </span>
+                                        <p class="body-text" style="font-size: 14px;"
+                                           data-en="Built reusable modules utilizing the Riot API to collect match and in-game data, automating the entire workflow from data ingestion to statistical analysis while strengthening software architecture skills.">
+                                            Riot API를 활용하여 전적/인게임 데이터를 수집하고, 재사용 가능한 모듈로 코드를 정리했습니다. 이를 통해 데이터 수집부터 분석까지의 과정을 자동화하며 아키텍처 설계 역량을 향상시켰습니다.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="needs-content-box">
+                                    <div class="needs-content-header">
+                                        <span class="needs-content-title" data-en="arXiv Paper &amp; Data Analysis Details">
+                                            <i class="fas fa-pen-to-square"></i> 관련 논문(arXiv) 및 데이터 분석 상세 내용
+                                        </span>
+                                        <span class="chip chip-warning" data-en="Needs Content">내용 필요</span>
+                                    </div>
+                                    <p class="needs-content-placeholder" data-en="Content needed">내용 필요</p>
+                                </div>
+
+                                <div class="log-actions-footer">
+                                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                        <a href="https://github.com/hope77-githhub/Proj_code" target="_blank" class="btn-utility" style="height: 38px; font-size: 13px;">
+                                            <i class="fab fa-github"></i> <span data-en="View Repository">저장소 보기</span>
+                                        </a>
+                                        <a href="https://arxiv.org/abs/2512.20116" target="_blank" class="btn-utility btn-primary-accent" style="height: 38px; font-size: 13px;">
+                                            <i class="fas fa-file-pdf"></i> <span data-en="arXiv:2512.20116 Paper">논문 원문 (arXiv)</span>
+                                        </a>
+                                    </div>
+                                    <span class="meta-label">ID: LOG-PAPER-ARXIV-2512</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- ==========================================================
+                             LOG ITEM 3: Race Engineer (F1 UDP Telemetry App)
+                             ========================================================== -->
+                        <article class="log-stream-card" id="log-entry-f1" data-category="projects">
+                            <div class="log-card-header">
+                                <div class="log-header-left">
+                                    <span class="log-ts-badge"><i class="fas fa-clock"></i> 2025.08 - PRESENT</span>
+                                    <span class="log-tag-badge">TELEMETRY</span>
+                                    <span class="log-tag-badge" style="color: var(--color-primary);">UDP_SOCKET_20777</span>
+                                    <span class="log-service-name">service.f1.race_engineer</span>
+                                </div>
+                                <span class="chip chip-info" data-en="In Progress">진행 중 (ACTIVE)</span>
+                            </div>
+
+                            <div class="log-card-summary">
+                                <h3 class="log-project-title" data-en="Race Engineer (F1 Telemetry App) — Real-Time UDP Telemetry Dashboard">
+                                    Race Engineer (F1 Telemetry App) — 실시간 UDP 텔레메트리 &amp; 레이스 엔지니어링 대시보드
+                                </h3>
+                                <p class="log-summary-text"
+                                   data-en="A full-stack telemetry platform that parses high-frequency UDP telemetry packets (PORT 20777) from the official F1 game to visualize live tire wear, fuel load, and lap time deltas for tactical decision-making.">
+                                    F1 게임의 UDP 텔레메트리 데이터를 실시간으로 파싱하여 타이어 마모, 연료 적재량, 랩타임 델타를 시각화하고 실제 레이스 엔지니어처럼 즉각적인 전략 수정을 보조하는 풀스택 앱입니다.
+                                </p>
+                            </div>
+
+                            <button type="button" class="log-expand-btn">
+                                <span><i class="fas fa-magnifying-glass"></i> <span data-en="Inspect Log Details &amp; Telemetry Payload">로그 상세 페이로드 &amp; 텔레메트리 분석 열기</span></span>
+                                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+                            </button>
+
+                            <div class="log-payload-drawer">
+                                <pre class="log-json-block"><code>{
+  <span class="jk">"timestamp"</span>: <span class="js">"2025-08-10T18:30:00Z"</span>,
+  <span class="jk">"network_protocol"</span>: <span class="js">"UDP Socket :20777"</span>,
+  <span class="jk">"frequency"</span>: <span class="js">"60Hz real-time packet stream"</span>,
+  <span class="jk">"telemetry_metrics"</span>: [
+    <span class="js">"Surface_Tire_Temperature"</span>,
+    <span class="js">"Inner_Core_Wear_Percent"</span>,
+    <span class="js">"Fuel_Laps_Remaining"</span>,
+    <span class="js">"Sector_Delta_Live"</span>
+  ],
+  <span class="jk">"repository"</span>: <span class="js">"https://github.com/hope77-githhub/F125_Personal_RaceEngineer"</span>
+}</code></pre>
+
+                                <div class="log-incident-grid">
+                                    <div class="log-incident-box">
+                                        <span class="log-incident-title">
+                                            <i class="fas fa-triangle-exclamation" style="color: var(--color-semantic-down);"></i>
+                                            <span data-en="Problem Incident">문제 정의 (Problem Incident)</span>
+                                        </span>
+                                        <p class="body-text" style="font-size: 14px;"
+                                           data-en="Difficulty intuitively monitoring real-time vehicle states (tire wear, fuel load, lap times) and formulating live race strategies while driving.">
+                                            F1 게임 플레이 중 실시간 차량 상태(타이어 마모, 연료, 랩타임 등)를 직관적으로 파악하고 레이스 전략을 세우기 어려움
+                                        </p>
+                                    </div>
+                                    <div class="log-incident-box">
+                                        <span class="log-incident-title">
+                                            <i class="fas fa-circle-check" style="color: var(--color-semantic-up);"></i>
+                                            <span data-en="Resolution Strategy">해결 방안 (Resolution Strategy)</span>
+                                        </span>
+                                        <p class="body-text" style="font-size: 14px;"
+                                           data-en="Developing a full-stack application that parses F1 UDP telemetry packets in real time and visualizes them on an interactive dashboard, enabling immediate data-driven strategy adjustments just like a real race engineer.">
+                                            F1 게임의 UDP 텔레메트리 데이터를 실시간으로 파싱하여 프론트엔드 대시보드에 시각화하는 풀스택 앱을 구축하고 있습니다. 실제 레이스 엔지니어처럼 데이터를 바탕으로 즉각적인 전략 수정이 가능하도록 돕습니다.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="needs-content-box">
+                                    <div class="needs-content-header">
+                                        <span class="needs-content-title" data-en="Telemetry Parsing &amp; Strategy Features">
+                                            <i class="fas fa-pen-to-square"></i> 텔레메트리 파싱 및 전략 기능 상세 서술
+                                        </span>
+                                        <span class="chip chip-warning" data-en="Needs Content">내용 필요</span>
+                                    </div>
+                                    <p class="needs-content-placeholder" data-en="Content needed">내용 필요</p>
+                                </div>
+
+                                <div class="log-actions-footer">
+                                    <a href="https://github.com/hope77-githhub/F125_Personal_RaceEngineer" target="_blank" class="btn-utility btn-primary-accent" style="height: 38px; font-size: 13px;">
+                                        <i class="fab fa-github"></i> <span data-en="View Repository">저장소 보기 (F125_Personal_RaceEngineer)</span>
+                                    </a>
+                                    <span class="meta-label">ID: LOG-TELEMETRY-F1-001</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- ==========================================================
+                             LOG ITEM 4: NEIS Letter Counter
+                             ========================================================== -->
+                        <article class="log-stream-card" id="log-entry-neis" data-category="projects">
+                            <div class="log-card-header">
+                                <div class="log-header-left">
+                                    <span class="log-ts-badge"><i class="fas fa-clock"></i> 2025.04 - 2025.06</span>
+                                    <span class="log-tag-badge">PRODUCTION</span>
+                                    <span class="log-tag-badge" style="color: var(--color-semantic-up);">SHEETJS_SANDBOX</span>
+                                    <span class="log-service-name">service.neis.counter</span>
+                                </div>
+                                <span class="chip chip-success" data-en="Completed">배포 완료 (DONE)</span>
+                            </div>
+
+                            <div class="log-card-summary">
+                                <h3 class="log-project-title" data-en="NEIS Letter Counter — Custom Byte Calculator &amp; Client-Side Batch Processor">
+                                    NEIS Letter Counter — 교사를 위한 나이스 맞춤형 바이트 계산기 &amp; 엑셀 일괄 처리 도구
+                                </h3>
+                                <p class="log-summary-text"
+                                   data-en="A specialized byte calculator and client-side batch processor designed around unique NEIS byte specifications (3 bytes/Korean, 2 bytes/linebreak). Employs SheetJS in an isolated browser sandbox to guarantee 100% student data privacy.">
+                                    나이스(NEIS) 시스템의 특수 바이트 규칙(한글 3byte, 줄바꿈 2byte)을 오차 없이 계산하고, SheetJS 기반 100% 브라우저 내 클라이언트 샌드박스로 학생 개인정보를 완벽히 보호하며 대량 엑셀 데이터를 일괄 처리하는 도구입니다.
+                                </p>
+                            </div>
+
+                            <button type="button" class="log-expand-btn">
+                                <span><i class="fas fa-magnifying-glass"></i> <span data-en="Inspect Log Details &amp; Privacy Architecture">로그 상세 페이로드 &amp; 보안 아키텍처 열기</span></span>
+                                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+                            </button>
+
+                            <div class="log-payload-drawer">
+                                <pre class="log-json-block"><code>{
+  <span class="jk">"timestamp"</span>: <span class="js">"2025-04-12T11:00:00Z"</span>,
+  <span class="jk">"target_system"</span>: <span class="js">"National Education Information System (NEIS)"</span>,
+  <span class="jk">"byte_encoding_rule"</span>: <span class="js">"Korean: 3-bytes | Linebreak: 2-bytes | ASCII: 1-byte"</span>,
+  <span class="jk">"data_privacy"</span>: <span class="js">"100% Client-Side In-Memory Execution (Zero Server Transmission)"</span>,
+  <span class="jk">"excel_engine"</span>: <span class="js">"SheetJS XLSX Parser"</span>
+}</code></pre>
+
+                                <div class="log-incident-grid">
+                                    <div class="log-incident-box">
+                                        <span class="log-incident-title">
+                                            <i class="fas fa-triangle-exclamation" style="color: var(--color-semantic-down);"></i>
+                                            <span data-en="Problem Incident">문제 정의 (Problem Incident)</span>
+                                        </span>
+                                        <p class="body-text" style="font-size: 14px;"
+                                           data-en="NEIS's unique byte-counting rules (3 bytes per Korean character, 2 bytes per line break) made it tedious for teachers to fit student record limits and manually copy-paste data for multiple students.">
+                                            나이스 시스템의 독특한 바이트 계산 방식(한글 3byte, 줄바꿈 2byte 등)으로 인해 학생부 작성 시 길이를 맞추기 어렵고, 여러 학생의 데이터를 일일이 복사/붙여넣기 해야 하는 비효율 발생
+                                        </p>
+                                    </div>
+                                    <div class="log-incident-box">
+                                        <span class="log-incident-title">
+                                            <i class="fas fa-circle-check" style="color: var(--color-semantic-up);"></i>
+                                            <span data-en="Resolution Strategy">해결 방안 (Resolution Strategy)</span>
+                                        </span>
+                                        <p class="body-text" style="font-size: 14px;"
+                                           data-en="Implemented exact NEIS byte-calculation logic and added Excel (.xlsx) batch upload via SheetJS. By processing everything 100% client-side in the browser, it simultaneously solved workflow inefficiency and student data privacy concerns.">
+                                            나이스 기준에 정확히 맞는 바이트 계산 로직을 구현하고, Excel(.xlsx) 파일 업로드 기능을 추가하여 다수의 학생 데이터를 한 번에 처리하도록 개선했습니다. 브라우저 내에서만 동작하도록(SheetJS) 설계하여 학생 개인정보 보안 문제까지 완벽히 해결했습니다.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="needs-content-box">
+                                    <div class="needs-content-header">
+                                        <span class="needs-content-title" data-en="Implementation Details &amp; Impact">
+                                            <i class="fas fa-pen-to-square"></i> 구현 상세 및 활용 성과 서술
+                                        </span>
+                                        <span class="chip chip-warning" data-en="Needs Content">내용 필요</span>
+                                    </div>
+                                    <p class="needs-content-placeholder" data-en="Content needed">내용 필요</p>
+                                </div>
+
+                                <div class="log-actions-footer">
+                                    <div style="display: flex; gap: 8px;">
+                                        <span class="chip chip-neutral">SheetJS Client-Side</span>
+                                        <span class="chip chip-success" data-en="Privacy Safe">개인정보 무전송 안전 설계</span>
+                                    </div>
+                                    <span class="meta-label">ID: LOG-TOOL-NEIS-001</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- ==========================================================
+                             LOG ITEM 5: 4 Architecture Pillars
+                             ========================================================== -->
+                        <article class="log-stream-card" id="log-entry-architecture" data-category="architecture">
+                            <div class="log-card-header">
+                                <div class="log-header-left">
+                                    <span class="log-ts-badge"><i class="fas fa-clock"></i> ARCHITECTURE</span>
+                                    <span class="log-tag-badge">DESIGN_INSIGHT</span>
+                                    <span class="log-tag-badge" style="color: var(--color-accent-orange);">SPATIAL_EFFICIENCY</span>
+                                    <span class="log-service-name">arch.unknown.4_pillars</span>
+                                </div>
+                                <span class="chip chip-info">4 Core Pillars</span>
+                            </div>
+
+                            <div class="log-card-summary">
+                                <h3 class="log-project-title"
+                                    data-en="Spatial Efficiency &amp; Teamwork on the Pitch — Unknown Project Architecture Insights">
+                                    피치 위의 공간 효율성과 팀워크 — Unknown Project 4대 핵심 아키텍처 인사이트
+                                </h3>
+                                <p class="log-summary-text"
+                                   data-en="Tactical movements, pass networks, and Expected Goals (xG) from football directly inspired the 4 core pillars of the Unknown Project: Log Visualization, Test Video Sync Pipeline, Analytics Tools, and CEL Syntax Filters.">
+                                    축구의 공간 제어, 패스 네트워크, 기대득점(xG) 등 전술 데이터와 유기적인 팀워크에서 영감을 얻어 설계한 Unknown Project의 4대 핵심 아키텍처(로그 시각화, 파이프라인+영상 레코딩 동시 동작, 테스트 지원 도구, CEL 문법 필터 지원) 기록입니다.
+                                </p>
+                            </div>
+
+                            <button type="button" class="log-expand-btn">
+                                <span><i class="fas fa-magnifying-glass"></i> <span data-en="Inspect 4 Core Pillars Architecture Payload">4대 핵심 아키텍처 상세 페이로드 열기</span></span>
+                                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+                            </button>
+
+                            <div class="log-payload-drawer">
+                                <div class="pitch-banner" style="margin-bottom: 0;">
+                                    <p class="body-text"
+                                       data-en="&quot;I enjoy playing and watching football, analyzing tactical movements and sports data such as spatial control, pass networks, and Expected Goals (xG). Organic teamwork and efficient spatial utilization directly inspire how I design software architectures.&quot;">
+                                        "축구를 즐기며 경기 내 공간 제어, 패스 네트워크, 기대득점(xG) 등 스포츠 데이터와 전술적 움직임을 분석하는 것을 좋아합니다. 유기적인 팀워크와 효율적인 공간 활용은 코드 아키텍처 설계에도 영감을 줍니다."
+                                    </p>
+                                </div>
+
+                                <div class="four-topic-grid">
+                                    <!-- Pillar 1 -->
+                                    <div class="topic-card">
+                                        <div class="card-title-row">
+                                            <h4 class="card-title" data-en="1. Visualization of Log Data">1. 로그 데이터의 시각화</h4>
+                                            <span class="chip chip-info">Log Viz</span>
+                                        </div>
+                                        <div class="needs-content-box">
+                                            <div class="needs-content-header">
+                                                <span class="needs-content-title" data-en="Detailed Architecture &amp; Implementation">상세 아키텍처 및 구현 내용</span>
+                                                <span class="chip chip-warning" data-en="Needs Content">내용 필요</span>
+                                            </div>
+                                            <p class="needs-content-placeholder" data-en="Content needed">내용 필요</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Pillar 2 -->
+                                    <div class="topic-card">
+                                        <div class="card-title-row">
+                                            <h4 class="card-title" data-en="2. Log Data Download &amp; Automation Test Pipeline + Concurrent Video Recording">
+                                                2. 로그 데이터 다운로드 및 Automation Test Pipeline + 영상 동시 레코딩
+                                            </h4>
+                                            <span class="chip chip-purple">Pipeline &amp; Video</span>
+                                        </div>
+                                        <div class="needs-content-box">
+                                            <div class="needs-content-header">
+                                                <span class="needs-content-title" data-en="Detailed Architecture &amp; Implementation">상세 아키텍처 및 구현 내용</span>
+                                                <span class="chip chip-warning" data-en="Needs Content">내용 필요</span>
+                                            </div>
+                                            <p class="needs-content-placeholder" data-en="Content needed">내용 필요</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Pillar 3 -->
+                                    <div class="topic-card">
+                                        <div class="card-title-row">
+                                            <h4 class="card-title" data-en="3. Testing &amp; Analytics Tooling">
+                                                3. 여러 테스트 도구 개발 (팀전술 테스트 도구, 이슈티켓 분석레포트 도구)
+                                            </h4>
+                                            <span class="chip chip-success">Analytics Tools</span>
+                                        </div>
+                                        <div class="needs-content-box">
+                                            <div class="needs-content-header">
+                                                <span class="needs-content-title" data-en="Detailed Architecture &amp; Implementation">상세 아키텍처 및 구현 내용</span>
+                                                <span class="chip chip-warning" data-en="Needs Content">내용 필요</span>
+                                            </div>
+                                            <p class="needs-content-placeholder" data-en="Content needed">내용 필요</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Pillar 4 -->
+                                    <div class="topic-card">
+                                        <div class="card-title-row">
+                                            <h4 class="card-title" data-en="4. CEL (Common Expression Language) Syntax Filter Code Support">
+                                                4. CEL 문법 Filter Code 지원
+                                            </h4>
+                                            <span class="chip chip-info">CEL Engine</span>
+                                        </div>
+                                        <div class="needs-content-box">
+                                            <div class="needs-content-header">
+                                                <span class="needs-content-title" data-en="Detailed Architecture &amp; Implementation">상세 아키텍처 및 구현 내용</span>
+                                                <span class="chip chip-warning" data-en="Needs Content">내용 필요</span>
+                                            </div>
+                                            <p class="needs-content-placeholder" data-en="Content needed">내용 필요</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="log-actions-footer">
+                                    <span class="meta-label">ARCHITECTURE PILLARS 1~4</span>
+                                    <span class="meta-label">ID: LOG-ARCH-UNKNOWN-4PILLARS</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- ==========================================================
+                             LOG ITEM 6: About Me & Tech Stack
+                             ========================================================== -->
+                        <article class="log-stream-card" id="log-entry-about" data-category="profile">
+                            <div class="log-card-header">
+                                <div class="log-header-left">
+                                    <span class="log-ts-badge"><i class="fas fa-clock"></i> PROFILE</span>
+                                    <span class="log-tag-badge">ENGINEER_IDENTITY</span>
+                                    <span class="log-tag-badge" style="color: var(--color-semantic-up);">PROBLEM_SOLVER</span>
+                                    <span class="log-service-name">identity.hope77.profile</span>
+                                </div>
+                                <span class="chip chip-neutral">Engineer Overview</span>
+                            </div>
+
+                            <div class="log-card-summary">
+                                <h3 class="log-project-title" data-en="About Me &amp; Tech Stack — Problem Solving Philosophy">
+                                    About Me &amp; Skills — 문제 해결사로서의 철학 및 보유 기술 스택
+                                </h3>
+                                <p class="log-summary-text"
+                                   data-en="Inspired by Max Verstappen's data-driven precision in Formula 1 and tactical spatial analytics in football, I proactively design and build automation tools whenever I spot workflow bottlenecks.">
+                                    F1의 막스 베르스타펜이 보여주는 데이터 기반의 극한 효율성과 축구의 전술 데이터를 분석하는 것을 좋아하며, 업무 현장의 비효율을 발견하면 직접 자동화 도구를 기획·개발해 해결합니다.
+                                </p>
+                            </div>
+
+                            <button type="button" class="log-expand-btn">
+                                <span><i class="fas fa-magnifying-glass"></i> <span data-en="Inspect Profile Details &amp; Tech Stack">엔지니어 프로필 &amp; 기술 스택 상세 열기</span></span>
+                                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+                            </button>
+
+                            <div class="log-payload-drawer">
+                                <div class="skills-grid">
+                                    <div class="skill-item"><i class="fab fa-html5"></i><span>HTML / CSS</span></div>
+                                    <div class="skill-item"><i class="fab fa-js"></i><span>JavaScript</span></div>
+                                    <div class="skill-item"><i class="fab fa-python"></i><span>Python</span></div>
+                                    <div class="skill-item"><i class="fas fa-chart-line"></i><span>Data Analysis</span></div>
+                                    <div class="skill-item"><i class="fas fa-robot"></i><span>Test Automation</span></div>
+                                    <div class="skill-item"><i class="fas fa-code-branch"></i><span>CEL / Telemetry</span></div>
+                                </div>
+
+                                <div class="two-col-grid">
+                                    <div class="needs-content-box">
+                                        <div class="needs-content-header">
+                                            <span class="needs-content-title" data-en="Detailed Background &amp; Core Values">
+                                                <i class="fas fa-user-pen"></i> 자기소개 상세 서술 (배경 및 가치관)
+                                            </span>
+                                            <span class="chip chip-warning" data-en="Needs Content">내용 필요</span>
+                                        </div>
+                                        <p class="needs-content-placeholder" data-en="Content needed">내용 필요</p>
+                                    </div>
+                                    <div class="needs-content-box">
+                                        <div class="needs-content-header">
+                                            <span class="needs-content-title" data-en="Key Efficiency &amp; Tooling Episodes">
+                                                <i class="fas fa-lightbulb"></i> 효율성 개선 및 아이디어 실현 대표 사례
+                                            </span>
+                                            <span class="chip chip-warning" data-en="Needs Content">내용 필요</span>
+                                        </div>
+                                        <p class="needs-content-placeholder" data-en="Content needed">내용 필요</p>
+                                    </div>
+                                </div>
+
+                                <div class="two-col-grid" style="margin-top: 12px;">
+                                    <div class="needs-content-box">
+                                        <div class="needs-content-header">
+                                            <span class="needs-content-title" data-en="Frameworks &amp; Libraries">
+                                                <i class="fas fa-layer-group"></i> 세부 기술 스택 및 프레임워크
+                                            </span>
+                                            <span class="chip chip-warning" data-en="Needs Content">내용 필요</span>
+                                        </div>
+                                        <p class="needs-content-placeholder" data-en="Content needed">내용 필요</p>
+                                    </div>
+                                    <div class="needs-content-box">
+                                        <div class="needs-content-header">
+                                            <span class="needs-content-title" data-en="Data Analytics &amp; Engineering Capabilities">
+                                                <i class="fas fa-database"></i> 데이터 분석 및 엔지니어링 상세 역량
+                                            </span>
+                                            <span class="chip chip-warning" data-en="Needs Content">내용 필요</span>
+                                        </div>
+                                        <p class="needs-content-placeholder" data-en="Content needed">내용 필요</p>
+                                    </div>
+                                </div>
+
+                                <div class="log-actions-footer">
+                                    <span class="meta-label">ENGINEER PROFILE &amp; TECH STACK</span>
+                                    <span class="meta-label">ID: LOG-PROFILE-HOPE77</span>
+                                </div>
+                            </div>
+                        </article>
+
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- ==========================================================================
+             5. MILESTONES & TIMELINE
+             ========================================================================== -->
+        <div class="band-light">
+            <div class="band-inner">
+                <section class="section-card" id="milestones">
+                    <div class="section-header">
+                        <div class="section-header-left">
+                            <h2 class="section-heading">Project &amp; Research Milestones</h2>
+                            <span class="chip chip-purple">Timeline</span>
+                        </div>
+                        <span class="meta-label" data-en="Key Development &amp; Research History">주요 개발 및 연구 이력</span>
+                    </div>
+
+                    <div class="release-timeline">
+                        <div class="release-row">
+                            <div class="marker-lane">
+                                <div class="marker-dot"></div>
+                                <div class="marker-line"></div>
+                            </div>
+                            <div class="content-lane">
+                                <div class="release-date-row">
+                                    <span class="release-date" data-en="Advancing Unknown Project &amp; Race Engineer">Unknown Project &amp; Race Engineer 고도화</span>
+                                    <span class="chip chip-info" data-en="In Progress">진행 중</span>
+                                </div>
+                                <div class="release-body" data-en="Content needed">내용 필요</div>
+                            </div>
+                        </div>
+
+                        <div class="release-row">
+                            <div class="marker-lane">
+                                <div class="marker-dot"></div>
+                                <div class="marker-line"></div>
+                            </div>
+                            <div class="content-lane">
+                                <div class="release-date-row">
+                                    <span class="release-date" data-en="Published COM_study Data Analysis Paper (arXiv:2512.20116)">COM_study 데이터 분석 논문 공개 (<span style="font-family: var(--font-mono);">arXiv:2512.20116</span>)</span>
+                                    <span class="chip chip-success" data-en="Completed">완료</span>
+                                </div>
+                                <div class="release-body" data-en="Content needed">내용 필요</div>
+                            </div>
+                        </div>
+
+                        <div class="release-row">
+                            <div class="marker-lane">
+                                <div class="marker-dot"></div>
+                                <div class="marker-line"></div>
+                            </div>
+                            <div class="content-lane">
+                                <div class="release-date-row">
+                                    <span class="release-date" data-en="Developed &amp; Deployed NIES Letter Counter">NIES Letter Counter 개발 및 배포</span>
+                                    <span class="chip chip-success" data-en="Completed">완료</span>
+                                </div>
+                                <div class="release-body" data-en="Content needed">내용 필요</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- ==========================================================================
+             6. FOOTER / CONTACT
+             ========================================================================== -->
+        <footer class="app-footer" id="contact">
+            <div class="footer-inner">
+                <div class="footer-contacts">
+                    <span><i class="fas fa-envelope" style="color: var(--color-primary); margin-right: 6px;"></i> bijabi99@gmail.com</span>
+                    <a href="https://github.com/hope77-githhub" target="_blank">
+                        <i class="fab fa-github" style="color: var(--color-primary); margin-right: 6px;"></i> github.com/hope77-githhub
+                    </a>
+                </div>
+                <div class="meta-label">
+                    &copy; 2026 장자훈 (HOPE77). All rights reserved.
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- Modular Scripts -->
+    <script src="js/log-streamer.js"></script>
+    <script src="js/project-logs.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
