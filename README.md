@@ -198,3 +198,5 @@
 * **GitHub**: [github.com/hope77-githhub](https://github.com/hope77-githhub)
 * **공식 포트폴리오 웹사이트**: [https://hope77-githhub.github.io/hope77.io/](https://hope77-githhub.github.io/hope77.io/)
 * **학술 논문 (arXiv)**: [arXiv:2512.20116](https://arxiv.org/abs/2512.20116)
+
+agy --conversation=0dcbd27c-68b1-40e0-8069-263a7c44fcc7
