@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: './', // 상대 경로 지원 (GitHub Pages 호환)
+  base: process.env.NODE_ENV === 'production' ? '/hope77.io/' : '/',
   build: {
     outDir: 'dist',
     assetsDir: 'assets'
