@@ -18,9 +18,7 @@
    - [03. Real-Time AI Race Engineer (실시간 텔레메트리 & 음성 AI 솔루션)](#03-real-time-ai-race-engineer-실시간-텔레메트리--음성-ai-솔루션)
    - [04. NEIS 맞춤형 바이트 계산기 & 엑셀 중복 탐지기 (NEIS Letter Counter)](#04-neis-맞춤형-바이트-계산기--엑셀-중복-탐지기-neis-letter-counter)
 3. [포트폴리오 웹 아키텍처 및 인터랙션 (Portfolio Web Architecture)](#-포트폴리오-웹-아키텍처-및-인터랙션)
-4. [저장소 구조 (Repository Directory Structure)](#-저장소-구조-repository-directory-structure)
-5. [로컬 빌드 및 실행 가이드 (Getting Started)](#-로컬-빌드-및-실행-가이드)
-6. [Contact & Links](#-contact--author)
+4. [Contact & Links](#-contact--author)
 
 ---
 
@@ -190,62 +188,6 @@
   - 브라우저 내장 `BroadcastChannel` 기반으로 다른 탭 사용자들과 60fps로 실시간 좌표/채팅을 공유하는 가벼운 웹소켓 대체 인터랙티브 쇼케이스.
 * **완벽한 다국어 지원 (KO / EN)**:
   - 전용 `LanguageContext`를 통해 버튼 클릭 즉시 모든 레이블과 프로젝트 데이터가 매끄럽게 번역 전환.
-
----
-
-## 📁 저장소 구조 (Repository Directory Structure)
-
-본 저장소는 루트 디렉토리를 깨끗하게 유지하고, 목적별로 체계적으로 모듈화되어 관리됩니다:
-
-```
-hope77.io/
-├── .github/
-│   └── workflows/
-│       └── deploy.yml            # GitHub Pages 자동 배포 CI/CD 워크플로우
-├── docs/                         # 상세 기획 및 레퍼런스 문서 보관 폴더
-│   ├── design/                   # 디자인 시스템 규격서 (Coinbase, Discord, RedBull, Toss)
-│   │   ├── DESIGN-coinbase.md
-│   │   ├── discord.md
-│   │   ├── redbull.md
-│   │   └── toss.md
-│   └── projects/                 # 프로젝트 상세 원문 아카이브
-│       └── contents.md
-├── legacy-vanilla/               # 초기 Vanilla JS 구현체 아카이브
-├── public/                       # 정적 그래픽 에셋 (머신 이미지, 리버리 등)
-├── src/                          # React + Vite 메인 애플리케이션 소스
-│   ├── components/               # 재사용 컴포넌트 (HeroSection, ProjectLogsFeed, TopAppBar 등)
-│   ├── context/                  # 다국어(LanguageContext) 전역 상태 관리
-│   ├── data/                     # 프로젝트 로그, 마일스톤, 텔레메트리 데이터 모듈
-│   ├── styles/                   # Coinbase Light 디자인 시스템 CSS
-│   └── utils/                    # 방문자 시퀀스 계산기 등 유틸리티
-├── index.html                    # 메인 엔트리 HTML (Pretendard & Inter 타이포그래피)
-├── package.json                  # 프로젝트 의존성 및 스크립트 정의
-├── vite.config.js                # Vite 번들러 및 GitHub Pages 베이스 경로 설정
-└── README.md                     # 메인 레포지토리 종합 기술 문서 (현재 파일)
-```
-
----
-
-## 🚀 로컬 빌드 및 실행 가이드
-
-```bash
-# 1. 저장소 클론
-git clone https://github.com/hope77-githhub/hope77.io.git
-cd hope77.io
-
-# 2. 의존성 패키지 설치
-npm install
-
-# 3. 로컬 개발 서버 실행 (Vite HMR)
-npm run dev
-```
-
-브라우저에서 `http://localhost:5173`으로 접속하면 포트폴리오를 즉시 확인하실 수 있습니다.
-
-```bash
-# 프로덕션 번들 빌드
-npm run build
-```
 
 ---
 
