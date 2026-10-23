@@ -1,59 +1,59 @@
 /* ==========================================================================
-   Components & Interactive Elements — Red Bull Design System Edition
-   Specification: redbull.md (Athletic-Maximalist, Vivid Red & Deep Racing Navy)
+   Components & Interactive Elements — Coinbase Design System Edition
+   Specification: DESIGN-coinbase.md (Institutional Calm, Single-Blue Voltage #0052ff)
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   1. Badges, Pills & Chips (Red Bull Pill & Badge Specs)
+   1. Badges, Pills & Chips (Coinbase 100px Pill System)
    -------------------------------------------------------------------------- */
 .chip {
     display: inline-flex;
     align-items: center;
     gap: 6px;
     padding: 4px 14px;
-    height: 32px;
-    border-radius: var(--rounded-pill); /* 9999px Full Pill */
+    height: 30px;
+    border-radius: var(--rounded-pill); /* 100px Full Pill */
     font-family: var(--font-sans);
-    font-size: 13px;
+    font-size: 12.5px;
     font-weight: 600;
     line-height: 1;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
     white-space: nowrap;
-    background: var(--color-surface-container-high); /* #efefef */
-    color: var(--color-on-surface-variant);          /* #4a4a4a */
-    border: 1px solid transparent;
+    background: var(--color-surface-strong); /* #eef0f3 */
+    color: var(--color-ink);                 /* #0a0b0d */
+    border: 1px solid var(--color-hairline);
     transition: all var(--dur-snappy) var(--ease-snappy);
 }
 
 .chip-success {
-    background: #e8f8f0;
-    color: var(--color-semantic-up);                 /* #00c853 */
+    background: #edfbf4;
+    color: var(--color-semantic-up);        /* #05b169 */
     font-family: var(--font-mono);
-    border-color: rgba(0, 200, 83, 0.25);
+    border-color: rgba(5, 177, 105, 0.3);
 }
 
 .chip-info {
-    background: var(--color-primary-weak);           /* #fff0f3 */
-    color: var(--color-primary);                     /* #db0a40 */
-    border-color: rgba(219, 10, 64, 0.2);
+    background: var(--color-primary-weak);   /* #edf3ff */
+    color: var(--color-primary);             /* #0052ff Coinbase Blue */
+    border-color: rgba(0, 82, 255, 0.25);
 }
 
 .chip-secondary {
-    background: var(--color-secondary-container);    /* #e3f0ff */
-    color: var(--color-secondary);                   /* #1b6aee */
-    border-color: rgba(27, 106, 238, 0.25);
+    background: var(--color-surface-strong); /* #eef0f3 */
+    color: var(--color-ink);
+    border-color: var(--color-hairline);
 }
 
 .chip-purple {
-    background: #f3eeff;
-    color: #7c3aed;
-    border-color: rgba(124, 58, 237, 0.25);
+    background: #f4f0ff;
+    color: #6941c6;
+    border-color: rgba(105, 65, 198, 0.25);
 }
 
 .chip-warning {
-    background: #fff9e6;
-    color: #b78103;
-    border-color: rgba(255, 214, 0, 0.4);
+    background: #fef8eb;
+    color: #b58300;
+    border-color: rgba(244, 176, 0, 0.35);
 }
 
 .chip-warning::before {
@@ -66,31 +66,32 @@
 }
 
 .chip-neutral {
-    background: var(--color-surface-container-low);
-    color: var(--color-on-surface-variant);
+    background: var(--color-surface-strong);
+    color: var(--color-body);
     border-color: var(--color-hairline);
 }
 
 /* --------------------------------------------------------------------------
-   2. Top App Bar (Red Bull High-Contrast Sticky Navigation)
+   2. Top App Bar (Coinbase top-nav-light Edition)
    -------------------------------------------------------------------------- */
 .top-app-bar {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(0, 18, 36, 0.96); /* Red Bull Deep Racing Navy */
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-bottom: 2px solid var(--color-primary); /* #db0a40 Red Bull Racing Line */
-    height: 62px;
+    background: rgba(255, 255, 255, 0.96); /* Coinbase surface-white #ffffff */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 3px solid var(--color-primary); /* Coinbase Blue Top Brand Accent */
+    border-bottom: 1px solid var(--color-hairline);
+    height: 64px;
     display: flex;
     align-items: center;
-    box-shadow: 0 4px 20px rgba(0, 15, 30, 0.35);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
 }
 
 .top-app-bar-inner {
     width: 100%;
-    max-width: 1180px;
+    max-width: 1140px;
     margin: 0 auto;
     padding: 0 var(--space-md);
     display: flex;
@@ -101,29 +102,29 @@
 
 .product-title {
     font-family: var(--font-display);
-    font-size: 18px;
-    font-weight: 800;
-    color: #ffffff;
-    letter-spacing: -0.02em;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--color-ink);
+    letter-spacing: -0.01em;
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
 .product-title i {
-    color: var(--color-primary); /* #db0a40 */
+    color: var(--color-primary); /* #0052ff Coinbase Blue */
 }
 
 .product-title-badge {
     font-size: 11px;
     padding: 3px 10px;
     border-radius: var(--rounded-pill);
-    background: rgba(27, 106, 238, 0.2); /* Technical Blue Tint */
-    color: #82b1ff;                       /* Electric Blue */
-    border: 1px solid rgba(27, 106, 238, 0.4);
+    background: var(--color-primary-weak);
+    color: var(--color-primary);
+    border: 1px solid rgba(0, 82, 255, 0.25);
     font-family: var(--font-mono);
-    font-weight: 700;
-    letter-spacing: 0.03em;
+    font-weight: 500;
+    letter-spacing: 0.02em;
 }
 
 .header-right {
@@ -133,17 +134,17 @@
 }
 
 .active-module-pill {
-    background: rgba(255, 255, 255, 0.08);
-    color: #ffffff;
+    background: #edf3ff; /* Soft Blue wash */
+    color: var(--color-ink);
     padding: 6px 14px;
     border-radius: var(--rounded-pill);
     font-family: var(--font-mono);
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 500;
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(0, 82, 255, 0.2);
 }
 
 .active-module-pill::before {
@@ -151,8 +152,7 @@
     width: 6px;
     height: 6px;
     border-radius: var(--rounded-full);
-    background: var(--color-primary);
-    box-shadow: 0 0 6px var(--color-primary);
+    background: var(--color-semantic-up); /* #05b169 */
 }
 
 /* Pipeline Log Ingestion Reopen Button */
@@ -160,39 +160,33 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: var(--rounded-pill); /* 9999px Full Pill */
+    background: var(--color-surface-strong); /* #eef0f3 */
+    color: var(--color-ink);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-pill);
     padding: 6px 16px;
-    height: 38px;
+    height: 36px;
     font-family: var(--font-display);
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 500;
     cursor: pointer;
-    transition: all var(--dur-snappy) var(--ease-snappy);
-    letter-spacing: 0.02em;
+    transition: all 150ms var(--ease-snappy);
+    letter-spacing: 0.01em;
 }
 
 .btn-log-console-toggle:hover {
-    background: rgba(219, 10, 64, 0.25);
+    background: var(--color-primary);
     border-color: var(--color-primary);
+    box-shadow: 0 4px 14px rgba(0, 82, 255, 0.25);
     color: #ffffff;
-    box-shadow: 0 0 14px rgba(219, 10, 64, 0.5);
 }
 
 .btn-log-console-toggle .live-dot {
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background-color: var(--color-semantic-up);
-    box-shadow: 0 0 6px var(--color-semantic-up);
-    animation: pulse-dot 1.8s infinite;
-}
-
-@keyframes pulse-dot {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(0.85); }
+    background-color: var(--color-semantic-up); /* #05b169 */
+    box-shadow: 0 0 6px rgba(5, 177, 105, 0.6);
 }
 
 /* Language Toggle Button (Segmented Pill) */
@@ -200,31 +194,31 @@
     display: inline-flex;
     align-items: center;
     gap: 2px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: var(--color-surface-strong);
+    border: 1px solid var(--color-hairline);
     border-radius: var(--rounded-pill);
-    padding: 3px;
-    height: 38px;
+    padding: 2px;
+    height: 36px;
     cursor: pointer;
     font-family: var(--font-display);
 }
 
 .lang-opt {
-    padding: 5px 12px;
+    padding: 4px 10px;
     border-radius: var(--rounded-pill);
-    font-size: 12px;
-    font-weight: 700;
-    color: #b0c4de;
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--color-muted);
     transition: background-color var(--dur-snappy) var(--ease-snappy), color var(--dur-snappy) var(--ease-snappy);
 }
 
 .lang-opt.active {
-    background: var(--color-primary); /* #db0a40 */
+    background: var(--color-primary);
     color: #ffffff;
 }
 
 /* --------------------------------------------------------------------------
-   3. Hero / Profile Summary (Red Bull Racing Terminal Console Window)
+   3. Hero / Profile Summary (Coinbase White Editorial Card Window)
    -------------------------------------------------------------------------- */
 #summary.section-card {
     background: transparent;
@@ -233,25 +227,28 @@
     padding: 0;
 }
 
-/* Master Hero Terminal Log Window (Red Bull Athletic Container) */
+/* Master Hero Terminal Log Window (Coinbase White Card Container) */
 .hero-log-window {
-    background: #ffffff;
-    border: 1px solid rgba(0, 30, 60, 0.12);
-    border-radius: var(--rounded-lg); /* 16px */
-    box-shadow: 0 16px 36px rgba(0, 15, 30, 0.12), 0 2px 6px rgba(0, 15, 30, 0.04);
+    background: #ffffff; /* Pure White Canvas */
+    border: 1px solid var(--color-hairline);
+    border-top: 3.5px solid var(--color-primary); /* Coinbase Blue Accent Top Bar */
+    border-radius: var(--rounded-xl); /* 24px */
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
     overflow: hidden;
     display: flex;
     flex-direction: column;
 }
 
-/* Window Header Bar (Red Bull Deep Racing Navy Header) */
+/* Window Header Bar (Coinbase Surface-Soft Header) */
 .hero-log-header {
-    background: var(--color-tertiary);       /* #001e3c */
-    border-bottom: 2px solid var(--color-primary); /* #db0a40 Signature Red Racing Line */
-    padding: 14px 24px;
+    background: var(--color-surface-soft); /* #f7f7f7 */
+    border-bottom: 1px solid var(--color-hairline);
+    padding: 14px 28px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
     user-select: none;
 }
 
@@ -268,15 +265,15 @@
 }
 
 .hero-window-dots .term-dot {
-    width: 12px;
-    height: 12px;
+    width: 11px;
+    height: 11px;
 }
 
 .hero-header-title {
     font-family: var(--font-display);
     font-size: 13px;
-    font-weight: 700;
-    color: #ffffff;
+    font-weight: 500;
+    color: var(--color-ink);
     display: flex;
     align-items: center;
     gap: 8px;
@@ -288,40 +285,92 @@
 }
 
 .hero-header-tag {
-    background: rgba(219, 10, 64, 0.25);
-    color: #ff6b8a;
-    border: 1px solid rgba(219, 10, 64, 0.45);
-    padding: 3px 12px;
+    background: var(--color-primary-weak);
+    color: var(--color-primary);
+    border: 1px solid rgba(0, 82, 255, 0.25);
+    padding: 2px 10px;
     border-radius: var(--rounded-pill);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
 }
 
 .hero-header-right {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--color-semantic-up);          /* #00c853 */
-    font-weight: 700;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
-.hero-header-right .live-dot {
-    width: 7px;
-    height: 7px;
+/* Visitor Counter Inlined into Hero Header */
+.visitor-badge {
+    background: #edf3ff;
+    color: var(--color-primary);
+    border: 1px solid rgba(0, 82, 255, 0.25);
+    padding: 4px 12px;
+    border-radius: var(--rounded-pill);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.visitor-badge i {
+    color: var(--color-primary);
+}
+
+.live-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--color-semantic-up); /* #05b169 */
+    font-weight: 500;
+    background: #edfbf4;
+    border: 1px solid rgba(5, 177, 105, 0.25);
+    padding: 4px 12px;
+    border-radius: var(--rounded-pill);
+}
+
+.live-status-pill .live-dot {
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     background-color: var(--color-semantic-up);
-    box-shadow: 0 0 8px rgba(0, 200, 83, 0.6);
-    animation: pulse-dot 1.8s infinite;
+    box-shadow: 0 0 6px rgba(5, 177, 105, 0.5);
+}
+
+.btn-hero-pit-trigger {
+    background: #ffffff;
+    color: var(--color-ink);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-pill);
+    padding: 4px 14px;
+    font-size: 11.5px;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 150ms var(--ease-snappy);
+}
+
+.btn-hero-pit-trigger:hover {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(0, 82, 255, 0.25);
 }
 
 /* Metadata Substrip */
 .hero-log-substrip {
-    background: var(--color-surface-container); /* #f8f8f8 */
-    border-bottom: 1px solid var(--color-hairline);
-    padding: 10px 24px;
+    background: #f6f9fe; /* Soft Icy Blue Wash */
+    border-bottom: 1px solid rgba(0, 82, 255, 0.12);
+    padding: 12px 28px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -329,43 +378,38 @@
     gap: 14px;
     font-family: var(--font-mono);
     font-size: 12px;
-    color: var(--color-on-surface-variant);
+    color: var(--color-body);
 }
 
 .hero-meta-items {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 16px;
+    gap: 18px;
 }
 
 .hero-meta-items span {
-    color: #000000;
+    color: var(--color-ink);
 }
 
 .hero-meta-key {
     color: var(--color-primary);
-    font-weight: 800;
+    font-weight: 600;
     margin-right: 4px;
 }
 
-/* Main Body inside Terminal */
+.hero-substrip-right {
+    font-family: var(--font-mono);
+    font-size: 12px;
+}
+
+/* Main Body inside Terminal: Vertical Flow Architecture */
 .hero-log-body {
-    padding: 36px 32px;
-    background: #ffffff;
-}
-
-.summary-grid {
-    display: grid;
-    grid-template-columns: 1.25fr 0.75fr;
-    gap: 36px;
-    align-items: stretch;
-}
-
-.summary-main {
+    padding: 40px 36px;
+    background: #ffffff; /* Pure white */
     display: flex;
     flex-direction: column;
-    gap: var(--space-base);
+    gap: 28px;
 }
 
 .hero-prompt-line {
@@ -373,20 +417,24 @@
     align-items: center;
     gap: 10px;
     font-family: var(--font-mono);
-    font-size: 14px;
-    color: #000000;
-    margin-bottom: 4px;
+    font-size: 13.5px;
+    margin-bottom: 0;
 }
 
-.hero-prompt-line span:first-child {
+.prompt-host {
     color: var(--color-semantic-up);
-    font-weight: 700;
+    font-weight: 500;
 }
 
-.hero-prompt-line .prompt-cursor {
+.prompt-cmd {
+    color: var(--color-ink);
+    font-weight: 400;
+}
+
+.prompt-cursor {
     display: inline-block;
-    width: 8px;
-    height: 16px;
+    width: 7px;
+    height: 15px;
     background: var(--color-primary);
     animation: cursor-blink 1s infinite;
 }
@@ -397,206 +445,449 @@
     gap: 10px;
 }
 
-.band-light .summary-main .chip,
-.summary-main .chip {
-    border-radius: var(--rounded-pill);
-    padding: 5px 14px;
-    font-family: var(--font-display);
-    font-size: 13px;
-    font-weight: 600;
-}
-
 .hero-text-block {
     position: relative;
-    border-left: 3px solid var(--color-primary);
-    padding-left: 18px;
+    border-left: 3.5px solid var(--color-primary);
+    background: linear-gradient(90deg, rgba(0, 82, 255, 0.045) 0%, rgba(0, 82, 255, 0.01) 60%, transparent 100%);
+    padding: 16px 24px;
+    border-radius: 0 var(--rounded-md) var(--rounded-md) 0;
     margin-top: 4px;
 }
 
-.hero-text-block .page-heading {
-    color: #000000;
-    letter-spacing: -0.03em;
+.hero-main-heading {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 3.8vw, 36px);
+    font-weight: 500;
+    letter-spacing: -1.2px;
+    line-height: 1.3;
+    color: var(--color-ink);
+    margin-bottom: 14px;
 }
 
-.summary-main .body-text {
-    color: var(--color-on-surface-variant);
-    font-size: 15.5px;
-    line-height: 1.65;
+.hero-main-desc {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--color-body);
+    max-width: 980px;
+}
+
+.hero-actions-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding-top: 14px;
+    border-top: 1px solid var(--color-hairline);
 }
 
 .summary-owner-bar {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--space-lg);
-    padding-top: var(--space-sm);
-    border-top: 1px solid var(--color-hairline);
+    gap: 20px;
 }
 
 .summary-owner-bar .meta-label {
-    color: var(--color-on-surface-variant);
+    color: var(--color-body);
     font-family: var(--font-sans);
-    font-size: 13px;
-    font-weight: 600;
-    text-transform: none;
-}
-
-/* Floating Telemetry HUD Card inside Hero (Red Bull Deep Racing Navy) */
-.summary-profile-box {
-    background: linear-gradient(145deg, #001224 0%, #001e3c 100%);
-    color: #ffffff;
-    border: 1px solid rgba(27, 106, 238, 0.35);
-    border-radius: var(--rounded-lg); /* 16px */
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 18px;
-    box-shadow: 0 12px 28px rgba(0, 15, 30, 0.35);
-}
-
-.summary-profile-box .card-title-row .meta-label {
-    color: #82b1ff; /* Electric Blue */
-    font-family: var(--font-mono);
-    font-weight: 800;
-    letter-spacing: 0.5px;
-}
-
-.profile-stat-list {
-    background: rgba(0, 15, 30, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--rounded-md); /* 8px */
-    padding: 8px 16px;
-    display: flex;
-    flex-direction: column;
-}
-
-.profile-stat-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     font-size: 13.5px;
-    font-family: var(--font-display);
-    font-weight: 600;
-    color: #ffffff;
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    gap: 10px;
+    font-weight: 400;
+    text-transform: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
 
-.profile-stat-item:last-child {
-    border-bottom: none;
+.link-accent {
+    color: var(--color-primary) !important;
+    font-weight: 500 !important;
 }
 
-/* --------------------------------------------------------------------------
-   4. Quick Navigation & Preview Panel (Red Bull High-Performance Directory)
-   -------------------------------------------------------------------------- */
-.quick-nav-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-md);
-    margin-bottom: var(--space-lg);
-}
-
-.module-btn {
-    background: #ffffff;
-    border: 1px solid rgba(0, 30, 60, 0.12);
-    border-radius: var(--rounded-lg); /* 16px */
-    padding: var(--space-md);
-    text-align: left;
-    cursor: pointer;
-    font-family: var(--font-sans);
+.hero-section-divider {
+    padding-top: 32px;
+    border-top: 1px solid var(--color-hairline);
     display: flex;
     flex-direction: column;
-    gap: var(--space-xs);
-    transition: all var(--dur-snappy) var(--ease-snappy);
-    box-shadow: var(--elevation-sm);
+    gap: 18px;
 }
 
-.module-btn:hover {
-    box-shadow: 0 8px 18px rgba(27, 106, 238, 0.15);
-    border-color: var(--color-secondary); /* #1b6aee Technical Blue */
-    transform: translateY(-2px);
-}
-
-.module-btn.active {
-    background: var(--color-tertiary); /* #001e3c Deep Racing Navy */
-    border-color: var(--color-tertiary);
-    color: #ffffff;
-    box-shadow: var(--elevation-lg);
-}
-
-.module-btn-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-}
-
-.module-btn-title {
-    font-family: var(--font-display);
-    font-size: 15px;
-    font-weight: 700;
-    color: #001e3c; /* Deep Racing Navy */
-}
-
-.module-btn.active .module-btn-title {
-    color: #ffffff;
-}
-
-.module-btn-desc {
-    font-size: 13px;
-    color: var(--color-on-surface-variant);
-    line-height: 1.45;
-}
-
-.module-btn.active .module-btn-desc {
-    color: #b0c4de;
-}
-
-.module-btn.active .chip {
-    background: var(--color-primary);
-    color: #ffffff;
-    border-color: transparent;
-}
-
-.preview-panel {
-    background: linear-gradient(135deg, #001224 0%, #001e3c 100%);
-    border: 1px solid rgba(27, 106, 238, 0.35);
-    border-radius: var(--rounded-lg); /* 16px */
-    padding: var(--space-md) var(--space-lg);
+.hero-subhead-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: var(--space-md);
-    box-shadow: 0 8px 24px rgba(0, 15, 30, 0.25);
-    color: #ffffff;
+    gap: 10px;
 }
 
-.preview-content {
+.hero-subhead-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-ink);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.hero-subhead-title i {
+    color: var(--color-primary);
+}
+
+/* 4 Engineering Philosophy & Capabilities: Coinbase Surface-Soft Cards */
+.hero-vertical-cards {
     display: flex;
     flex-direction: column;
-    gap: var(--space-xs);
-    flex: 1;
-    min-width: 240px;
+    gap: 14px;
 }
 
-.preview-title {
-    font-size: 16px;
-    font-weight: 800;
-    color: #ffffff;
+.profile-flow-card {
+    background: #ffffff;
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-lg); /* 16px */
+    padding: 22px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    transition: all 180ms var(--ease-snappy);
+}
+
+.profile-flow-card:hover {
+    border-color: rgba(0, 82, 255, 0.35);
+    box-shadow: 0 4px 16px rgba(0, 82, 255, 0.05);
+}
+
+.profile-card-header {
     display: flex;
     align-items: center;
-    gap: var(--space-sm);
+    gap: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--color-hairline);
 }
 
-.preview-panel .body-text {
-    color: #b0c4de !important;
+.profile-card-title-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.profile-card-icon-wrap {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--rounded-md);
+    background: #edf3ff;
+    color: var(--color-primary);
+    border: 1px solid rgba(0, 82, 255, 0.22);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.profile-card-title {
+    font-size: 15.5px;
+    font-weight: 600;
+    color: var(--color-ink);
+    margin: 0;
+}
+
+.profile-card-chip {
+    font-size: 11.5px;
+    padding: 3px 11px;
+    background: #edf3ff;
+    border: 1px solid rgba(0, 82, 255, 0.22);
+    color: var(--color-primary);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+/* Stepped Hierarchy Layout (계단식 위계 구조) */
+.stepped-hierarchy-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.stepped-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: var(--rounded-md);
+    transition: all 150ms ease;
+}
+
+/* 계단식 들여쓰기 위계: Level 1 (0px) -> Level 2 (24px) -> Level 3 (48px) */
+.stepped-row.stepped-level-1 {
+    margin-left: 0;
+    background: #f8faff;
+    border: 1px solid #d9e6ff;
+    border-left: 3.5px solid var(--color-primary);
+}
+
+.stepped-row.stepped-level-2 {
+    margin-left: 24px;
+    background: #ffffff;
+    border: 1px solid var(--color-hairline);
+    border-left: 3px dashed rgba(0, 82, 255, 0.45);
+}
+
+.stepped-row.stepped-level-3 {
+    margin-left: 48px;
+    background: #fafafa;
+    border: 1px solid var(--color-hairline);
+    border-left: 3px dashed rgba(0, 82, 255, 0.75);
+}
+
+.stepped-connector {
+    color: var(--color-primary);
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 13.5px;
+    line-height: 1.4;
+    flex-shrink: 0;
+    margin-top: 2px;
+    user-select: none;
+}
+
+.stepped-tag {
+    font-family: var(--font-sans);
+    font-size: 11.5px;
+    font-weight: 700;
+    line-height: 1.35;
+    padding: 3px 9px;
+    border-radius: var(--rounded-pill);
+    flex-shrink: 0;
+    letter-spacing: -0.01em;
+    margin-top: 1px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stepped-tag-l1 {
+    background: var(--color-primary);
+    color: #ffffff;
+    box-shadow: 0 1px 4px rgba(0, 82, 255, 0.25);
+}
+
+.stepped-tag-l2 {
+    background: #edf3ff;
+    color: var(--color-primary);
+    border: 1px solid rgba(0, 82, 255, 0.25);
+}
+
+.stepped-tag-l3 {
+    background: #f1f4f9;
+    color: var(--color-ink);
+    border: 1px solid var(--color-hairline);
+}
+
+.stepped-text {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--color-body);
+    flex: 1;
+    margin: 0;
+}
+
+.stepped-row.stepped-level-1 .stepped-text {
+    color: var(--color-ink);
+    font-weight: 500;
+}
+
+@media (max-width: 640px) {
+    .profile-flow-card {
+        padding: 16px 18px;
+    }
+    .stepped-row.stepped-level-2 {
+        margin-left: 12px;
+        padding: 8px 10px;
+    }
+    .stepped-row.stepped-level-3 {
+        margin-left: 22px;
+        padding: 8px 10px;
+    }
+    .stepped-text {
+        font-size: 12.5px;
+    }
+    .stepped-tag {
+        font-size: 10px;
+        padding: 2px 6px;
+    }
 }
 
 /* --------------------------------------------------------------------------
-   5. Buttons (Red Bull Signature Full Pill Grammar: 9999px)
+   4. Quick Navigation & Tabbed Module Directory (Reduced Vertical Height)
+   -------------------------------------------------------------------------- */
+.quick-nav-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-tab-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.nav-tab-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+}
+
+.nav-tab-bar::-webkit-scrollbar {
+    height: 4px;
+}
+
+.nav-tab-bar::-webkit-scrollbar-thumb {
+    background: var(--color-hairline);
+    border-radius: 4px;
+}
+
+.nav-tab-btn {
+    background: #ffffff;
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-pill);
+    padding: 8px 18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--color-body);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 150ms var(--ease-snappy);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.nav-tab-btn:hover {
+    background: #f7f7f7;
+    border-color: var(--color-muted);
+    color: var(--color-ink);
+}
+
+.nav-tab-btn.is-active {
+    background: var(--color-primary); /* #0052ff Coinbase Blue */
+    border-color: var(--color-primary);
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(0, 82, 255, 0.25);
+}
+
+.nav-tab-num {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--color-primary);
+}
+
+.nav-tab-btn.is-active .nav-tab-num {
+    color: #ffffff;
+}
+
+.nav-tab-name {
+    font-size: 13.5px;
+    font-weight: 500;
+}
+
+.chip-mini {
+    height: 22px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.nav-tab-btn.is-active .chip {
+    background: rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+    border-color: transparent;
+}
+
+/* Active Tab Detail Preview Panel (Coinbase Card Container) */
+.nav-tab-panel {
+    background: #ffffff;
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-xl); /* 24px */
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.nav-panel-left {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    min-width: 280px;
+}
+
+.nav-panel-tag-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.nav-panel-subtitle {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--color-muted);
+}
+
+.nav-panel-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--color-ink);
+    letter-spacing: -0.6px;
+    margin: 0;
+}
+
+.nav-panel-desc {
+    font-size: 15px;
+    color: var(--color-body);
+    line-height: 1.65;
+    margin: 0;
+}
+
+.nav-panel-action {
+    flex-shrink: 0;
+}
+
+.nav-jump-btn {
+    height: 44px;
+    padding: 0 24px;
+    font-size: 14px;
+    background: var(--color-primary); /* #0052ff Coinbase Blue */
+    color: #ffffff !important;
+    font-weight: 600;
+    border-radius: var(--rounded-pill); /* 100px */
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 14px rgba(0, 82, 255, 0.25);
+    transition: background 150ms var(--ease-snappy), transform 150ms var(--ease-snappy);
+}
+
+.nav-jump-btn:hover {
+    background: var(--color-primary-active); /* #003ecc */
+}
+
+/* --------------------------------------------------------------------------
+   5. Buttons (Coinbase 100px Pill Button System)
    -------------------------------------------------------------------------- */
 .btn-utility {
     display: inline-flex;
@@ -604,54 +895,109 @@
     justify-content: center;
     gap: 8px;
     padding: 10px 22px;
-    height: 44px;
-    border-radius: var(--rounded-pill); /* 9999px Full Pill */
-    font-family: var(--font-display);
+    height: 42px;
+    border-radius: var(--rounded-pill); /* 100px */
+    font-family: var(--font-sans);
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 1;
-    letter-spacing: -0.01em;
-    border: 1px solid transparent;
-    background: var(--color-surface-container-high);
-    color: #000000;
+    border: 1px solid var(--color-hairline);
+    background: var(--color-surface-strong); /* #eef0f3 */
+    color: var(--color-ink);
     cursor: pointer;
     transition: all var(--dur-snappy) var(--ease-snappy);
 }
 
 .btn-utility:hover {
-    background: #e0e0e0;
-    color: #000000;
+    background: #e2e5eb;
+    border-color: #cbd0d8;
+    color: var(--color-ink);
 }
 
 .btn-utility:active {
     transform: scale(0.98);
 }
 
-.btn-primary-accent {
-    background: var(--color-primary); /* #db0a40 */
+/* Coinbase Primary Button: Blue (#0052ff) */
+.btn-primary-accent,
+.btn-primary-blurple {
+    background: var(--color-primary);
     color: #ffffff !important;
-    border-color: var(--color-primary);
-    box-shadow: 0 4px 14px rgba(219, 10, 64, 0.35);
+    border: 1px solid transparent;
+    border-radius: var(--rounded-pill);
+    box-shadow: 0 4px 14px rgba(0, 82, 255, 0.25);
+    font-weight: 600;
 }
 
-.btn-primary-accent:hover {
-    background: var(--color-primary-hover); /* #c2073a */
-    border-color: var(--color-primary-hover);
-    color: #ffffff !important;
-}
-
-.btn-primary-accent:active {
-    background: var(--color-primary-active); /* #a80530 */
+.btn-primary-accent:hover,
+.btn-primary-blurple:hover {
+    background: var(--color-primary-active);
     border-color: var(--color-primary-active);
+    color: #ffffff !important;
+}
+
+.btn-primary-accent:active,
+.btn-primary-blurple:active {
+    background: #002db3;
+}
+
+/* Coinbase Secondary Button */
+.btn-secondary-light {
+    background: var(--color-surface-strong); /* #eef0f3 */
+    color: var(--color-ink) !important;
+    font-weight: 600;
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-pill);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all var(--dur-snappy) var(--ease-snappy);
+}
+
+.btn-secondary-light:hover {
+    background: #e2e5eb;
+}
+
+.btn-action-green {
+    background: var(--color-primary);
+    color: #ffffff !important;
+    font-weight: 600;
+    border: 1px solid transparent;
+    border-radius: var(--rounded-pill);
+    box-shadow: 0 4px 14px rgba(0, 82, 255, 0.25);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all var(--dur-snappy) var(--ease-snappy);
+}
+
+.btn-action-green:hover {
+    background: var(--color-primary-active);
+}
+
+.btn-action-white {
+    background: #ffffff;
+    color: var(--color-ink) !important;
+    font-weight: 600;
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-pill);
+}
+
+.btn-action-white:hover {
+    background: #f7f7f7;
 }
 
 /* --------------------------------------------------------------------------
-   6. Containers & Cards (16px and 8px)
+   6. Containers & Cards (Coinbase 24px and 12px)
    -------------------------------------------------------------------------- */
 .needs-content-box {
     background: var(--color-surface-container);
-    border: 1px solid rgba(0, 15, 30, 0.08);
-    border-radius: var(--rounded-md); /* 8px */
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-md);
     padding: var(--space-base) var(--space-md);
     display: flex;
     flex-direction: column;
@@ -667,8 +1013,8 @@
 
 .needs-content-title {
     font-size: 14px;
-    font-weight: 700;
-    color: #000000;
+    font-weight: 600;
+    color: var(--color-ink);
 }
 
 .two-col-grid {
@@ -690,41 +1036,41 @@
 }
 
 .pitch-banner {
-    background: var(--color-tertiary); /* #001e3c Deep Racing Navy */
-    color: #ffffff;
-    border-radius: var(--rounded-lg);  /* 16px */
+    background: #f7f7f7;
+    color: var(--color-ink);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-xl);
     padding: var(--space-lg);
     margin-bottom: var(--space-lg);
     border-left: 4px solid var(--color-primary);
 }
 
 .pitch-banner .body-text {
-    color: #ffffff !important;
+    color: var(--color-body) !important;
     font-family: var(--font-sans);
     font-size: 16px;
-    font-weight: 500 !important;
+    font-weight: 400 !important;
     line-height: 1.6;
 }
 
 .topic-card,
 .project-card {
     background: #ffffff;
-    border: 1px solid rgba(0, 15, 30, 0.08);
-    border-radius: var(--rounded-lg); /* 16px */
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-xl); /* 24px */
     padding: var(--space-lg);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: var(--space-md);
-    transition: all var(--dur-snappy) var(--ease-snappy);
-    box-shadow: var(--elevation-sm);
+    transition: border-color var(--dur-snappy) var(--ease-snappy);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
 }
 
 .topic-card:hover,
 .project-card:hover {
-    box-shadow: var(--elevation-md);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
     border-color: var(--color-primary);
-    transform: translateY(-2px);
 }
 
 .card-title-row {
@@ -737,45 +1083,196 @@
 .card-title {
     font-family: var(--font-display);
     font-size: 17px;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 1.35;
     letter-spacing: -0.01em;
-    color: #000000;
+    color: var(--color-ink);
 }
 
-/* Skills Grid */
+/* Skills Vertical List (Coinbase Vertical Card Architecture) */
+.skills-vertical-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.skill-vertical-card {
+    background: #ffffff;
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-lg); /* 16px */
+    padding: 18px 22px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    transition: all 180ms var(--ease-snappy);
+}
+
+.skill-vertical-card:hover {
+    border-color: rgba(0, 82, 255, 0.35);
+    background: #fbfdff;
+    box-shadow: 0 4px 14px rgba(0, 82, 255, 0.06);
+    transform: translateY(-1px);
+}
+
+.skill-icon-plate {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--rounded-md); /* 10px */
+    background: #edf3ff;
+    color: var(--color-primary);
+    border: 1px solid rgba(0, 82, 255, 0.22);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.skill-content-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    min-width: 0;
+}
+
+.skill-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-bottom: 2px;
+}
+
+.skill-name-title {
+    font-size: 15.5px;
+    font-weight: 600;
+    color: var(--color-ink);
+    letter-spacing: -0.01em;
+}
+
+.skill-category-badge {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: var(--rounded-pill);
+    background: #edf3ff;
+    color: var(--color-primary);
+    border: 1px solid rgba(0, 82, 255, 0.25);
+    font-family: var(--font-mono);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+/* Bulleted Tasks List (Improved Scannability & Separation) */
+.skill-bullets-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.skill-bullet-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    font-size: 13.5px;
+    line-height: 1.6;
+}
+
+.skill-bullet-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--color-primary); /* #0052ff Coinbase Blue Bullet */
+    flex-shrink: 0;
+    margin-top: 8px;
+    box-shadow: 0 0 4px rgba(0, 82, 255, 0.4);
+}
+
+.skill-bullet-text {
+    flex: 1;
+    color: var(--color-body);
+    font-size: 13.5px;
+    line-height: 1.6;
+}
+
+.skill-desc-text {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--color-body);
+    margin: 0;
+}
+
+@media (max-width: 640px) {
+    .skill-vertical-card {
+        padding: 14px 16px;
+        gap: 12px;
+    }
+    .skill-icon-plate {
+        width: 38px;
+        height: 38px;
+        font-size: 16px;
+    }
+    .skill-name-title {
+        font-size: 14.5px;
+    }
+    .skill-bullet-item {
+        font-size: 13px;
+        gap: 7px;
+    }
+    .skill-bullet-dot {
+        width: 4.5px;
+        height: 4.5px;
+        margin-top: 7px;
+    }
+    .skill-bullet-text {
+        font-size: 13px;
+    }
+    .skill-desc-text {
+        font-size: 13px;
+    }
+}
+
+/* Skills Grid (Legacy / Fallback) */
 .skills-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: var(--space-sm);
-    margin-bottom: var(--space-md);
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 12px;
+    margin-bottom: var(--space-base);
 }
 
 .skill-item {
-    background: #ffffff;
-    border: 1px solid rgba(0, 15, 30, 0.08);
-    border-radius: var(--rounded-md); /* 8px */
-    padding: 10px 14px;
+    background: var(--color-surface-soft); /* #f7f7f7 */
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-md);
+    padding: 12px 16px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     font-size: 13.5px;
-    font-weight: 700;
-    color: #000000;
-    box-shadow: var(--elevation-sm);
-    transition: border-color var(--dur-snappy) var(--ease-snappy);
+    font-weight: 500;
+    color: var(--color-ink);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    transition: background 150ms var(--ease-snappy), border-color 150ms var(--ease-snappy);
 }
 
 .skill-item:hover {
+    background: #ffffff;
     border-color: var(--color-primary);
 }
 
 .skill-item i {
     width: 28px;
     height: 28px;
-    border-radius: var(--rounded-full);
+    border-radius: 6px;
     background: var(--color-primary-weak);
     color: var(--color-primary);
+    border: 1px solid rgba(0, 82, 255, 0.2);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -784,7 +1281,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   7. Milestones Timeline (Red Bull Racing Chronology)
+   7. Milestones Timeline (Coinbase Chronology)
    -------------------------------------------------------------------------- */
 .release-timeline {
     display: flex;
@@ -809,15 +1306,15 @@
     width: 10px;
     height: 10px;
     border-radius: var(--rounded-full);
-    background: var(--color-primary); /* #db0a40 */
-    box-shadow: 0 0 8px rgba(219, 10, 64, 0.5);
+    background: var(--color-primary); /* #0052ff */
+    box-shadow: 0 0 8px rgba(0, 82, 255, 0.35);
     flex-shrink: 0;
 }
 
 .marker-line {
     width: 1px;
     flex-grow: 1;
-    background: rgba(27, 106, 238, 0.2); /* Technical Blue subtle line */
+    background: var(--color-hairline);
     margin: 6px 0;
 }
 
@@ -844,30 +1341,31 @@
 }
 
 .release-date {
-    font-size: 17px;
-    font-weight: 800;
-    color: #001e3c; /* Red Bull Deep Racing Navy */
+    font-size: 16.5px;
+    font-weight: 600;
+    color: var(--color-ink);
     font-family: var(--font-display);
 }
 
 .release-body {
-    font-size: 14px;
-    color: var(--color-on-surface-variant);
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--color-body);
     white-space: pre-line;
 }
 
 /* --------------------------------------------------------------------------
-   8. Footer (Red Bull Midnight Racing Navy)
+   8. Footer (Coinbase Institutional Surface-Dark)
    -------------------------------------------------------------------------- */
 .app-footer {
-    background: #001224;
-    border-top: 2px solid var(--color-primary); /* #db0a40 Red Bull Racing Line */
-    padding: 48px 0;
+    background: #0a0b0d; /* Coinbase surface-dark */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 64px 0 48px;
     color: #ffffff;
 }
 
 .footer-inner {
-    max-width: 1180px;
+    max-width: 1140px;
     margin: 0 auto;
     padding: 0 var(--space-md);
     display: flex;
@@ -883,35 +1381,36 @@
     flex-wrap: wrap;
     gap: var(--space-lg);
     font-size: 14px;
-    font-weight: 600;
-    color: #b0c4de;
+    font-weight: 500;
+    color: var(--color-on-dark-soft);
 }
 
 .footer-contacts a {
-    color: #82b1ff;
+    color: #ffffff;
+    text-decoration: none;
     transition: color var(--dur-snappy) var(--ease-snappy);
 }
 
 .footer-contacts a:hover {
-    color: #ffffff;
+    color: #709bfd;
 }
 
 .app-footer .meta-label {
-    color: #8e9192;
+    color: var(--color-muted);
 }
 
 /* --------------------------------------------------------------------------
    9. Responsive Breakpoints
    -------------------------------------------------------------------------- */
 @media (max-width: 1024px) {
-    .summary-grid,
     .two-col-grid,
     .four-topic-grid,
     .projects-grid {
         grid-template-columns: 1fr;
     }
-    .quick-nav-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .nav-tab-panel {
+        flex-direction: column;
+        align-items: flex-start;
     }
     .active-module-pill {
         display: none;
@@ -919,222 +1418,227 @@
 }
 
 @media (max-width: 640px) {
-    .quick-nav-grid {
-        grid-template-columns: 1fr;
-    }
     .section-card,
     .topic-card,
     .project-card,
-    .summary-profile-box,
-    .hero-log-body {
-        padding: var(--space-md);
+    .hero-log-body,
+    .log-stream-card,
+    .nav-tab-panel {
+        padding: 20px 16px;
     }
     .hero-log-header,
     .hero-log-substrip {
-        padding: 10px var(--space-sm);
+        padding: 10px 14px;
+    }
+    .hero-main-heading {
+        font-size: 24px;
+    }
+    .log-project-title {
+        font-size: 18px;
     }
 }
 
 /* ==========================================================================
-   10. "장자훈's Log" — Timeline Log Registry & Expandable Payload System
+   10. Log Index & Project History — Split-View Vertical Tab Architecture
    ========================================================================== */
 
-/* Log Dashboard Metrics Banner (Red Bull Racing Observability Banner) */
-.log-dashboard-banner {
-    background: linear-gradient(135deg, #001224 0%, #001e3c 100%);
-    border: 1px solid rgba(27, 106, 238, 0.35);
-    border-radius: var(--rounded-lg); /* 16px */
-    padding: var(--space-md) var(--space-lg);
-    margin-bottom: var(--space-lg);
-    box-shadow: 0 8px 24px rgba(0, 15, 30, 0.25);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: var(--space-md);
+/* Split Container: Left Vertical Tabs + Right Active Project Log Pane */
+.project-history-split {
+    display: grid;
+    grid-template-columns: 310px 1fr;
+    gap: 32px;
+    align-items: flex-start;
+    margin-top: var(--space-base);
 }
 
-.log-dashboard-left {
+/* Left Column: Vertical Tab Navigation */
+.project-vertical-nav {
+    position: sticky;
+    top: 84px; /* Sits nicely below sticky top nav */
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 12px;
 }
 
-.log-dashboard-title {
+.vertical-nav-sticky {
+    background: #ffffff;
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-xl); /* 24px */
+    padding: 18px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.vertical-nav-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     font-family: var(--font-display);
-    font-size: 18px;
-    font-weight: 800;
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    letter-spacing: -0.01em;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 10px 14px;
+    background: #f6f9fe;
+    border: 1px solid rgba(0, 82, 255, 0.12);
+    border-radius: var(--rounded-md);
 }
 
-.log-pulse-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: var(--color-semantic-up);
-    box-shadow: 0 0 8px rgba(0, 200, 83, 0.6);
-    animation: pulse-dot 1.8s infinite;
-}
-
-.log-dashboard-desc {
-    font-size: 14px;
-    color: #b0c4de;
-    font-family: var(--font-sans);
-    line-height: 1.5;
-}
-
-.log-metrics-grid {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: var(--space-sm);
-}
-
-.log-stat-card {
-    background: rgba(0, 15, 30, 0.75);
-    border: 1px solid rgba(27, 106, 238, 0.35);
-    border-radius: var(--rounded-md);          /* 8px */
-    padding: 8px 16px;
+.vertical-tab-items {
     display: flex;
     flex-direction: column;
-    gap: 2px;
-}
-
-.log-stat-val {
-    font-family: var(--font-mono);
-    font-size: 16px;
-    font-weight: 800;
-    color: #ffffff;
-}
-
-.log-stat-lbl {
-    font-size: 11px;
-    color: #82b1ff; /* Electric Blue */
-    text-transform: uppercase;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-}
-
-/* Log Stream Filter Toolbar */
-.log-toolbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: var(--space-md);
-    margin-bottom: var(--space-lg);
-    padding-bottom: var(--space-base);
-    border-bottom: 1px solid var(--color-hairline);
-}
-
-.log-filter-group {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
     gap: 8px;
 }
 
-.log-filter-btn {
+.vertical-tab-btn {
+    background: var(--color-surface-soft); /* #f7f7f7 */
+    border: 1px solid transparent;
+    border-radius: var(--rounded-lg); /* 16px */
+    padding: 13px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 150ms var(--ease-snappy);
+    width: 100%;
+}
+
+.vertical-tab-btn:hover {
     background: #ffffff;
-    border: 1px solid var(--color-hairline);
-    border-radius: var(--rounded-pill); /* 9999px Full Pill */
-    padding: 6px 16px;
+    border-color: rgba(0, 82, 255, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 82, 255, 0.05);
+    transform: translateX(2px);
+}
+
+.vertical-tab-btn.is-active {
+    background: #f0f5ff; /* Soft Coinbase Blue wash */
+    border: 2px solid var(--color-primary); /* #0052ff Coinbase Blue */
+    box-shadow: 0 4px 16px rgba(0, 82, 255, 0.12);
+}
+
+.vtab-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.vtab-num {
     font-family: var(--font-mono);
     font-size: 12px;
     font-weight: 700;
-    color: var(--color-on-surface-variant);
-    cursor: pointer;
-    transition: all var(--dur-snappy) var(--ease-snappy);
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+    color: var(--color-primary);
+    transition: all 150ms ease;
 }
 
-.log-filter-btn:hover {
-    border-color: var(--color-primary);
-    color: #000000;
-}
-
-.log-filter-btn.active {
-    background: var(--color-tertiary); /* #001e3c Deep Racing Navy */
-    border-color: var(--color-tertiary);
-    color: #ffffff;
-}
-
-.log-filter-btn .badge-count {
-    background: var(--color-surface-container-high);
-    color: #000000;
-    padding: 1px 7px;
-    border-radius: var(--rounded-pill);
-    font-size: 10px;
-    font-weight: 800;
-}
-
-.log-filter-btn.active .badge-count {
+.vertical-tab-btn.is-active .vtab-num {
     background: var(--color-primary);
     color: #ffffff;
+    padding: 2px 7px;
+    border-radius: 6px;
 }
 
-.log-actions-group {
+.vtab-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 2px 8px;
+    border-radius: var(--rounded-pill);
+    background: var(--color-surface-strong);
+    color: var(--color-ink);
+    font-family: var(--font-mono);
+    transition: all 150ms ease;
+}
+
+.vertical-tab-btn.is-active .vtab-tag {
+    background: #ffffff;
+    color: var(--color-primary);
+    border: 1px solid rgba(0, 82, 255, 0.3);
+    font-weight: 600;
+}
+
+.vtab-name {
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--color-ink);
+    line-height: 1.4;
+}
+
+.vertical-tab-btn.is-active .vtab-name {
+    color: var(--color-primary);
+}
+
+.vtab-bottom-row {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 8px;
+    font-size: 11px;
 }
 
-.btn-log-ctrl {
-    background: var(--color-surface-container);
-    border: 1px solid var(--color-hairline);
-    border-radius: var(--rounded-pill); /* 9999px Full Pill */
-    padding: 6px 16px;
-    font-size: 12px;
-    font-weight: 700;
-    color: #000000;
-    cursor: pointer;
-    display: inline-flex;
+.vtab-meta {
+    display: flex;
     align-items: center;
     gap: 6px;
-    transition: all var(--dur-snappy) var(--ease-snappy);
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-body);
 }
 
-.btn-log-ctrl:hover {
-    background: var(--color-surface-container-high);
-    border-color: rgba(0, 15, 30, 0.2);
+.vtab-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
 }
 
-/* Timeline Log Registry Feed */
-.log-stream-feed {
+.vtab-ts {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--color-muted);
+}
+
+/* Right Column: Project Detail Pane */
+.project-detail-pane {
     display: flex;
     flex-direction: column;
-    gap: var(--space-md);
-    position: relative;
+    min-width: 0;
 }
 
-/* Individual Log Card (Red Bull 16px Container) */
+.all-logs-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Individual Log Card (Coinbase 24px Container on White Canvas) */
 .log-stream-card {
     background: #ffffff;
-    border: 1px solid rgba(0, 15, 30, 0.08);
-    border-radius: var(--rounded-lg); /* 16px */
-    padding: var(--space-md) var(--space-lg);
-    transition: all var(--dur-snappy) var(--ease-snappy);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-xl); /* 24px */
+    padding: 28px 32px;
     display: flex;
     flex-direction: column;
-    gap: var(--space-base);
+    gap: 18px;
     position: relative;
-    box-shadow: var(--elevation-sm);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    transition: border-color 150ms var(--ease-snappy), box-shadow 150ms var(--ease-snappy);
 }
 
 .log-stream-card:hover {
-    box-shadow: var(--elevation-md);
-    border-color: rgba(0, 15, 30, 0.2);
+    border-color: var(--color-primary);
+    box-shadow: 0 8px 24px rgba(0, 82, 255, 0.08);
 }
 
 .log-stream-card.highlighted {
     border: 2px solid var(--color-primary);
-    box-shadow: 0 8px 24px rgba(219, 10, 64, 0.18);
+    box-shadow: 0 8px 24px rgba(0, 82, 255, 0.15);
 }
 
 /* Card Header Line */
@@ -1143,43 +1647,51 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 10px;
-    padding-bottom: 8px;
-    border-bottom: 1px dashed var(--color-hairline);
+    gap: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--color-hairline);
 }
 
 .log-header-left {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 10px;
     font-family: var(--font-mono);
 }
 
+.log-header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
 .log-ts-badge {
-    background: var(--color-secondary-container); /* #e3f0ff */
-    color: var(--color-secondary);                /* #1b6aee Red Bull Technical Blue */
-    padding: 3px 12px;
-    border-radius: var(--rounded-pill);           /* 9999px Full Pill */
+    background: var(--color-surface-strong);
+    color: var(--color-ink);
+    padding: 4px 12px;
+    border-radius: var(--rounded-pill);
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 500;
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    border: 1px solid rgba(27, 106, 238, 0.25);
+    border: 1px solid var(--color-hairline);
 }
 
 .log-tag-badge {
-    background: var(--color-surface-container);
-    color: #000000;
-    padding: 3px 10px;
-    border-radius: var(--rounded-pill); /* 9999px Full Pill */
+    background: var(--color-surface-soft);
+    color: var(--color-body);
+    padding: 4px 10px;
+    border-radius: var(--rounded-pill);
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 600;
+    border: 1px solid var(--color-hairline);
 }
 
 .log-service-name {
-    color: var(--color-outline-variant);
+    color: var(--color-muted);
     font-size: 12px;
 }
 
@@ -1187,15 +1699,15 @@
 .log-card-summary {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
 }
 
 .log-project-title {
     font-family: var(--font-display);
-    font-size: 19px;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    color: #000000;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.6px;
+    color: var(--color-ink);
     display: flex;
     align-items: center;
     gap: 10px;
@@ -1203,130 +1715,201 @@
 }
 
 .log-summary-text {
-    font-size: 14.5px;
-    line-height: 1.6;
-    color: var(--color-on-surface-variant);
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--color-body);
 }
 
-/* Interactive Payload Expand Button (Red Bull Full Pill) */
-.log-expand-btn {
+/* Expandable Drawer (Vertical Sequential Layout — Always Visible Directly) */
+.log-payload-drawer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--color-hairline);
+}
+
+/* Vertical Steps Flow: Problem & Resolution (Coinbase Semantic Borders) */
+.payload-flow-section {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.payload-step-card {
+    border-radius: var(--rounded-lg); /* 16px */
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.problem-card {
+    background: #fff9f9;
+    border: 1px solid #ffd6d9;
+    border-left: 4px solid var(--color-semantic-down); /* #cf202f */
+}
+
+.resolution-card {
+    background: #f5f9ff;
+    border: 1px solid #d4e3ff;
+    border-left: 4px solid var(--color-primary); /* #0052ff */
+}
+
+.payload-step-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.payload-step-badge {
+    font-size: 13.5px;
+    font-weight: 600;
     display: inline-flex;
     align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 10px 18px;
-    background: var(--color-surface-container);
-    border: 1px solid var(--color-hairline);
-    border-radius: var(--rounded-pill); /* 9999px Full Pill */
-    cursor: pointer;
-    font-family: var(--font-mono);
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--color-primary); /* #db0a40 */
-    transition: all var(--dur-snappy) var(--ease-snappy);
-}
-
-.log-expand-btn:hover {
-    background: var(--color-primary-weak);
-    border-color: rgba(219, 10, 64, 0.3);
-}
-
-.log-expand-btn .toggle-icon {
-    transition: transform 0.25s var(--ease-snappy);
-}
-
-.log-stream-card.is-expanded .log-expand-btn .toggle-icon {
-    transform: rotate(180deg);
-}
-
-.log-stream-card.is-expanded .log-expand-btn {
-    background: var(--color-tertiary); /* #001e3c */
-    color: #ffffff;
-    border-color: var(--color-tertiary);
-}
-
-/* Expandable Drawer (The Project Details) */
-.log-payload-drawer {
-    display: none;
-    flex-direction: column;
-    gap: var(--space-base);
-    padding-top: var(--space-base);
-    border-top: 1px solid var(--color-hairline);
-    animation: drawer-fade-down 0.25s var(--ease-snappy);
-}
-
-.log-stream-card.is-expanded .log-payload-drawer {
-    display: flex;
-}
-
-@keyframes drawer-fade-down {
-    from {
-        opacity: 0;
-        transform: translateY(-8px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* JSON / Telemetry Structured Metadata View (Deep Racing Navy Code Block) */
-.log-json-block {
-    background: var(--color-tertiary-container); /* #00162b */
-    border: 1px solid rgba(27, 106, 238, 0.25);
-    border-radius: var(--rounded-md);           /* 8px */
-    padding: 14px 18px;
-    font-family: var(--font-mono);
-    font-size: 12.5px;
-    line-height: 1.6;
-    color: #ffffff;
-    overflow-x: auto;
-}
-
-.log-json-block .jk { color: #82b1ff; } /* Technical Light Blue */
-.log-json-block .js { color: #b3e5fc; }
-.log-json-block .jn { color: var(--color-accent-yellow); }
-.log-json-block .jb { color: var(--color-primary); }
-
-/* Problem & Resolution Detail Box */
-.log-incident-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-md);
-}
-
-@media (max-width: 768px) {
-    .log-incident-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-.log-incident-box {
-    background: var(--color-surface-container);
-    border: 1px solid var(--color-hairline);
-    border-radius: var(--rounded-md); /* 8px */
-    padding: var(--space-base);
-    display: flex;
-    flex-direction: column;
     gap: 8px;
 }
 
-.log-incident-title {
-    font-size: 13.5px;
-    font-weight: 700;
-    color: #000000;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+.problem-badge {
+    color: var(--color-semantic-down);
 }
 
-/* Project Action Links Row */
-.log-actions-footer {
+.resolution-badge {
+    color: var(--color-primary);
+}
+
+.payload-step-desc {
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: var(--color-body);
+    margin: 0;
+}
+
+/* Core Implementations & Technical Details (Step 3) */
+.payload-details-block {
+    background: var(--color-surface-soft);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-lg);
+    padding: 22px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.payload-details-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: var(--space-base);
-    padding-top: var(--space-sm);
-    border-top: 1px dashed var(--color-hairline);
+    gap: 10px;
+}
+
+.details-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.details-heading {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-ink);
+    margin: 0;
+}
+
+.payload-details-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.payload-detail-row {
+    background: #ffffff;
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-md);
+    padding: 12px 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.detail-number-badge {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffffff;
+    background: var(--color-primary);
+    padding: 3px 8px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    box-shadow: 0 2px 6px rgba(0, 82, 255, 0.25);
+}
+
+.detail-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.detail-title {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--color-ink);
+}
+
+.detail-desc {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--color-body);
+    margin: 0;
+}
+
+/* Deep Documentation Note & Action Links Footer (Step 4) */
+.payload-doc-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 18px;
+    border-top: 1px solid var(--color-hairline);
+}
+
+.doc-notice-box {
+    background: #f4f8ff;
+    border: 1px solid #cbe0ff;
+    border-radius: var(--rounded-md);
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: #1e3a8a;
+    line-height: 1.6;
+}
+
+.doc-notice-box i {
+    color: var(--color-primary);
+    font-size: 15px;
+    flex-shrink: 0;
+}
+
+.payload-action-links {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.payload-footer-chips {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.log-id-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-muted);
 }

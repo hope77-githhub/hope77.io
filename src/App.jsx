@@ -3,48 +3,27 @@ import { LanguageProvider } from './context/LanguageContext';
 import LogStreamOverlay from './components/LogStreamOverlay';
 import TopAppBar from './components/TopAppBar';
 import HeroSection from './components/HeroSection';
-import QuickNavigation from './components/QuickNavigation';
-import PaddockLounge from './components/PaddockLounge';
 import ProjectLogsFeed from './components/ProjectLogsFeed';
 import MilestonesSection from './components/MilestonesSection';
+import PaddockLounge from './components/PaddockLounge';
 import AppFooter from './components/AppFooter';
 import './styles/style.css';
 
 export default function App() {
-  const [isTerminalOpen, setIsTerminalOpen] = useState(true);
-  const [activeSection, setActiveSection] = useState("장자훈's Log");
+  // Default to false so user is not surprised by initial full-screen popup
+  const [isTerminalOpen, setIsTerminalOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("01. LoL SNA (arXiv)");
   const projectLogsRef = useRef(null);
-
-  const handleSelectModule = (targetSelector, moduleName) => {
-    setActiveSection(moduleName);
-    if (targetSelector === '#summary') {
-      const el = document.getElementById('summary');
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-      return;
-    }
-    if (targetSelector === '#paddock-lounge') {
-      const el = document.getElementById('paddock-lounge');
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-      return;
-    }
-    if (projectLogsRef.current) {
-      projectLogsRef.current.openAndScrollTo(targetSelector);
-    }
-  };
 
   return (
     <LanguageProvider>
-      {/* 0. Initial Log Ingestion Telemetry Stream Overlay */}
+      {/* 0. Telemetry & Pit Wall Overlay (Accessible via top bar button or hero trigger, not forced on load) */}
       <LogStreamOverlay
         isOpen={isTerminalOpen}
         onClose={() => setIsTerminalOpen(false)}
       />
 
-      {/* 1. Top App Bar (Sticky Header) */}
+      {/* 1. Top App Bar (Sticky Header — Clean Light Navigation) */}
       <TopAppBar
         onOpenTerminal={() => setIsTerminalOpen(true)}
         activeSection={activeSection}
@@ -52,22 +31,22 @@ export default function App() {
 
       {/* Main Container */}
       <main className="app-container">
-        {/* 2. Hero Section */}
-        <HeroSection />
+        {/* 2. Hero Section (Unified White Canvas Landing) */}
+        <HeroSection onOpenTerminal={() => setIsTerminalOpen(true)} />
 
-        {/* 3. Quick Navigation & Preview */}
-        <QuickNavigation onSelectModule={handleSelectModule} />
+        {/* 3. Project History & Vertical Tab Index (Full Content Display, No Expand Button) */}
+        <ProjectLogsFeed
+          ref={projectLogsRef}
+          onSelectSection={setActiveSection}
+        />
 
-        {/* 4. Real-time 2D Mini Game Character Paddock Lounge & Chat */}
-        <PaddockLounge />
-
-        {/* 5. Project Logs Feed (Timeline Registry) */}
-        <ProjectLogsFeed ref={projectLogsRef} />
-
-        {/* 6. Milestones & Timeline */}
+        {/* 4. Milestones & Timeline */}
         <MilestonesSection />
 
-        {/* 7. Footer */}
+        {/* 5. Real-time 2D Mini Game Character Paddock Lounge & Chat (Moved to Bottom Feature) */}
+        <PaddockLounge />
+
+        {/* 6. Footer */}
         <AppFooter />
       </main>
     </LanguageProvider>

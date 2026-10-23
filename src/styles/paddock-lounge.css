@@ -1,13 +1,13 @@
 /* ==========================================================================
-   Red Bull Paddock Lounge — 2D Mini Game & Live Telemetry Chat Section
-   Specification: Red Bull Athletic-Maximalist Design (Navy, Red, Yellow)
+   Coinbase Paddock Lounge — 2D Mini Game & Live Telemetry Chat Section
+   Specification: DESIGN-coinbase.md (Institutional Calm, Single-Blue Voltage #0052ff)
    ========================================================================== */
 
 .paddock-section {
     padding: 48px 0 64px 0;
     position: relative;
     border-top: 1px solid var(--color-hairline);
-    background: #ffffff;
+    background: var(--color-surface-soft); /* #f7f7f7 */
 }
 
 .paddock-header-wrap {
@@ -35,9 +35,9 @@
 .paddock-title {
     font-family: var(--font-display);
     font-size: 24px;
-    font-weight: 800;
-    color: #000000;
-    letter-spacing: -0.02em;
+    font-weight: 600;
+    color: var(--color-ink);
+    letter-spacing: -0.6px;
     margin: 0;
     display: flex;
     align-items: center;
@@ -45,12 +45,12 @@
 }
 
 .paddock-title i {
-    color: var(--color-primary); /* #db0a40 */
+    color: var(--color-primary); /* #0052ff Coinbase Blue */
 }
 
 .paddock-desc {
-    font-size: 13px;
-    color: var(--color-on-surface-variant);
+    font-size: 13.5px;
+    color: var(--color-body);
     margin: 0;
 }
 
@@ -73,10 +73,10 @@
    Column 1: 2D Mini Game Arena (Interactive Paddock Floor)
    ========================================================================== */
 .paddock-arena-card {
-    background: #001224; /* Deep Red Bull Racing Navy */
-    border: 1px solid rgba(27, 106, 238, 0.3);
-    border-radius: var(--rounded-lg);
-    box-shadow: 0 8px 30px rgba(0, 15, 30, 0.25);
+    background: #0a0b0d; /* Coinbase surface-dark */
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-xl);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -86,14 +86,14 @@
 
 /* Arena Top Telemetry Bar */
 .arena-top-bar {
-    background: rgba(0, 30, 60, 0.8);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: #16181c;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     padding: 10px 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 12px;
-    color: #b0c4de;
+    color: #a8acb3;
     font-family: var(--font-mono);
 }
 
@@ -534,11 +534,11 @@
 .paddock-controls-card {
     background: #ffffff;
     border: 1px solid var(--color-hairline);
-    border-radius: var(--rounded-lg);
-    box-shadow: 0 4px 20px rgba(0, 15, 30, 0.08);
+    border-radius: var(--rounded-xl); /* 24px */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 22px;
     gap: 16px;
     justify-content: space-between;
 }
@@ -552,40 +552,41 @@
 
 .paddock-chat-input {
     flex: 1;
-    background: #f8f8f8;
-    border: 1px solid #dcdcdc;
-    border-radius: 9999px;
-    padding: 9px 16px;
-    font-size: 13px;
-    color: #000000;
+    background: var(--color-surface-soft);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-pill);
+    padding: 10px 18px;
+    font-size: 13.5px;
+    color: var(--color-ink);
     outline: none;
     font-family: var(--font-sans);
     transition: border-color 150ms var(--ease-snappy), box-shadow 150ms var(--ease-snappy);
 }
 
 .paddock-chat-input:focus {
-    border-color: #db0a40;
+    border-color: var(--color-primary);
     background: #ffffff;
-    box-shadow: 0 0 0 3px rgba(219, 10, 64, 0.15);
+    box-shadow: 0 0 0 3px rgba(0, 82, 255, 0.15);
 }
 
 .btn-paddock-send {
-    background: #db0a40;
+    background: var(--color-primary); /* #0052ff Coinbase Blue */
     color: #ffffff;
     border: none;
-    border-radius: 9999px;
-    padding: 8px 18px;
+    border-radius: var(--rounded-pill);
+    padding: 8px 20px;
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 600;
     display: inline-flex;
     align-items: center;
     gap: 6px;
     cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 82, 255, 0.25);
     transition: background 150ms var(--ease-snappy), transform 100ms;
 }
 
 .btn-paddock-send:hover {
-    background: #c2073a;
+    background: var(--color-primary-active);
     transform: translateY(-1px);
 }
 
@@ -598,9 +599,9 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    background: #f8f8f8;
-    border: 1px solid #e8e8e8;
-    border-radius: 12px;
+    background: var(--color-surface-soft);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-md);
     padding: 12px 14px;
 }
 
@@ -609,22 +610,22 @@
     justify-content: space-between;
     align-items: center;
     font-size: 11px;
-    font-weight: 800;
-    color: #000000;
+    font-weight: 700;
+    color: var(--color-ink);
     font-family: var(--font-display);
     text-transform: uppercase;
     letter-spacing: 0.04em;
 }
 
 .zone-guide-header kbd {
-    background: #db0a40;
+    background: var(--color-primary);
     color: #ffffff;
     padding: 2px 7px;
     border-radius: 4px;
     font-size: 10px;
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: 0.05em;
-    box-shadow: 0 1px 3px rgba(219, 10, 64, 0.4);
+    box-shadow: 0 1px 3px rgba(0, 82, 255, 0.3);
 }
 
 .zone-guide-grid {
@@ -635,7 +636,7 @@
 
 .zone-guide-item {
     background: #ffffff;
-    border: 1px solid #e0e0e0;
+    border: 1px solid var(--color-hairline);
     border-radius: 8px;
     padding: 7px 10px;
     display: flex;
@@ -646,15 +647,15 @@
 }
 
 .zone-guide-item.is-current {
-    border-color: #ffd600;
-    background: #fffdf0;
-    box-shadow: 0 0 10px rgba(255, 214, 0, 0.45);
+    border-color: var(--color-primary);
+    background: #f5f9ff;
+    box-shadow: 0 0 10px rgba(0, 82, 255, 0.2);
     transform: translateY(-1px);
 }
 
 .zone-guide-item-title {
-    font-weight: 800;
-    color: #000000;
+    font-weight: 600;
+    color: var(--color-ink);
     display: flex;
     align-items: center;
     gap: 5px;
@@ -663,7 +664,7 @@
 
 .zone-guide-item-desc {
     font-size: 10px;
-    color: #6c757d;
+    color: var(--color-muted);
 }
 
 /* Quick Speech Chips */
@@ -674,13 +675,13 @@
 }
 
 .btn-quick-chip {
-    background: #f0f4f9;
-    border: 1px solid #d5e0ee;
-    color: #001e3c;
-    border-radius: 9999px;
-    padding: 4px 11px;
+    background: var(--color-surface-soft);
+    border: 1px solid var(--color-hairline);
+    color: var(--color-ink);
+    border-radius: var(--rounded-pill);
+    padding: 4px 12px;
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 500;
     cursor: pointer;
     transition: all 120ms var(--ease-snappy);
     display: inline-flex;
@@ -689,9 +690,9 @@
 }
 
 .btn-quick-chip:hover {
-    background: #e1ebf7;
-    border-color: #1b6aee;
-    color: #1b6aee;
+    background: var(--color-surface-strong);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
     transform: translateY(-1px);
 }
 
@@ -699,16 +700,16 @@
 .paddock-minilog-wrap {
     display: flex;
     flex-direction: column;
-    background: #001224; /* Red Bull Deep Navy Log */
-    border: 1px solid rgba(27, 106, 238, 0.3);
-    border-radius: 12px;
+    background: #0a0b0d; /* Coinbase surface-dark */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--rounded-md);
     overflow: hidden;
     height: 200px;
 }
 
 .minilog-header {
-    background: rgba(0, 30, 60, 0.9);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: #16181c;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     padding: 8px 14px;
     display: flex;
     justify-content: space-between;
@@ -717,8 +718,8 @@
 
 .minilog-title {
     font-size: 11px;
-    font-weight: 800;
-    color: #ffd600;
+    font-weight: 600;
+    color: #ffffff;
     font-family: var(--font-mono);
     display: flex;
     align-items: center;
@@ -733,25 +734,25 @@
 .btn-log-filter {
     background: transparent;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #8e9192;
+    color: #a8acb3;
     padding: 2px 7px;
     border-radius: 4px;
     font-size: 9px;
-    font-weight: 700;
+    font-weight: 600;
     cursor: pointer;
     font-family: var(--font-mono);
 }
 
 .btn-log-filter.active {
-    background: #db0a40;
+    background: var(--color-primary);
     color: #ffffff;
-    border-color: #db0a40;
+    border-color: var(--color-primary);
 }
 
 .minilog-clear-btn {
     background: transparent;
     border: none;
-    color: #8e9192;
+    color: #a8acb3;
     cursor: pointer;
     font-size: 11px;
     padding: 2px 6px;

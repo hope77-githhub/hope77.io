@@ -3,158 +3,185 @@ import { PROJECT_LOGS_DATA } from '../data/projectLogsData';
 import ProjectLogCard from './ProjectLogCard';
 import { useLanguage } from '../context/LanguageContext';
 
-const ProjectLogsFeed = forwardRef(function ProjectLogsFeed(props, ref) {
-  const { t } = useLanguage();
-  const [filter, setFilter] = useState('all');
-  const [expandedMap, setExpandedMap] = useState({});
+const ProjectLogsFeed = forwardRef(function ProjectLogsFeed({ onSelectSection }, ref) {
+  const { t, lang } = useLanguage();
+  const [activeTab, setActiveTab] = useState('log-entry-com-study');
 
-  // Filter projects
-  const filteredProjects = PROJECT_LOGS_DATA.filter((p) => {
-    if (filter === 'all') return true;
-    return p.categories.includes(filter);
-  });
+  const tabItems = [
+    {
+      id: 'log-entry-com-study',
+      num: '01',
+      nameKo: 'LoL 커뮤니케이션 & SNA (arXiv)',
+      nameEn: 'LoL In-Game SNA & arXiv Paper',
+      tag: 'RESEARCH',
+      statusTextKo: '논문 등재',
+      statusTextEn: 'Published',
+      statusType: 'success',
+      timestamp: '2023.09 - 2025.09'
+    },
+    {
+      id: 'log-entry-unknown',
+      num: '02',
+      nameKo: 'Unknown QA & 테스트 지원 도구',
+      nameEn: 'Unknown QA & Automation Suite',
+      tag: 'QA_AUTOMATION',
+      statusTextKo: '진행 중',
+      statusTextEn: 'In Progress',
+      statusType: 'info',
+      timestamp: '2025.12 - PRESENT'
+    },
+    {
+      id: 'log-entry-f1',
+      num: '03',
+      nameKo: 'AI Race Engineer (F1 텔레메트리)',
+      nameEn: 'Live AI Race Engineer (F1 UDP)',
+      tag: 'TELEMETRY / AI',
+      statusTextKo: '진행 중',
+      statusTextEn: 'In Progress',
+      statusType: 'info',
+      timestamp: '2026.09 - PRESENT'
+    },
+    {
+      id: 'log-entry-neis',
+      num: '04',
+      nameKo: 'NEIS 글자수 & 엑셀 중복 탐지기',
+      nameEn: 'NEIS Byte Counter & Excel Tool',
+      tag: 'CLIENT_WEB',
+      statusTextKo: '배포 완료',
+      statusTextEn: 'Completed',
+      statusType: 'success',
+      timestamp: '2026.09 - DONE'
+    },
+    {
+      id: 'all',
+      num: 'ALL',
+      nameKo: '전체 프로젝트 한눈에 보기',
+      nameEn: 'View All Project Logs Feed',
+      tag: '4 ENTRIES',
+      statusTextKo: '전체 로그',
+      statusTextEn: 'All Logs',
+      statusType: 'neutral',
+      timestamp: '2023 - 2026'
+    }
+  ];
 
-  const handleToggleCard = (id) => {
-    setExpandedMap((prev) => ({
-      ...prev,
-      [id]: !prev[id]
-    }));
+  const handleTabClick = (tabId) => {
+    setActiveTab(tabId);
+    const targetTab = tabItems.find((tab) => tab.id === tabId);
+    if (onSelectSection && targetTab) {
+      onSelectSection(lang === 'en' ? targetTab.nameEn : targetTab.nameKo);
+    }
   };
 
-  const handleExpandAll = () => {
-    const nextMap = {};
-    filteredProjects.forEach((p) => {
-      nextMap[p.id] = true;
-    });
-    setExpandedMap(nextMap);
-  };
-
-  const handleCollapseAll = () => {
-    setExpandedMap({});
-  };
-
-  // Expose openAndScrollTo method to parent ref (called by QuickNavigation)
   useImperativeHandle(ref, () => ({
     openAndScrollTo(targetSelector) {
       const cleanId = targetSelector.replace('#', '');
-      setExpandedMap((prev) => ({
-        ...prev,
-        [cleanId]: true
-      }));
-
-      // Ensure filter doesn't hide it
-      const targetProject = PROJECT_LOGS_DATA.find((p) => p.id === cleanId);
-      if (targetProject && filter !== 'all' && !targetProject.categories.includes(filter)) {
-        setFilter('all');
+      const matchedTab = tabItems.find((tab) => tab.id === cleanId);
+      if (matchedTab) {
+        setActiveTab(cleanId);
+        if (onSelectSection) {
+          onSelectSection(lang === 'en' ? matchedTab.nameEn : matchedTab.nameKo);
+        }
+      } else if (cleanId === 'all') {
+        setActiveTab('all');
       }
-
       setTimeout(() => {
-        const el = document.getElementById(cleanId);
+        const el = document.getElementById('project-logs-section');
         if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       }, 50);
     }
   }));
 
+  const activeProject = PROJECT_LOGS_DATA.find((p) => p.id === activeTab);
+
   return (
     <div className="band-soft" id="project-logs-section">
       <div className="band-inner">
         <section>
-          {/* Log Dashboard Observability Header Banner */}
-          <div className="log-dashboard-banner">
-            <div className="log-dashboard-left">
-              <div className="log-dashboard-title">
-                <span className="log-pulse-dot"></span>
-                <span>장자훈's Log Registry &amp; Timeline Stream</span>
-              </div>
-              <p className="log-dashboard-desc">
-                {t(
-                  "시간대별로 수행한 업무 효율화 도구 개발, 텔레메트리 파싱, 학술 논문 및 아키텍처 로그 기록입니다. [로그 상세 페이로드 열기]를 누르면 세부 프로젝트 정보가 노출됩니다.",
-                  "Chronological log repository recording system tool builds, telemetry parsing, and research publications. Click 'Inspect Payload' to view detailed project architectures."
-                )}
-              </p>
+          {/* Section Header */}
+          <div className="section-header">
+            <div className="section-header-left">
+              <h2 className="section-heading">Log Index &amp; Project History</h2>
+              <span className="chip chip-info">4 Ingested Projects</span>
+              <span className="chip chip-purple">1 arXiv Paper (2512.20116)</span>
             </div>
-            <div className="log-metrics-grid">
-              <div className="log-stat-card">
-                <span className="log-stat-val">4 Entries</span>
-                <span className="log-stat-lbl">Ingested Logs</span>
-              </div>
-              <div className="log-stat-card">
-                <span className="log-stat-val">3 Projects</span>
-                <span className="log-stat-lbl">Active &amp; Production</span>
-              </div>
-              <div className="log-stat-card">
-                <span className="log-stat-val">1 Paper</span>
-                <span className="log-stat-lbl">arXiv:2512.20116</span>
-              </div>
-              <div className="log-stat-card">
-                <span className="log-stat-val">0 Errors</span>
-                <span className="log-stat-lbl">Pipeline Health</span>
-              </div>
-            </div>
+            <span className="meta-label">
+              {t(
+                '세로 탭을 선택하면 해당 프로젝트의 문제 정의, 해결 전략, 세부 성과 및 Git 문서 전체가 즉시 노출됩니다.',
+                'Select a vertical tab to inspect full architecture, problem context, and achievements directly.'
+              )}
+            </span>
           </div>
 
-          {/* Log Filter Toolbar */}
-          <div className="log-toolbar">
-            <div className="log-filter-group">
-              <button
-                type="button"
-                className={`log-filter-btn ${filter === 'all' ? 'active' : ''}`}
-                onClick={() => setFilter('all')}
-              >
-                <span>전체 로그 ALL</span>
-                <span className="badge-count">4</span>
-              </button>
-              <button
-                type="button"
-                className={`log-filter-btn ${filter === 'projects' ? 'active' : ''}`}
-                onClick={() => setFilter('projects')}
-              >
-                <span>프로젝트 PROJECTS</span>
-                <span className="badge-count">4</span>
-              </button>
-              <button
-                type="button"
-                className={`log-filter-btn ${filter === 'research' ? 'active' : ''}`}
-                onClick={() => setFilter('research')}
-              >
-                <span>연구 &amp; 논문 RESEARCH</span>
-                <span className="badge-count">1</span>
-              </button>
-            </div>
-            <div className="log-actions-group">
-              <button
-                type="button"
-                className="btn-log-ctrl"
-                id="btn-logs-expand-all"
-                onClick={handleExpandAll}
-              >
-                <i className="fas fa-angles-down"></i>{' '}
-                <span>{t('전체 로그 펼치기', 'Expand All')}</span>
-              </button>
-              <button
-                type="button"
-                className="btn-log-ctrl"
-                id="btn-logs-collapse-all"
-                onClick={handleCollapseAll}
-              >
-                <i className="fas fa-angles-up"></i>{' '}
-                <span>{t('전체 접기', 'Collapse All')}</span>
-              </button>
-            </div>
-          </div>
+          {/* Split Layout: Left Vertical Tabs + Right Full Project Log Pane */}
+          <div className="project-history-split">
+            {/* Left Column: Vertical Tab List */}
+            <aside className="project-vertical-nav" role="tablist">
+              <div className="vertical-nav-sticky">
+                <div className="vertical-nav-header">
+                  <i className="fas fa-layer-group" style={{ color: 'var(--color-primary)' }}></i>
+                  <span>{t('프로젝트 세로 탭 인덱스', 'Project Vertical Index')}</span>
+                </div>
 
-          {/* The Stream of Log Cards */}
-          <div className="log-stream-feed">
-            {filteredProjects.map((project) => (
-              <ProjectLogCard
-                key={project.id}
-                project={project}
-                isExpanded={!!expandedMap[project.id]}
-                onToggle={() => handleToggleCard(project.id)}
-              />
-            ))}
+                <div className="vertical-tab-items">
+                  {tabItems.map((tab) => {
+                    const isActive = activeTab === tab.id;
+                    return (
+                      <button
+                        key={tab.id}
+                        type="button"
+                        role="tab"
+                        aria-selected={isActive}
+                        className={`vertical-tab-btn ${isActive ? 'is-active' : ''}`}
+                        onClick={() => handleTabClick(tab.id)}
+                      >
+                        <div className="vtab-top-row">
+                          <span className="vtab-num">{tab.num}</span>
+                          <span className="vtab-tag">{tab.tag}</span>
+                        </div>
+                        <div className="vtab-name">
+                          {lang === 'en' ? tab.nameEn : tab.nameKo}
+                        </div>
+                        <div className="vtab-bottom-row">
+                          <span className="vtab-meta">
+                            <span
+                              className="vtab-status-dot"
+                              style={{
+                                backgroundColor:
+                                  tab.statusType === 'success'
+                                    ? 'var(--color-semantic-up)'
+                                    : tab.statusType === 'info'
+                                    ? 'var(--color-primary)'
+                                    : 'var(--color-muted)'
+                              }}
+                            ></span>
+                            <span>{lang === 'en' ? tab.statusTextEn : tab.statusTextKo}</span>
+                          </span>
+                          <span className="vtab-ts">{tab.timestamp}</span>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </aside>
+
+            {/* Right Column: Full Detailed Content */}
+            <main className="project-detail-pane">
+              {activeTab === 'all' ? (
+                <div className="all-logs-container">
+                  {PROJECT_LOGS_DATA.map((project) => (
+                    <ProjectLogCard key={project.id} project={project} />
+                  ))}
+                </div>
+              ) : (
+                activeProject && (
+                  <ProjectLogCard key={activeProject.id} project={activeProject} />
+                )
+              )}
+            </main>
           </div>
         </section>
       </div>

@@ -1,12 +1,12 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 
-export default function ProjectLogCard({ project, isExpanded, onToggle }) {
+export default function ProjectLogCard({ project }) {
   const { t, lang } = useLanguage();
 
   return (
     <article
-      className={`log-stream-card ${isExpanded ? 'is-expanded' : ''}`}
+      className="log-stream-card is-expanded"
       id={project.id}
     >
       {/* Log Card Header */}
@@ -18,20 +18,20 @@ export default function ProjectLogCard({ project, isExpanded, onToggle }) {
           <span className="log-tag-badge">{project.tagPrimary}</span>
           <span
             className="log-tag-badge"
-            style={{ color: project.tagSecondaryColor || 'var(--color-primary)' }}
+            style={{ color: project.tagSecondaryColor || 'var(--color-secondary)' }}
           >
             {project.tagSecondary}
           </span>
           <span className="log-service-name">{project.service}</span>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div className="log-header-right">
           {project.paperUrl && (
             <a
               href={project.paperUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="chip chip-purple"
-              style={{ textDecoration: 'none', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+              style={{ textDecoration: 'none', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '5px' }}
               title="Open arXiv Paper in new tab"
               onClick={(e) => e.stopPropagation()}
             >
@@ -64,271 +64,118 @@ export default function ProjectLogCard({ project, isExpanded, onToggle }) {
         </p>
       </div>
 
-      {/* Expand/Collapse Button */}
-      <button
-        type="button"
-        className="log-expand-btn"
-        onClick={onToggle}
-      >
-        <span>
-          <i className="fas fa-magnifying-glass"></i>{' '}
-          <span>
-            {isExpanded
-              ? t('로그 상세 페이로드 닫기', 'Collapse Log Payload')
-              : t('로그 상세 페이로드 열기', 'Inspect Log Details & Payload')}
-          </span>
-        </span>
-        <span
-          className="toggle-icon"
-          style={{ transform: isExpanded ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}
-        >
-          <i className="fas fa-chevron-down"></i>
-        </span>
-      </button>
-
-      {/* Expandable Payload Drawer */}
-      {isExpanded && (
-        <div className="log-payload-drawer" style={{ display: 'block' }}>
-          {/* CASE 1: 4 Architecture Pillars */}
-          {project.isCustomPillars ? (
-            <>
-              <div className="pitch-banner" style={{ marginBottom: 0 }}>
-                <p className="body-text">
-                  {lang === 'en' ? project.pitchQuoteEn : project.pitchQuoteKo}
-                </p>
+      {/* Full Content Payload Flow (Always Open, No Expand Button Required) */}
+      <div className="log-payload-drawer">
+        {/* 1. Problem Context (세로 첫 번째 단계) */}
+        {project.incident && (
+          <div className="payload-flow-section">
+            <div className="payload-step-card problem-card">
+              <div className="payload-step-header">
+                <span className="payload-step-badge problem-badge">
+                  <i className="fas fa-triangle-exclamation"></i>
+                  <span>{t('문제 정의 및 배경 (Problem Context)', 'Problem Context & Inefficiencies')}</span>
+                </span>
               </div>
+              <p className="body-text payload-step-desc">
+                {lang === 'en' ? project.incident.problemEn : project.incident.problemKo}
+              </p>
+            </div>
 
-              <div className="four-topic-grid">
-                {project.pillars.map((pillar) => (
-                  <div key={pillar.num} className="topic-card">
-                    <div className="card-title-row">
-                      <h4 className="card-title">
-                        {lang === 'en' ? pillar.titleEn : pillar.titleKo}
-                      </h4>
-                      <span
-                        className={`chip ${
-                          pillar.chipType === 'purple'
-                            ? 'chip-purple'
-                            : pillar.chipType === 'success'
-                            ? 'chip-success'
-                            : 'chip-info'
-                        }`}
-                      >
-                        {pillar.chipText}
-                      </span>
-                    </div>
-                    <div className="needs-content-box" style={{ background: '#ffffff', border: '1px solid var(--color-hairline)' }}>
-                      <p className="body-text" style={{ fontSize: '14px', margin: 0, color: 'var(--color-on-surface-variant)', lineHeight: '1.6' }}>
-                        {lang === 'en' ? pillar.descEn : pillar.descKo}
-                      </p>
-                    </div>
+            {/* 2. Resolution Strategy (세로 두 번째 단계) */}
+            <div className="payload-step-card resolution-card">
+              <div className="payload-step-header">
+                <span className="payload-step-badge resolution-badge">
+                  <i className="fas fa-circle-check"></i>
+                  <span>{t('해결 전략 및 구현 (Resolution & Architecture)', 'Resolution Strategy & Implementation')}</span>
+                </span>
+              </div>
+              <p className="body-text payload-step-desc">
+                {lang === 'en' ? project.incident.resolutionEn : project.incident.resolutionKo}
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* 3. Core Implementations & Quantitative Highlights (세로 세 번째 단계) */}
+        {project.details && (
+          <div className="payload-details-block">
+            <div className="payload-details-header">
+              <div className="details-header-left">
+                <i className="fas fa-cubes-stacked" style={{ color: 'var(--color-primary)' }}></i>
+                <h4 className="details-heading">
+                  {lang === 'en' ? project.detailsTitleEn : project.detailsTitleKo}
+                </h4>
+              </div>
+              <span className="chip chip-neutral" style={{ fontSize: '11.5px' }}>
+                {lang === 'en' ? 'Core Achievements' : '주요 수행 내역'}
+              </span>
+            </div>
+
+            <div className="payload-details-list">
+              {project.details.map((item, idx) => (
+                <div key={idx} className="payload-detail-row">
+                  <div className="detail-number-badge">
+                    <span>{String(idx + 1).padStart(2, '0')}</span>
                   </div>
-                ))}
-              </div>
-
-              <div className="log-actions-footer">
-                <span className="meta-label">ARCHITECTURE PILLARS 1~4</span>
-                <span className="meta-label">ID: {project.logId}</span>
-              </div>
-            </>
-          ) : project.isCustomProfile ? (
-            /* CASE 2: Engineer Profile & Skills */
-            <>
-              <div className="skills-grid">
-                {project.skills.map((skill, idx) => (
-                  <div key={idx} className="skill-item">
-                    <i className={skill.icon}></i>
-                    <span>{skill.name}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="two-col-grid">
-                {project.needsContentBoxes.slice(0, 2).map((box, idx) => (
-                  <div key={idx} className="needs-content-box" style={{ background: '#ffffff', border: '1px solid var(--color-hairline)' }}>
-                    <div className="needs-content-header" style={{ marginBottom: '8px' }}>
-                      <span className="needs-content-title" style={{ color: '#000000', fontWeight: 800 }}>
-                        <i className={box.icon} style={{ color: 'var(--color-primary)' }}></i>{' '}
-                        {lang === 'en' ? box.titleEn : box.titleKo}
-                      </span>
-                      <span className="chip chip-info">Profile</span>
-                    </div>
-                    <p className="body-text" style={{ fontSize: '14px', margin: 0, color: 'var(--color-on-surface-variant)', lineHeight: '1.6' }}>
-                      {lang === 'en' ? box.contentEn : box.contentKo}
-                    </p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="two-col-grid" style={{ marginTop: '12px' }}>
-                {project.needsContentBoxes.slice(2, 4).map((box, idx) => (
-                  <div key={idx} className="needs-content-box" style={{ background: '#ffffff', border: '1px solid var(--color-hairline)' }}>
-                    <div className="needs-content-header" style={{ marginBottom: '8px' }}>
-                      <span className="needs-content-title" style={{ color: '#000000', fontWeight: 800 }}>
-                        <i className={box.icon} style={{ color: 'var(--color-primary)' }}></i>{' '}
-                        {lang === 'en' ? box.titleEn : box.titleKo}
-                      </span>
-                      <span className="chip chip-info">Technical</span>
-                    </div>
-                    <p className="body-text" style={{ fontSize: '14px', margin: 0, color: 'var(--color-on-surface-variant)', lineHeight: '1.6' }}>
-                      {lang === 'en' ? box.contentEn : box.contentKo}
-                    </p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="log-actions-footer">
-                <span className="meta-label">ENGINEER PROFILE &amp; TECH STACK</span>
-                <span className="meta-label">ID: {project.logId}</span>
-              </div>
-            </>
-          ) : (
-            /* CASE 3: Standard Project Log Card */
-            <>
-              {/* Structured JSON Metadata Block */}
-              {project.jsonPayload && (
-                <div style={{ position: 'relative' }}>
-                  <pre className="log-json-block">
-                    <code>{JSON.stringify(project.jsonPayload, null, 2)}</code>
-                  </pre>
-                  {project.paperUrl && (
-                    <a
-                      href={project.paperUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-utility btn-primary-accent"
-                      style={{
-                        position: 'absolute',
-                        top: '12px',
-                        right: '12px',
-                        height: '32px',
-                        fontSize: '12px',
-                        padding: '0 12px'
-                      }}
-                    >
-                      <i className="fas fa-file-pdf"></i> arXiv:2512.20116 열기
-                    </a>
-                  )}
-                </div>
-              )}
-
-              {/* Problem & Resolution Incident Grid */}
-              {project.incident && (
-                <div className="log-incident-grid">
-                  <div className="log-incident-box">
-                    <span className="log-incident-title">
-                      <i className="fas fa-triangle-exclamation" style={{ color: 'var(--color-semantic-down)' }}></i>
-                      <span>{t('문제 정의 (Problem Incident)', 'Problem Incident')}</span>
-                    </span>
-                    <p className="body-text" style={{ fontSize: '14px' }}>
-                      {lang === 'en' ? project.incident.problemEn : project.incident.problemKo}
-                    </p>
-                  </div>
-                  <div className="log-incident-box">
-                    <span className="log-incident-title">
-                      <i className="fas fa-circle-check" style={{ color: 'var(--color-semantic-up)' }}></i>
-                      <span>{t('해결 방안 (Resolution Strategy)', 'Resolution Strategy')}</span>
-                    </span>
-                    <p className="body-text" style={{ fontSize: '14px' }}>
-                      {lang === 'en' ? project.incident.resolutionEn : project.incident.resolutionKo}
+                  <div className="detail-content">
+                    <strong className="detail-title">
+                      {lang === 'en' ? item.titleEn : item.titleKo}
+                    </strong>
+                    <p className="body-text detail-desc">
+                      {lang === 'en' ? item.descEn : item.descKo}
                     </p>
                   </div>
                 </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* 4. Deep Documentation Note & External Links (논문 및 GitHub MD 문서화 지향) */}
+        <div className="payload-doc-footer">
+          <div className="doc-notice-box">
+            <i className="fas fa-circle-info"></i>
+            <span>
+              {t(
+                '※ 정량적 벤치마크 그래프, 가설 검증 수치 및 세부 트러블슈팅 내역은 학술 논문과 Git Repo의 마크다운(README.md)에 상세히 문서화되어 있습니다.',
+                '※ Quantitative benchmark graphs, hypothesis tests, and detailed troubleshooting logs are fully documented in the academic paper and Git repository README.md.'
               )}
+            </span>
+          </div>
 
-              {/* Detailed Implementations List (Populated from contents.md) */}
-              {project.details && (
-                <div className="needs-content-box" style={{ background: '#ffffff', border: '1px solid var(--color-hairline)', padding: '20px' }}>
-                  <div className="needs-content-header" style={{ marginBottom: '12px' }}>
-                    <span className="needs-content-title" style={{ color: '#000000', fontWeight: 800 }}>
-                      <i className="fas fa-cubes" style={{ color: 'var(--color-primary)' }}></i>{' '}
-                      {lang === 'en' ? project.detailsTitleEn : project.detailsTitleKo}
-                    </span>
-                    <span className="chip chip-info">
-                      {lang === 'en' ? 'Core Achievements' : '주요 수행 내용'}
-                    </span>
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                    {project.details.map((item, idx) => (
-                      <div
-                        key={idx}
-                        style={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          gap: '3px',
-                          padding: '10px 14px',
-                          background: 'var(--color-surface-container)',
-                          borderRadius: '8px',
-                          border: '1px solid var(--color-hairline)'
-                        }}
-                      >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <span style={{ color: 'var(--color-primary)', fontWeight: 800, fontSize: '13px' }}>
-                            {idx + 1}.
-                          </span>
-                          <strong style={{ color: '#000000', fontSize: '14px', fontWeight: 700 }}>
-                            {lang === 'en' ? item.titleEn : item.titleKo}
-                          </strong>
-                        </div>
-                        <p style={{ margin: 0, color: 'var(--color-on-surface-variant)', fontSize: '13.5px', lineHeight: '1.55', paddingLeft: '20px' }}>
-                          {lang === 'en' ? item.descEn : item.descKo}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+          <div className="payload-action-links">
+            {project.footerLinks && project.footerLinks.map((link, idx) => (
+              <a
+                key={idx}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={link.accent ? 'btn-primary-accent' : 'btn-secondary-light'}
+                style={{ height: '42px', padding: '0 20px', borderRadius: '100px', textDecoration: 'none' }}
+              >
+                <i className={link.icon}></i>
+                <span>{lang === 'en' ? link.labelEn : link.labelKo}</span>
+                <i className="fas fa-arrow-up-right-from-square" style={{ fontSize: '11px', opacity: 0.85 }}></i>
+              </a>
+            ))}
 
-              {/* Action Buttons & Footer */}
-              <div className="log-actions-footer">
-                {project.footerLinks && (
-                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                    {project.footerLinks.map((link, idx) => (
-                      <a
-                        key={idx}
-                        href={link.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`btn-utility ${link.accent ? 'btn-primary-accent' : ''}`}
-                        style={{ height: '38px', fontSize: '13px', textDecoration: 'none' }}
-                      >
-                        <i className={link.icon}></i>{' '}
-                        <span>{lang === 'en' ? link.labelEn : link.labelKo}</span>
-                      </a>
-                    ))}
-                  </div>
-                )}
-
-                {project.footerAction && (
-                  <a
-                    href={project.footerAction.href}
-                    className="btn-utility btn-primary-accent"
-                    style={{ height: '38px', fontSize: '13px', textDecoration: 'none' }}
+            {project.footerChips && (
+              <div className="payload-footer-chips">
+                {project.footerChips.map((chip, idx) => (
+                  <span
+                    key={idx}
+                    className={`chip ${chip.type === 'success' ? 'chip-success' : 'chip-neutral'}`}
                   >
-                    <i className={project.footerAction.icon}></i>{' '}
-                    <span>{lang === 'en' ? project.footerAction.labelEn : project.footerAction.labelKo}</span>
-                  </a>
-                )}
-
-                {project.footerChips && (
-                  <div style={{ display: 'flex', gap: '8px' }}>
-                    {project.footerChips.map((chip, idx) => (
-                      <span
-                        key={idx}
-                        className={`chip ${chip.type === 'success' ? 'chip-success' : 'chip-neutral'}`}
-                      >
-                        {chip.textKo ? (lang === 'en' ? chip.textEn : chip.textKo) : chip.text}
-                      </span>
-                    ))}
-                  </div>
-                )}
-
-                <span className="meta-label">ID: {project.logId}</span>
+                    {chip.textKo ? (lang === 'en' ? chip.textEn : chip.textKo) : chip.text}
+                  </span>
+                ))}
               </div>
-            </>
-          )}
+            )}
+
+            <span className="meta-label log-id-label">ID: {project.logId}</span>
+          </div>
         </div>
-      )}
+      </div>
     </article>
   );
 }

@@ -1,6 +1,6 @@
 /* ==========================================================================
-   Base Styles, Reset & Editorial Bands — Red Bull Design System Edition
-   Specification: redbull.md (Athletic-Maximalist & High-Performance Typography)
+   Base Styles, Reset & Editorial Bands — Coinbase Design System Edition
+   Specification: DESIGN-coinbase.md (Institutional Editorial Calm & Single-Blue Voltage)
    ========================================================================== */
 * {
     box-sizing: border-box;
@@ -10,117 +10,134 @@
 
 html {
     scroll-behavior: smooth;
+    background-color: var(--color-canvas);
 }
 
 body {
-    background-color: var(--color-background); /* #ffffff */
-    color: var(--color-on-surface);           /* #000000 */
+    background-color: var(--color-canvas); /* Pure White */
+    color: var(--color-ink);              /* #0a0b0d */
     font-family: var(--font-sans);
-    font-size: 16px;                          /* Red Bull body-md */
+    font-size: 16px;
     font-weight: 400;
-    line-height: 1.5;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     word-break: keep-all;
+    min-height: 100vh;
 }
 
 a {
-    color: var(--color-secondary);            /* #1b6aee Technical Blue */
+    color: var(--color-primary);          /* #0052ff Coinbase Blue */
     text-decoration: none;
     transition: color var(--dur-snappy) var(--ease-snappy);
 }
 
 a:hover {
-    color: var(--color-secondary-hover);
+    color: var(--color-primary-active);
+    text-decoration: underline;
 }
 
 /* ==========================================================================
-   Typography Classes (Red Bull Athletic Hierarchy)
+   Typography Classes (Coinbase Editorial Calm Hierarchy — Weight 400~600)
    ========================================================================== */
 .page-heading {
     font-family: var(--font-display);
-    font-size: clamp(32px, 4.5vw, 44px);
-    font-weight: 800;                         /* Bull display weight */
+    font-size: clamp(30px, 4.4vw, 44px);
+    font-weight: 500;                     /* Coinbase signals institutional trust rather than aggressive bold */
     line-height: 1.15;
-    letter-spacing: -0.04em;
-    color: #000000;
+    letter-spacing: -1.2px;
+    color: var(--color-ink);
 }
 
 .section-heading {
     font-family: var(--font-display);
-    font-size: clamp(22px, 3vw, 28px);       /* Red Bull headline-md */
-    font-weight: 700;
+    font-size: clamp(22px, 2.8vw, 30px);
+    font-weight: 600;
     line-height: 1.25;
-    letter-spacing: -0.02em;
-    color: #000000;
+    letter-spacing: -0.6px;
+    color: var(--color-ink);
 }
 
 .body-text {
     font-family: var(--font-sans);
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 400;
-    line-height: 1.6;
+    line-height: 1.65;
     letter-spacing: 0;
-    color: var(--color-on-surface-variant);    /* #4a4a4a */
+    color: var(--color-body);             /* #5b616e Refined cool gray */
 }
 
 .meta-label {
     font-family: var(--font-sans);
-    font-size: 12px;
+    font-size: 12.5px;
     font-weight: 600;
     line-height: 1.4;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: var(--color-outline-variant);       /* #8e9192 */
+    color: var(--color-muted);            /* #7c828a */
 }
 
 /* ==========================================================================
-   Page Rhythm & Layout Containers (Red Bull 1600px Max Fluid Containers)
+   Page Rhythm & Layout Containers (Coinbase 3-Mode Rhythm: Dark Hero / Soft Gray / White)
    ========================================================================== */
 .app-container {
     width: 100%;
     display: flex;
     flex-direction: column;
+    background-color: var(--color-canvas);
 }
 
-.band-dark {
-    background-color: var(--color-tertiary);  /* #001e3c Deep Racing Navy */
-    color: #ffffff;
-    padding: var(--space-xl) 0;
+/* 1. Signature Coinbase Hero Band (White / Light Format) */
+.band-hero-light {
+    background-color: var(--color-canvas); /* #ffffff Pure White */
+    color: var(--color-ink);
+    padding: var(--space-xl) 0 var(--space-xxl) 0;
+    position: relative;
+    border-bottom: 1px solid var(--color-hairline);
 }
 
 .band-hero-racing {
-    background: linear-gradient(180deg, var(--color-racing-navy-deep) 0%, var(--color-tertiary) 100%);
-    padding: var(--space-xl) 0;
+    background-color: var(--color-canvas); /* Align with white canvas */
+    color: var(--color-ink);
+    padding: var(--space-xl) 0 var(--space-xxl) 0;
     position: relative;
-    border-bottom: 2px solid var(--color-primary);
+    border-bottom: 1px solid var(--color-hairline);
 }
 
+/* 2. Soft Gray Alternating Band (#f7f7f7) for Quick Navigation & Projects */
 .band-light {
-    background-color: var(--color-surface);   /* #ffffff Pure White Canvas */
-    color: var(--color-on-surface);
-    padding: var(--space-xl) 0;
+    background-color: var(--color-surface-soft); /* #f7f7f7 */
+    color: var(--color-ink);
+    padding: var(--space-xxl) 0;
+    border-bottom: 1px solid var(--color-hairline-soft);
+}
+
+/* 3. Pure White Canvas Band (#ffffff) for Project Logs Registry */
+.band-soft {
+    background-color: var(--color-canvas);       /* #ffffff */
+    color: var(--color-ink);
+    padding: var(--space-xxl) 0;
     border-bottom: 1px solid var(--color-hairline);
 }
 
-.band-soft {
-    background-color: #f0f4f9;                /* High-Tech Racing Cool Slate */
-    color: var(--color-on-surface);
-    padding: var(--space-xl) 0;
-    border-bottom: 1px solid var(--color-hairline);
+/* 4. Deep Editorial Dark Band for Footer/CTA */
+.band-dark {
+    background-color: var(--color-surface-dark);
+    color: var(--color-on-dark);
+    padding: var(--space-xxl) 0;
 }
 
 .band-inner {
-    max-width: 1180px;
+    max-width: 1140px;
     margin: 0 auto;
-    padding: 0 var(--space-md);
+    padding: 0 var(--space-lg);
 }
 
 .section-card {
-    background: var(--color-surface);
-    border: 1px solid rgba(0, 15, 30, 0.08);
-    border-radius: var(--rounded-lg);          /* Red Bull 16px */
-    padding: var(--space-lg);
-    box-shadow: var(--elevation-md);
+    background: var(--color-surface-card);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-xl);            /* 24px Coinbase Standard */
+    padding: var(--space-xl);
+    box-shadow: var(--elevation-sm);
 }
 
 .section-header {
@@ -130,7 +147,7 @@ a:hover {
     flex-wrap: wrap;
     gap: var(--space-sm);
     margin-bottom: var(--space-lg);
-    padding-bottom: var(--space-sm);
+    padding-bottom: var(--space-base);
     border-bottom: 1px solid var(--color-hairline);
 }
 
