@@ -37,16 +37,16 @@
     --color-surface-onyx: #16181c;
 
     /* --------------------------------------------------------------------------
-       3. Text & Typography Colors
+       3. Text & Typography Colors (High-Contrast & Enhanced Readability)
        -------------------------------------------------------------------------- */
-    --color-ink: #0a0b0d;                  /* Display Headings, Strong Ink */
-    --color-body: #5b616e;                 /* Default Running Text, Refined Cool Gray */
+    --color-ink: #0a0b0d;                  /* Display Headings, Strong Ink (#0a0b0d) */
+    --color-body: #1e293b;                 /* Default Running Text, Deep Slate (#1e293b) for crisp contrast on white */
     --color-body-strong: #0a0b0d;          /* Emphasized Body */
     --color-on-surface: #0a0b0d;           /* Default On Surface */
-    --color-on-surface-variant: #5b616e;   /* Body text */
-    --color-on-surface-muted: #7c828a;     /* Muted secondary labels */
-    --color-muted: #7c828a;
-    --color-muted-soft: #a8acb3;
+    --color-on-surface-variant: #1e293b;   /* Body text */
+    --color-on-surface-muted: #475569;     /* Legible secondary labels (#475569) */
+    --color-muted: #475569;                /* Darker Slate-600 for high-contrast secondary text */
+    --color-muted-soft: #64748b;           /* Slate-500 */
 
     --color-on-primary: #ffffff;           /* Text on Coinbase Blue Pill */
     --color-on-dark: #ffffff;              /* Text on Dark Hero */

@@ -6,43 +6,43 @@ export default function HeroSection({ onOpenTerminal, onNavigateToProjects, onNa
   const { t, lang } = useLanguage();
   const visitorNum = getVisitorSequence();
 
-  // Compressed Tech Stack as requested in Section 2 & 2.3 of edit.MD
+  // Compressed Tech Stack (Project-usage level expression as requested)
   const skills = [
     {
       name: 'Python',
       tag: 'Pipeline & Automation',
-      scopeKo: '대규모 데이터 수집 파이프라인 및 백엔드 자동화 도구 개발',
-      scopeEn: 'High-throughput data ingestion pipelines and backend automation tooling'
+      scopeKo: 'API 데이터 수집 스크립트 작성 및 텍스트·시계열 데이터 전처리에 활용',
+      scopeEn: 'Used for API data collection scripts and text/time-series data preprocessing'
     },
     {
       name: 'React & Vite',
-      tag: 'Frontend & Reactive UI',
-      scopeKo: '데이터 중심 반응형 웹 대시보드 및 인터랙티브 시각화 뷰어 구현',
-      scopeEn: 'Data-driven reactive web dashboards and interactive timeline visualizers'
+      tag: 'Frontend UI',
+      scopeKo: '포트폴리오 대시보드 및 영상-로그 대조 뷰어 컴포넌트 화면 구현에 활용',
+      scopeEn: 'Used for portfolio dashboard and video-log interactive viewer UI components'
     },
     {
       name: 'JavaScript / TypeScript',
       tag: 'Client Engine',
-      scopeKo: '100% 브라우저 인메모리(SheetJS) 파서 및 클라이언트 샌드박스 로직 구축',
-      scopeEn: '100% browser in-memory parser and zero-server sandbox client logic'
+      scopeKo: '나이스 바이트 계산 알고리즘 및 SheetJS 기반 엑셀 파일 파싱 처리에 활용',
+      scopeEn: 'Used for byte calculation logic and SheetJS-based client Excel file parsing'
     },
     {
       name: 'Data & NLP (RoBERTa & SNA)',
-      tag: 'Modeling & Research',
-      scopeKo: '언어 모델 기반 발화 의도/감성 분류 및 동적 SNA 네트워크 그래프 모델링',
-      scopeEn: 'NLP intent/sentiment classification and dynamic SNA graph statistical modeling'
+      tag: 'Analysis & Modeling',
+      scopeKo: 'RoBERTa 모델을 통한 텍스트 의도 분류 및 NetworkX 기반 네트워크 분석에 활용',
+      scopeEn: 'Used for RoBERTa text intent classification and NetworkX network graph analysis'
     },
     {
       name: 'QA & Test Automation',
-      tag: 'Tooling & CI/CD',
-      scopeKo: '스키마 기반 자동 검증 엔진 및 원클릭 영상-로그 대조 파이프라인 구축',
-      scopeEn: 'Schema-based automated validation engines and 1-click video-log sync pipelines'
+      tag: 'Test Tooling',
+      scopeKo: 'JSON 스키마 기반 로그 유효성 검사 및 영상-로그 동기화 파이프라인 구현에 활용',
+      scopeEn: 'Used for JSON schema validation and video-log sync testing workflows'
     },
     {
       name: 'UDP & Telemetry Systems',
-      tag: 'Real-Time Ingestion',
-      scopeKo: '60Hz 고주파 UDP 소켓 패킷 파싱 및 원형 링 버퍼 초저지연 인덱싱',
-      scopeEn: '60Hz high-frequency UDP socket parsing and low-latency circular ring buffers'
+      tag: 'Real-Time Data',
+      scopeKo: 'F1 게임 UDP 20777 포트 바이너리 패킷 수신 및 주행 데이터 인덱싱에 활용',
+      scopeEn: 'Used for receiving F1 game UDP telemetry packets and indexing driving metrics'
     }
   ];
 
@@ -134,7 +134,7 @@ export default function HeroSection({ onOpenTerminal, onNavigateToProjects, onNa
                   )}
                 </p>
 
-                {/* Contact & Links Bar */}
+                {/* Contact & Links Bar (아카이브 문서는 하이퍼링크 없이 정보 텍스트 배지로 표현) */}
                 <div className="hero-contact-row">
                   <span className="contact-item">
                     <i className="fas fa-envelope"></i>
@@ -149,15 +149,10 @@ export default function HeroSection({ onOpenTerminal, onNavigateToProjects, onNa
                     <i className="fab fa-github"></i>
                     <span>github.com/hope77-githhub</span>
                   </a>
-                  <a
-                    href="https://arxiv.org/abs/2512.20116"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="contact-item link purple"
-                  >
+                  <span className="contact-item purple">
                     <i className="fas fa-file-pdf"></i>
                     <span>arXiv:2512.20116</span>
-                  </a>
+                  </span>
                 </div>
               </div>
 
@@ -184,7 +179,7 @@ export default function HeroSection({ onOpenTerminal, onNavigateToProjects, onNa
 
             {/* 3. Two-Column Compact Grid: Tech Stack & Philosophy (Section 2 & 3 of edit.MD) */}
             <div className="hero-compact-grid">
-              {/* Column 1: Compressed Tech Stack (간소화된 기술 스택) */}
+              {/* Column 1: Compressed Tech Stack (기술스택 문구 바로 밑에 소단락 문구 배치) */}
               <div className="compact-card tech-stack-compact">
                 <div className="compact-card-header">
                   <div className="compact-header-left">
@@ -196,8 +191,10 @@ export default function HeroSection({ onOpenTerminal, onNavigateToProjects, onNa
                 <div className="compact-skills-list">
                   {skills.map((skill, idx) => (
                     <div key={idx} className="compact-skill-item">
-                      <div className="skill-item-top">
+                      <div className="skill-name-row">
                         <strong className="skill-item-name">{skill.name}</strong>
+                      </div>
+                      <div className="skill-tag-row">
                         <span className="skill-item-tag">{skill.tag}</span>
                       </div>
                       <p className="skill-item-scope">

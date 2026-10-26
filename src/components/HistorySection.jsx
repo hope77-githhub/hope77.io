@@ -119,20 +119,14 @@ export default function HistorySection({ onNavigateToProject }) {
                 </div>
               </div>
 
-              {/* Action Footer: Project link / Paper link */}
+              {/* Action Footer: Static document badge (no link in overview) & Project link */}
               <div className="history-card-footer">
                 <div className="history-footer-left">
                   {item.paperUrl && (
-                    <a
-                      href={item.paperUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="history-external-link"
-                    >
+                    <span className="history-doc-badge">
                       <i className="fas fa-file-pdf"></i>
                       <span>arXiv:2512.20116</span>
-                      <i className="fas fa-arrow-up-right-from-square" style={{ fontSize: '10px' }}></i>
-                    </a>
+                    </span>
                   )}
                   {item.repoUrl && (
                     <a
