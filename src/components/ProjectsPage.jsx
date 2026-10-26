@@ -24,10 +24,8 @@ export default function ProjectsPage({ selectedProjectId, onSelectProject, onNav
   }, [selectedProjectId]);
 
   const title = lang === 'en' ? currentProject.titleEn : currentProject.titleKo;
-  const oneLiner = lang === 'en' ? currentProject.oneLinerEn : currentProject.oneLinerKo;
   const role = lang === 'en' ? currentProject.roleEn : currentProject.roleKo;
   const badgeText = lang === 'en' ? currentProject.badgeTextEn : currentProject.badgeTextKo;
-  const cs = currentProject.caseStudy;
 
   return (
     <div className="projects-page-wrap">
@@ -44,7 +42,7 @@ export default function ProjectsPage({ selectedProjectId, onSelectProject, onNav
               <span>{t('이력 / 개요 페이지로 돌아가기', 'Back to Overview & Resume')}</span>
             </button>
             <span className="breadcrumb-divider">/</span>
-            <span className="breadcrumb-current">{t('프로젝트 상세 케이스 스터디', 'Project Case Studies')}</span>
+            <span className="breadcrumb-current">{t('프로젝트 상세', 'Project Details')}</span>
           </div>
 
           <div className="projects-hero-titles">
@@ -53,13 +51,13 @@ export default function ProjectsPage({ selectedProjectId, onSelectProject, onNav
             </h1>
             <p className="projects-sub-heading">
               {t(
-                '문제 인지 계기부터 아키텍처 설계, 구현 개선, 정량적 수치 성과 및 배운 점까지 상세히 다룬 케이스 스터디입니다.',
-                'Deep case studies detailing problem triggers, architectural decisions, quantitative metrics, and retrospectives.'
+                '각 프로젝트별 핵심 문제 정의부터 해결 전략, 구현 과정 및 성과 분석 프레임워크입니다.',
+                'Case study architecture detailing problem definitions, implementation processes, and retrospective frameworks.'
               )}
             </p>
           </div>
 
-          {/* 2. Horizontal Project Tabs (가로 탭 내비게이션 — Section 8.2) */}
+          {/* 2. Horizontal Project Tabs (가로 탭 내비게이션) */}
           <div className="horizontal-tabs-container" ref={tabsRef} role="tablist">
             {CASE_STUDIES_DATA.map((proj, idx) => {
               const isActive = proj.id === currentProject.id;
@@ -85,7 +83,7 @@ export default function ProjectsPage({ selectedProjectId, onSelectProject, onNav
         </div>
       </div>
 
-      {/* 3. Main Case Study Content Container */}
+      {/* 3. Main Case Study Content Container (제목만 유지, 작성된 본문 내용 삭제) */}
       <div className="band-inner">
         <article className="case-study-container" id="case-study-view">
           {/* Case Study Meta Top Bar */}
@@ -132,7 +130,6 @@ export default function ProjectsPage({ selectedProjectId, onSelectProject, onNav
             </div>
 
             <h2 className="cs-title">{title}</h2>
-            <p className="cs-oneliner">{oneLiner}</p>
 
             <div className="cs-role-row">
               <span className="cs-role-label">
@@ -153,100 +150,18 @@ export default function ProjectsPage({ selectedProjectId, onSelectProject, onNav
             )}
           </header>
 
-          {/* Key Metrics Highlight Grid (정량 성과 카드) */}
-          {currentProject.keyMetrics && (
-            <section className="cs-metrics-section">
-              <h3 className="cs-section-subhead">
-                <i className="fas fa-chart-pie"></i>
-                <span>{t('핵심 정량 성과 지표 (Key Quantitative Impact)', 'Key Quantitative Impact')}</span>
-              </h3>
-              <div className="cs-metrics-grid">
-                {currentProject.keyMetrics.map((metric, mIdx) => (
-                  <div key={mIdx} className="cs-metric-card">
-                    <div className="cs-metric-icon">
-                      <i className={metric.icon}></i>
-                    </div>
-                    <div className="cs-metric-val">
-                      {lang === 'en' ? metric.valueEn : metric.valueKo}
-                    </div>
-                    <div className="cs-metric-lbl">
-                      {lang === 'en' ? metric.labelEn : metric.labelKo}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {/* Architecture Pipeline Flow Diagram */}
-          {currentProject.pipelineFlow && (
-            <section className="cs-diagram-section">
-              <h3 className="cs-section-subhead">
-                <i className="fas fa-diagram-project"></i>
-                <span>{t('데이터 파이프라인 및 아키텍처 흐름', 'Data Pipeline & System Architecture')}</span>
-              </h3>
-              <div className="cs-pipeline-grid">
-                {currentProject.pipelineFlow.map((flowItem, fIdx) => (
-                  <div key={fIdx} className="cs-pipeline-node">
-                    <div className="pipeline-node-top">
-                      <span className="pipeline-step-badge">{flowItem.step}</span>
-                      <strong className="pipeline-step-title">{flowItem.titleKo}</strong>
-                    </div>
-                    <p className="pipeline-step-desc">{flowItem.descKo}</p>
-                    {fIdx < currentProject.pipelineFlow.length - 1 && (
-                      <span className="pipeline-arrow-indicator">
-                        <i className="fas fa-chevron-right"></i>
-                      </span>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {/* Before vs After Comparison Card */}
-          {currentProject.beforeAfter && (
-            <section className="cs-before-after-section">
-              <div className="before-after-grid">
-                <div className="ba-card ba-before">
-                  <div className="ba-header">
-                    <i className="fas fa-xmark-circle"></i>
-                    <span>{t('개선 전 (Before)', 'Before')}</span>
-                  </div>
-                  <p className="ba-text">
-                    {lang === 'en' ? currentProject.beforeAfter.beforeEn : currentProject.beforeAfter.beforeKo}
-                  </p>
-                </div>
-                <div className="ba-card ba-after">
-                  <div className="ba-header">
-                    <i className="fas fa-check-circle"></i>
-                    <span>{t('개선 후 (After)', 'After')}</span>
-                  </div>
-                  <p className="ba-text">
-                    {lang === 'en' ? currentProject.beforeAfter.afterEn : currentProject.beforeAfter.afterKo}
-                  </p>
-                </div>
-              </div>
-            </section>
-          )}
-
-          {/* 6-Step Case Study Deep Dive Sections */}
+          {/* 6-Step Case Study Sections (내용 없이 제목만 남김) */}
           <div className="cs-steps-flow">
-            {/* Step 1: 문제 */}
+            {/* Step 1: 문제 정의 */}
             <section className="cs-step-block">
               <div className="cs-step-heading-row">
                 <span className="cs-step-num">01</span>
                 <div className="cs-step-title-wrap">
-                  <span className="cs-step-tag">{t('문제 정의', 'Problem')}</span>
+                  <span className="cs-step-tag">{t('문제 정의', 'Problem Context')}</span>
                   <h3 className="cs-step-title">
-                    {t('어떤 문제와 비효율이 있었는가?', 'What was the core problem & inefficiency?')}
+                    {t('01. 문제 정의 (Problem Context)', '01. Problem Context & Bottlenecks')}
                   </h3>
                 </div>
-              </div>
-              <div className="cs-step-content-box">
-                <p className="cs-text-paragraph">
-                  {lang === 'en' ? cs.problemEn : cs.problemKo}
-                </p>
               </div>
             </section>
 
@@ -255,16 +170,11 @@ export default function ProjectsPage({ selectedProjectId, onSelectProject, onNav
               <div className="cs-step-heading-row">
                 <span className="cs-step-num">02</span>
                 <div className="cs-step-title-wrap">
-                  <span className="cs-step-tag">{t('인지 계기', 'Discovery & Trigger')}</span>
+                  <span className="cs-step-tag">{t('문제 인지 계기', 'Discovery & Trigger')}</span>
                   <h3 className="cs-step-title">
-                    {t('이 문제를 어떻게 발견했고, 왜 중요했는가?', 'How was it identified, and why was it critical?')}
+                    {t('02. 문제 인지 계기 (Discovery & Trigger)', '02. Discovery & Trigger')}
                   </h3>
                 </div>
-              </div>
-              <div className="cs-step-content-box">
-                <p className="cs-text-paragraph">
-                  {lang === 'en' ? cs.triggerEn : cs.triggerKo}
-                </p>
               </div>
             </section>
 
@@ -275,15 +185,8 @@ export default function ProjectsPage({ selectedProjectId, onSelectProject, onNav
                 <div className="cs-step-title-wrap">
                   <span className="cs-step-tag">{t('접근 전략', 'Approach & Decision Making')}</span>
                   <h3 className="cs-step-title">
-                    {t('어떤 전략, 가설, 기준으로 해결에 접근했는가?', 'What strategies, hypotheses, and criteria were established?')}
+                    {t('03. 접근 방식 및 의사결정 (Approach & Decisions)', '03. Approach & Decision Making')}
                   </h3>
-                </div>
-              </div>
-              <div className="cs-step-content-box">
-                <div className="cs-formatted-content">
-                  {(lang === 'en' ? cs.approachEn : cs.approachKo).split('\n').map((line, lIdx) => (
-                    <p key={lIdx} className="cs-text-paragraph line">{line}</p>
-                  ))}
                 </div>
               </div>
             </section>
@@ -293,17 +196,10 @@ export default function ProjectsPage({ selectedProjectId, onSelectProject, onNav
               <div className="cs-step-heading-row">
                 <span className="cs-step-num">04</span>
                 <div className="cs-step-title-wrap">
-                  <span className="cs-step-tag">{t('구현 과정', 'Implementation & Resolution')}</span>
+                  <span className="cs-step-tag">{t('구현 과정', 'Implementation & Process')}</span>
                   <h3 className="cs-step-title">
-                    {t('실제로 무엇을 구현했고, 무엇이 바뀌었는가?', 'What was engineered, and how did the system transform?')}
+                    {t('04. 구현 및 해결 과정 (Implementation & Process)', '04. Implementation & Process')}
                   </h3>
-                </div>
-              </div>
-              <div className="cs-step-content-box">
-                <div className="cs-formatted-content">
-                  {(lang === 'en' ? cs.implementationEn : cs.implementationKo).split('\n').map((line, lIdx) => (
-                    <p key={lIdx} className="cs-text-paragraph line">{line}</p>
-                  ))}
                 </div>
               </div>
             </section>
@@ -315,17 +211,8 @@ export default function ProjectsPage({ selectedProjectId, onSelectProject, onNav
                 <div className="cs-step-title-wrap">
                   <span className="cs-step-tag highlight">{t('정량 성과', 'Quantitative Results')}</span>
                   <h3 className="cs-step-title">
-                    {t('어떤 정량적·관찰 가능한 성과를 얻었는가?', 'What measurable and observable results were achieved?')}
+                    {t('05. 정량적 또는 관찰 가능한 성과 (Quantitative Results)', '05. Measurable & Observable Results')}
                   </h3>
-                </div>
-              </div>
-              <div className="cs-step-content-box highlight">
-                <div className="cs-formatted-content">
-                  {(lang === 'en' ? cs.resultsEn : cs.resultsKo).split('\n').map((line, lIdx) => (
-                    <p key={lIdx} className="cs-text-paragraph result-line">
-                      {line}
-                    </p>
-                  ))}
                 </div>
               </div>
             </section>
@@ -337,14 +224,9 @@ export default function ProjectsPage({ selectedProjectId, onSelectProject, onNav
                 <div className="cs-step-title-wrap">
                   <span className="cs-step-tag">{t('회고 및 배운 점', 'Key Learnings & Takeaways')}</span>
                   <h3 className="cs-step-title">
-                    {t('기술적·운영적으로 어떤 인사이트를 얻었는가?', 'What technical and operational insights were gained?')}
+                    {t('06. 배운 점 및 회고 (Key Learnings & Retrospective)', '06. Key Learnings & Retrospective')}
                   </h3>
                 </div>
-              </div>
-              <div className="cs-step-content-box">
-                <p className="cs-text-paragraph">
-                  {lang === 'en' ? cs.learningsEn : cs.learningsKo}
-                </p>
               </div>
             </section>
           </div>

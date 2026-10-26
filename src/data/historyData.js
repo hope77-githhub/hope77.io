@@ -58,8 +58,8 @@ export const HISTORY_DATA = {
         'Conducted statistical hypothesis testing and co-authored research paper on arXiv (arXiv:2512.20116)'
       ],
       relatedProjectId: 'log-entry-com-study',
-      relatedProjectNameKo: 'LoL 커뮤니케이션 패턴 및 SNA 분석',
-      relatedProjectNameEn: 'LoL Communication Patterns & Dynamic SNA',
+      relatedProjectNameKo: 'RTS (LOL) Communication pattern 연구',
+      relatedProjectNameEn: 'RTS (LOL) Communication Pattern Research',
       paperUrl: 'https://arxiv.org/abs/2512.20116',
       repoUrl: 'https://github.com/hope77-githhub/Proj_code'
     }
