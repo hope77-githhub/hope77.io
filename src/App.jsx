@@ -4,7 +4,6 @@ import LogStreamOverlay from './components/LogStreamOverlay';
 import TopAppBar from './components/TopAppBar';
 import HeroSection from './components/HeroSection';
 import HistorySection from './components/HistorySection';
-import ProjectPreviewSection from './components/ProjectPreviewSection';
 import ProjectsPage from './components/ProjectsPage';
 import MilestonesSection from './components/MilestonesSection';
 import PaddockLounge from './components/PaddockLounge';
@@ -30,7 +29,7 @@ export default function App() {
         return params.get('id') || 'log-entry-com-study';
       }
     }
-    return 'log-entry-com-study';
+    return 'log-entry-unknown';
   });
 
   // Sync with browser back/forward buttons
@@ -69,10 +68,6 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleSelectProjectFromPreview = (projectId) => {
-    navigateTo('projects', projectId);
-  };
-
   const scrollToHistory = () => {
     const el = document.getElementById('history');
     if (el) {
@@ -99,7 +94,7 @@ export default function App() {
       <main className="app-container">
         {currentPage === 'overview' ? (
           <div className="overview-page-flow">
-            {/* A. Hero: Concise Bio, Compressed Tech Stack & Philosophy (Section 2, 3, 6.4) */}
+            {/* A. Hero: Concise Bio, Compressed Tech Stack & Philosophy */}
             <HeroSection
               onOpenTerminal={() => setIsTerminalOpen(true)}
               onNavigateToProjects={() => navigateTo('projects')}
@@ -108,30 +103,25 @@ export default function App() {
 
             <div className="band-soft">
               <div className="band-inner">
-                {/* B. Career & Research History (Section 4 & 7 of edit.MD) */}
+                {/* B. Career & Research History (Career: Unknown + F1 Telemetry, Research: LoL SNA) */}
                 <HistorySection
                   onNavigateToProject={(projectId) => navigateTo('projects', projectId)}
                 />
 
-                {/* C. Project Summary Preview Cards (Section 5.3 of edit.MD) */}
-                <ProjectPreviewSection
-                  onSelectProject={handleSelectProjectFromPreview}
-                />
-
-                {/* D. Milestones Timeline */}
+                {/* C. Milestones Timeline */}
                 <MilestonesSection />
               </div>
             </div>
 
-            {/* E. 2D Interactive Paddock Lounge Character Game at Bottom */}
+            {/* D. 2D Interactive Paddock Lounge Character Game at Bottom */}
             <PaddockLounge />
 
-            {/* F. Footer */}
+            {/* E. Footer */}
             <AppFooter />
           </div>
         ) : (
           <div className="projects-page-flow">
-            {/* Projects Detailed Case Study View (Section 5 & 8 of edit.MD) */}
+            {/* Projects Detailed Case Study View */}
             <ProjectsPage
               selectedProjectId={selectedProjectId}
               onSelectProject={(id) => {

@@ -2,8 +2,8 @@ export const HISTORY_DATA = {
   career: [
     {
       id: 'career-unknown-qa',
-      orgKo: 'Unknown Project QA & 테스트 플랫폼 엔지니어링팀',
-      orgEn: 'Unknown Project QA & Test Platform Engineering Group',
+      orgKo: 'Unknown Project QA & 테스트 플랫폼 개발',
+      orgEn: 'Unknown Project QA & Test Platform Development',
       period: '2025.12 – 현재 (Active)',
       roleKo: 'QA 플랫폼 엔지니어 & 테스트 도구 개발자',
       roleEn: 'QA Platform Engineer & Tooling Developer',
@@ -37,40 +37,41 @@ export const HISTORY_DATA = {
       relatedProjectNameEn: 'Unknown QA & Test Support Suite'
     },
     {
-      id: 'career-neis-counter',
-      orgKo: '교육 공공행정 소프트웨어 유틸리티 개발',
-      orgEn: 'EdTech & Public Administration Software Utility',
-      period: '2026.09 – 완료 (DONE)',
-      roleKo: '클라이언트 소프트웨어 엔지니어 (독자 기획·개발)',
-      roleEn: 'Client-Side Software Engineer (Independent Lead)',
-      type: 'Career / Service',
-      summaryKo: '나이스(NEIS) 시스템의 특수 바이트 계산 규격(한글 3byte, 줄바꿈 2byte)과 엑셀 시트 내 중복 문장 탐지 피로도를 해결하기 위해 100% 브라우저 인메모리 텍스트 유틸리티를 개발 및 배포했습니다.',
-      summaryEn: 'Designed and deployed a 100% browser in-memory utility addressing custom NEIS byte calculation rules and multi-row Excel duplicate sentence fatigue.',
+      id: 'career-f1-telemetry',
+      orgKo: 'Real-Time AI Race Engineer (F1 텔레메트리 개발)',
+      orgEn: 'Real-Time AI Race Engineer (F1 Telemetry Development)',
+      period: '2026.09 – 현재 (Active)',
+      roleKo: '텔레메트리 시스템 & 풀스택 개발자',
+      roleEn: 'Telemetry Systems & Full-Stack Developer',
+      type: 'Career / Engineering',
+      summaryKo: 'F1 게임으로부터 초당 60회 쏟아지는 고주파 UDP 텔레메트리를 실시간 파싱하고, 공식 서킷 실좌표 매핑과 타이어 마모 예측 기반 AI 음성 전술 피드백 시스템을 개발하고 있습니다.',
+      summaryEn: 'Developing high-frequency 60Hz UDP telemetry parsing, official circuit track mapping, and AI voice feedback models for tactical pit stop strategies.',
       dutiesKo: [
-        '공백 포함/제외, UTF-8 및 EUC-KR 기반의 나이스 전용 실시간 정밀 Byte 계산 알고리즘 설계',
-        'SheetJS 기반 100% 브라우저 인메모리 엑셀 파서 구축으로 대규모 행(Row) 고속 파싱 구현',
-        '문장 단위 텍스트 차분(Diff) 알고리즘을 통한 행 번호 기반 중복 문장 실시간 탐지 UI 개발',
-        '양방향 인라인 수정 및 엑셀 포맷 즉시 덮어쓰기/내보내기 워크플로우 구현'
+        'F1 공식 UDP 20777 포트 바이너리 패킷 파서 및 원형 링 버퍼(Circular Buffer) 초저지연 인덱싱 엔진 개발',
+        '차량 속도, 스로틀/브레이크 강도, 타이어 마모도, 섹터별 델타 타임 시계열 분석 알고리즘 구현',
+        'FIA 24개 공식 서킷 X-Y 실좌표계 기반 실시간 주행 궤적 렌더링 프론트엔드 구축',
+        '드라이버 랩 페이스 및 타이어 수명 감쇠 모델 기반 실시간 피트스탑 AI Voice 음성 브리핑 에이전트 설계'
       ],
       dutiesEn: [
-        'Engineered precision byte counting logic supporting UTF-8/EUC-KR under strict NEIS standards',
-        'Built 100% client-side Excel parser using SheetJS to inspect large multi-student grade sheets',
-        'Developed sentence-level diff algorithm mapping duplicate sentences directly to exact row indices',
-        'Supported bidirectional inline editing with instant .xlsx export and overwrite capabilities'
+        'Developed binary packet parser and circular buffer indexing engine for 60Hz UDP 20777 streams',
+        'Implemented time-series algorithms for vehicle speed, throttle/brake inputs, tire wear, and sector deltas',
+        'Constructed real-time canvas track visualizer mapped to 24 official FIA circuit coordinate systems',
+        'Architected AI voice coaching agent delivering auditory pit stop strategies based on live tire wear models'
       ],
       achievementsKo: [
-        '대규모 엑셀 시트 내 중복 문장 탐지 시간 90% 이상 단축 (수작업 1시간 ➔ 2초 이내 자동 탐지)',
-        '나이스 특수 규격 기준 바이트 계산 정합도 100% 달성',
-        '서버 데이터 전송 0%로 학생 민감 개인정보 유출 위험을 원천 차단하여 안전성 확보'
+        '초당 60회 고주파 UDP 패킷을 패킷 손실 없이 5ms 미만 초저지연으로 실시간 처리',
+        '24개 F1 공식 서킷 좌표계 100% 매핑으로 정밀 주행 궤적 재현',
+        '계기판 시각 주시 대비 운전자 시각 인지 부하 80% 경감 (음성 피드백 전환)'
       ],
       achievementsEn: [
-        'Cut duplicate sentence inspection time by > 90% (from 1 hour manual review to < 2 seconds)',
-        'Achieved 100% precision matching official NEIS byte counting specifications',
-        'Guaranteed zero server transmission, completely eliminating student privacy leak risks'
+        'Processed 60Hz UDP packets with zero drops at sub-5ms low latency',
+        'Mapped 100% of 24 official FIA F1 circuits to true-scale coordinates',
+        'Reduced driver visual cognitive burden by 80% through real-time auditory briefings'
       ],
-      relatedProjectId: 'log-entry-neis',
-      relatedProjectNameKo: 'NEIS 글자수 & 엑셀 중복 탐지기',
-      relatedProjectNameEn: 'NEIS Byte Counter & Excel Tool'
+      relatedProjectId: 'log-entry-f1',
+      relatedProjectNameKo: 'Real-Time AI Race Engineer',
+      relatedProjectNameEn: 'Real-Time AI Race Engineer (F1 UDP)',
+      repoUrl: 'https://github.com/hope77-githhub/F125_Personal_RaceEngineer'
     }
   ],
   research: [
@@ -113,43 +114,6 @@ export const HISTORY_DATA = {
       relatedProjectNameEn: 'LoL Communication Patterns & Dynamic SNA',
       paperUrl: 'https://arxiv.org/abs/2512.20116',
       repoUrl: 'https://github.com/hope77-githhub/Proj_code'
-    },
-    {
-      id: 'research-f1-telemetry',
-      orgKo: '고주파 레이스 텔레메트리 & AI 전략 연구 Lab',
-      orgEn: 'High-Frequency Race Telemetry & AI Strategy Lab',
-      period: '2026.09 – 현재 (Active)',
-      roleKo: '텔레메트리 시스템 엔지니어 (연구 개발)',
-      roleEn: 'Telemetry Systems Engineer (R&D Lead)',
-      type: 'Research & Engineering',
-      summaryKo: 'F1 게임으로부터 초당 60회 쏟아지는 고빈도 UDP 텔레메트리를 실시간 파싱하고, 공식 서킷 실좌표 매핑과 타이어 마모 예측 기반 AI 음성 전술 피드백 시스템을 연구 및 구현하고 있습니다.',
-      summaryEn: 'Researching 60Hz high-frequency UDP telemetry parsing, official circuit track mapping, and AI voice feedback models for tactical pit stop strategies.',
-      dutiesKo: [
-        'F1 공식 UDP 20777 포트 바이너리 패킷 파서 및 원형 링 버퍼(Circular Buffer) 초저지연 인덱싱 엔진 개발',
-        '차량 속도, 스로틀/브레이크 강도, 타이어 마모도, 섹터별 델타 타임 시계열 분석 알고리즘 구현',
-        'FIA 24개 공식 서킷 X-Y 실좌표계 기반 실시간 주행 궤적 렌더링 프론트엔드 구축',
-        '드라이버 랩 페이스 및 타이어 수명 감쇠 모델 기반 실시간 피트스탑 AI Voice 음성 브리핑 에이전트 설계'
-      ],
-      dutiesEn: [
-        'Developed binary packet parser and circular buffer indexing engine for 60Hz UDP 20777 streams',
-        'Implemented time-series algorithms for vehicle speed, throttle/brake inputs, tire wear, and sector deltas',
-        'Constructed real-time canvas track visualizer mapped to 24 official FIA circuit coordinate systems',
-        'Architected AI voice coaching agent delivering auditory pit stop strategies based on live tire wear models'
-      ],
-      achievementsKo: [
-        '초당 60회 고주파 UDP 패킷을 패킷 손실 없이 5ms 미만 초저지연으로 실시간 처리',
-        '24개 F1 공식 서킷 좌표계 100% 매핑으로 정밀 주행 궤적 재현',
-        '계기판 시각 주시 대비 운전자 시각 인지 부하 80% 경감 (음성 피드백 전환)'
-      ],
-      achievementsEn: [
-        'Processed 60Hz UDP packets with zero drops at sub-5ms low latency',
-        'Mapped 100% of 24 official FIA F1 circuits to true-scale coordinates',
-        'Reduced driver visual cognitive burden by 80% through real-time auditory briefings'
-      ],
-      relatedProjectId: 'log-entry-f1',
-      relatedProjectNameKo: 'Real-Time AI Race Engineer',
-      relatedProjectNameEn: 'Real-Time AI Race Engineer (F1 UDP)',
-      repoUrl: 'https://github.com/hope77-githhub/F125_Personal_RaceEngineer'
     }
   ]
 };
