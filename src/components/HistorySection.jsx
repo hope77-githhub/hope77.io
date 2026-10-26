@@ -105,7 +105,7 @@ export default function HistorySection({ onNavigateToProject }) {
                 </div>
               </div>
 
-              {/* Duties Only (요약 섹션 삭제 완료, 담당 업무로 직결) */}
+              {/* Duties Only */}
               <div className="history-duties-block">
                 <h4 className="history-col-title">
                   <i className="fas fa-list-check"></i>
@@ -121,15 +121,9 @@ export default function HistorySection({ onNavigateToProject }) {
                 </ul>
               </div>
 
-              {/* Action Footer: Static document badge (no link in overview) & Project link */}
+              {/* Action Footer: Project link & GitHub */}
               <div className="history-card-footer">
                 <div className="history-footer-left">
-                  {item.paperUrl && (
-                    <span className="history-doc-badge">
-                      <i className="fas fa-file-pdf"></i>
-                      <span>arXiv:2512.20116</span>
-                    </span>
-                  )}
                   {item.repoUrl && (
                     <a
                       href={item.repoUrl}

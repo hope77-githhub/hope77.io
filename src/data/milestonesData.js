@@ -2,8 +2,8 @@ export const MILESTONES_DATA = [
   {
     id: 'm1',
     projectId: 'log-entry-com-study',
-    titleKo: 'RTS (LOL) Communication pattern 연구 (arXiv:2512.20116)',
-    titleEn: 'RTS (LOL) Communication Pattern Research (arXiv:2512.20116)',
+    titleKo: 'RTS (LOL) Communication pattern 연구',
+    titleEn: 'RTS (LOL) Communication Pattern Research',
     statusKo: '완료',
     statusEn: 'Completed',
     chipType: 'success',

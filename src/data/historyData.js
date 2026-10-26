@@ -48,14 +48,14 @@ export const HISTORY_DATA = {
         '커스텀 Discord Bot 개발을 통한 음성 스트림 수집 및 타임스탬프 동기화 체계 구축',
         '수집 주기가 다른 게임 로그와 음성 데이터(Voice Communication) 간의 시계열 오차를 수학적 보간법(Interpolation)으로 정밀 동기화',
         'RoBERTa 언어 모델 기반 발화 의도/감성 분류 및 동적 소셜 네트워크 분석(SNA) 그래프를 통한 의사소통 패턴 분석',
-        '통계적 가설 검증 수행 및 국제 공인 학술 프리프린트(arXiv:2512.20116) 논문 집필'
+        '통계적 가설 검증 수행 및 학술 연구 논문 공저 집필'
       ],
       dutiesEn: [
         'Analyzed Riot Client API schemas to engineer real-time event log ingestion pipelines with ms precision',
         'Engineered custom Discord Bot capturing voice communication streams with synchronized Unix timestamps',
         'Applied mathematical time-series interpolation to align multi-frequency voice audio and in-game logs',
         'Analyzed communication patterns via RoBERTa language models and dynamic SNA graph algorithms',
-        'Conducted statistical hypothesis testing and co-authored research paper on arXiv (arXiv:2512.20116)'
+        'Conducted statistical hypothesis testing and co-authored academic research paper'
       ],
       relatedProjectId: 'log-entry-com-study',
       relatedProjectNameKo: 'RTS (LOL) Communication pattern 연구',

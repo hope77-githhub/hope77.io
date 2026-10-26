@@ -49,10 +49,6 @@ export default function MilestonesSection({ onNavigateToProject }) {
                       </span>
                     </div>
 
-                    <p className="release-body">
-                      {milestone.bodyEn}
-                    </p>
-
                     <div className="timeline-card-footer">
                       <span className="timeline-action-cue">
                         <span>View Case Study</span>
