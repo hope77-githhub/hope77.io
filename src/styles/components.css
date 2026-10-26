@@ -2728,6 +2728,54 @@
     max-width: 780px;
 }
 
+/* Sticky Project Tabs Navigation Bar */
+.projects-sticky-nav-bar {
+    position: sticky;
+    top: 64px;
+    z-index: 90;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-hairline);
+    padding: 10px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.projects-sticky-inner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tab-arrow-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--rounded-pill);
+    border: 1px solid var(--color-hairline);
+    background: #ffffff;
+    color: var(--color-ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+    font-size: 13px;
+}
+
+.tab-arrow-btn:hover:not(:disabled) {
+    background: var(--color-primary);
+    color: #ffffff;
+    border-color: var(--color-primary);
+    transform: translateY(-1px);
+}
+
+.tab-arrow-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    background: #f1f5f9;
+}
+
 /* Horizontal Project Tabs (Section 8.2 of edit.MD) */
 .horizontal-tabs-container {
     display: flex;
@@ -3098,6 +3146,133 @@
     line-height: 1.6;
     color: var(--color-body);
     margin: 0;
+}
+
+/* 3-Step Condensed Core Grid */
+.cs-condensed-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.cs-condensed-card {
+    background: #ffffff;
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-lg);
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+    transition: border-color 0.2s ease;
+}
+
+.cs-condensed-card.highlight-blue {
+    border-color: rgba(0, 82, 255, 0.25);
+    background: #fbfdff;
+}
+
+.cs-condensed-card.highlight-green {
+    border-color: rgba(16, 185, 129, 0.25);
+    background: #fbfffd;
+}
+
+.cs-condensed-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.cs-condensed-num-badge {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    color: #64748b;
+    background: #f1f5f9;
+    padding: 4px 10px;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.cs-condensed-num-badge.highlight-blue {
+    color: #ffffff;
+    background: var(--color-primary);
+}
+
+.cs-condensed-num-badge.highlight-green {
+    color: #ffffff;
+    background: #10b981;
+}
+
+.cs-condensed-tag {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    display: block;
+    margin-bottom: 2px;
+}
+
+.cs-condensed-tag.highlight-blue {
+    color: var(--color-primary);
+}
+
+.cs-condensed-tag.highlight-green {
+    color: #059669;
+}
+
+.cs-condensed-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--color-ink);
+    margin: 0;
+}
+
+.cs-condensed-body {
+    padding-left: 48px;
+}
+
+.cs-condensed-desc {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--color-body);
+    margin: 0;
+}
+
+.cs-condensed-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cs-condensed-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-body);
+}
+
+.cs-condensed-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-top: 8px;
+    flex-shrink: 0;
+}
+
+.cs-condensed-dot.accent {
+    background: var(--color-primary);
+}
+
+.cs-condensed-dot.green {
+    background: #10b981;
 }
 
 /* 6-Step Case Study Deep Dive Flow */
