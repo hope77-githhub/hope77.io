@@ -1,6 +1,7 @@
 export const MILESTONES_DATA = [
   {
     id: 'm1',
+    projectId: 'log-entry-com-study',
     titleKo: 'COM_study 멀티모달 데이터 분석 연구 논문 공식 등재 (arXiv:2512.20116)',
     titleEn: 'Published LoL Multimodal SNA Research Paper on arXiv (arXiv:2512.20116)',
     statusKo: '완료',
@@ -11,6 +12,7 @@ export const MILESTONES_DATA = [
   },
   {
     id: 'm2',
+    projectId: 'log-entry-unknown',
     titleKo: 'Unknown Project QA 테스트 지원 도구 & 원클릭 파이프라인 구축',
     titleEn: 'Engineered Unknown Project QA Support Tooling & One-Click Pipeline',
     statusKo: '진행 중',
@@ -21,6 +23,7 @@ export const MILESTONES_DATA = [
   },
   {
     id: 'm3',
+    projectId: 'log-entry-f1',
     titleKo: 'Real-Time AI Race Engineer 텔레메트리 파싱 및 서킷 트랙 매핑',
     titleEn: 'Real-Time F1 Telemetry Ingestion & Interactive Circuit Track Mapping',
     statusKo: '진행 중',
@@ -31,6 +34,7 @@ export const MILESTONES_DATA = [
   },
   {
     id: 'm4',
+    projectId: 'log-entry-neis',
     titleKo: 'NIES Letter Counter (개선 버전) 개발 및 배포',
     titleEn: 'Developed & Deployed NEIS Letter Counter & Excel Duplicate Detector',
     statusKo: '완료',

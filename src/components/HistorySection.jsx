@@ -62,7 +62,6 @@ export default function HistorySection({ onNavigateToProject }) {
           const role = lang === 'en' ? item.roleEn : item.roleKo;
           const summary = lang === 'en' ? item.summaryEn : item.summaryKo;
           const duties = lang === 'en' ? item.dutiesEn : item.dutiesKo;
-          const achievements = lang === 'en' ? item.achievementsEn : item.achievementsKo;
 
           return (
             <article key={item.id} className="history-entry-card">
@@ -84,39 +83,20 @@ export default function HistorySection({ onNavigateToProject }) {
               {/* Summary line */}
               <p className="history-summary-text">{summary}</p>
 
-              {/* Two columns: Duties & Achievements */}
-              <div className="history-details-grid">
-                {/* 1. Duties */}
-                <div className="history-col">
-                  <h4 className="history-col-title">
-                    <i className="fas fa-list-check"></i>
-                    <span>{t('담당 업무', 'Key Responsibilities')}</span>
-                  </h4>
-                  <ul className="history-bullet-list">
-                    {duties.map((duty, dIdx) => (
-                      <li key={dIdx} className="history-bullet-item">
-                        <span className="bullet-dot"></span>
-                        <span className="bullet-text">{duty}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* 2. Key Achievements */}
-                <div className="history-col">
-                  <h4 className="history-col-title accent">
-                    <i className="fas fa-chart-line"></i>
-                    <span>{t('주요 성과 요약', 'Key Achievements & Impact')}</span>
-                  </h4>
-                  <ul className="history-bullet-list">
-                    {achievements.map((achieve, aIdx) => (
-                      <li key={aIdx} className="history-bullet-item achievement">
-                        <span className="bullet-dot accent"></span>
-                        <span className="bullet-text">{achieve}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+              {/* Duties Only (성과 요약 제거 및 폰트 크기 확대) */}
+              <div className="history-duties-block">
+                <h4 className="history-col-title">
+                  <i className="fas fa-list-check"></i>
+                  <span>{t('담당 업무 및 핵심 수행 내용', 'Key Responsibilities & Scope')}</span>
+                </h4>
+                <ul className="history-bullet-list">
+                  {duties.map((duty, dIdx) => (
+                    <li key={dIdx} className="history-bullet-item">
+                      <span className="bullet-dot accent"></span>
+                      <span className="bullet-text">{duty}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
 
               {/* Action Footer: Static document badge (no link in overview) & Project link */}
@@ -137,7 +117,7 @@ export default function HistorySection({ onNavigateToProject }) {
                     >
                       <i className="fab fa-github"></i>
                       <span>GitHub</span>
-                      <i className="fas fa-arrow-up-right-from-square" style={{ fontSize: '10px' }}></i>
+                      <i className="fas fa-arrow-up-right-from-square" style={{ fontSize: '11px' }}></i>
                     </a>
                   )}
                 </div>

@@ -2014,7 +2014,7 @@
 }
 
 .hero-main-title {
-    font-size: 30px;
+    font-size: 34px;
     font-weight: 700;
     color: var(--color-ink);
     margin: 0 0 10px 0;
@@ -2023,7 +2023,7 @@
 }
 
 .hero-concise-desc {
-    font-size: 15px;
+    font-size: 17px;
     line-height: 1.7;
     color: var(--color-body);
     margin: 0 0 18px 0;
@@ -2200,7 +2200,7 @@
 }
 
 .skill-item-name {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 700;
     color: var(--color-ink);
 }
@@ -2211,7 +2211,7 @@
 }
 
 .skill-item-tag {
-    font-size: 11px;
+    font-size: 12px;
     font-family: var(--font-mono);
     color: var(--color-primary);
     background: var(--color-primary-weak);
@@ -2223,9 +2223,9 @@
 }
 
 .skill-item-scope {
-    font-size: 12.5px;
+    font-size: 14px;
     color: var(--color-body);
-    line-height: 1.55;
+    line-height: 1.6;
     margin: 0;
 }
 
@@ -2238,7 +2238,7 @@
 }
 
 .profile-summary-text {
-    font-size: 13px;
+    font-size: 15.5px;
     line-height: 1.6;
     color: var(--color-body);
     margin: 0;
@@ -2266,7 +2266,7 @@
 }
 
 .philosophy-title {
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 600;
     color: var(--color-ink);
     display: block;
@@ -2274,7 +2274,7 @@
 }
 
 .philosophy-desc {
-    font-size: 12.5px;
+    font-size: 14px;
     line-height: 1.5;
     color: var(--color-body);
     margin: 0;
@@ -2306,7 +2306,7 @@
 }
 
 .section-main-title {
-    font-size: 22px;
+    font-size: 26px;
     font-weight: 700;
     color: var(--color-ink);
     margin: 0 0 6px 0;
@@ -2315,7 +2315,7 @@
 }
 
 .section-sub-desc {
-    font-size: 14px;
+    font-size: 16px;
     color: var(--color-body);
     margin: 0;
     line-height: 1.6;
@@ -2336,9 +2336,9 @@
     gap: 8px;
     border: 1px solid var(--color-hairline);
     background: #ffffff;
-    padding: 8px 18px;
+    padding: 10px 22px;
     border-radius: var(--rounded-pill);
-    font-size: 13.5px;
+    font-size: 15px;
     font-weight: 500;
     color: var(--color-body);
     cursor: pointer;
@@ -2393,7 +2393,7 @@
 }
 
 .history-org-name {
-    font-size: 18px;
+    font-size: 22px;
     font-weight: 700;
     color: var(--color-ink);
     margin: 0 0 6px 0;
@@ -2403,7 +2403,7 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    font-size: 13px;
+    font-size: 15.5px;
     font-weight: 600;
     color: var(--color-primary);
 }
@@ -2412,49 +2412,47 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    font-size: 12.5px;
+    font-size: 13.5px;
     font-family: var(--font-mono);
     color: var(--color-muted);
     background: #f8fafc;
-    padding: 4px 12px;
+    padding: 5px 14px;
     border-radius: var(--rounded-pill);
     border: 1px solid var(--color-hairline);
 }
 
 .history-summary-text {
-    font-size: 14px;
-    line-height: 1.65;
+    font-size: 16px;
+    line-height: 1.7;
     color: var(--color-body);
     margin: 0;
     background: #f8fafc;
-    padding: 12px 16px;
+    padding: 14px 18px;
     border-radius: var(--rounded-md);
-    border-left: 3px solid var(--color-hairline);
+    border-left: 3px solid var(--color-primary);
 }
 
-.history-details-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.history-col {
+.history-duties-block {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
+    background: #ffffff;
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-md);
+    padding: 18px 20px;
 }
 
 .history-col-title {
-    font-size: 13px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 700;
     color: var(--color-ink);
     display: flex;
     align-items: center;
-    gap: 6px;
-    margin: 0 0 4px 0;
+    gap: 8px;
+    margin: 0 0 6px 0;
 }
 
-.history-col-title.accent {
+.history-col-title i {
     color: var(--color-primary);
 }
 
@@ -2464,15 +2462,15 @@
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
 }
 
 .history-bullet-item {
     display: flex;
     align-items: flex-start;
-    gap: 8px;
-    font-size: 13px;
-    line-height: 1.55;
+    gap: 10px;
+    font-size: 15.5px;
+    line-height: 1.7;
     color: var(--color-body);
 }
 
@@ -2529,8 +2527,8 @@
     color: var(--color-primary);
     border: 1px solid rgba(0, 82, 255, 0.2);
     border-radius: var(--rounded-pill);
-    padding: 7px 18px;
-    font-size: 12.5px;
+    padding: 9px 20px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     display: inline-flex;
@@ -3314,18 +3312,103 @@
         max-width: 140px;
     }
 }
-
-
-.history-doc-badge {
-    font-size: 12.5px;
-    font-family: var(--font-mono);
-    color: #6941c6;
-    background: #fbf9ff;
-    border: 1px solid rgba(105, 65, 198, 0.2);
-    padding: 4px 10px;
-    border-radius: var(--rounded-pill);
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-weight: 500;
-}
+
+
+
+
+.history-doc-badge {
+
+    font-size: 12.5px;
+
+    font-family: var(--font-mono);
+
+    color: #6941c6;
+
+    background: #fbf9ff;
+
+    border: 1px solid rgba(105, 65, 198, 0.2);
+
+    padding: 4px 10px;
+
+    border-radius: var(--rounded-pill);
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    font-weight: 500;
+
+}
+
+
+
+/* Interactive Timeline Card & Hover Effect */
+.timeline-interactive-card {
+    background: #ffffff;
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-lg);
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.22s cubic-bezier(0.2, 0, 0, 1);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+    position: relative;
+}
+
+.timeline-interactive-card:hover {
+    border-color: rgba(0, 82, 255, 0.45);
+    background: #fafcff;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(0, 82, 255, 0.1);
+}
+
+.release-row:hover .marker-dot {
+    transform: scale(1.3);
+    box-shadow: 0 0 14px rgba(0, 82, 255, 0.75);
+}
+
+.marker-dot {
+    transition: all 0.2s ease;
+}
+
+.release-date {
+    font-size: 18.5px;
+    font-weight: 700;
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    margin: 0;
+}
+
+.release-body {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--color-body);
+    white-space: pre-line;
+    margin: 0;
+}
+
+.timeline-card-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 6px;
+}
+
+.timeline-action-cue {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--color-primary);
+    opacity: 0.85;
+    transition: all 0.2s ease;
+}
+
+.timeline-interactive-card:hover .timeline-action-cue {
+    opacity: 1;
+    transform: translateX(4px);
+}

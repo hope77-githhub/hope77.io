@@ -108,8 +108,10 @@ export default function App() {
                   onNavigateToProject={(projectId) => navigateTo('projects', projectId)}
                 />
 
-                {/* C. Milestones Timeline */}
-                <MilestonesSection />
+                {/* C. Project Timeline (Milestones) */}
+                <MilestonesSection
+                  onNavigateToProject={(projectId) => navigateTo('projects', projectId)}
+                />
               </div>
             </div>
 
