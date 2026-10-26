@@ -3412,3 +3412,52 @@
     opacity: 1;
     transform: translateX(4px);
 }
+
+
+/* History TBD Placeholder Cards */
+.history-tbd-card {
+    border: 2px dashed #cbd5e1;
+    background: #fbfcfe;
+    box-shadow: none;
+    transition: all 0.2s ease;
+}
+
+.history-tbd-card:hover {
+    border-color: #94a3b8;
+    background: #f8fafc;
+}
+
+.tbd-text {
+    color: #475569;
+    font-weight: 600;
+}
+
+.history-role-badge.tbd {
+    color: #64748b;
+    background: #edf2f7;
+    border-radius: var(--rounded-pill);
+    padding: 4px 12px;
+    font-size: 13.5px;
+    font-weight: 600;
+}
+
+.history-period-pill.tbd {
+    color: #64748b;
+    background: #edf2f7;
+    font-weight: 600;
+    font-family: var(--font-mono);
+}
+
+.history-tbd-body {
+    padding: 16px 20px;
+    background: #ffffff;
+    border: 1px dashed #cbd5e1;
+    border-radius: var(--rounded-md);
+}
+
+.history-tbd-notice {
+    font-size: 15px;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.6;
+}

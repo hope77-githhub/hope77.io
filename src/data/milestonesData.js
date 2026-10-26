@@ -2,13 +2,13 @@ export const MILESTONES_DATA = [
   {
     id: 'm1',
     projectId: 'log-entry-com-study',
-    titleKo: 'COM_study 멀티모달 데이터 분석 연구 논문 공식 등재 (arXiv:2512.20116)',
-    titleEn: 'Published LoL Multimodal SNA Research Paper on arXiv (arXiv:2512.20116)',
+    titleKo: 'Voice Communication & In-Game Log 싱크 및 의사소통 패턴 분석 연구 논문 공식 등재 (arXiv:2512.20116)',
+    titleEn: 'Published In-Game Voice & Log Sync Communication Analysis Paper on arXiv (arXiv:2512.20116)',
     statusKo: '완료',
     statusEn: 'Completed',
     chipType: 'success',
-    bodyKo: 'Riot Games Client API와 Discord 보이스 데이터를 보간법(Interpolation)으로 정밀 동기화하고, RoBERTa 감성 모델 및 동적 SNA 그래프 모델링을 적용하여 게임 내 커뮤니케이션 패턴과 정보 전파 양상을 통계적으로 규명했습니다.',
-    bodyEn: 'Synchronized in-game logs with Discord voice streams using mathematical interpolation, modeling communication dissemination via RoBERTa embeddings and dynamic SNA graphs.'
+    bodyKo: 'Riot Games Client API와 Discord 보이스 데이터를 보간법(Interpolation)으로 정밀 동기화하고, RoBERTa 모델 및 동적 SNA 그래프를 적용하여 게임 내 의사소통 패턴과 정보 전파 양상을 통계적으로 분석했습니다.',
+    bodyEn: 'Synchronized in-game logs with Discord voice streams using mathematical interpolation, analyzing communication patterns via RoBERTa embeddings and dynamic SNA graphs.'
   },
   {
     id: 'm2',

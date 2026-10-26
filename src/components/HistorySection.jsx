@@ -60,8 +60,33 @@ export default function HistorySection({ onNavigateToProject }) {
         {items.map((item) => {
           const org = lang === 'en' ? item.orgEn : item.orgKo;
           const role = lang === 'en' ? item.roleEn : item.roleKo;
-          const summary = lang === 'en' ? item.summaryEn : item.summaryKo;
           const duties = lang === 'en' ? item.dutiesEn : item.dutiesKo;
+
+          if (item.isTbd) {
+            return (
+              <article key={item.id} className="history-entry-card history-tbd-card">
+                <div className="history-card-top">
+                  <div className="history-org-role">
+                    <h3 className="history-org-name tbd-text">{org}</h3>
+                    <div className="history-role-badge tbd">
+                      <i className="fas fa-clock"></i>
+                      <span>{role}</span>
+                    </div>
+                  </div>
+                  <div className="history-period-pill tbd">
+                    <span>{item.period}</span>
+                  </div>
+                </div>
+                <div className="history-tbd-body">
+                  <p className="history-tbd-notice">
+                    {lang === 'en'
+                      ? 'Upcoming professional career experience to be updated.'
+                      : '새로운 실무 경력 및 프로젝트 이력이 순차적으로 추가될 예정입니다.'}
+                  </p>
+                </div>
+              </article>
+            );
+          }
 
           return (
             <article key={item.id} className="history-entry-card">
@@ -80,10 +105,7 @@ export default function HistorySection({ onNavigateToProject }) {
                 </div>
               </div>
 
-              {/* Summary line */}
-              <p className="history-summary-text">{summary}</p>
-
-              {/* Duties Only (성과 요약 제거 및 폰트 크기 확대) */}
+              {/* Duties Only (요약 섹션 삭제 완료, 담당 업무로 직결) */}
               <div className="history-duties-block">
                 <h4 className="history-col-title">
                   <i className="fas fa-list-check"></i>

@@ -129,7 +129,7 @@ export default function HeroSection({ onOpenTerminal, onNavigateToProjects, onNa
                 </h1>
                 <p className="hero-concise-desc">
                   {t(
-                    "당연한 것을 당연하게 여기지 않고 시스템의 숨은 비효율을 포착하여 직접 도구를 만들어 해결합니다. 현장의 수작업 병목을 해소하는 자동화 파이프라인 구축부터 멀티모달 데이터 정합 연구(arXiv:2512.20116)까지, 데이터와 정량적 수치로 가치를 증명하는 엔지니어입니다.",
+                    "당연한 것을 당연하게 여기지 않고 시스템의 숨은 비효율을 포착하여 직접 도구를 만들어 해결합니다. 현장의 수작업 병목을 해소하는 자동화 파이프라인 구축부터 음성 및 인게임 로그 싱크 분석 연구(arXiv:2512.20116)까지, 데이터와 정량적 수치로 가치를 증명하는 엔지니어입니다.",
                     "A problem solver who questions standard assumptions, builds custom tools to eliminate manual bottlenecks, and validates impact with empirical metrics and published research (arXiv:2512.20116)."
                   )}
                 </p>
