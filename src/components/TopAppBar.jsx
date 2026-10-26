@@ -1,35 +1,66 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 
-export default function TopAppBar({ onOpenTerminal, activeSection = "장자훈's Log" }) {
-  const { lang, toggleLang } = useLanguage();
+export default function TopAppBar({
+  onOpenTerminal,
+  currentPage = 'overview',
+  onNavigate
+}) {
+  const { lang, toggleLang, t } = useLanguage();
 
   return (
     <header className="top-app-bar">
       <div className="top-app-bar-inner">
-        <div className="product-title">
-          <i className="fas fa-terminal" style={{ fontSize: '16px', color: 'var(--color-primary)' }}></i>
-          <span>Jang Ja Hun Portfolio</span>
-          <span className="product-title-badge">Log Stream &amp; Observability</span>
+        {/* Brand / Logo */}
+        <div
+          className="product-title"
+          onClick={() => onNavigate && onNavigate('overview')}
+          style={{ cursor: 'pointer' }}
+          role="button"
+          tabIndex={0}
+        >
+          <i className="fas fa-terminal" style={{ fontSize: '15px', color: 'var(--color-primary)' }}></i>
+          <span className="brand-name">장자훈's Log</span>
+          <span className="brand-sub">hope77</span>
         </div>
-        <div className="header-right">
-          {/* Pit Wall & Telemetry Overlay Reopen Button */}
+
+        {/* Center: Main Page Tabs (이력 / 개요 vs 프로젝트 상세) */}
+        <nav className="top-nav-pages" aria-label="Main Navigation">
           <button
             type="button"
-            className="btn-log-console-toggle"
-            id="btn-header-log-console"
-            title="View Pit Wall & Live Telemetry"
-            onClick={onOpenTerminal}
+            className={`top-nav-tab ${currentPage === 'overview' ? 'is-active' : ''}`}
+            onClick={() => onNavigate && onNavigate('overview')}
           >
-            <span className="live-dot"></span>
-            <span>Pit Wall Live</span>
+            <i className="fas fa-user-circle"></i>
+            <span>{t('이력 / 개요', 'Overview & Resume')}</span>
           </button>
+          <button
+            type="button"
+            className={`top-nav-tab ${currentPage === 'projects' ? 'is-active' : ''}`}
+            onClick={() => onNavigate && onNavigate('projects')}
+          >
+            <i className="fas fa-folder-open"></i>
+            <span>{t('프로젝트 상세', 'Projects Case Study')}</span>
+          </button>
+        </nav>
 
-          <span className="active-module-pill" id="header-active-pill">
-            SECTION: {activeSection}
-          </span>
+        {/* Right Controls */}
+        <div className="header-right">
+          {/* Telemetry Pit Wall Trigger */}
+          {onOpenTerminal && (
+            <button
+              type="button"
+              className="btn-log-console-toggle"
+              id="btn-header-log-console"
+              title={t('F1 피트스탑 & 텔레메트리 콘솔 열기', 'Open Pit Wall & Telemetry')}
+              onClick={onOpenTerminal}
+            >
+              <span className="live-dot"></span>
+              <span>Pit Wall</span>
+            </button>
+          )}
 
-          {/* Multilingual Translation Toggle Button */}
+          {/* Multilingual Toggle */}
           <button
             type="button"
             className="lang-toggle-btn"
