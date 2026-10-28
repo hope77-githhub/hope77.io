@@ -27,7 +27,6 @@ export default function ProjectsPage({ selectedProjectId, onSelectProject, onNav
   const oneLiner = lang === 'en' ? currentProject.oneLinerEn : currentProject.oneLinerKo;
   const role = lang === 'en' ? currentProject.roleEn : currentProject.roleKo;
   const badgeText = lang === 'en' ? currentProject.badgeTextEn : currentProject.badgeTextKo;
-  const cs = currentProject.caseStudy;
 
   return (
     <div className="projects-page-wrap">
@@ -243,123 +242,69 @@ export default function ProjectsPage({ selectedProjectId, onSelectProject, onNav
             </section>
           )}
 
-          {/* 6-Step Deep Case Study Framework */}
+          {/* Detailed Case Study Framework (Custom Sections with Large Headings) */}
           <div className="cs-steps-flow">
-            {/* Step 1: 문제 정의 */}
-            <section className="cs-step-block">
-              <div className="cs-step-heading-row">
-                <span className="cs-step-num">01</span>
-                <div className="cs-step-title-wrap">
-                  <span className="cs-step-tag">{t('문제 정의', 'Problem Context')}</span>
-                  <h3 className="cs-step-title">
-                    {t('어떤 문제나 비효율이 있었는가?', 'What was the core bottleneck or technical challenge?')}
-                  </h3>
-                </div>
-              </div>
-              <div className="cs-step-content-box">
-                <p className="cs-text-paragraph">
-                  {lang === 'en' ? cs.problemEn : cs.problemKo}
-                </p>
-              </div>
-            </section>
+            {currentProject.sections &&
+              currentProject.sections.map((section, sIdx) => (
+                <section
+                  key={sIdx}
+                  className={`cs-step-block ${section.highlight ? 'highlight' : ''}`}
+                >
+                  <div className="cs-step-heading-row">
+                    <span className={`cs-step-num ${section.highlight ? 'highlight' : ''}`}>
+                      {section.num || `0${sIdx + 1}`}
+                    </span>
+                    <div className="cs-step-title-wrap">
+                      <h3 className="cs-step-title">
+                        {lang === 'en' ? section.titleEn : section.titleKo}
+                      </h3>
+                    </div>
+                  </div>
 
-            {/* Step 2: 문제 인지 계기 */}
-            <section className="cs-step-block">
-              <div className="cs-step-heading-row">
-                <span className="cs-step-num">02</span>
-                <div className="cs-step-title-wrap">
-                  <span className="cs-step-tag">{t('문제 인지 계기', 'Discovery & Trigger')}</span>
-                  <h3 className="cs-step-title">
-                    {t('이 문제를 어떻게 발견했고, 왜 중요했는가?', 'How was it identified, and why was it critical?')}
-                  </h3>
-                </div>
-              </div>
-              <div className="cs-step-content-box">
-                <p className="cs-text-paragraph">
-                  {lang === 'en' ? cs.triggerEn : cs.triggerKo}
-                </p>
-              </div>
-            </section>
+                  <div className={`cs-step-content-box ${section.highlight ? 'highlight' : ''}`}>
+                    {section.contentKo && (
+                      <div className="cs-formatted-content">
+                        {(lang === 'en' ? section.contentEn : section.contentKo)
+                          .split('\n')
+                          .map((line, lIdx) => (
+                            <p
+                              key={lIdx}
+                              className={`cs-text-paragraph ${line.startsWith('•') || line.startsWith('1)') || line.startsWith('2)') || line.startsWith('3)') ? 'bullet-line' : 'line'}`}
+                            >
+                              {line}
+                            </p>
+                          ))}
+                      </div>
+                    )}
 
-            {/* Step 3: 접근 방식 / 의사결정 */}
-            <section className="cs-step-block">
-              <div className="cs-step-heading-row">
-                <span className="cs-step-num">03</span>
-                <div className="cs-step-title-wrap">
-                  <span className="cs-step-tag">{t('접근 전략', 'Approach & Decision Making')}</span>
-                  <h3 className="cs-step-title">
-                    {t('어떤 전략, 가설, 기준으로 해결에 접근했는가?', 'What strategies, hypotheses, and criteria were established?')}
-                  </h3>
-                </div>
-              </div>
-              <div className="cs-step-content-box">
-                <div className="cs-formatted-content">
-                  {(lang === 'en' ? cs.approachEn : cs.approachKo).split('\n').map((line, lIdx) => (
-                    <p key={lIdx} className="cs-text-paragraph line">{line}</p>
-                  ))}
-                </div>
-              </div>
-            </section>
-
-            {/* Step 4: 구현 및 해결 과정 */}
-            <section className="cs-step-block">
-              <div className="cs-step-heading-row">
-                <span className="cs-step-num">04</span>
-                <div className="cs-step-title-wrap">
-                  <span className="cs-step-tag">{t('구현 과정', 'Implementation & Resolution')}</span>
-                  <h3 className="cs-step-title">
-                    {t('실제로 무엇을 구현했고, 무엇이 바뀌었는가?', 'What was engineered, and how did the system transform?')}
-                  </h3>
-                </div>
-              </div>
-              <div className="cs-step-content-box">
-                <div className="cs-formatted-content">
-                  {(lang === 'en' ? cs.implementationEn : cs.implementationKo).split('\n').map((line, lIdx) => (
-                    <p key={lIdx} className="cs-text-paragraph line">{line}</p>
-                  ))}
-                </div>
-              </div>
-            </section>
-
-            {/* Step 5: 성과 */}
-            <section className="cs-step-block highlight">
-              <div className="cs-step-heading-row">
-                <span className="cs-step-num highlight">05</span>
-                <div className="cs-step-title-wrap">
-                  <span className="cs-step-tag highlight">{t('정량 성과', 'Quantitative Results')}</span>
-                  <h3 className="cs-step-title">
-                    {t('어떤 정량적·관찰 가능한 성과를 얻었는가?', 'What measurable and observable results were achieved?')}
-                  </h3>
-                </div>
-              </div>
-              <div className="cs-step-content-box highlight">
-                <div className="cs-formatted-content">
-                  {(lang === 'en' ? cs.resultsEn : cs.resultsKo).split('\n').map((line, lIdx) => (
-                    <p key={lIdx} className="cs-text-paragraph result-line">
-                      {line}
-                    </p>
-                  ))}
-                </div>
-              </div>
-            </section>
-
-            {/* Step 6: 배운 점 */}
-            <section className="cs-step-block">
-              <div className="cs-step-heading-row">
-                <span className="cs-step-num">06</span>
-                <div className="cs-step-title-wrap">
-                  <span className="cs-step-tag">{t('회고 및 배운 점', 'Key Learnings & Takeaways')}</span>
-                  <h3 className="cs-step-title">
-                    {t('기술적·운영적으로 어떤 인사이트를 얻었는가?', 'What technical and operational insights were gained?')}
-                  </h3>
-                </div>
-              </div>
-              <div className="cs-step-content-box">
-                <p className="cs-text-paragraph">
-                  {lang === 'en' ? cs.learningsEn : cs.learningsKo}
-                </p>
-              </div>
-            </section>
+                    {/* Screenshots Gallery (For F1 project results) */}
+                    {section.screenshots && (
+                      <div className="cs-screenshots-grid">
+                        {section.screenshots.map((shot, shotIdx) => (
+                          <figure key={shotIdx} className="cs-screenshot-card">
+                            <div className="cs-screenshot-img-wrap">
+                              <img
+                                src={shot.src}
+                                alt={lang === 'en' ? shot.titleEn : shot.titleKo}
+                                className="cs-screenshot-img"
+                                loading="lazy"
+                              />
+                            </div>
+                            <figcaption className="cs-screenshot-caption">
+                              <strong className="cs-screenshot-title">
+                                {lang === 'en' ? shot.titleEn : shot.titleKo}
+                              </strong>
+                              <p className="cs-screenshot-desc">
+                                {lang === 'en' ? shot.descEn : shot.descKo}
+                              </p>
+                            </figcaption>
+                          </figure>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </section>
+              ))}
           </div>
 
           {/* Bottom Project Pagination & Navigation */}

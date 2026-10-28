@@ -3260,7 +3260,7 @@
 
 .cs-step-heading-row {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 14px;
 }
 
@@ -3270,7 +3270,7 @@
     font-weight: 700;
     color: #64748b;
     background: #f1f5f9;
-    padding: 4px 10px;
+    padding: 6px 12px;
     border-radius: 6px;
     flex-shrink: 0;
 }
@@ -3284,21 +3284,20 @@
     display: flex;
     flex-direction: column;
     gap: 3px;
+    flex: 1;
 }
 
 .cs-step-tag {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--color-primary);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    display: none;
 }
 
 .cs-step-title {
-    font-size: 16.5px;
+    font-size: 20px;
     font-weight: 700;
     color: var(--color-ink);
     margin: 0;
+    line-height: 1.35;
+    font-family: var(--font-display);
 }
 
 .cs-step-content-box {
@@ -3595,4 +3594,78 @@
     color: #64748b;
     margin: 0;
     line-height: 1.6;
+}
+
+/* Screenshots Gallery Grid */
+.cs-screenshots-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 24px;
+}
+
+.cs-screenshot-card {
+    margin: 0;
+    background: #ffffff;
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-md);
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cs-screenshot-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.cs-screenshot-img-wrap {
+    width: 100%;
+    background: #0f172a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.cs-screenshot-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.cs-screenshot-caption {
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: #fbfcfe;
+    border-top: 1px solid var(--color-hairline);
+}
+
+.cs-screenshot-title {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--color-ink);
+}
+
+.cs-screenshot-desc {
+    font-size: 13px;
+    color: var(--color-body);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.cs-text-paragraph.bullet-line {
+    padding-left: 4px;
+    font-weight: 500;
+    color: var(--color-ink);
+}
+
+@media (max-width: 800px) {
+    .cs-screenshots-grid {
+        grid-template-columns: 1fr;
+    }
 }
