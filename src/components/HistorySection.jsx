@@ -5,6 +5,14 @@ import { HISTORY_DATA } from '../data/historyData';
 export default function HistorySection({ onNavigateToProject }) {
   const { t, lang } = useLanguage();
   const [activeTab, setActiveTab] = useState('career'); // 'career' | 'research'
+  const [expandedAwards, setExpandedAwards] = useState({});
+
+  const toggleAwards = (id) => {
+    setExpandedAwards(prev => ({
+      ...prev,
+      [id]: !prev[id]
+    }));
+  };
 
   const items = activeTab === 'career' ? HISTORY_DATA.career : HISTORY_DATA.research;
 
@@ -61,6 +69,7 @@ export default function HistorySection({ onNavigateToProject }) {
           const org = lang === 'en' ? item.orgEn : item.orgKo;
           const role = lang === 'en' ? item.roleEn : item.roleKo;
           const duties = lang === 'en' ? item.dutiesEn : item.dutiesKo;
+          const isAwardsExpanded = !!expandedAwards[item.id];
 
           if (item.isTbd) {
             return (
@@ -121,74 +130,95 @@ export default function HistorySection({ onNavigateToProject }) {
                 </ul>
               </div>
 
-              {/* Awards / Achievements (대회 공식 수상 실적 - 시간순 세로 나열) */}
+              {/* Awards / Achievements (대회 공식 수상 실적 - 드롭다운 섹션) */}
               {item.awards && item.awards.length > 0 && (
-                <div className="history-awards-block">
-                  <div className="history-awards-header">
+                <div className={`history-awards-block ${isAwardsExpanded ? 'is-expanded' : 'is-collapsed'}`}>
+                  <button
+                    type="button"
+                    className="history-awards-trigger"
+                    onClick={() => toggleAwards(item.id)}
+                    aria-expanded={isAwardsExpanded}
+                    title={isAwardsExpanded ? t('수상 실적 접기', 'Collapse awards') : t('수상 실적 펼치기', 'Expand awards')}
+                  >
                     <div className="history-awards-title-wrap">
-                      <h4 className="history-col-title">
-                        <i className="fas fa-trophy" style={{ color: '#d97706' }}></i>
-                        <span>{t('대회 공식 수상 실적 및 주요 성과 (Awards & Honors)', 'Official Awards & Tournament Honors')}</span>
+                      <div className="awards-trigger-heading">
+                        <i className="fas fa-trophy trophy-header-icon"></i>
+                        <span className="awards-trigger-title-text">
+                          {t('대회 공식 수상 실적 및 주요 성과 (Awards & Honors)', 'Official Awards & Tournament Honors')}
+                        </span>
                         <span className="awards-count-pill">{item.awards.length}</span>
-                      </h4>
-                    </div>
-                    {item.totalPrizeKo && (
-                      <div className="awards-total-prize-pill" title="공식 대회 누적 상금">
-                        <i className="fas fa-coins"></i>
-                        <span>{lang === 'en' ? item.totalPrizeEn : item.totalPrizeKo}</span>
                       </div>
-                    )}
-                  </div>
+                    </div>
 
-                  {/* Vertical Chronological Awards List */}
-                  <div className="history-awards-vertical-list">
-                    {item.awards.map((award, aIdx) => {
-                      const isChampion = award.rankKo?.includes('우승') || (award.ko.includes('우승') && !award.ko.includes('준우승'));
-                      const isRunnerUp = award.rankKo?.includes('준우승') || award.ko.includes('준우승');
-                      return (
-                        <div
-                          key={aIdx}
-                          className={`history-award-row ${isChampion ? 'champion' : isRunnerUp ? 'runner-up' : 'qualifier'}`}
-                        >
-                          <div className="award-time-cell">
-                            <span className="award-date-pill">
-                              <i className="far fa-calendar-alt"></i>
-                              <span>{award.date}</span>
-                            </span>
-                          </div>
-
-                          <div className="award-icon-cell">
-                            <div className="award-icon-box">
-                              <i className={isChampion ? 'fas fa-trophy trophy-gold' : isRunnerUp ? 'fas fa-medal medal-silver' : 'fas fa-shield-halved ribbon-blue'}></i>
-                            </div>
-                          </div>
-
-                          <div className="award-main-cell">
-                            <div className="award-title-line">
-                              <strong className="award-title">{lang === 'en' ? award.en : award.ko}</strong>
-                              {award.team && (
-                                <span className="award-team-tag">{award.team}</span>
-                              )}
-                            </div>
-                            <span className="award-issuer-text">{award.issuer}</span>
-                          </div>
-
-                          <div className="award-meta-cell">
-                            {award.prizeKo && (
-                              <span className="award-prize-pill" title={lang === 'en' ? 'Price' : '상금'}>
-                                <span>{lang === 'en' ? award.prizeEn : award.prizeKo}</span>
-                              </span>
-                            )}
-                            <span className={`award-rank-pill ${isChampion ? 'rank-gold' : isRunnerUp ? 'rank-silver' : 'rank-bronze'}`}>
-                              {lang === 'en'
-                                ? (award.rankEn || (isChampion ? 'Champion' : isRunnerUp ? 'Runner-up' : 'Top 16'))
-                                : (award.rankKo || (isChampion ? '우승 (1등)' : isRunnerUp ? '준우승 (2등)' : '16강'))}
-                            </span>
-                          </div>
+                    <div className="history-awards-trigger-meta">
+                      {item.totalPrizeKo && (
+                        <div className="awards-total-prize-pill" title="공식 대회 누적 상금">
+                          <i className="fas fa-coins"></i>
+                          <span>{lang === 'en' ? item.totalPrizeEn : item.totalPrizeKo}</span>
                         </div>
-                      );
-                    })}
-                  </div>
+                      )}
+                      <div className="awards-toggle-action">
+                        <span className="toggle-label-text">
+                          {isAwardsExpanded ? t('접기', 'Collapse') : t('상세 보기', 'Details')}
+                        </span>
+                        <i className={`fas fa-chevron-down awards-chevron-icon ${isAwardsExpanded ? 'is-open' : ''}`}></i>
+                      </div>
+                    </div>
+                  </button>
+
+                  {/* Dropdown Content */}
+                  {isAwardsExpanded && (
+                    <div className="history-awards-dropdown-body">
+                      <div className="history-awards-vertical-list">
+                        {item.awards.map((award, aIdx) => {
+                          const isChampion = award.rankKo?.includes('우승') || (award.ko.includes('우승') && !award.ko.includes('준우승'));
+                          const isRunnerUp = award.rankKo?.includes('준우승') || award.ko.includes('준우승');
+                          return (
+                            <div
+                              key={aIdx}
+                              className={`history-award-row ${isChampion ? 'champion' : isRunnerUp ? 'runner-up' : 'qualifier'}`}
+                            >
+                              <div className="award-time-cell">
+                                <span className="award-date-pill">
+                                  <i className="far fa-calendar-alt"></i>
+                                  <span>{award.date}</span>
+                                </span>
+                              </div>
+
+                              <div className="award-icon-cell">
+                                <div className="award-icon-box">
+                                  <i className={isChampion ? 'fas fa-trophy trophy-gold' : isRunnerUp ? 'fas fa-medal medal-silver' : 'fas fa-shield-halved ribbon-blue'}></i>
+                                </div>
+                              </div>
+
+                              <div className="award-main-cell">
+                                <div className="award-title-line">
+                                  <strong className="award-title">{lang === 'en' ? award.en : award.ko}</strong>
+                                  {award.team && (
+                                    <span className="award-team-tag">{award.team}</span>
+                                  )}
+                                </div>
+                                <span className="award-issuer-text">{award.issuer}</span>
+                              </div>
+
+                              <div className="award-meta-cell">
+                                {award.prizeKo && (
+                                  <span className="award-prize-pill" title={lang === 'en' ? 'Price' : '상금'}>
+                                    <span>{lang === 'en' ? award.prizeEn : award.prizeKo}</span>
+                                  </span>
+                                )}
+                                <span className={`award-rank-pill ${isChampion ? 'rank-gold' : isRunnerUp ? 'rank-silver' : 'rank-bronze'}`}>
+                                  {lang === 'en'
+                                    ? (award.rankEn || (isChampion ? 'Champion' : isRunnerUp ? 'Runner-up' : 'Top 16'))
+                                    : (award.rankKo || (isChampion ? '우승 (1등)' : isRunnerUp ? '준우승 (2등)' : '16강'))}
+                                </span>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 
