@@ -95,10 +95,25 @@ export default function HistorySection({ onNavigateToProject }) {
                 <div className="history-org-role">
                   <h3 className="history-org-name">{org}</h3>
                   <div className="history-role-row">
-                    <div className="history-role-badge">
-                      <i className="fas fa-id-badge"></i>
-                      <span>{role}</span>
-                    </div>
+                    {item.profileUrl ? (
+                      <a
+                        href={item.profileUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="history-role-badge has-link"
+                        title={lang === 'en' ? 'Open Coach Profile on LoL Fandom Wiki' : 'e스포츠 리그오브레전드 코치 On2 프로필 (LoL Fandom)'}
+                      >
+                        <i className="fas fa-id-badge"></i>
+                        <span>{role}</span>
+                        <span className="role-profile-tag">On2</span>
+                        <i className="fas fa-arrow-up-right-from-square" style={{ fontSize: '10px' }}></i>
+                      </a>
+                    ) : (
+                      <div className="history-role-badge">
+                        <i className="fas fa-id-badge"></i>
+                        <span>{role}</span>
+                      </div>
+                    )}
                     {item.wikiLinks && (
                       <div className="history-header-links">
                         {item.wikiLinks.map((wLink, wIdx) => (
@@ -110,7 +125,7 @@ export default function HistorySection({ onNavigateToProject }) {
                             className="history-header-link-pill"
                             title={lang === 'en' ? wLink.labelEn : wLink.labelKo}
                           >
-                            <i className="fas fa-globe"></i>
+                            <i className={wLink.isProfile ? 'fas fa-user-tie' : 'fas fa-globe'}></i>
                             <span>{lang === 'en' ? wLink.labelEn : wLink.labelKo}</span>
                             <i className="fas fa-arrow-up-right-from-square" style={{ fontSize: '10px' }}></i>
                           </a>
@@ -141,28 +156,70 @@ export default function HistorySection({ onNavigateToProject }) {
                 </ul>
               </div>
 
-              {/* Awards / Achievements (대회 수상 실적) */}
+              {/* Awards / Achievements (대회 공식 수상 실적 - 시간순 세로 나열) */}
               {item.awards && item.awards.length > 0 && (
                 <div className="history-awards-block">
-                  <h4 className="history-col-title">
-                    <i className="fas fa-trophy" style={{ color: '#d97706' }}></i>
-                    <span>{t('대회 공식 수상 실적 및 주요 성과 (Awards & Honors)', 'Official Awards & Tournament Honors')}</span>
-                    <span className="awards-count-pill">{item.awards.length}</span>
-                  </h4>
-                  <div className="history-awards-grid">
+                  <div className="history-awards-header">
+                    <div className="history-awards-title-wrap">
+                      <h4 className="history-col-title">
+                        <i className="fas fa-trophy" style={{ color: '#d97706' }}></i>
+                        <span>{t('대회 공식 수상 실적 및 주요 성과 (Awards & Honors)', 'Official Awards & Tournament Honors')}</span>
+                        <span className="awards-count-pill">{item.awards.length}</span>
+                      </h4>
+                    </div>
+                    {item.totalPrizeKo && (
+                      <div className="awards-total-prize-pill" title="공식 대회 누적 상금">
+                        <i className="fas fa-coins"></i>
+                        <span>{lang === 'en' ? item.totalPrizeEn : item.totalPrizeKo}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Vertical Chronological Awards List */}
+                  <div className="history-awards-vertical-list">
                     {item.awards.map((award, aIdx) => {
-                      const isChampion = award.ko.includes('우승') && !award.ko.includes('준우승');
+                      const isChampion = award.rankKo?.includes('우승') || (award.ko.includes('우승') && !award.ko.includes('준우승'));
+                      const isRunnerUp = award.rankKo?.includes('준우승') || award.ko.includes('준우승');
                       return (
-                        <div key={aIdx} className={`history-award-item ${isChampion ? 'champion' : ''}`}>
-                          <div className="award-icon-box">
-                            <i className={isChampion ? 'fas fa-trophy trophy-gold' : 'fas fa-medal medal-silver'}></i>
+                        <div
+                          key={aIdx}
+                          className={`history-award-row ${isChampion ? 'champion' : isRunnerUp ? 'runner-up' : 'qualifier'}`}
+                        >
+                          <div className="award-time-cell">
+                            <span className="award-date-pill">
+                              <i className="far fa-calendar-alt"></i>
+                              <span>{award.date}</span>
+                            </span>
                           </div>
-                          <div className="award-text-group">
-                            <div className="award-title-row">
+
+                          <div className="award-icon-cell">
+                            <div className="award-icon-box">
+                              <i className={isChampion ? 'fas fa-trophy trophy-gold' : isRunnerUp ? 'fas fa-medal medal-silver' : 'fas fa-shield-halved ribbon-blue'}></i>
+                            </div>
+                          </div>
+
+                          <div className="award-main-cell">
+                            <div className="award-title-line">
                               <strong className="award-title">{lang === 'en' ? award.en : award.ko}</strong>
-                              <span className="award-date-pill">{award.date}</span>
+                              {award.team && (
+                                <span className="award-team-tag">{award.team}</span>
+                              )}
                             </div>
                             <span className="award-issuer-text">{award.issuer}</span>
+                          </div>
+
+                          <div className="award-meta-cell">
+                            {award.prizeKo && (
+                              <span className="award-prize-pill" title={lang === 'en' ? 'Tournament Prize' : '대회 획득 상금'}>
+                                <i className="fas fa-won-sign"></i>
+                                <span>{lang === 'en' ? award.prizeEn : award.prizeKo}</span>
+                              </span>
+                            )}
+                            <span className={`award-rank-pill ${isChampion ? 'rank-gold' : isRunnerUp ? 'rank-silver' : 'rank-bronze'}`}>
+                              {lang === 'en'
+                                ? (award.rankEn || (isChampion ? 'Champion' : isRunnerUp ? 'Runner-up' : 'Top 16'))
+                                : (award.rankKo || (isChampion ? '우승 (1등)' : isRunnerUp ? '준우승 (2등)' : '16강'))}
+                            </span>
                           </div>
                         </div>
                       );
@@ -204,9 +261,9 @@ export default function HistorySection({ onNavigateToProject }) {
                       href={wLink.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="history-external-link wiki-link"
+                      className={`history-external-link wiki-link ${wLink.isProfile ? 'profile-link' : ''}`}
                     >
-                      <i className="fas fa-globe"></i>
+                      <i className={wLink.isProfile ? 'fas fa-user-tie' : 'fas fa-globe'}></i>
                       <span>{lang === 'en' ? wLink.labelEn : wLink.labelKo}</span>
                       <i className="fas fa-arrow-up-right-from-square" style={{ fontSize: '10px' }}></i>
                     </a>

@@ -2554,6 +2554,58 @@
     transform: translateY(-1px);
 }
 
+.history-role-badge.has-link {
+    text-decoration: none;
+    color: var(--color-ink);
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.history-role-badge.has-link:hover {
+    background: #e0e7ff;
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 82, 255, 0.12);
+}
+
+.role-profile-tag {
+    background: var(--color-primary);
+    color: #ffffff;
+    font-size: 10.5px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 9999px;
+    margin-left: 4px;
+}
+
+.history-header-link-pill.profile-pill {
+    background: #fdf4ff;
+    border-color: #f0abfc;
+    color: #a21caf;
+}
+
+.history-header-link-pill.profile-pill:hover {
+    background: #fae8ff;
+    border-color: #c026d3;
+    color: #86198f;
+}
+
+.history-external-link.wiki-link.profile-link {
+    background: #fdf4ff;
+    border-color: #f0abfc;
+    color: #a21caf;
+}
+
+.history-external-link.wiki-link.profile-link:hover {
+    background: #fae8ff;
+    border-color: #c026d3;
+    color: #86198f;
+}
+
 .history-external-link.wiki-link {
     background: #f1f5f9;
     border: 1px solid #cbd5e1;
@@ -3887,12 +3939,26 @@
 }
 
 /* --------------------------------------------------------------------------
-   Awards & Achievements in History Section
+   Awards & Achievements in History Section (Chronological Vertical List)
    -------------------------------------------------------------------------- */
 .history-awards-block {
     margin-top: 24px;
     padding-top: 20px;
     border-top: 1px dashed #cbd5e1;
+}
+
+.history-awards-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.history-awards-title-wrap {
+    display: flex;
+    align-items: center;
 }
 
 .awards-count-pill {
@@ -3906,34 +3972,89 @@
     margin-left: 8px;
 }
 
-.history-awards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 12px;
-    margin-top: 14px;
+.awards-total-prize-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fef3c7;
+    border: 1px solid #fde68a;
+    color: #92400e;
+    font-size: 12.5px;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    padding: 4px 12px;
+    border-radius: var(--rounded-pill);
+    box-shadow: 0 1px 3px rgba(217, 119, 6, 0.1);
 }
 
-.history-award-item {
+.awards-total-prize-pill i {
+    color: #d97706;
+}
+
+.history-awards-vertical-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.history-award-row {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: var(--rounded-md);
     padding: 12px 16px;
     transition: all 0.2s ease;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-.history-award-item:hover {
+.history-award-row:hover {
     border-color: #f59e0b;
-    background: #fffdf8;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 14px rgba(245, 158, 11, 0.12);
+    background: #fffdfa;
+    transform: translateX(3px);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
 }
 
-.history-award-item.champion {
-    border-color: rgba(245, 158, 11, 0.45);
+.history-award-row.champion {
+    border-left: 4px solid #f59e0b;
     background: #fffefb;
+}
+
+.history-award-row.runner-up {
+    border-left: 4px solid #94a3b8;
+    background: #ffffff;
+}
+
+.history-award-row.qualifier {
+    border-left: 4px solid #3b82f6;
+    background: #fcfdfe;
+}
+
+.award-time-cell {
+    flex-shrink: 0;
+    min-width: 82px;
+}
+
+.award-date-pill {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: #475569;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+}
+
+.award-icon-cell {
+    flex-shrink: 0;
 }
 
 .award-icon-box {
@@ -3944,7 +4065,13 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+}
+
+.history-award-row.champion .award-icon-box {
     background: #fef3c7;
+    border-color: #fde68a;
 }
 
 .trophy-gold {
@@ -3957,7 +4084,12 @@
     font-size: 15px;
 }
 
-.award-text-group {
+.ribbon-blue {
+    color: #2563eb;
+    font-size: 15px;
+}
+
+.award-main-cell {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -3965,10 +4097,10 @@
     min-width: 0;
 }
 
-.award-title-row {
+.award-title-line {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    flex-wrap: wrap;
     gap: 8px;
 }
 
@@ -3979,15 +4111,16 @@
     line-height: 1.4;
 }
 
-.award-date-pill {
-    font-family: var(--font-mono);
+.award-team-tag {
     font-size: 11px;
-    font-weight: 700;
-    color: #b45309;
-    background: #fef3c7;
+    font-family: var(--font-mono);
+    color: #0369a1;
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
     padding: 1px 6px;
     border-radius: 4px;
-    flex-shrink: 0;
+    font-weight: 600;
+    white-space: nowrap;
 }
 
 .award-issuer-text {
@@ -3995,8 +4128,63 @@
     color: var(--color-muted);
 }
 
+.award-meta-cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.award-prize-pill {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #92400e;
+    background: #fef3c7;
+    border: 1px solid #fde68a;
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+}
+
+.award-rank-pill {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.award-rank-pill.rank-gold {
+    background: #fef3c7;
+    color: #b45309;
+    border: 1px solid #fde68a;
+}
+
+.award-rank-pill.rank-silver {
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+}
+
+.award-rank-pill.rank-bronze {
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+}
+
 @media (max-width: 768px) {
-    .history-awards-grid {
-        grid-template-columns: 1fr;
+    .history-award-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 12px;
+    }
+    .award-meta-cell {
+        align-self: flex-start;
+        flex-wrap: wrap;
     }
 }

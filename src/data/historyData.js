@@ -8,8 +8,15 @@ export const HISTORY_DATA = {
       period: '2021.05 – 2022.09 (1년 4개월)',
       roleKo: 'e스포츠 리그 오브 레전드 코치 (Coach)',
       roleEn: 'eSports League of Legends Coach',
+      profileUrl: 'https://lol.fandom.com/wiki/On2',
       type: 'Career / Coaching',
       wikiLinks: [
+        {
+          labelKo: 'On2 코치 위키 프로필',
+          labelEn: 'Coach On2 Wiki Profile',
+          url: 'https://lol.fandom.com/wiki/On2',
+          isProfile: true
+        },
         {
           labelKo: 'Shadow Battlica Wiki',
           labelEn: 'Shadow Battlica Wiki',
@@ -22,9 +29,9 @@ export const HISTORY_DATA = {
         }
       ],
       dutiesKo: [
-        '선수 간 인게임·외적 커뮤니케이션 흐름 및 발화 빈도·응답 속도 분석을 통한 의사결정 효율화 및 팀 전술 최적화',
+        '선수 간 인게임·외적 커뮤니케이션 빈도·응답 분석을 통한 의사결정 효율화 및 팀 전술 최적화',
         '인게임 경기 데이터 분석을 기반으로 선수별 선호 챔피언(밴·픽) 및 플레이스타일 맞춤형 전략(교전 지향형, 운영 지향형 등) 수립',
-        '시즌별 메타 변화 분석과 상위권 프로팀 트렌드 모니터링, 라인전 세부 지표 분석 및 선수별 1:1 맞춤형 피드백 제공',
+        '시즌별 메타 변화 분석과 프로팀 모니터링, 선수별 1:1 맞춤형 피드백 제공',
         '스크림(연습경기) 일정 관리, 개인별 훈련 계획 수립 및 장기 리그 집중력 유지를 위한 멘탈 케어 프로그램 운영'
       ],
       dutiesEn: [
@@ -33,48 +40,85 @@ export const HISTORY_DATA = {
         'Monitored top-tier professional meta trends and delivered data-backed 1-on-1 feedback on lane phase micro-mechanics',
         'Managed scrim schedules, individualized training routines, and structured mental resilience coaching programs'
       ],
+      totalPrizeKo: '총 획득 상금 1,000만 원 (10,000,000 KRW)',
+      totalPrizeEn: 'Total Prize: 10,000,000 KRW',
       awards: [
         {
           date: '2021.10',
           ko: 'LCK Academy Series 8회차 오픈토너먼트 우승',
           en: 'LCK Academy Series Open Tournament #8 — 1st Place (Champion)',
+          rankKo: '우승 (1등)',
+          rankEn: '1st Place',
+          prizeKo: '상금 200만 원',
+          prizeEn: '₩2,000,000',
+          team: 'Shadow Battlica',
           issuer: 'LCK 법인, 한국e스포츠협회'
         },
         {
           date: '2021.10',
           ko: 'LCK Academy Series 챔피언십 준우승',
           en: 'LCK Academy Series Championship — 2nd Place (Runner-up)',
-          issuer: 'LCK 법인, 한국e스포츠협회'
-        },
-        {
-          date: '2022.02',
-          ko: 'LCK Academy Series 2회차 오픈토너먼트 준우승',
-          en: 'LCK Academy Series Open Tournament #2 — 2nd Place (Runner-up)',
-          issuer: 'LCK 법인, 한국e스포츠협회'
-        },
-        {
-          date: '2022.03',
-          ko: 'LCK Academy Series 3회차 오픈토너먼트 우승',
-          en: 'LCK Academy Series Open Tournament #3 — 1st Place (Champion)',
-          issuer: 'LCK 법인, 한국e스포츠협회'
-        },
-        {
-          date: '2022.08',
-          ko: 'LCK Academy Series 5회차 오픈토너먼트 준우승',
-          en: 'LCK Academy Series Open Tournament #5 — 2nd Place (Runner-up)',
-          issuer: 'LCK 법인, 한국e스포츠협회'
-        },
-        {
-          date: '2022.09',
-          ko: 'LCK Academy Series 6회차 오픈토너먼트 준우승',
-          en: 'LCK Academy Series Open Tournament #6 — 2nd Place (Runner-up)',
+          rankKo: '준우승 (2등)',
+          rankEn: '2nd Place',
+          prizeKo: '상금 300만 원',
+          prizeEn: '₩3,000,000',
+          team: 'Shadow Battlica',
           issuer: 'LCK 법인, 한국e스포츠협회'
         },
         {
           date: '2021.12',
           ko: 'KeSPA 컵 16강 진출 (신속한 전술 적응 및 단기 팀 조직력 입증)',
           en: 'KeSPA Cup Round of 16 (Rapid Tactical Adaptation & Team Synergy)',
+          rankKo: '16강 진출',
+          rankEn: 'Round of 16',
+          prizeKo: null,
+          prizeEn: null,
+          team: 'Shadow Battlica',
           issuer: '한국e스포츠협회'
+        },
+        {
+          date: '2022.02',
+          ko: 'LCK Academy Series 2회차 오픈토너먼트 준우승',
+          en: 'LCK Academy Series Open Tournament #2 — 2nd Place (Runner-up)',
+          rankKo: '준우승 (2등)',
+          rankEn: '2nd Place',
+          prizeKo: '상금 100만 원',
+          prizeEn: '₩1,000,000',
+          team: 'Shadow Deeplol',
+          issuer: 'LCK 법인, 한국e스포츠협회'
+        },
+        {
+          date: '2022.03',
+          ko: 'LCK Academy Series 3회차 오픈토너먼트 우승',
+          en: 'LCK Academy Series Open Tournament #3 — 1st Place (Champion)',
+          rankKo: '우승 (1등)',
+          rankEn: '1st Place',
+          prizeKo: '상금 200만 원',
+          prizeEn: '₩2,000,000',
+          team: 'Shadow Battlica',
+          issuer: 'LCK 법인, 한국e스포츠협회'
+        },
+        {
+          date: '2022.08',
+          ko: 'LCK Academy Series 5회차 오픈토너먼트 준우승',
+          en: 'LCK Academy Series Open Tournament #5 — 2nd Place (Runner-up)',
+          rankKo: '준우승 (2등)',
+          rankEn: '2nd Place',
+          prizeKo: '상금 100만 원',
+          prizeEn: '₩1,000,000',
+          team: 'Shadow Battlica',
+          issuer: 'LCK 법인, 한국e스포츠협회'
+        },
+        {
+          date: '2022.09',
+          ko: 'LCK Academy Series 6회차 오픈토너먼트 준우승',
+          en: 'LCK Academy Series Open Tournament #6 — 2nd Place (Runner-up)',
+          rankKo: '준우승 (2등)',
+          rankEn: '2nd Place',
+          prizeKo: '상금 100만 원',
+          prizeEn: '₩1,000,000',
+          team: 'Shadow Battlica',
+          issuer: 'LCK 법인, 한국e스포츠협회'
         }
       ]
     },
