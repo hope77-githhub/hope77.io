@@ -94,44 +94,9 @@ export default function HistorySection({ onNavigateToProject }) {
               <div className="history-card-top">
                 <div className="history-org-role">
                   <h3 className="history-org-name">{org}</h3>
-                  <div className="history-role-row">
-                    {item.profileUrl ? (
-                      <a
-                        href={item.profileUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="history-role-badge has-link"
-                        title={lang === 'en' ? 'Open Coach Profile on LoL Fandom Wiki' : 'e스포츠 리그오브레전드 코치 On2 프로필 (LoL Fandom)'}
-                      >
-                        <i className="fas fa-id-badge"></i>
-                        <span>{role}</span>
-                        <span className="role-profile-tag">On2</span>
-                        <i className="fas fa-arrow-up-right-from-square" style={{ fontSize: '10px' }}></i>
-                      </a>
-                    ) : (
-                      <div className="history-role-badge">
-                        <i className="fas fa-id-badge"></i>
-                        <span>{role}</span>
-                      </div>
-                    )}
-                    {item.wikiLinks && (
-                      <div className="history-header-links">
-                        {item.wikiLinks.map((wLink, wIdx) => (
-                          <a
-                            key={wIdx}
-                            href={wLink.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="history-header-link-pill"
-                            title={lang === 'en' ? wLink.labelEn : wLink.labelKo}
-                          >
-                            <i className={wLink.isProfile ? 'fas fa-user-tie' : 'fas fa-globe'}></i>
-                            <span>{lang === 'en' ? wLink.labelEn : wLink.labelKo}</span>
-                            <i className="fas fa-arrow-up-right-from-square" style={{ fontSize: '10px' }}></i>
-                          </a>
-                        ))}
-                      </div>
-                    )}
+                  <div className="history-role-badge">
+                    <i className="fas fa-id-badge"></i>
+                    <span>{role}</span>
                   </div>
                 </div>
                 <div className="history-period-pill">
@@ -210,8 +175,7 @@ export default function HistorySection({ onNavigateToProject }) {
 
                           <div className="award-meta-cell">
                             {award.prizeKo && (
-                              <span className="award-prize-pill" title={lang === 'en' ? 'Tournament Prize' : '대회 획득 상금'}>
-                                <i className="fas fa-won-sign"></i>
+                              <span className="award-prize-pill" title={lang === 'en' ? 'Price' : '상금'}>
                                 <span>{lang === 'en' ? award.prizeEn : award.prizeKo}</span>
                               </span>
                             )}

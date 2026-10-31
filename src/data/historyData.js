@@ -40,8 +40,8 @@ export const HISTORY_DATA = {
         'Monitored top-tier professional meta trends and delivered data-backed 1-on-1 feedback on lane phase micro-mechanics',
         'Managed scrim schedules, individualized training routines, and structured mental resilience coaching programs'
       ],
-      totalPrizeKo: '총 획득 상금 1,000만 원 (10,000,000 KRW)',
-      totalPrizeEn: 'Total Prize: 10,000,000 KRW',
+      totalPrizeKo: 'Total Price: 1,000만 원',
+      totalPrizeEn: 'Total Price: 10,000,000 KRW',
       awards: [
         {
           date: '2021.10',
@@ -49,8 +49,8 @@ export const HISTORY_DATA = {
           en: 'LCK Academy Series Open Tournament #8 — 1st Place (Champion)',
           rankKo: '우승 (1등)',
           rankEn: '1st Place',
-          prizeKo: '상금 200만 원',
-          prizeEn: '₩2,000,000',
+          prizeKo: 'Price: 200만 원',
+          prizeEn: 'Price: ₩2,000,000',
           team: 'Shadow Battlica',
           issuer: 'LCK 법인, 한국e스포츠협회'
         },
@@ -60,8 +60,8 @@ export const HISTORY_DATA = {
           en: 'LCK Academy Series Championship — 2nd Place (Runner-up)',
           rankKo: '준우승 (2등)',
           rankEn: '2nd Place',
-          prizeKo: '상금 300만 원',
-          prizeEn: '₩3,000,000',
+          prizeKo: 'Price: 300만 원',
+          prizeEn: 'Price: ₩3,000,000',
           team: 'Shadow Battlica',
           issuer: 'LCK 법인, 한국e스포츠협회'
         },
@@ -82,8 +82,8 @@ export const HISTORY_DATA = {
           en: 'LCK Academy Series Open Tournament #2 — 2nd Place (Runner-up)',
           rankKo: '준우승 (2등)',
           rankEn: '2nd Place',
-          prizeKo: '상금 100만 원',
-          prizeEn: '₩1,000,000',
+          prizeKo: 'Price: 100만 원',
+          prizeEn: 'Price: ₩1,000,000',
           team: 'Shadow Deeplol',
           issuer: 'LCK 법인, 한국e스포츠협회'
         },
@@ -93,8 +93,8 @@ export const HISTORY_DATA = {
           en: 'LCK Academy Series Open Tournament #3 — 1st Place (Champion)',
           rankKo: '우승 (1등)',
           rankEn: '1st Place',
-          prizeKo: '상금 200만 원',
-          prizeEn: '₩2,000,000',
+          prizeKo: 'Price: 200만 원',
+          prizeEn: 'Price: ₩2,000,000',
           team: 'Shadow Battlica',
           issuer: 'LCK 법인, 한국e스포츠협회'
         },
@@ -104,8 +104,8 @@ export const HISTORY_DATA = {
           en: 'LCK Academy Series Open Tournament #5 — 2nd Place (Runner-up)',
           rankKo: '준우승 (2등)',
           rankEn: '2nd Place',
-          prizeKo: '상금 100만 원',
-          prizeEn: '₩1,000,000',
+          prizeKo: 'Price: 100만 원',
+          prizeEn: 'Price: ₩1,000,000',
           team: 'Shadow Battlica',
           issuer: 'LCK 법인, 한국e스포츠협회'
         },
@@ -115,8 +115,8 @@ export const HISTORY_DATA = {
           en: 'LCK Academy Series Open Tournament #6 — 2nd Place (Runner-up)',
           rankKo: '준우승 (2등)',
           rankEn: '2nd Place',
-          prizeKo: '상금 100만 원',
-          prizeEn: '₩1,000,000',
+          prizeKo: 'Price: 100만 원',
+          prizeEn: 'Price: ₩1,000,000',
           team: 'Shadow Battlica',
           issuer: 'LCK 법인, 한국e스포츠협회'
         }
