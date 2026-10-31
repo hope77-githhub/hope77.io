@@ -138,13 +138,13 @@ export default function HistorySection({ onNavigateToProject }) {
                     className="history-awards-trigger"
                     onClick={() => toggleAwards(item.id)}
                     aria-expanded={isAwardsExpanded}
-                    title={isAwardsExpanded ? t('수상 실적 접기', 'Collapse awards') : t('수상 실적 펼치기', 'Expand awards')}
+                    title={isAwardsExpanded ? t('수상 이력 접기', 'Collapse awards history') : t('수상 이력 펼치기', 'Expand awards history')}
                   >
                     <div className="history-awards-title-wrap">
                       <div className="awards-trigger-heading">
                         <i className="fas fa-trophy trophy-header-icon"></i>
                         <span className="awards-trigger-title-text">
-                          {t('대회 공식 수상 실적 및 주요 성과 (Awards & Honors)', 'Official Awards & Tournament Honors')}
+                          {t('대회 수상 이력', 'Tournament Awards History')}
                         </span>
                         <span className="awards-count-pill">{item.awards.length}</span>
                       </div>
@@ -208,9 +208,12 @@ export default function HistorySection({ onNavigateToProject }) {
                                   </span>
                                 )}
                                 <span className={`award-rank-pill ${isChampion ? 'rank-gold' : isRunnerUp ? 'rank-silver' : 'rank-bronze'}`}>
-                                  {lang === 'en'
-                                    ? (award.rankEn || (isChampion ? 'Champion' : isRunnerUp ? 'Runner-up' : 'Top 16'))
-                                    : (award.rankKo || (isChampion ? '우승 (1등)' : isRunnerUp ? '준우승 (2등)' : '16강'))}
+                                  <i className={isChampion ? 'fas fa-trophy' : isRunnerUp ? 'fas fa-medal' : 'fas fa-shield-halved'} style={{ fontSize: '10px' }}></i>
+                                  <span>
+                                    {lang === 'en'
+                                      ? (award.rankEn || (isChampion ? 'Champion' : isRunnerUp ? 'Runner-up' : 'Top 16'))
+                                      : (award.rankKo || (isChampion ? '우승 (1등)' : isRunnerUp ? '준우승 (2등)' : '16강'))}
+                                  </span>
                                 </span>
                               </div>
                             </div>
