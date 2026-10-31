@@ -4295,7 +4295,11 @@
     box-shadow: 0 1px 3px rgba(245, 158, 11, 0.12);
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 5px;
+}
+
+.award-rank-pill.rank-gold i {
+    color: #d97706;
 }
 
 .award-rank-pill.rank-silver {
@@ -4305,7 +4309,11 @@
     box-shadow: 0 1px 3px rgba(100, 116, 139, 0.1);
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 5px;
+}
+
+.award-rank-pill.rank-silver i {
+    color: #475569;
 }
 
 .award-rank-pill.rank-bronze {
@@ -4315,7 +4323,11 @@
     box-shadow: 0 1px 3px rgba(37, 99, 235, 0.1);
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 5px;
+}
+
+.award-rank-pill.rank-bronze i {
+    color: #2563eb;
 }
 
 @media (max-width: 768px) {

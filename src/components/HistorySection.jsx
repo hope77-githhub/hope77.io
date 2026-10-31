@@ -171,8 +171,8 @@ export default function HistorySection({ onNavigateToProject }) {
                     <div className="history-awards-dropdown-body">
                       <div className="history-awards-vertical-list">
                         {item.awards.map((award, aIdx) => {
-                          const isChampion = award.rankKo?.includes('우승') || (award.ko.includes('우승') && !award.ko.includes('준우승'));
-                          const isRunnerUp = award.rankKo?.includes('준우승') || award.ko.includes('준우승');
+                          const isRunnerUp = award.rankKo ? award.rankKo.includes('준우승') : award.ko.includes('준우승');
+                          const isChampion = !isRunnerUp && (award.rankKo ? award.rankKo.includes('우승') : award.ko.includes('우승'));
                           return (
                             <div
                               key={aIdx}
