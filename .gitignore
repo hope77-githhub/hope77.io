@@ -8,6 +8,8 @@ dist/
 # Local backup directories & raw assets
 backup-*/
 *.jpg
+*.doc
+*.docx
 
 # Local env files
 .env

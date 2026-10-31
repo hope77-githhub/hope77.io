@@ -46,7 +46,7 @@ export default function HeroSection({ onOpenTerminal, onNavigateToProjects, onNa
     }
   ];
 
-  // Engineering Core Philosophy Bullets (3~5 bullets as requested in Section 3.4 of edit.MD)
+  // Engineering Core Philosophy Bullets (Section 3.4 of edit.MD)
   const philosophies = [
     {
       principleKo: "본질적 질문에서 시작",
@@ -74,6 +74,46 @@ export default function HeroSection({ onOpenTerminal, onNavigateToProjects, onNa
     }
   ];
 
+  // Verified Professional Certifications & Qualifications (국가공인 자격 및 전문성 검증)
+  const certifications = [
+    {
+      nameKo: '정보처리기사',
+      nameEn: 'Engineer Information Processing',
+      date: '2026.12',
+      issuerKo: '한국산업인력공단 (Q-Net)',
+      issuerEn: 'Human Resources Development Service of Korea',
+      category: '국가기술자격',
+      icon: 'fas fa-laptop-code'
+    },
+    {
+      nameKo: '빅데이터분석기사',
+      nameEn: 'Engineer Big Data Analytics',
+      date: '2025.07',
+      issuerKo: '한국데이터산업진흥원 (K-DATA)',
+      issuerEn: 'Korea Data Agency',
+      category: '국가기술자격',
+      icon: 'fas fa-chart-line'
+    },
+    {
+      nameKo: 'ADsP (데이터분석 준전문가)',
+      nameEn: 'Advanced Data Analytics Semi-Professional',
+      date: '2025.06',
+      issuerKo: '한국데이터산업진흥원 (K-DATA)',
+      issuerEn: 'Korea Data Agency',
+      category: '국가공인 민간자격',
+      icon: 'fas fa-database'
+    },
+    {
+      nameKo: 'SQLD (SQL 개발자)',
+      nameEn: 'SQL Developer',
+      date: '2025.04',
+      issuerKo: '한국데이터산업진흥원 (K-DATA)',
+      issuerEn: 'Korea Data Agency',
+      category: '국가공인 민간자격',
+      icon: 'fas fa-server'
+    }
+  ];
+
   return (
     <div className="band-hero-light">
       <div className="band-inner">
@@ -88,7 +128,7 @@ export default function HeroSection({ onOpenTerminal, onNavigateToProjects, onNa
               </div>
               <div className="hero-header-title">
                 <i className="fas fa-terminal"></i>
-                <span>identity.hope77.init()</span>
+                <span className="hero-header-file">system_status.log</span>
                 <span className="hero-header-tag">PRODUCTION</span>
               </div>
             </div>
@@ -134,7 +174,7 @@ export default function HeroSection({ onOpenTerminal, onNavigateToProjects, onNa
                   )}
                 </p>
 
-                {/* Contact & Links Bar (아카이브 문서는 하이퍼링크 없이 정보 텍스트 배지로 표현) */}
+                {/* Contact & Links Bar */}
                 <div className="hero-contact-row">
                   <span className="contact-item">
                     <i className="fas fa-envelope"></i>
@@ -177,9 +217,9 @@ export default function HeroSection({ onOpenTerminal, onNavigateToProjects, onNa
               </div>
             </div>
 
-            {/* 3. Two-Column Compact Grid: Tech Stack & Philosophy (Section 2 & 3 of edit.MD) */}
+            {/* 3. Two-Column Compact Grid: Tech Stack & Philosophy */}
             <div className="hero-compact-grid">
-              {/* Column 1: Compressed Tech Stack (기술스택 문구 바로 밑에 소단락 문구 배치) */}
+              {/* Column 1: Compressed Tech Stack */}
               <div className="compact-card tech-stack-compact">
                 <div className="compact-card-header">
                   <div className="compact-header-left">
@@ -205,7 +245,7 @@ export default function HeroSection({ onOpenTerminal, onNavigateToProjects, onNa
                 </div>
               </div>
 
-              {/* Column 2: Engineering Profile & Philosophy (프로필 & 핵심 가치) */}
+              {/* Column 2: Engineering Profile & Philosophy */}
               <div className="compact-card profile-compact">
                 <div className="compact-card-header">
                   <div className="compact-header-left">
@@ -215,7 +255,6 @@ export default function HeroSection({ onOpenTerminal, onNavigateToProjects, onNa
                   <span className="compact-count-badge">Principles</span>
                 </div>
 
-                {/* Short Profile Statement (2~4 sentences) */}
                 <div className="compact-profile-summary">
                   <p className="profile-summary-text">
                     {t(
@@ -225,7 +264,6 @@ export default function HeroSection({ onOpenTerminal, onNavigateToProjects, onNa
                   </p>
                 </div>
 
-                {/* 4 Core Philosophy Bullets */}
                 <div className="compact-philosophy-list">
                   {philosophies.map((item, idx) => (
                     <div key={idx} className="compact-philosophy-item">
@@ -237,6 +275,41 @@ export default function HeroSection({ onOpenTerminal, onNavigateToProjects, onNa
                         <p className="philosophy-desc">
                           {lang === 'en' ? item.descEn : item.descKo}
                         </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* 4. Professional Certifications & Qualifications Bar */}
+            <div className="hero-credentials-wrapper">
+              <div className="compact-card credentials-compact-card">
+                <div className="compact-card-header">
+                  <div className="compact-header-left">
+                    <i className="fas fa-certificate"></i>
+                    <h3>{t('공인 자격증 및 전문성 검증 (Certifications & Qualifications)', 'Professional Certifications')}</h3>
+                  </div>
+                  <span className="compact-count-badge">4 Certified</span>
+                </div>
+                <div className="credentials-grid-row">
+                  {certifications.map((cert, cIdx) => (
+                    <div key={cIdx} className="credential-pill-card">
+                      <div className="cert-icon-box">
+                        <i className={cert.icon}></i>
+                      </div>
+                      <div className="cert-details">
+                        <div className="cert-title-line">
+                          <strong className="cert-title-name">
+                            {lang === 'en' ? cert.nameEn : cert.nameKo}
+                          </strong>
+                          <span className="cert-date-chip">{cert.date}</span>
+                        </div>
+                        <div className="cert-sub-line">
+                          <span className="cert-issuer-badge">
+                            {lang === 'en' ? cert.issuerEn : cert.issuerKo}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   ))}

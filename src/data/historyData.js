@@ -1,35 +1,85 @@
 export const HISTORY_DATA = {
   career: [
     {
-      id: 'career-tbd-1',
-      isTbd: true,
-      orgKo: '경력 이력 (추후 추가 예정)',
-      orgEn: 'Career Experience (To Be Determined)',
-      period: 'TBD',
-      roleKo: '추후 업데이트 예정',
-      roleEn: 'Upcoming',
-      type: 'Career',
+      id: 'career-coach-shadow',
+      isTbd: false,
+      orgKo: '쉐도우 코퍼레이션 (Shadow Corporation)',
+      orgEn: 'Shadow Corporation',
+      period: '2021.05 – 2022.09 (1년 4개월)',
+      roleKo: 'e스포츠 리그 오브 레전드 코치 (Coach)',
+      roleEn: 'eSports League of Legends Coach',
+      type: 'Career / Coaching',
       dutiesKo: [
-        '새로운 실무 경력 및 프로젝트 이력이 추가될 예정입니다.'
+        '선수 간 인게임·외적 커뮤니케이션 흐름 및 발화 빈도·응답 속도 분석을 통한 의사결정 효율화 및 팀 전술 최적화',
+        '인게임 경기 데이터 분석을 기반으로 선수별 선호 챔피언(밴·픽) 및 플레이스타일 맞춤형 전략(교전 지향형, 운영 지향형 등) 수립',
+        '시즌별 메타 변화 분석과 상위권 프로팀 트렌드 모니터링, 라인전 세부 지표 분석 및 선수별 1:1 맞춤형 피드백 제공',
+        '스크림(연습경기) 일정 관리, 개인별 훈련 계획 수립 및 장기 리그 집중력 유지를 위한 멘탈 케어 프로그램 운영'
       ],
       dutiesEn: [
-        'Upcoming professional career experience to be updated.'
+        'Analyzed in-game team communication patterns, speech frequency, and response times to optimize tactical decision-making',
+        'Engineered custom draft (ban/pick) and strategic playbooks based on player preference telemetry and team synergies',
+        'Monitored top-tier professional meta trends and delivered data-backed 1-on-1 feedback on lane phase micro-mechanics',
+        'Managed scrim schedules, individualized training routines, and structured mental resilience coaching programs'
+      ],
+      awards: [
+        {
+          date: '2021.10',
+          ko: 'LCK Academy Series 8회차 오픈토너먼트 우승',
+          en: 'LCK Academy Series Open Tournament #8 — 1st Place (Champion)',
+          issuer: 'LCK 법인, 한국e스포츠협회'
+        },
+        {
+          date: '2021.10',
+          ko: 'LCK Academy Series 챔피언십 준우승',
+          en: 'LCK Academy Series Championship — 2nd Place (Runner-up)',
+          issuer: 'LCK 법인, 한국e스포츠협회'
+        },
+        {
+          date: '2022.02',
+          ko: 'LCK Academy Series 2회차 오픈토너먼트 준우승',
+          en: 'LCK Academy Series Open Tournament #2 — 2nd Place (Runner-up)',
+          issuer: 'LCK 법인, 한국e스포츠협회'
+        },
+        {
+          date: '2022.03',
+          ko: 'LCK Academy Series 3회차 오픈토너먼트 우승',
+          en: 'LCK Academy Series Open Tournament #3 — 1st Place (Champion)',
+          issuer: 'LCK 법인, 한국e스포츠협회'
+        },
+        {
+          date: '2022.08',
+          ko: 'LCK Academy Series 5회차 오픈토너먼트 준우승',
+          en: 'LCK Academy Series Open Tournament #5 — 2nd Place (Runner-up)',
+          issuer: 'LCK 법인, 한국e스포츠협회'
+        },
+        {
+          date: '2022.09',
+          ko: 'LCK Academy Series 6회차 오픈토너먼트 준우승',
+          en: 'LCK Academy Series Open Tournament #6 — 2nd Place (Runner-up)',
+          issuer: 'LCK 법인, 한국e스포츠협회'
+        },
+        {
+          date: '2021.12',
+          ko: 'KeSPA 컵 16강 진출 (신속한 전술 적응 및 단기 팀 조직력 입증)',
+          en: 'KeSPA Cup Round of 16 (Rapid Tactical Adaptation & Team Synergy)',
+          issuer: '한국e스포츠협회'
+        }
       ]
     },
     {
-      id: 'career-tbd-2',
+      id: 'career-tbd-1',
       isTbd: true,
-      orgKo: '경력 이력 (추후 추가 예정)',
-      orgEn: 'Career Experience (To Be Determined)',
-      period: 'TBD',
-      roleKo: '추후 업데이트 예정',
-      roleEn: 'Upcoming',
+      orgKo: '차기 실무 경력 이력 (추후 추가 예정)',
+      orgEn: 'Professional Experience (To Be Determined)',
+      period: 'Upcoming',
+      roleKo: '소프트웨어 엔지니어링 / 데이터 파이프라인',
+      roleEn: 'Software Engineering / Data Pipelines',
       type: 'Career',
       dutiesKo: [
-        '새로운 실무 경력 및 프로젝트 이력이 추가될 예정입니다.'
+        '새로운 실무 경력 및 산업 프로젝트 이력이 추가될 예정입니다.'
       ],
       dutiesEn: [
-        'Upcoming professional career experience to be updated.'
+        'Upcoming professional industry career experience to be updated.'
       ]
     }
   ],

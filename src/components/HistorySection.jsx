@@ -22,8 +22,8 @@ export default function HistorySection({ onNavigateToProject }) {
         </div>
         <p className="section-sub-desc">
           {t(
-            '실제 현장의 수작업 병목을 시스템으로 해결한 실무 경험과 학술 논문 등재로 검증된 데이터 분석 연구 이력입니다.',
-            'Structured professional experience eliminating operational bottlenecks and empirical research verified by academic publication.'
+            '실제 현장의 수작업 병목을 시스템으로 해결한 실무 경험과 학술 논문 등재 및 공식 대회 성과로 검증된 이력입니다.',
+            'Structured professional experience, official tournament achievements, and empirical research verified by academic publication.'
           )}
         </p>
       </div>
@@ -105,7 +105,7 @@ export default function HistorySection({ onNavigateToProject }) {
                 </div>
               </div>
 
-              {/* Duties Only */}
+              {/* Duties */}
               <div className="history-duties-block">
                 <h4 className="history-col-title">
                   <i className="fas fa-list-check"></i>
@@ -120,6 +120,36 @@ export default function HistorySection({ onNavigateToProject }) {
                   ))}
                 </ul>
               </div>
+
+              {/* Awards / Achievements (대회 수상 실적) */}
+              {item.awards && item.awards.length > 0 && (
+                <div className="history-awards-block">
+                  <h4 className="history-col-title">
+                    <i className="fas fa-trophy" style={{ color: '#d97706' }}></i>
+                    <span>{t('대회 공식 수상 실적 및 주요 성과 (Awards & Honors)', 'Official Awards & Tournament Honors')}</span>
+                    <span className="awards-count-pill">{item.awards.length}</span>
+                  </h4>
+                  <div className="history-awards-grid">
+                    {item.awards.map((award, aIdx) => {
+                      const isChampion = award.ko.includes('우승') && !award.ko.includes('준우승');
+                      return (
+                        <div key={aIdx} className={`history-award-item ${isChampion ? 'champion' : ''}`}>
+                          <div className="award-icon-box">
+                            <i className={isChampion ? 'fas fa-trophy trophy-gold' : 'fas fa-medal medal-silver'}></i>
+                          </div>
+                          <div className="award-text-group">
+                            <div className="award-title-row">
+                              <strong className="award-title">{lang === 'en' ? award.en : award.ko}</strong>
+                              <span className="award-date-pill">{award.date}</span>
+                            </div>
+                            <span className="award-issuer-text">{award.issuer}</span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
 
               {/* Action Footer: Project link & GitHub */}
               <div className="history-card-footer">
