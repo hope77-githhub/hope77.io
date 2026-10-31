@@ -6,43 +6,31 @@ export default function HeroSection({ onOpenTerminal, onNavigateToProjects, onNa
   const { t, lang } = useLanguage();
   const visitorNum = getVisitorSequence();
 
-  // Compressed Tech Stack (Project-usage level expression as requested)
+  // Compressed Tech Stack (Technical Skills)
   const skills = [
     {
       name: 'Python',
-      tag: 'Pipeline & Automation',
-      scopeKo: 'API 데이터 수집 스크립트 작성 및 텍스트·시계열 데이터 전처리에 활용',
-      scopeEn: 'Used for API data collection scripts and text/time-series data preprocessing'
+      tag: 'Pipeline & Automation'
     },
     {
       name: 'React & Vite',
-      tag: 'Frontend UI',
-      scopeKo: '포트폴리오 대시보드 및 영상-로그 대조 뷰어 컴포넌트 화면 구현에 활용',
-      scopeEn: 'Used for portfolio dashboard and video-log interactive viewer UI components'
+      tag: 'Frontend UI'
     },
     {
       name: 'JavaScript / TypeScript',
-      tag: 'Client Engine',
-      scopeKo: '나이스 바이트 계산 알고리즘 및 SheetJS 기반 엑셀 파일 파싱 처리에 활용',
-      scopeEn: 'Used for byte calculation logic and SheetJS-based client Excel file parsing'
+      tag: 'Client Engine'
     },
     {
       name: 'Data & NLP (RoBERTa & SNA)',
-      tag: 'Analysis & Modeling',
-      scopeKo: 'RoBERTa 모델을 통한 텍스트 의도 분류 및 NetworkX 기반 네트워크 분석에 활용',
-      scopeEn: 'Used for RoBERTa text intent classification and NetworkX network graph analysis'
+      tag: 'Analysis & Modeling'
     },
     {
       name: 'QA & Test Automation',
-      tag: 'Test Tooling',
-      scopeKo: 'JSON 스키마 기반 로그 유효성 검사 및 영상-로그 동기화 파이프라인 구현에 활용',
-      scopeEn: 'Used for JSON schema validation and video-log sync testing workflows'
+      tag: 'Test Tooling'
     },
     {
       name: 'UDP & Telemetry Systems',
-      tag: 'Real-Time Data',
-      scopeKo: 'F1 게임 UDP 20777 포트 바이너리 패킷 수신 및 주행 데이터 인덱싱에 활용',
-      scopeEn: 'Used for receiving F1 game UDP telemetry packets and indexing driving metrics'
+      tag: 'Real-Time Data'
     }
   ];
 
@@ -231,15 +219,8 @@ export default function HeroSection({ onOpenTerminal, onNavigateToProjects, onNa
                 <div className="compact-skills-list">
                   {skills.map((skill, idx) => (
                     <div key={idx} className="compact-skill-item">
-                      <div className="skill-name-row">
-                        <strong className="skill-item-name">{skill.name}</strong>
-                      </div>
-                      <div className="skill-tag-row">
-                        <span className="skill-item-tag">{skill.tag}</span>
-                      </div>
-                      <p className="skill-item-scope">
-                        {lang === 'en' ? skill.scopeEn : skill.scopeKo}
-                      </p>
+                      <strong className="skill-item-name">{skill.name}</strong>
+                      <span className="skill-item-tag">{skill.tag}</span>
                     </div>
                   ))}
                 </div>
@@ -295,21 +276,27 @@ export default function HeroSection({ onOpenTerminal, onNavigateToProjects, onNa
                 <div className="credentials-grid-row">
                   {certifications.map((cert, cIdx) => (
                     <div key={cIdx} className="credential-pill-card">
-                      <div className="cert-icon-box">
-                        <i className={cert.icon}></i>
+                      <div className="cert-card-top">
+                        <div className="cert-icon-box">
+                          <i className={cert.icon}></i>
+                        </div>
+                        <span className="cert-category-chip">{cert.category}</span>
                       </div>
                       <div className="cert-details">
-                        <div className="cert-title-line">
-                          <strong className="cert-title-name">
-                            {lang === 'en' ? cert.nameEn : cert.nameKo}
-                          </strong>
-                          <span className="cert-date-chip">{cert.date}</span>
-                        </div>
-                        <div className="cert-sub-line">
-                          <span className="cert-issuer-badge">
-                            {lang === 'en' ? cert.issuerEn : cert.issuerKo}
+                        {/* 1. 자격증이름 */}
+                        <strong className="cert-title-name">
+                          {lang === 'en' ? cert.nameEn : cert.nameKo}
+                        </strong>
+                        {/* 2. 취득날짜 */}
+                        <div className="cert-date-row">
+                          <span className="cert-date-chip">
+                            <i className="far fa-calendar-check"></i> {cert.date}
                           </span>
                         </div>
+                        {/* 3. 발급기관 */}
+                        <span className="cert-issuer-badge">
+                          {lang === 'en' ? cert.issuerEn : cert.issuerKo}
+                        </span>
                       </div>
                     </div>
                   ))}

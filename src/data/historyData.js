@@ -9,6 +9,18 @@ export const HISTORY_DATA = {
       roleKo: 'e스포츠 리그 오브 레전드 코치 (Coach)',
       roleEn: 'eSports League of Legends Coach',
       type: 'Career / Coaching',
+      wikiLinks: [
+        {
+          labelKo: 'Shadow Battlica Wiki',
+          labelEn: 'Shadow Battlica Wiki',
+          url: 'https://lol.fandom.com/wiki/Shadow_Battlica'
+        },
+        {
+          labelKo: 'Shadow Deeplol Wiki',
+          labelEn: 'Shadow Deeplol Wiki',
+          url: 'https://lol.fandom.com/wiki/Shadow_Deeplol'
+        }
+      ],
       dutiesKo: [
         '선수 간 인게임·외적 커뮤니케이션 흐름 및 발화 빈도·응답 속도 분석을 통한 의사결정 효율화 및 팀 전술 최적화',
         '인게임 경기 데이터 분석을 기반으로 선수별 선호 챔피언(밴·픽) 및 플레이스타일 맞춤형 전략(교전 지향형, 운영 지향형 등) 수립',

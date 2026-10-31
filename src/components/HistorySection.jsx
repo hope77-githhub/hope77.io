@@ -94,9 +94,29 @@ export default function HistorySection({ onNavigateToProject }) {
               <div className="history-card-top">
                 <div className="history-org-role">
                   <h3 className="history-org-name">{org}</h3>
-                  <div className="history-role-badge">
-                    <i className="fas fa-id-badge"></i>
-                    <span>{role}</span>
+                  <div className="history-role-row">
+                    <div className="history-role-badge">
+                      <i className="fas fa-id-badge"></i>
+                      <span>{role}</span>
+                    </div>
+                    {item.wikiLinks && (
+                      <div className="history-header-links">
+                        {item.wikiLinks.map((wLink, wIdx) => (
+                          <a
+                            key={wIdx}
+                            href={wLink.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="history-header-link-pill"
+                            title={lang === 'en' ? wLink.labelEn : wLink.labelKo}
+                          >
+                            <i className="fas fa-globe"></i>
+                            <span>{lang === 'en' ? wLink.labelEn : wLink.labelKo}</span>
+                            <i className="fas fa-arrow-up-right-from-square" style={{ fontSize: '10px' }}></i>
+                          </a>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="history-period-pill">
@@ -151,7 +171,7 @@ export default function HistorySection({ onNavigateToProject }) {
                 </div>
               )}
 
-              {/* Action Footer: Project link & GitHub */}
+              {/* Action Footer: Project link & GitHub & Wiki links */}
               <div className="history-card-footer">
                 <div className="history-footer-left">
                   {item.repoUrl && (
@@ -166,6 +186,31 @@ export default function HistorySection({ onNavigateToProject }) {
                       <i className="fas fa-arrow-up-right-from-square" style={{ fontSize: '11px' }}></i>
                     </a>
                   )}
+                  {item.paperUrl && (
+                    <a
+                      href={item.paperUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="history-external-link paper-link"
+                    >
+                      <i className="fas fa-file-pdf"></i>
+                      <span>arXiv Paper</span>
+                      <i className="fas fa-arrow-up-right-from-square" style={{ fontSize: '11px' }}></i>
+                    </a>
+                  )}
+                  {item.wikiLinks && item.wikiLinks.map((wLink, wIdx) => (
+                    <a
+                      key={wIdx}
+                      href={wLink.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="history-external-link wiki-link"
+                    >
+                      <i className="fas fa-globe"></i>
+                      <span>{lang === 'en' ? wLink.labelEn : wLink.labelKo}</span>
+                      <i className="fas fa-arrow-up-right-from-square" style={{ fontSize: '10px' }}></i>
+                    </a>
+                  ))}
                 </div>
 
                 {item.relatedProjectId && (
