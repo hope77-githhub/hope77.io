@@ -104,7 +104,7 @@ export const PROJECT_LOGS_DATA = [
       service: "Automation-Test-Tool",
       domain: "Match Data Integrity Verification",
       core_modules: [
-        "Schema_As_Config_Validator",
+        "Schema_Referenced_Validator",
         "Cross_Field_Consistency_Rules",
         "Video_Timestamp_Sync",
         "Pitch_Visualizer_2D_3D",
@@ -115,17 +115,17 @@ export const PROJECT_LOGS_DATA = [
     incident: {
       problemKo: '경기 데이터가 올바르게 기록되었는지 보려면 수십 개 항목을 하나씩 열어 보고 합계와 내역을 직접 계산해야 했고, 명세가 바뀔 때마다 확인 목록을 새로 만들어야 했습니다.',
       problemEn: 'Verifying match data meant opening dozens of fields by hand, recalculating totals, and rebuilding checklists on every spec change.',
-      resolutionKo: '명세 파일 기반 형식 검사, 요약↔상세 · 관계 · 참가자 간 정합성 규칙, 영상 시간 동기화와 피치 시각화를 하나의 원클릭 흐름으로 묶었습니다.',
-      resolutionEn: 'Combined spec-driven format checks, summary/relation/cross-participant consistency rules, video time sync, and pitch visualization into one click.'
+      resolutionKo: '데이터 스키마를 참조한 형식 검사, 요약↔상세 · 관계 · 참가자 간 정합성 규칙, 영상 시간 동기화와 피치 시각화를 하나의 원클릭 흐름으로 묶었습니다.',
+      resolutionEn: 'Combined schema-referenced format checks, summary/relation/cross-participant consistency rules, video time sync, and pitch visualization into one click.'
     },
     detailsTitleKo: '주요 기능',
     detailsTitleEn: 'Core Features',
     details: [
       {
-        titleKo: '명세 파일 기반 검증',
-        titleEn: 'Schema-as-Config Validation',
-        descKo: '데이터 항목 · 타입 · 허용 값을 YAML 명세로 정의하면 검사 대상이 자동으로 만들어집니다.',
-        descEn: 'Fields, types, and allowed values defined in YAML specs automatically become checks.'
+        titleKo: '데이터 스키마 참조 검증',
+        titleEn: 'Schema-Referenced Validation',
+        descKo: '데이터 스키마를 참조해 검사할 항목 · 타입 · 허용 값을 자동으로 정합니다.',
+        descEn: 'Check targets, types, and allowed values are derived from the data schema.'
       },
       {
         titleKo: '값 사이의 정합성 규칙',

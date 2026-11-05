@@ -25,8 +25,8 @@ export const LOG_SEQUENCE = [
   },
   {
     level: 'FILTER',
-    tag: 'engine:qa-suite',
-    msg: 'Verifying one-click video-log sync &amp; schema validator for <span class="highlight">Unknown QA Pipeline</span>... <span class="success-text">ONLINE</span>.',
+    tag: 'engine:auto-test',
+    msg: 'Verifying one-click video sync &amp; schema-referenced validator for <span class="highlight">Automation Test Tool</span>... <span class="success-text">ONLINE</span>.',
     duration: 340,
     progress: 58,
     events: 8940
@@ -42,7 +42,7 @@ export const LOG_SEQUENCE = [
   {
     level: 'PIPELINE',
     tag: 'sync:arch',
-    msg: 'Ingesting Core Tooling &amp; Pipelines: <span class="highlight">[LoL SNA, Unknown QA Suite, Race Engineer, NEIS Counter]</span>.',
+    msg: 'Ingesting Core Tooling &amp; Pipelines: <span class="highlight">[LoL SNA, Automation Test Tool, Race Engineer, NEIS Counter]</span>.',
     duration: 300,
     progress: 84,
     events: 12450

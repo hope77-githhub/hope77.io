@@ -30,8 +30,8 @@ export const MILESTONES_DATA = [
     chipType: 'info',
     summaryKo: '경기 데이터 정합성을 원클릭으로 확인하는 자동화 테스트 툴',
     summaryEn: 'One-click automation test tool for match data integrity',
-    bodyKo: '명세 파일 기반 형식 검사와 값 사이의 정합성 규칙, 영상 동기화와 피치 시각화를 결합해 경기 데이터가 규칙대로 기록되었는지 한 번에 확인하는 자동화 테스트 툴입니다.',
-    bodyEn: 'Combines spec-driven format checks, cross-field consistency rules, video sync, and pitch visualization to verify match data in one pass.'
+    bodyKo: '데이터 스키마를 참조한 형식 검사와 값 사이의 정합성 규칙, 영상 동기화와 피치 시각화를 결합해 경기 데이터가 규칙대로 기록되었는지 자동으로 검증하는 자동화 테스트 툴입니다.',
+    bodyEn: 'Combines schema-referenced format checks, cross-field consistency rules, video sync, and pitch visualization to verify match data in one pass.'
   },
   {
     id: 'm4',

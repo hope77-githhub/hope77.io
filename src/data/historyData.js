@@ -128,9 +128,9 @@ export const HISTORY_DATA = {
       orgKo: 'EA 코리아 (Electronic Arts Korea)',
       orgEn: 'EA Korea (Electronic Arts Korea)',
       period: '2025.12 – 현재',
-      roleKo: 'QA 테스터 (QA Tester)',
-      roleEn: 'QA Tester',
-      type: 'Career / QA Engineering',
+      roleKo: '테스트 자동화 · 데이터 검증 (Test Automation)',
+      roleEn: 'Test Automation & Data Verification',
+      type: 'Career / Test Automation',
       relatedProjectId: 'entry-automation-test',
     }
   ],

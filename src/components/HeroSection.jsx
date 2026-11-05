@@ -26,7 +26,7 @@ export default function HeroSection({ onOpenTerminal, onNavigateToProjects, onNa
       tag: 'Analysis & Modeling'
     },
     {
-      name: 'QA & Test Automation',
+      name: 'Test Automation',
       tag: 'Test Tooling'
     },
     {
