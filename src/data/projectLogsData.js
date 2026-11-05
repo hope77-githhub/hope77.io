@@ -85,75 +85,62 @@ export const PROJECT_LOGS_DATA = [
   },
 
   // =========================================================================
-  // 2. [2025.12 - PRESENT] Telemetry Log Automation & QA Ops
+  // 2. [2025.12 - PRESENT] Automation Test Tool
   // =========================================================================
   {
-    id: 'log-entry-unknown',
+    id: 'entry-automation-test',
     categories: ['projects'],
     timestamp: '2025.12 - PRESENT',
-    service: 'service.telemetry.qa_ops',
+    service: 'service.automation_test_tool',
     tagPrimary: 'PROJECT',
-    tagSecondary: 'QA_TEST_AUTOMATION',
+    tagSecondary: 'TEST_AUTOMATION',
     statusChip: { textKo: '진행 중 (ACTIVE)', textEn: 'In Progress', type: 'info' },
-    titleKo: 'Telemetry Log Automation & QA Ops',
-    titleEn: 'Telemetry Log Automation & QA Ops',
-    summaryKo: 'QA중 가장 많은 Human Resource를 요구하는 Telemetry Log 검증을 지원하는 도구 제작 및 파이프라인 일원화 개발을 진행하였고, 부가적인 테스트 툴을 새로운 탭으로 추가하여 확장하는 QA Test Tool입니다.',
-    summaryEn: 'A QA test tool built to streamline and unify high-labor telemetry log verification into a single pipeline, extendable with additional testing modules via independent tabs.',
+    titleKo: '자동화 테스트 툴',
+    titleEn: 'Automation Test Tool',
+    summaryKo: '경기 한 판에서 만들어지는 수백 개의 값이 규칙대로, 서로 모순 없이 기록되었는지를 한 번에 확인하는 자동화 테스트 툴입니다. (FC Online 매치 상세 데이터 구조에 빗대어 설명)',
+    summaryEn: 'An automation test tool that checks whether the hundreds of values produced by a match are recorded by the rules and consistent with each other (illustrated with the FC Online match detail model).',
     jsonPayload: {
       timestamp: "2025-12-01T09:00:00Z",
-      service: "Telemetry-Log-Automation-QA-Ops",
-      domain: "Automated Verification & Telemetry Alignment",
+      service: "Automation-Test-Tool",
+      domain: "Match Data Integrity Verification",
       core_modules: [
-        "Kafbat_Stored_Downloader",
-        "Declarative_YAML_Validator",
-        "FFmpeg_Video_Timestamp_Sync",
-        "Interactive_Log_Visualizer",
-        "Team_Tactics_Test_Tool",
-        "Issue_Ticket_Auto_Mapper"
+        "Schema_As_Config_Validator",
+        "Cross_Field_Consistency_Rules",
+        "Video_Timestamp_Sync",
+        "Pitch_Visualizer_2D_3D",
+        "Known_Issue_Matcher"
       ],
-      runtime_status: "Active Development & Real-World QA Ops"
+      runtime_status: "Active Development"
     },
     incident: {
-      problemKo: '인게임 이벤트 수행 후 대상 로그를 필터링하고 버그 발생 시 화면 녹화 영상을 재촬영해 대조하는 반복 작업으로 인해, 로그 필드 하나를 검증하는 데도 최소 5분이 소요되고 문서 미비로 129개 케이스 기준 총 120~180분의 오랜 시간이 소요됨',
-      problemEn: 'Repeatedly triggering in-game events, filtering logs, and re-recording video footage to cross-reference defects meant verifying a single log field took at least 5 minutes, resulting in 120-180 minutes across 129 legacy cases.',
-      resolutionKo: 'Kafbat API 자동 다운로더, YAML 스키마 기반 필드별 자동 검증, FFmpeg 영상-타임스탬프 연동 뷰어, Log Visualization 및 팀전술 테스트 지원도구(선수 DB 연동, 호버 점수 비교)를 일원화하여 검증 시간을 20~30분(80% 이상 절감)으로 단축했습니다.',
-      resolutionEn: 'Architected automated Kafbat downloads, YAML schema-based automated verification, FFmpeg video-timestamp sync seeking, Log Visualization, and Team Tactics Test Tools with live player DB and hover score comparison, slashing verification by >80%.'
+      problemKo: '경기 데이터가 올바르게 기록되었는지 보려면 수십 개 항목을 하나씩 열어 보고 합계와 내역을 직접 계산해야 했고, 명세가 바뀔 때마다 확인 목록을 새로 만들어야 했습니다.',
+      problemEn: 'Verifying match data meant opening dozens of fields by hand, recalculating totals, and rebuilding checklists on every spec change.',
+      resolutionKo: '명세 파일 기반 형식 검사, 요약↔상세 · 관계 · 참가자 간 정합성 규칙, 영상 시간 동기화와 피치 시각화를 하나의 원클릭 흐름으로 묶었습니다.',
+      resolutionEn: 'Combined spec-driven format checks, summary/relation/cross-participant consistency rules, video time sync, and pitch visualization into one click.'
     },
-    detailsTitleKo: '주요 기능 및 핵심 성과',
-    detailsTitleEn: 'Core Features & Technical Milestones',
+    detailsTitleKo: '주요 기능',
+    detailsTitleEn: 'Core Features',
     details: [
       {
-        titleKo: 'Kafbat API 기반 로그 자동 수집 & 1-Click 다운로드',
-        titleEn: 'Kafbat API Automated Ingestion & 1-Click Downloader',
-        descKo: '다수의 테스트 서버별 엔드포인트에서 필요한 게임플레이 텔레메트리 로그를 1-Click API 요청으로 자동 수집하여 수동 다운로드 병목을 원천 해소했습니다.',
-        descEn: 'Automated telemetry retrieval across multiple test server endpoints with single-click API downloads, removing manual retrieval bottlenecks.'
+        titleKo: '명세 파일 기반 검증',
+        titleEn: 'Schema-as-Config Validation',
+        descKo: '데이터 항목 · 타입 · 허용 값을 YAML 명세로 정의하면 검사 대상이 자동으로 만들어집니다.',
+        descEn: 'Fields, types, and allowed values defined in YAML specs automatically become checks.'
       },
       {
-        titleKo: 'YAML 스키마 기반 자동 검증 엔진',
-        titleEn: 'YAML Schema-Based Automated Verification Engine',
-        descKo: '하드코딩을 탈피하고 YAML 명세 및 이벤트별 rules.py를 기반으로 필수 키 결측, 포맷 오류, 런타임 이상치를 전수 자동 검증하여 스키마 누락률 0%를 달성했습니다.',
-        descEn: 'Decoupled checks into YAML schemas and event-specific rules.py, catching missing keys and runtime outliers with 0% omission.'
+        titleKo: '값 사이의 정합성 규칙',
+        titleEn: 'Cross-Field Consistency Rules',
+        descKo: '합계와 내역, 성공과 시도, 양쪽 참가자 기록이 서로 맞는지 확인합니다.',
+        descEn: 'Checks totals vs details, successes vs attempts, and both participants against each other.'
       },
       {
-        titleKo: 'FFmpeg 인게임 영상 녹화 & Unix Timestamp 동기화',
-        titleEn: 'FFmpeg Screen Capture & Unix Timestamp Video Sync',
-        descKo: '테스트 영상을 자동 녹화하고 로그 타임스탬프와 정합하여, 로그 클릭 시 해당 이벤트 프레임으로 1초 내 즉각 이동하며 실시간 인게임 오버레이를 지원합니다.',
-        descEn: 'Captured test footage via FFmpeg and synchronized timecodes; clicking any log entry navigates to that exact in-game video frame within 1 second.'
-      },
-      {
-        titleKo: '인터랙티브 Log Visualization & 세션 Clean 기능',
-        titleEn: 'Interactive Log Visualization & Test Session Clean',
-        descKo: '복잡한 텔레메트리 이벤트 시퀀스와 필드 분포를 직관적으로 시각화하고, 테스트 환경을 원클릭으로 초기화하는 세션 Clean 기능을 제공합니다.',
-        descEn: 'Intuitive telemetry visualization board mapping event sequences, pinpointing anomalies, and providing 1-click testbed resets.'
-      },
-      {
-        titleKo: '팀전술 테스트 지원도구',
-        titleEn: 'Team Tactics Test Tool',
-        descKo: '선수 DB(players.xlsx) 실시간 연동, 입출력 JSON 파이프라인, 마우스 호버 실시간 포지션 점수 비교 및 히스토리 저장을 지원하여 테스트 효율을 80% 이상 향상시켰습니다.',
-        descEn: 'Boosted testing efficiency >80% via live player DB sync, bidirectional JSON I/O, real-time hover score deltas, and artifact caching.'
+        titleKo: '영상 동기화 & 피치 시각화',
+        titleEn: 'Video Sync & Pitch Visualization',
+        descKo: '검사 결과에서 해당 장면 영상으로 이동하고, 좌표를 2D/3D 피치 위에 그립니다.',
+        descEn: 'Jumps from results to the matching video moment and plots coordinates on a 2D/3D pitch.'
       }
     ],
-    logId: 'LOG-PROJ-QAOPS-001'
+    logId: 'PROJ-AUTOTEST-001'
   },
 
   // =========================================================================

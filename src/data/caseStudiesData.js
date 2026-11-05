@@ -216,6 +216,312 @@ Gained methodological mastery in combining quantitative telemetry/SNA metrics ($
     ]
   },
   // =========================================================================
+  // 2. Automation Test Tool
+  //    (실제 데이터는 공개하지 않으며, 넥슨 Open API의 FC Online 매치 상세 데이터 구조를 예시로 서술)
+  // =========================================================================
+  {
+    id: 'entry-automation-test',
+    category: 'Test Automation & Tooling',
+    badgeTextKo: '진행 중 (Active)',
+    badgeTextEn: 'Active Project',
+    badgeType: 'info',
+    titleKo: '자동화 테스트 툴 — 경기 데이터 정합성 검증 플랫폼',
+    titleEn: 'Automation Test Tool — Match Data Integrity Verification',
+    tabLabelKo: '자동화 테스트 툴',
+    tabLabelEn: 'Automation Test Tool',
+    oneLinerKo: '넥슨 FC Online Open API의 매치 상세 데이터처럼, 경기 한 판에서 만들어지는 수백 개의 값이 "규칙대로, 서로 모순 없이" 기록되었는지를 한 번에 확인하는 자동화 테스트 툴',
+    oneLinerEn: 'An automation test tool that checks, in one pass, whether the hundreds of values produced by a single match are recorded by the rules and consistent with each other, illustrated with the FC Online Open API match detail model.',
+    roleKo: '개인 프로젝트 · 설계 및 풀스택 개발',
+    roleEn: 'Personal Project · Design & Full-Stack Development',
+    period: '2025.12 – 현재 (Active)',
+    techStack: ['Python', 'FastAPI', 'React', 'YAML / JSON Schema', 'pandas', 'FFmpeg & OpenCV', 'RapidFuzz', 'cx_Freeze'],
+
+    metricsHeadingKo: '결과 요약 (Summary of Results)',
+    metricsHeadingEn: 'Results Summary',
+    keyMetrics: [
+      {
+        valueKo: '명세 파일만 추가하면 새 데이터 항목까지 자동 검증',
+        valueEn: 'New Data Fields Covered by Adding a Spec File',
+        icon: 'fas fa-file-code'
+      },
+      {
+        valueKo: '형식 · 요약↔상세 · 관계 · 참가자 간 4단계 정합성 검사',
+        valueEn: '4-Layer Checks: Format, Summary↔Detail, Relations, Cross-Participant',
+        icon: 'fas fa-layer-group'
+      },
+      {
+        valueKo: '검증 결과에서 해당 장면 영상으로 바로 이동',
+        valueEn: 'Jump from a Result Straight to the Matching Video Moment',
+        icon: 'fas fa-film'
+      },
+      {
+        valueKo: '반복 확인 작업을 원클릭 자동 검증으로 대체',
+        valueEn: 'Repetitive Manual Checks Replaced by One-Click Runs',
+        icon: 'fas fa-hand-pointer'
+      }
+    ],
+
+    pipelineFlow: [
+      { step: '01', titleKo: '매치 데이터 불러오기', titleEn: 'Load Match Data' },
+      { step: '02', titleKo: '명세 기반 형식 검사', titleEn: 'Spec-Driven Format Checks' },
+      { step: '03', titleKo: '값 · 관계 정합성 검사', titleEn: 'Value & Relation Consistency' },
+      { step: '04', titleKo: '영상 · 피치 시각화 대조', titleEn: 'Video & Pitch Cross-Check' },
+      { step: '05', titleKo: '결과 리포트 & 알려진 문제 대조', titleEn: 'Report & Known-Issue Matching' }
+    ],
+
+    beforeAfter: {
+      beforeKo: '경기 데이터가 올바르게 기록되었는지 보려면 수십 개 항목을 하나씩 열어 보고, 합계와 내역이 맞는지 직접 계산하고, 의심스러운 장면은 다시 재현해 봐야 했습니다. 데이터 명세가 바뀔 때마다 확인 목록도 새로 만들어야 했습니다.',
+      beforeEn: 'Checking match data meant opening dozens of fields one by one, hand-calculating whether totals matched details, and re-creating suspicious scenes. Every spec change meant a new checklist.',
+      afterKo: '매치 데이터를 불러오면 형식 · 관계 · 참가자 간 검사가 한 번에 끝나고, 어긋난 항목만 골라 그 순간의 영상과 피치 위 좌표로 바로 확인할 수 있습니다.',
+      afterEn: 'Loading match data runs format, relation, and cross-participant checks at once; only mismatches surface, each linked to its video moment and on-pitch coordinates.'
+    },
+
+    sections: [
+      {
+        num: '01',
+        titleKo: '01. Background & Problem (배경 및 문제점)',
+        titleEn: '01. Background & Problem (Hundreds of Values per Match)',
+        contentKo: `> 실제 데이터와 화면은 공개할 수 없어, 넥슨 Open API에 공개된 FC Online 매치 상세(match-detail) 데이터 구조를 예시로 설명합니다.
+
+### 1. 경기 한 판 = 수백 개의 숫자
+FC Online 매치 상세 데이터에는 매치 하나에 참가자별 \`matchDetail\`(결과, 점유율, 카드, 컨트롤러), \`shoot\`(슈팅·골 요약), \`shootDetail[]\`(슈팅마다 시간·좌표·종류·결과·선수), \`pass\`, \`defence\`, 그리고 선수별 \`player[].status\`까지 수백 개의 값이 담깁니다.
+
+### 2. 값 하나가 맞아도 전체는 틀릴 수 있다
+각 값의 형식이 올바르더라도 서로 맞물려야 하는 값들이 어긋나면 데이터는 신뢰할 수 없습니다. 예를 들어 \`goalTotal\`은 명세상 \`goalInPenalty + goalOutPenalty + goalPenaltyKick\`과 같아야 하고, \`shootDetail\`에서 결과가 골(\`result: 3\`)인 슈팅 수와도 맞아야 합니다.
+
+### 3. 사람의 눈과 손으로는 한계가 있다
+이런 관계를 매번 손으로 계산하고, 명세가 바뀔 때마다 확인 목록을 다시 만드는 방식은 느리고 빠뜨리기 쉽습니다.`,
+        contentEn: `> Real data and screens are private, so this case study uses the public FC Online match detail model from the Nexon Open API.
+
+### 1. One Match, Hundreds of Numbers
+A single match holds per-participant \`matchDetail\` (result, possession, cards, controller), \`shoot\` summaries, \`shootDetail[]\` (time, coordinates, type, result, player per shot), \`pass\`, \`defence\`, and per-player \`player[].status\`.
+
+### 2. Every Value Can Be Valid While the Whole Is Wrong
+Values must agree with each other: \`goalTotal\` should equal \`goalInPenalty + goalOutPenalty + goalPenaltyKick\` and the number of \`shootDetail\` entries with \`result: 3\`.
+
+### 3. Manual Checking Doesn't Scale
+Hand-calculating these relations and rebuilding checklists on every spec change is slow and error-prone.`
+      },
+      {
+        num: '02',
+        titleKo: '02. Introduction & Objective (도입 배경 및 개발 목표)',
+        titleEn: '02. Introduction & Objective (Load Data, Get Answers)',
+        contentKo: `### 1. 데이터를 넣으면 검증이 끝나는 구조
+매치 데이터를 불러오는 것만으로 형식 검사부터 값 사이의 관계 검사까지 자동으로 끝나는 원클릭 흐름을 목표로 했습니다.
+
+### 2. 사람은 '어긋난 것'만 본다
+규칙으로 정의할 수 있는 확인은 모두 툴이 맡고, 사람은 실패로 표시된 항목만 영상과 좌표로 확인해 판단하도록 역할을 나눴습니다.
+
+### 3. 명세가 바뀌어도 코드는 그대로
+검사 대상을 코드에 박아 두지 않고 명세 파일로 분리해, 데이터 항목이 추가·변경되어도 파일 교체만으로 대응할 수 있게 설계했습니다.`,
+        contentEn: `### 1. Load Data, Get Answers
+Loading match data alone should run everything from format checks to cross-value relations.
+
+### 2. People Only Look at Mismatches
+Rule-expressible checks belong to the tool; people review only flagged items with video and coordinates.
+
+### 3. Specs Change, Code Doesn't
+Check targets live in spec files, so new or changed fields are handled by swapping files.`
+      },
+      {
+        num: '03',
+        titleKo: '03. System Architecture & Data Flow (시스템 아키텍처 및 데이터 흐름)',
+        titleEn: '03. System Architecture & Data Flow',
+        architectureDiagrams: [
+          {
+            id: 'diag-automation-system',
+            tabTitleKo: '시스템 아키텍쳐',
+            tabTitleEn: 'System Architecture',
+            titleKo: '시스템 아키텍쳐',
+            titleEn: 'System Architecture',
+            defaultScale: 0.75,
+            mermaidChart: `flowchart TD
+    subgraph Source["입력"]
+        API["매치 상세 데이터<br/>(match-detail 형태 JSON)"]
+        META["메타데이터<br/>spid · spposition · season · matchtype"]
+        VID["화면 녹화 영상"]
+    end
+
+    subgraph Engine["FastAPI 검증 엔진"]
+        SPEC["명세 파일<br/>(YAML / JSON Schema)"]
+        RULE["항목별 규칙 모듈"]
+        CHK["검증 실행기"]
+        SYNC["시간 동기화"]
+    end
+
+    subgraph UI["React 대시보드 (탭 확장형)"]
+        R1["검증 결과 리포트"]
+        R2["피치 시각화 2D / 3D"]
+        R3["장면 클립 플레이어"]
+        R4["추가 테스트 도구 탭"]
+    end
+
+    API --> CHK
+    META --> CHK
+    SPEC --> CHK
+    RULE --> CHK
+    CHK --> R1
+    CHK --> R2
+    VID --> SYNC
+    CHK --> SYNC
+    SYNC --> R3`
+          },
+          {
+            id: 'diag-automation-checks',
+            tabTitleKo: '검증 단계',
+            tabTitleEn: 'Check Layers',
+            titleKo: '검증 단계 (FC Online 매치 상세 데이터 예시)',
+            titleEn: 'Check Layers (FC Online Match Detail Example)',
+            defaultScale: 1.0,
+            mermaidChart: `flowchart LR
+    IN["matchInfo[]<br/>matchDetail · shoot · shootDetail[]<br/>pass · defence · player[]"]
+
+    subgraph L1["1. 형식"]
+        A1["허용 값 · 타입<br/>좌표 0~1 범위"]
+    end
+    subgraph L2["2. 요약 ↔ 상세"]
+        A2["shootTotal = shootDetail 수<br/>goalTotal = 골 결과 수"]
+    end
+    subgraph L3["3. 관계"]
+        A3["성공 ≤ 시도<br/>assist ↔ assistSpId"]
+    end
+    subgraph L4["4. 참가자 간"]
+        A4["점유율 합 100<br/>골 수 ↔ matchResult"]
+    end
+
+    OUT["통과 / 실패 리포트<br/>+ 장면 · 좌표 확인"]
+
+    IN --> A1 --> A2 --> A3 --> A4 --> OUT`
+          }
+        ]
+      },
+      {
+        num: '04',
+        titleKo: '04. What It Can Test (FC Online 매치 상세 데이터로 본 검증 범위)',
+        titleEn: '04. What It Can Test (Illustrated with FC Online Match Detail)',
+        highlight: true,
+        contentKo: `### 1. 형식 검사 — 있어야 할 값이 올바른 모양으로 있는가
+- \`matchResult\`는 "승"·"무"·"패", \`matchEndType\`은 0·1·2, \`controller\`는 keyboard·pad·etc 중 하나인지
+- \`shootDetail[].type\`이 1~12, \`result\`가 1~3처럼 약속된 코드 안에 있는지
+- \`x\`, \`y\`, \`assistX\`, \`assistY\` 좌표가 경기장 기준 0~1 범위 안에 있는지
+
+### 2. 요약 ↔ 상세 일치 — 합계와 내역이 맞는가
+- \`shootTotal\`과 \`shootDetail\` 항목 수, \`goalTotal\`과 골로 끝난 슈팅 수가 맞는지
+- \`goalTotal = goalInPenalty + goalOutPenalty + goalPenaltyKick\`이 성립하는지
+- 선수별 \`player[].status\`의 골·패스 합계가 팀 단위 \`shoot\`·\`pass\` 요약과 맞는지
+
+### 3. 논리적 관계 — 말이 되는 숫자인가
+- 성공 수가 시도 수를 넘지 않는지 (\`passSuccess ≤ passTry\`, \`tackleSuccess ≤ tackleTry\`, \`effectiveShootTotal ≤ shootTotal\`, \`goalHeading ≤ shootHeading\`)
+- \`assist\`가 false면 \`assistSpId\`가 -1, true면 실제 선수 식별자인지
+- \`inPenalty\` 값이 슈팅 좌표가 페널티박스 안에 있는지와 일치하는지
+
+### 4. 참가자 간 정합성 — 양쪽 기록이 서로 맞는가
+- 두 참가자의 \`possession\` 합이 100인지
+- 양쪽 골 수를 비교한 결과가 각자의 \`matchResult\`와 맞는지 (몰수 등 \`matchEndType\` 예외는 별도 처리)
+
+### 5. 메타데이터 · 맥락 검사
+- \`spId\`, \`spPosition\`, \`seasonId\`, \`matchType\`이 메타데이터 목록에 실제로 있는 값인지
+- \`matchType\`에 따라 기대값이 달라지는 항목은 규칙을 다르게 적용하는지
+
+### 6. 시간 · 장면 검사
+- 전·후반, 연장, 승부차기 구간이 함께 담긴 \`goalTime\` 값을 실제 경기 시각으로 풀어, 녹화 영상의 해당 장면과 나란히 확인
+- 슈팅·어시스트 좌표를 피치 위에 그려, 의미 없는 기본 좌표로 남은 기록을 눈으로 바로 구별`,
+        contentEn: `### 1. Format — Is Each Value Present and Well-Formed?
+- \`matchResult\` in 승/무/패, \`matchEndType\` in 0/1/2, \`controller\` in keyboard/pad/etc
+- \`shootDetail[].type\` within 1–12 and \`result\` within 1–3
+- \`x\`, \`y\`, \`assistX\`, \`assistY\` within the 0–1 pitch range
+
+### 2. Summary ↔ Detail — Do Totals Match Line Items?
+- \`shootTotal\` vs number of \`shootDetail\` entries; \`goalTotal\` vs goal-result shots
+- \`goalTotal = goalInPenalty + goalOutPenalty + goalPenaltyKick\`
+- Per-player \`player[].status\` sums vs team \`shoot\`/\`pass\` summaries
+
+### 3. Relations — Do the Numbers Make Sense?
+- Successes never exceed attempts (\`passSuccess ≤ passTry\`, \`tackleSuccess ≤ tackleTry\`, \`effectiveShootTotal ≤ shootTotal\`)
+- \`assist: false\` implies \`assistSpId = -1\`
+- \`inPenalty\` agrees with whether the shot coordinates fall inside the box
+
+### 4. Cross-Participant — Do Both Sides Agree?
+- Both participants' \`possession\` sums to 100
+- Goal comparison agrees with each side's \`matchResult\` (forfeit \`matchEndType\` handled separately)
+
+### 5. Metadata & Context
+- \`spId\`, \`spPosition\`, \`seasonId\`, \`matchType\` exist in the metadata lists
+- Rules adapt where expectations differ by \`matchType\`
+
+### 6. Time & Scene
+- \`goalTime\` (half, extra time, shoot-out encoded together) is decoded to match time and shown beside the recorded scene
+- Shot and assist coordinates are drawn on the pitch, exposing placeholder positions at a glance`
+      },
+      {
+        num: '05',
+        titleKo: '05. How It Works (툴 스펙 및 구현 방식)',
+        titleEn: '05. How It Works (Tool Capabilities)',
+        contentKo: `### 1. 명세 파일 기반 검증 (Schema-as-Config)
+- 데이터 항목, 타입, 허용 값을 YAML 명세 파일로 정의하면 툴이 검사 대상을 자동으로 만듭니다. 새 항목이 생기면 파일만 바꾸면 됩니다.
+
+### 2. 중첩 · 배열 구조 자동 탐색
+- \`matchInfo[1].player[5].status.tackle\`처럼 깊이 들어간 값도 경로만으로 찾아 검사합니다.
+
+### 3. 규칙 모듈과 맥락 분기
+- 항목별 규칙을 독립 모듈로 두고, 매치 종류 같은 맥락에 따라 다른 기대값을 적용합니다.
+
+### 4. 영상 동기화 · 피치 시각화
+- 화면 녹화 시각과 데이터의 시각을 맞춰 검사 결과에서 해당 장면으로 이동하고, 선수·공·슈팅 좌표를 2D/3D 피치 위에 그립니다.
+
+### 5. 결과 리포트와 알려진 문제 대조
+- 항목별 통과/실패 리포트를 만들고, 미리 정리된 문제 목록과 유사도로 대조해 새로 확인할 것만 남깁니다.
+
+### 6. 탭 단위 확장 · 단일 실행 파일 배포
+- 새 테스트 기능을 탭으로 붙일 수 있고(예: 선수 메타데이터 기반 포지션 점수 비교 도구), 별도 설치 없이 실행되는 단일 파일로 배포됩니다.`,
+        contentEn: `### 1. Schema-as-Config
+- Fields, types, and allowed values live in YAML spec files; the tool builds its checks from them.
+
+### 2. Nested & Array Path Resolution
+- Deep values such as \`matchInfo[1].player[5].status.tackle\` are reached by path alone.
+
+### 3. Rule Modules with Context Branching
+- Independent rule modules apply different expectations depending on context such as match type.
+
+### 4. Video Sync & Pitch Visualization
+- Recording time is aligned with data time to jump to scenes; player, ball, and shot coordinates render on a 2D/3D pitch.
+
+### 5. Reports & Known-Issue Matching
+- Pass/fail reports per field, fuzzy-matched against a known-issue list so only new findings remain.
+
+### 6. Tab-Based Extension & Single-File Distribution
+- New test features plug in as tabs (e.g. a position-score comparison tool using player metadata), shipped as a no-install executable.`
+      },
+      {
+        num: '06',
+        titleKo: '06. Conclusion & Lessons Learned (결론 및 배운 점)',
+        titleEn: '06. Conclusion & Lessons Learned',
+        contentKo: `### 1. 데이터는 '관계'로 검증해야 한다
+- 값 하나하나가 맞는지보다, 요약과 상세, 참가자와 참가자 사이가 서로 맞는지를 볼 때 실제 문제가 드러난다는 점을 배웠습니다.
+
+### 2. 명세가 바뀌는 환경에서는 코드보다 설정이 오래 산다
+- 검사 대상을 명세 파일로 분리하자, 데이터 구조가 바뀌어도 툴 전체를 고치지 않고 대응할 수 있었습니다.
+
+### 3. 오탐을 줄이는 것이 신뢰를 만든다
+- 실패가 너무 많이 뜨는 검증기는 결국 쓰이지 않습니다. 맥락에 따라 기대값을 달리하는 규칙이 툴을 실제로 쓰이게 만든 핵심이었습니다.
+
+### 4. 다음 단계
+- 시각화 화면에서 최신 규칙으로 바로 다시 검사하는 실시간 동기화, 그리고 시나리오 단위로 "무엇을 플레이하고 무엇을 확인할지" 안내하는 기능으로 확장하고 있습니다.`,
+        contentEn: `### 1. Validate Relationships, Not Just Values
+- Real problems appear when summaries, details, and participants are checked against each other.
+
+### 2. Configuration Outlives Code
+- With checks in spec files, structural changes no longer meant rewriting the tool.
+
+### 3. Fewer False Positives Build Trust
+- A validator that flags everything gets ignored; context-aware expectations made the tool actually used.
+
+### 4. Next Steps
+- Real-time re-checking from the visualizer, and scenario-driven guidance on what to play and what to verify.`
+      }
+    ]
+  },
+  // =========================================================================
   // 3. Real-Time AI Race Engineer (실시간 텔레메트리 & AI 음성 솔루션)
   // =========================================================================
   {

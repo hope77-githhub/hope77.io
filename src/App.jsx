@@ -28,7 +28,7 @@ export default function App() {
         return params.get('id') || 'log-entry-com-study';
       }
     }
-    return 'log-entry-unknown';
+    return 'entry-automation-test';
   });
 
   // Sync with browser back/forward buttons

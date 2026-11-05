@@ -131,7 +131,7 @@ export const HISTORY_DATA = {
       roleKo: 'QA 테스터 (QA Tester)',
       roleEn: 'QA Tester',
       type: 'Career / QA Engineering',
-      relatedProjectId: 'log-entry-unknown',
+      relatedProjectId: 'entry-automation-test',
     }
   ],
   research: [
