@@ -1,0 +1,53 @@
+export const MILESTONES_DATA = [
+  {
+    id: 'm1',
+    projectId: 'log-entry-com-study',
+    periodKo: '2023.09 – 2025.09',
+    periodEn: '2023.09 – 2025.09',
+    titleKo: 'RTS (LOL) Communication pattern 연구',
+    titleEn: 'RTS (LOL) Communication Pattern Research',
+    shortTitleKo: 'RTS (LoL) 커뮤니케이션 패턴 연구',
+    shortTitleEn: 'RTS (LoL) Communication Research',
+    statusKo: '완료',
+    statusEn: 'Completed',
+    chipType: 'success',
+    summaryKo: 'League of legend (LOL)과 같은 MulitOnlineBattleArena(MOBA)게임에서 발생하는 팀원간 communication pattern이 인게임의 사전 정의된 중요 Event 지점에서 어떤 대화 패턴을 보이는지 분석한 학술 연구',
+    summaryEn: 'An academic research analyzing team communication patterns around pre-defined in-game critical events in MOBA games like League of Legends (LOL).',
+    bodyKo: 'League of legend (LOL)과 같은 MulitOnlineBattleArena(MOBA)게임에서 발생하는 팀원간 communication pattern이 인게임의 사전 정의된 중요 Event 지점에서 어떤 대화 패턴을 보이는지 분석한 학술 연구입니다.',
+    bodyEn: 'Synchronized in-game logs with Discord voice streams using mathematical interpolation, analyzing communication patterns and information dissemination dynamics via RoBERTa embeddings and dynamic SNA graphs.'
+  },
+  {
+    id: 'm4',
+    projectId: 'log-entry-neis',
+    periodKo: '2026.09',
+    periodEn: '2026.09',
+    titleKo: 'NEIS Letter Counter 개발 및 배포',
+    titleEn: 'NEIS Letter Counter & Excel Duplicate Detector',
+    shortTitleKo: 'NEIS Letter Counter',
+    shortTitleEn: 'NEIS Letter Counter',
+    statusKo: '완료',
+    statusEn: 'Completed',
+    chipType: 'success',
+    summaryKo: '나이스 규격 바이트 계산 및 100% 인메모리 엑셀 중복 탐지',
+    summaryEn: 'NEIS byte spec compliance & zero-leak in-memory duplicate detector',
+    bodyKo: '나이스 규격에 맞춘 공백 포함/제외 및 UTF-8, EUC-KR 기반 실시간 정밀 Byte 계산기 구현과 함께, 엑셀 시트 내 중복 문장 발생 위치(Row 번호)를 직관적으로 탐지하는 SheetJS 인메모리 클라이언트 툴을 배포 완료했습니다.',
+    bodyEn: 'Deployed a zero-server-leakage text utility providing exact NEIS byte counting and automated row-level duplicate sentence detection across large Excel files.'
+  },
+  {
+    id: 'm3',
+    projectId: 'log-entry-f1',
+    periodKo: '2026.09 – 현재',
+    periodEn: '2026.09 – Present',
+    titleKo: 'Real-Time AI Race Engineer 텔레메트리 파싱 및 서킷 트랙 매핑',
+    titleEn: 'Real-Time AI Race Engineer Telemetry Parsing & Track Mapping',
+    shortTitleKo: 'Real-Time AI Race Engineer',
+    shortTitleEn: 'Real-Time AI Race Engineer',
+    statusKo: '진행 중',
+    statusEn: 'In Progress',
+    chipType: 'info',
+    summaryKo: '60Hz UDP 패킷 무손실 처리, 24개 서킷 매핑 & AI 음성 코칭',
+    summaryEn: '60Hz UDP lossless parsing, 24-circuit mapping & AI voice coaching',
+    bodyKo: 'F1 게임 UDP 20777 포트로부터 고빈도 주행 텔레메트리 데이터를 실시간 인덱싱하고 공식 서킷 좌표계에 트랙 매핑을 완료했으며, 최적 피트 스탑 타이밍을 알려주는 AI Voice 음성 피드백 에이전트를 개발하고 있습니다.',
+    bodyEn: 'Implemented 60Hz UDP telemetry parsing and true-to-scale circuit track mapping, developing a real-time AI voice coach for live pit stop strategy advice.'
+  }
+];

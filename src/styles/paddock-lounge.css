@@ -1,0 +1,840 @@
+/* ==========================================================================
+   Coinbase Paddock Lounge — 2D Mini Game & Live Telemetry Chat Section
+   Specification: DESIGN-coinbase.md (Institutional Calm, Single-Blue Voltage #0052ff)
+   ========================================================================== */
+
+.paddock-section {
+    padding: 48px 0 64px 0;
+    position: relative;
+    border-top: 1px solid var(--color-hairline);
+    background: var(--color-surface-soft); /* #f7f7f7 */
+}
+
+.paddock-header-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.paddock-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.paddock-title-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.paddock-title {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--color-ink);
+    letter-spacing: -0.6px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.paddock-title i {
+    color: var(--color-primary); /* #0052ff Coinbase Blue */
+}
+
+.paddock-desc {
+    font-size: 13.5px;
+    color: var(--color-body);
+    margin: 0;
+}
+
+.paddock-chips {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* Main 2-Column Grid Layout */
+.paddock-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 24px;
+    align-items: stretch;
+}
+
+/* ==========================================================================
+   Column 1: 2D Mini Game Arena (Interactive Paddock Floor)
+   ========================================================================== */
+.paddock-arena-card {
+    background: #0a0b0d; /* Coinbase surface-dark */
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-xl);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-height: 420px;
+}
+
+/* Arena Top Telemetry Bar */
+.arena-top-bar {
+    background: #16181c;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 10px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #a8acb3;
+    font-family: var(--font-mono);
+}
+
+.arena-status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.live-pulse-dot {
+    width: 8px;
+    height: 8px;
+    background: #00c853;
+    border-radius: 50%;
+    animation: live-pulse 1.4s infinite;
+}
+
+@keyframes live-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0, 200, 83, 0.7); }
+    50% { box-shadow: 0 0 0 6px rgba(0, 200, 83, 0); }
+}
+
+.arena-controls-hint {
+    font-size: 11px;
+    color: #8e9192;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.arena-controls-hint kbd {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+/* The Keyboard-Only Arena Floor (WASD & Arrow Keys) */
+.paddock-arena-canvas {
+    position: relative;
+    flex: 1;
+    width: 100%;
+    min-height: 360px;
+    background-color: #001224;
+    background-image:
+        radial-gradient(circle at 50% 50%, rgba(27, 106, 238, 0.15) 0%, transparent 70%),
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 100% 100%, 36px 36px, 36px 36px;
+    cursor: default; /* Keyboard controlled only (WASD & Arrows) */
+    overflow: hidden;
+    user-select: none;
+}
+
+/* Interactive Zones Painted on Floor */
+.paddock-zone {
+    position: absolute;
+    border: 1.5px dashed rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+    padding: 8px 12px;
+    pointer-events: none;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    transition: all 0.25s var(--ease-snappy);
+    text-align: center;
+}
+
+.zone-action-hint {
+    font-size: 9px;
+    padding: 1px 6px;
+    border-radius: 9999px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-weight: 700;
+}
+
+/* Zone 1: Pit Box (Top-Left) */
+.zone-pitbox {
+    top: 16px;
+    left: 16px;
+    width: 130px;
+    height: 95px;
+    background: rgba(219, 10, 64, 0.08);
+    border-color: rgba(219, 10, 64, 0.4);
+    color: #ff6b8a;
+}
+
+.zone-pitbox.is-active {
+    background: rgba(219, 10, 64, 0.25);
+    border-color: #db0a40;
+    box-shadow: 0 0 16px rgba(219, 10, 64, 0.6);
+    transform: scale(1.02);
+}
+
+/* Zone 2: P1 Winner Podium (Top-Right) */
+.zone-podium {
+    top: 16px;
+    right: 16px;
+    width: 130px;
+    height: 95px;
+    background: rgba(255, 214, 0, 0.08);
+    border-color: rgba(255, 214, 0, 0.4);
+    color: #ffd600;
+}
+
+.zone-podium.is-active {
+    background: rgba(255, 214, 0, 0.25);
+    border-color: #ffd600;
+    box-shadow: 0 0 18px rgba(255, 214, 0, 0.7);
+    transform: scale(1.02);
+}
+
+/* Zone 3: Turbo Booster Zone (Bottom-Right) */
+.zone-booster {
+    bottom: 30px;
+    right: 16px;
+    width: 130px;
+    height: 95px;
+    background: rgba(255, 82, 82, 0.08);
+    border-color: rgba(255, 82, 82, 0.4);
+    color: #ff5252;
+}
+
+.zone-booster.is-active {
+    background: rgba(255, 82, 82, 0.25);
+    border-color: #ff5252;
+    box-shadow: 0 0 18px rgba(255, 82, 82, 0.7);
+    transform: scale(1.02);
+}
+
+/* Zone 4: Pit Wall Lounge (Bottom-Left) */
+.zone-pitwall {
+    bottom: 30px;
+    left: 16px;
+    width: 130px;
+    height: 95px;
+    background: rgba(27, 106, 238, 0.08);
+    border-color: rgba(27, 106, 238, 0.4);
+    color: #82b1ff;
+}
+
+.zone-pitwall.is-active {
+    background: rgba(27, 106, 238, 0.25);
+    border-color: #1b6aee;
+    box-shadow: 0 0 18px rgba(27, 106, 238, 0.7);
+    transform: scale(1.02);
+}
+
+/* Zone 5: Center Telemetry Screen Marker */
+.zone-telemetry-center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90px;
+    height: 48px;
+    background: rgba(27, 106, 238, 0.08);
+    border: 1px dashed rgba(27, 106, 238, 0.3);
+    color: #82b1ff;
+    border-radius: 6px;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 800;
+}
+
+/* Zone 6: Finish Line Chequered Strip */
+.zone-chequered-line {
+    bottom: 10px;
+    left: 20%;
+    right: 20%;
+    height: 12px;
+    background: repeating-linear-gradient(
+        90deg,
+        #ffffff 0, #ffffff 12px,
+        #000000 12px, #000000 24px
+    );
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    opacity: 0.75;
+    pointer-events: none;
+    position: absolute;
+}
+
+/* Spacebar Interaction Prompt Badge floating above character */
+.mini-interaction-prompt {
+    position: absolute;
+    top: -54px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #001224;
+    border: 1.5px solid #ffd600;
+    color: #ffffff;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    font-size: 10px;
+    font-weight: 800;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 0 16px rgba(255, 214, 0, 0.75), 0 4px 10px rgba(0, 0, 0, 0.85);
+    z-index: 28;
+    animation: prompt-float 0.8s ease-in-out infinite alternate;
+    pointer-events: none;
+    font-family: var(--font-display);
+}
+
+.mini-interaction-prompt kbd {
+    background: #db0a40;
+    color: #ffffff;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 800;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    letter-spacing: 0.05em;
+    animation: kbd-pulse 0.8s infinite alternate;
+}
+
+@keyframes prompt-float {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-4px); }
+}
+
+@keyframes kbd-pulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.08); }
+}
+
+/* On-Screen Mobile D-Pad Overlay */
+.arena-dpad {
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    display: grid;
+    grid-template-columns: repeat(3, 32px);
+    grid-template-rows: repeat(3, 32px);
+    gap: 4px;
+    z-index: 20;
+    opacity: 0.85;
+}
+
+.dpad-btn {
+    background: rgba(0, 30, 60, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    border-radius: 6px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    transition: background 100ms;
+}
+
+.dpad-btn:active {
+    background: #db0a40;
+    transform: scale(0.92);
+}
+
+.dpad-up    { grid-column: 2; grid-row: 1; }
+.dpad-left  { grid-column: 1; grid-row: 2; }
+.dpad-down  { grid-column: 2; grid-row: 3; }
+.dpad-right { grid-column: 3; grid-row: 2; }
+.dpad-center {
+    grid-column: 2;
+    grid-row: 2;
+    background: rgba(219, 10, 64, 0.4);
+    border-color: #db0a40;
+    font-size: 10px;
+    color: #ffd600;
+}
+
+/* ==========================================================================
+   2D Mini Driver Character & Animations
+   ========================================================================== */
+.mini-driver-wrapper {
+    position: absolute;
+    z-index: 15;
+    pointer-events: none;
+    will-change: left, top;
+}
+
+/* Remote other drivers get a smooth interpolation transition */
+.mini-driver-wrapper:not(.is-self-driver) {
+    transition: left 0.1s linear, top 0.1s linear;
+}
+
+/* Idle Breathing Bounce */
+.mini-driver-wrapper.is-idle .mini-driver-svg {
+    animation: mini-idle-bob 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes mini-idle-bob {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-2px); }
+}
+
+/* Walking Energetic Bounce */
+.mini-driver-wrapper.is-walking .mini-driver-svg {
+    animation: mini-walk-bounce 0.18s infinite alternate;
+}
+
+.mini-driver-wrapper.is-walking .mini-driver-legs rect.leg-left {
+    animation: leg-swing-left 0.18s infinite alternate;
+}
+
+.mini-driver-wrapper.is-walking .mini-driver-legs rect.leg-right {
+    animation: leg-swing-right 0.18s infinite alternate;
+}
+
+@keyframes mini-walk-bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-4px); }
+}
+
+@keyframes leg-swing-left {
+    0% { transform: translateY(-2px); }
+    100% { transform: translateY(2px); }
+}
+
+@keyframes leg-swing-right {
+    0% { transform: translateY(2px); }
+    100% { transform: translateY(-2px); }
+}
+
+/* Boost Nitro Aura & Trail */
+.mini-driver-wrapper.is-boosted .mini-driver-svg {
+    filter: drop-shadow(0 0 8px #db0a40) drop-shadow(0 0 16px #ffd600);
+}
+
+.mini-boost-trail {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(219, 10, 64, 0.8) 0%, rgba(255, 214, 0, 0.3) 60%, transparent 100%);
+    animation: boost-pulse 0.25s infinite alternate;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes boost-pulse {
+    0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+    100% { transform: translate(-50%, -50%) scale(1.6); opacity: 0.3; }
+}
+
+/* Floating Name Tag Above Character */
+.mini-name-badge {
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    padding: 2px 7px;
+    border-radius: 9999px;
+    font-size: 10px;
+    font-weight: 800;
+    font-family: var(--font-mono);
+    line-height: 1;
+    pointer-events: none;
+    z-index: 20;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.mini-name-badge.is-self {
+    background: #db0a40;
+    color: #ffffff;
+    border: 1px solid #ffd600;
+    box-shadow: 0 0 8px rgba(219, 10, 64, 0.8);
+}
+
+.mini-name-badge:not(.is-self) {
+    background: rgba(0, 20, 45, 0.85);
+    color: #82b1ff;
+    border: 1px solid rgba(130, 177, 255, 0.4);
+}
+
+/* Floating Comic Speech Bubble */
+.mini-speech-bubble {
+    position: absolute;
+    top: -64px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ffffff;
+    color: #000000;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    max-width: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    pointer-events: none;
+    z-index: 30;
+    animation: speech-pop 0.25s var(--ease-snappy);
+    font-family: var(--font-sans);
+}
+
+@keyframes speech-pop {
+    0% { transform: translateX(-50%) scale(0.6); opacity: 0; }
+    100% { transform: translateX(-50%) scale(1); opacity: 1; }
+}
+
+.speech-arrow {
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #ffffff;
+}
+
+/* ==========================================================================
+   Column 2: Chat & Action Controls + Telemetry Mini Log
+   ========================================================================== */
+.paddock-controls-card {
+    background: #ffffff;
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-xl); /* 24px */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    padding: 22px;
+    gap: 16px;
+    justify-content: space-between;
+}
+
+/* Chat Input Bar */
+.paddock-chat-form {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+}
+
+.paddock-chat-input {
+    flex: 1;
+    background: var(--color-surface-soft);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-pill);
+    padding: 10px 18px;
+    font-size: 13.5px;
+    color: var(--color-ink);
+    outline: none;
+    font-family: var(--font-sans);
+    transition: border-color 150ms var(--ease-snappy), box-shadow 150ms var(--ease-snappy);
+}
+
+.paddock-chat-input:focus {
+    border-color: var(--color-primary);
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(0, 82, 255, 0.15);
+}
+
+.btn-paddock-send {
+    background: var(--color-primary); /* #0052ff Coinbase Blue */
+    color: #ffffff;
+    border: none;
+    border-radius: var(--rounded-pill);
+    padding: 8px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 82, 255, 0.25);
+    transition: background 150ms var(--ease-snappy), transform 100ms;
+}
+
+.btn-paddock-send:hover {
+    background: var(--color-primary-active);
+    transform: translateY(-1px);
+}
+
+.btn-paddock-send:active {
+    transform: translateY(0);
+}
+
+/* Zone Guide & Spacebar Interaction Missions */
+.paddock-zone-guide {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: var(--color-surface-soft);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-md);
+    padding: 12px 14px;
+}
+
+.zone-guide-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.zone-guide-header kbd {
+    background: var(--color-primary);
+    color: #ffffff;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    box-shadow: 0 1px 3px rgba(0, 82, 255, 0.3);
+}
+
+.zone-guide-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+}
+
+.zone-guide-item {
+    background: #ffffff;
+    border: 1px solid var(--color-hairline);
+    border-radius: 8px;
+    padding: 7px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 11px;
+    transition: all 180ms var(--ease-snappy);
+}
+
+.zone-guide-item.is-current {
+    border-color: var(--color-primary);
+    background: #f5f9ff;
+    box-shadow: 0 0 10px rgba(0, 82, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.zone-guide-item-title {
+    font-weight: 600;
+    color: var(--color-ink);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+}
+
+.zone-guide-item-desc {
+    font-size: 10px;
+    color: var(--color-muted);
+}
+
+/* Quick Speech Chips */
+.quick-chips-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.btn-quick-chip {
+    background: var(--color-surface-soft);
+    border: 1px solid var(--color-hairline);
+    color: var(--color-ink);
+    border-radius: var(--rounded-pill);
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 120ms var(--ease-snappy);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.btn-quick-chip:hover {
+    background: var(--color-surface-strong);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    transform: translateY(-1px);
+}
+
+/* Mini Telemetry Log Container */
+.paddock-minilog-wrap {
+    display: flex;
+    flex-direction: column;
+    background: #0a0b0d; /* Coinbase surface-dark */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--rounded-md);
+    overflow: hidden;
+    height: 200px;
+}
+
+.minilog-header {
+    background: #16181c;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 8px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.minilog-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #ffffff;
+    font-family: var(--font-mono);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.minilog-filters {
+    display: flex;
+    gap: 4px;
+}
+
+.btn-log-filter {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #a8acb3;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--font-mono);
+}
+
+.btn-log-filter.active {
+    background: var(--color-primary);
+    color: #ffffff;
+    border-color: var(--color-primary);
+}
+
+.minilog-clear-btn {
+    background: transparent;
+    border: none;
+    color: #a8acb3;
+    cursor: pointer;
+    font-size: 11px;
+    padding: 2px 6px;
+    transition: color 150ms;
+}
+
+.minilog-clear-btn:hover {
+    color: #ffffff;
+}
+
+/* Scrolling Log Body */
+.minilog-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px 12px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    scroll-behavior: smooth;
+}
+
+.minilog-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    animation: minilog-entry 0.15s ease-out;
+    word-break: break-all;
+}
+
+@keyframes minilog-entry {
+    from { opacity: 0; transform: translateX(-4px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.log-time {
+    color: #6c757d;
+    font-size: 10px;
+    flex-shrink: 0;
+}
+
+.log-badge-mini {
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 9px;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+.badge-move   { background: rgba(27, 106, 238, 0.2); color: #82b1ff; }
+.badge-chat   { background: rgba(0, 200, 83, 0.2); color: #00e676; }
+.badge-boost  { background: rgba(219, 10, 64, 0.25); color: #ff5252; }
+.badge-event  { background: rgba(255, 214, 0, 0.2); color: #ffd600; }
+.badge-join   { background: rgba(124, 58, 237, 0.25); color: #b388ff; }
+
+.log-user-name {
+    font-weight: 800;
+    color: #ffffff;
+    flex-shrink: 0;
+}
+
+.log-detail {
+    color: #cfd8dc;
+    flex: 1;
+}
+
+.log-detail.chat-msg {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* Responsive Rules */
+@media (max-width: 900px) {
+    .paddock-grid {
+        grid-template-columns: 1fr;
+    }
+    .paddock-arena-card {
+        min-height: 380px;
+    }
+    .paddock-arena-canvas {
+        min-height: 320px;
+    }
+}

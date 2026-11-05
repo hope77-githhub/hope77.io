@@ -1,0 +1,1273 @@
+/* ==========================================================================
+   Log Streamer & Telemetry Console Styles — Red Bull Design System Edition
+   Specification: redbull.md (Athletic-Maximalist & Deep Racing Navy / Vivid Red)
+   ========================================================================== */
+
+/* Fullscreen Overlay Container (Coinbase Surface-Dark Backdrop Scrim) */
+.log-stream-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background-color: rgba(10, 11, 13, 0.75); /* Coinbase surface-dark scrim */
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-base);
+    transition: opacity 0.25s var(--ease-snappy), visibility 0.25s ease;
+    opacity: 1;
+    visibility: visible;
+}
+
+.log-stream-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* Modal Terminal Box (Coinbase 24px Rounded Container) */
+.terminal-window {
+    width: 100%;
+    max-width: 920px;
+    height: 560px;
+    background: #ffffff;
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-xl); /* 24px */
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25), 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: var(--font-mono);
+    animation: term-appear 0.25s var(--ease-snappy);
+    position: relative;
+}
+
+@keyframes term-appear {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Terminal Header (Coinbase Surface-Dark Header) */
+.terminal-header {
+    background: #0a0b0d; /* Coinbase surface-dark */
+    border-bottom: 2px solid var(--color-primary); /* Coinbase Blue #0052ff */
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+}
+
+.terminal-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.term-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    transition: transform 0.15s ease;
+}
+
+.term-dot:hover {
+    transform: scale(1.15);
+}
+
+.term-dot-red { background: var(--color-semantic-down); }    /* Coinbase Red #cf202f */
+.term-dot-yellow { background: var(--color-accent-yellow); } /* Amber Yellow #f4b000 */
+.term-dot-green { background: var(--color-semantic-up); }    /* Coinbase Green #05b169 */
+
+.terminal-title {
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: var(--font-display);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: -0.01em;
+}
+
+.terminal-title i {
+    color: var(--color-primary); /* Coinbase Blue */
+}
+
+.terminal-title-tag {
+    background: rgba(0, 82, 255, 0.2);
+    color: #709bfd;
+    border: 1px solid rgba(0, 82, 255, 0.35);
+    padding: 3px 12px;
+    border-radius: var(--rounded-pill); /* 100px */
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+.terminal-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-term-action {
+    background: #16181c;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    border-radius: var(--rounded-pill);
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: background 150ms var(--ease-snappy);
+    font-family: var(--font-display);
+}
+
+.btn-term-action:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+}
+
+/* Race Start (Enter) Top Action Button */
+.btn-term-race-start {
+    background: var(--color-primary) !important; /* Coinbase Blue #0052ff */
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    color: #ffffff !important;
+    border-radius: var(--rounded-pill);
+    padding: 6px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 82, 255, 0.35);
+    transition: all 150ms var(--ease-snappy);
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+}
+
+.btn-term-race-start:hover {
+    background: var(--color-primary-active) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(0, 82, 255, 0.45);
+}
+
+.btn-term-race-start i {
+    color: #ffffff;
+}
+
+/* Primary Enter Button (Coinbase 100px Pill CTA) */
+.btn-term-enter {
+    background: var(--color-primary) !important; /* Coinbase Blue */
+    color: #ffffff !important;
+    border: none !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    padding: 8px 22px !important;
+    border-radius: var(--rounded-pill) !important; /* Full pill */
+    box-shadow: 0 4px 14px rgba(0, 82, 255, 0.3);
+}
+
+.btn-term-enter:hover {
+    background: var(--color-primary-active) !important;
+    transform: translateY(-1px);
+}
+
+.btn-term-enter:active {
+    background: #a80530 !important; /* Red Bull active */
+}
+
+@keyframes btn-pulse {
+    0%, 100% {
+        box-shadow: 0 4px 14px rgba(219, 10, 64, 0.4);
+    }
+    50% {
+        box-shadow: 0 4px 22px rgba(219, 10, 64, 0.7);
+    }
+}
+
+/* Metrics Bar (Red Bull High-Contrast Telemetry Bar) */
+.terminal-metrics-bar {
+    background: #f8f8f8; /* Red Bull surface-container */
+    border-bottom: 1px solid #e8e8e8;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #4a4a4a;
+    font-family: var(--font-mono);
+}
+
+.metric-group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.metric-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.metric-val {
+    color: #000000;
+    font-weight: 800;
+}
+
+#term-status-tag {
+    color: #db0a40; /* Red Bull Red */
+    font-weight: 800;
+}
+
+.progress-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.progress-track {
+    width: 140px;
+    height: 6px;
+    background: #e0e0e0;
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #db0a40; /* Red Bull Red */
+    width: 0%;
+    transition: width 0.25s ease-out;
+    border-radius: 9999px;
+}
+
+.progress-pct {
+    color: #000000;
+    font-weight: 800;
+    min-width: 38px;
+    font-size: 11px;
+}
+
+/* Terminal Body (Pure White & High-Legibility Telemetry) */
+.terminal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px 24px;
+    background: #ffffff;
+    font-size: 13px;
+    line-height: 1.65;
+    scroll-behavior: smooth;
+}
+
+.terminal-line {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 7px;
+    animation: line-fade-in 0.15s ease-out;
+}
+
+@keyframes line-fade-in {
+    from { opacity: 0; transform: translateX(-4px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.log-ts {
+    color: #8e9192;
+    font-size: 11px;
+    flex-shrink: 0;
+}
+
+.log-badge {
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+.log-info { background: #e3f0ff; color: #1b6aee; }
+.log-debug { background: #f3eeff; color: #7c3aed; }
+.log-ingest { background: #e8f8f0; color: #00c853; }
+.log-filter { background: #fff8e1; color: #f57f17; }
+.log-pipeline { background: #ffebee; color: #db0a40; }
+.log-metric { background: #ffebee; color: #db0a40; }
+.log-success { background: #e8f8f0; color: #00c853; font-weight: 800; }
+
+.log-source {
+    color: #4a4a4a;
+    font-size: 11px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.log-msg {
+    color: #000000;
+    flex: 1;
+    word-break: break-word;
+}
+
+.log-msg .highlight {
+    color: #001e3c; /* Red Bull Navy */
+    font-weight: 800;
+}
+
+.log-msg .accent {
+    color: #db0a40; /* Red Bull Red */
+    font-weight: 700;
+}
+
+.log-msg .success-text {
+    color: #00c853;
+    font-weight: 800;
+}
+
+/* Prompt Cursor */
+.prompt-cursor {
+    display: inline-block;
+    width: 8px;
+    height: 15px;
+    background: #db0a40;
+    vertical-align: middle;
+    animation: cursor-blink 1s infinite;
+}
+
+@keyframes cursor-blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+/* Terminal Footer */
+.terminal-footer {
+    background: #f8f8f8;
+    border-top: 1px solid #e8e8e8;
+    padding: 12px 20px;
+    font-size: 12px;
+    color: #4a4a4a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-display);
+}
+
+.terminal-footer-hint {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #000000;
+    font-weight: 500;
+}
+
+.terminal-footer-hint kbd {
+    background: #ffffff;
+    color: #000000;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    border: 1px solid #8e9192;
+    box-shadow: 0 1px 2px rgba(0, 15, 30, 0.08);
+}
+
+/* ==========================================================================
+   Red Bull Interactive Login Simulation Panel (Racing Session Auth)
+   ========================================================================== */
+.toss-login-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 24px;
+    background: #f8f8f8;
+    animation: login-panel-enter 0.25s var(--ease-snappy);
+}
+
+@keyframes login-panel-enter {
+    from {
+        opacity: 0;
+        transform: scale(0.96) translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.toss-login-card {
+    width: 100%;
+    max-width: 440px;
+    background: #ffffff;
+    border: 1px solid #e8e8e8;
+    border-radius: 16px; /* Red Bull rounded.lg */
+    padding: 32px 28px;
+    box-shadow: 0 8px 24px rgba(0, 15, 30, 0.12);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.toss-login-header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.toss-login-icon-wrap {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: #fff0f3;
+    color: #db0a40; /* Red Bull Red */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 4px;
+    box-shadow: 0 4px 12px rgba(219, 10, 64, 0.2);
+}
+
+.toss-login-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 800;
+    color: #000000;
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+.toss-login-desc {
+    font-family: var(--font-display);
+    font-size: 14px;
+    color: #4a4a4a;
+    margin: 0;
+    line-height: 1.45;
+}
+
+/* Field Stack */
+.toss-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.toss-field-label {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    color: #000000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toss-field-tag {
+    font-size: 11px;
+    color: #db0a40; /* Red Bull Red */
+    font-family: var(--font-mono);
+    font-weight: 800;
+}
+
+/* Input Box (Red Bull 8px Rounded Athletic Input) */
+.toss-input-box {
+    height: 48px;
+    background: #f5f5f5; /* surface-container-low */
+    border: 1px solid #8e9192;
+    border-radius: 8px; /* Red Bull rounded.DEFAULT */
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: #000000;
+    transition: all 150ms var(--ease-snappy);
+    position: relative;
+    overflow: hidden;
+}
+
+.toss-input-box.is-focused {
+    background: #ffffff;
+    border: 2px solid #1b6aee; /* Red Bull secondary blue focus */
+    box-shadow: inset 0 0 0 2px #1b6aee, 0 0 0 2px #ffffff;
+}
+
+.toss-input-icon {
+    color: #8e9192;
+    font-size: 14px;
+}
+
+.toss-input-box.is-focused .toss-input-icon {
+    color: #1b6aee;
+}
+
+.toss-input-value {
+    flex: 1;
+    color: #000000;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 700;
+}
+
+.toss-typing-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 16px;
+    background: #db0a40;
+    margin-left: 2px;
+    animation: cursor-blink 0.8s infinite;
+}
+
+/* Red Bull Signature 9999px Full Pill Button (Login CTA) */
+.btn-toss-login {
+    height: 48px;
+    background: #db0a40; /* Red Bull Primary Red */
+    color: #ffffff;
+    border: none;
+    border-radius: 9999px; /* Red Bull Full Pill */
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: background 150ms var(--ease-snappy);
+    box-shadow: 0 4px 14px rgba(219, 10, 64, 0.35);
+    margin-top: 4px;
+    letter-spacing: -0.01em;
+}
+
+.btn-toss-login:hover:not(:disabled) {
+    background: #c2073a;
+}
+
+.btn-toss-login.is-pressed,
+.btn-toss-login:active {
+    background: #a80530;
+    transform: scale(0.98);
+}
+
+.btn-toss-login.is-success {
+    background: #00c853 !important;
+    box-shadow: 0 4px 16px rgba(0, 200, 83, 0.35) !important;
+}
+
+/* 3-Dot Loader */
+.toss-loader-dots {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.toss-loader-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ffffff;
+    animation: loader-bounce 1s infinite ease-in-out;
+}
+
+.toss-loader-dot:nth-child(1) { animation-delay: 0s; }
+.toss-loader-dot:nth-child(2) { animation-delay: 0.2s; }
+.toss-loader-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes loader-bounce {
+    0%, 80%, 100% {
+        transform: scale(0.6);
+        opacity: 0.4;
+    }
+    40% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+}
+
+/* ==========================================================================
+   Netflix "Drive to Survive" — F1 World Record Pit Stop Experience
+   ========================================================================== */
+
+/* Main Pit Stop Arena Theater */
+.pitstop-arena {
+    flex: 1;
+    background: radial-gradient(circle at 50% 15%, #001e3c 0%, #000c18 80%, #000810 100%);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px 28px;
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+    font-family: var(--font-display);
+}
+
+/* Subtle Animated Carbon Weave Grid Background */
+.pitstop-arena::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(27, 106, 238, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(27, 106, 238, 0.05) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+}
+
+/* Top Telemetry Strip */
+.pitstop-hud-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    z-index: 2;
+}
+
+.pitstop-race-status {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.race-pos-tag {
+    background: #ffd600; /* F1 P1 Gold */
+    color: #000000;
+    font-weight: 800;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    letter-spacing: 0.05em;
+}
+
+.race-lap-info {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: #b0c4de;
+    letter-spacing: 0.05em;
+}
+
+/* Pit Gantry Start Lights (5 Red -> 5 Green) */
+.gantry-box {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 6px 14px;
+    border-radius: 9999px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.gantry-bulb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #252830;
+    transition: all 0.2s var(--ease-snappy);
+}
+
+.gantry-bulb.red {
+    background: #db0a40;
+    box-shadow: 0 0 12px #db0a40, 0 0 20px rgba(219, 10, 64, 0.6);
+}
+
+.gantry-bulb.green {
+    background: #00c853;
+    box-shadow: 0 0 14px #00c853, 0 0 24px rgba(0, 200, 83, 0.8);
+    animation: gantry-green-pulse 0.5s infinite alternate;
+}
+
+@keyframes gantry-green-pulse {
+    from { transform: scale(1); filter: brightness(1); }
+    to { transform: scale(1.15); filter: brightness(1.3); }
+}
+
+/* Main 3-Column Arena Grid */
+.pitstop-grid {
+    display: grid;
+    grid-template-columns: 240px 1fr 240px;
+    gap: 20px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    margin: 16px 0;
+}
+
+/* 1. Left Card: Team Radio & Driver Comms */
+.radio-hud-card {
+    background: rgba(0, 22, 43, 0.7);
+    border: 1px solid rgba(27, 106, 238, 0.3);
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 8px 20px rgba(0, 15, 30, 0.4);
+    backdrop-filter: blur(8px);
+}
+
+.radio-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.radio-channel-name {
+    font-size: 11px;
+    font-weight: 800;
+    color: #82b1ff;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.radio-equalizer {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 14px;
+}
+
+.radio-bar {
+    width: 3px;
+    background: #db0a40;
+    border-radius: 2px;
+    animation: radio-wave 0.8s infinite ease-in-out;
+}
+
+.radio-bar:nth-child(1) { height: 40%; animation-delay: 0.1s; }
+.radio-bar:nth-child(2) { height: 90%; animation-delay: 0.3s; }
+.radio-bar:nth-child(3) { height: 60%; animation-delay: 0.2s; }
+.radio-bar:nth-child(4) { height: 100%; animation-delay: 0.4s; }
+
+@keyframes radio-wave {
+    0%, 100% { transform: scaleY(0.4); }
+    50% { transform: scaleY(1); }
+}
+
+.radio-quote-box {
+    background: rgba(0, 10, 20, 0.6);
+    border-radius: 8px;
+    padding: 10px 12px;
+    border-left: 3px solid #1b6aee;
+}
+
+.radio-speaker {
+    font-size: 10px;
+    font-weight: 800;
+    color: #ffd600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+}
+
+.radio-message {
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: #ffffff;
+    font-family: var(--font-sans);
+    font-style: italic;
+}
+
+/* 2. Center Stage: Realistic F1 Car Chassis & Direct Wheel Mounting HUD */
+.car-chassis-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 0;
+}
+
+.chassis-wrapper {
+    position: relative;
+    width: 145px;
+    height: 380px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Realistic F1 RB20 Real Livery Image */
+.f1-car-real-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+    filter: drop-shadow(0 0 20px rgba(0, 15, 30, 0.95)) drop-shadow(0 0 14px rgba(27, 106, 238, 0.4));
+    transition: transform 0.25s var(--ease-snappy);
+    z-index: 2;
+    user-select: none;
+    pointer-events: none;
+}
+
+.car-chassis-stage.is-jacking .f1-car-real-image {
+    transform: translateY(-6px) scale(1.02);
+}
+
+.car-chassis-stage.is-released .f1-car-real-image {
+    transform: translateY(0) scale(1);
+    animation: car-rev 0.25s infinite alternate;
+}
+
+@keyframes car-rev {
+    from { transform: translateY(0); }
+    to { transform: translateY(-1.5px); }
+}
+
+/* Realistic F1 Wheel Component (Direct Tire Installation & High-Speed Nut Spin) */
+.f1-wheel-wrapper {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    z-index: 10;
+    transition: transform 0.25s var(--ease-snappy), opacity 0.2s ease;
+    pointer-events: none;
+}
+
+/* 4 Precise Wheel Axle Hub Coordinates on the Real Livery */
+.f1-wheel-wrapper.fl { left: 13.5%; top: 26.3%; }
+.f1-wheel-wrapper.fr { left: 86.5%; top: 26.3%; }
+.f1-wheel-wrapper.rl { left: 14.9%; top: 86.1%; }
+.f1-wheel-wrapper.rr { left: 85.1%; top: 86.1%; }
+
+/* Unmounting Animation (Jacking Phase - Old Tires Slide Off) */
+.f1-wheel-wrapper.fl.is-unmounting,
+.f1-wheel-wrapper.rl.is-unmounting {
+    transform: translate(calc(-50% - 35px), -50%) scale(0.85);
+    opacity: 0;
+}
+
+.f1-wheel-wrapper.fr.is-unmounting,
+.f1-wheel-wrapper.rr.is-unmounting {
+    transform: translate(calc(-50% + 35px), -50%) scale(0.85);
+    opacity: 0;
+}
+
+/* Direct Wheel Mounting Slide-In Animation (새 타이어를 직접 꽂는 연출) */
+.f1-wheel-wrapper.fl.is-mounting,
+.f1-wheel-wrapper.rl.is-mounting {
+    animation: mount-snap-left 0.35s ease-out forwards;
+}
+
+.f1-wheel-wrapper.fr.is-mounting,
+.f1-wheel-wrapper.rr.is-mounting {
+    animation: mount-snap-right 0.35s ease-out forwards;
+}
+
+@keyframes mount-snap-left {
+    from { transform: translate(calc(-50% - 40px), -50%) scale(0.85); opacity: 0.3; }
+    to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+@keyframes mount-snap-right {
+    from { transform: translate(calc(-50% + 40px), -50%) scale(0.85); opacity: 0.3; }
+    to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+/* Realistic Rubber Tyre & Rim Body */
+.f1-realistic-tyre {
+    width: 28px;
+    height: 50px;
+    background: radial-gradient(circle at 50% 50%, #20222a 0%, #0d0e12 90%);
+    border-radius: 5px;
+    position: relative;
+    border: 1.5px solid #2c303c;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Pirelli Red Soft Sidewall Stripe */
+.f1-realistic-tyre::before {
+    content: "";
+    position: absolute;
+    inset: 2.5px;
+    border-radius: 3px;
+    border: 1.5px solid #db0a40; /* Pirelli Red Soft */
+    opacity: 0.95;
+    pointer-events: none;
+}
+
+/* Inner OZ Racing Wheel Rim */
+.f1-wheel-rim {
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #383e4a 0%, #15181e 85%);
+    border: 1.5px solid #8e9192;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 4px #000000;
+}
+
+/* Multi-Spokes */
+.f1-wheel-spokes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.f1-wheel-spokes::before,
+.f1-wheel-spokes::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    right: 10%;
+    height: 1.5px;
+    background: #6b7484;
+    transform: translateY(-50%);
+}
+
+.f1-wheel-spokes::after {
+    transform: translateY(-50%) rotate(90deg);
+}
+
+/* Center Lock Nut */
+.f1-center-nut {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #ffd600; /* Red Bull Center Nut Gold/Yellow */
+    border: 1px solid #ffffff;
+    z-index: 2;
+    transition: all 0.2s ease;
+}
+
+/* "빙글빙글" Wheel Gun Rapid Spin Animation */
+.is-spinning .f1-wheel-rim {
+    animation: wheel-gun-rapid-spin 0.08s infinite linear;
+}
+
+.is-spinning .f1-realistic-tyre {
+    border-color: #ffd600;
+    box-shadow: 0 0 14px rgba(255, 214, 0, 0.8), inset 0 0 6px rgba(255, 214, 0, 0.4);
+}
+
+@keyframes wheel-gun-rapid-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Spinning Wheel Gun Socket & Sparks */
+.is-spinning .f1-wheel-wrapper::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 26px;
+    height: 26px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 2px dashed #ffd600;
+    animation: wheel-gun-rapid-spin 0.16s infinite linear;
+    pointer-events: none;
+}
+
+/* Torque Locked State (100% Locked) */
+.is-locked .f1-center-nut {
+    background: #00c853;
+    box-shadow: 0 0 8px #00c853;
+}
+
+.is-locked .f1-realistic-tyre {
+    border-color: #00c853;
+    box-shadow: 0 0 12px rgba(0, 200, 83, 0.6);
+}
+
+.wheel-torque-badge {
+    font-size: 8px;
+    font-weight: 800;
+    font-family: var(--font-mono);
+    color: #8e9192;
+    letter-spacing: 0.05em;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 1.5px 5px;
+    border-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    white-space: nowrap;
+}
+
+.wheel-torque-badge.spinning {
+    color: #ffd600;
+    border-color: #ffd600;
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.wheel-torque-badge.locked {
+    color: #00c853;
+    border-color: rgba(0, 200, 83, 0.5);
+    background: rgba(0, 25, 10, 0.9);
+}
+
+/* Jack Status Indicators */
+.jack-status-hud {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #b0c4de;
+    margin-top: 8px;
+    font-family: var(--font-mono);
+}
+
+.jack-badge {
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.jack-badge.active {
+    background: #00c853;
+    color: #000000;
+    font-weight: 800;
+}
+
+/* 3. Right Card: World Record Stopwatch & Speed Telemetry */
+.stopwatch-hud-card {
+    background: rgba(0, 22, 43, 0.7);
+    border: 1px solid rgba(27, 106, 238, 0.3);
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 15, 30, 0.4);
+    backdrop-filter: blur(8px);
+}
+
+.stopwatch-label {
+    font-size: 11px;
+    font-weight: 800;
+    color: #82b1ff;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.stopwatch-time-digits {
+    font-family: var(--font-mono);
+    font-size: 38px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    text-shadow: 0 0 16px rgba(255, 255, 255, 0.3);
+}
+
+.stopwatch-time-digits.record-done {
+    color: #00c853;
+    text-shadow: 0 0 20px rgba(0, 200, 83, 0.7);
+}
+
+.stopwatch-record-badge {
+    font-size: 10px;
+    font-weight: 800;
+    background: rgba(0, 200, 83, 0.2);
+    color: #00c853;
+    border: 1px solid rgba(0, 200, 83, 0.4);
+    padding: 3px 10px;
+    border-radius: 9999px;
+    letter-spacing: 0.05em;
+}
+
+.pit-speed-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 6px 10px;
+    background: rgba(0, 10, 20, 0.5);
+    border-radius: 6px;
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: #b0c4de;
+}
+
+.speed-number {
+    color: #ffd600;
+    font-weight: 800;
+}
+
+/* Bottom Action & ENTER Section */
+.pitstop-bottom-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    z-index: 2;
+}
+
+/* Ready State Enter CTA */
+.pitstop-enter-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    animation: enter-pop 0.3s var(--ease-snappy);
+}
+
+@keyframes enter-pop {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.btn-pitstop-enter {
+    background: #db0a40 !important;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 9999px;
+    padding: 13px 40px;
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(219, 10, 64, 0.5), 0 0 30px rgba(219, 10, 64, 0.3);
+    transition: all 150ms var(--ease-snappy);
+    animation: pitstop-cta-pulse 1.6s infinite;
+}
+
+.btn-pitstop-enter:hover {
+    background: #c2073a !important;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 6px 26px rgba(219, 10, 64, 0.7);
+}
+
+@keyframes pitstop-cta-pulse {
+    0%, 100% {
+        box-shadow: 0 4px 20px rgba(219, 10, 64, 0.5);
+    }
+    50% {
+        box-shadow: 0 4px 32px rgba(219, 10, 64, 0.85), 0 0 40px rgba(219, 10, 64, 0.4);
+    }
+}
+
+.enter-key-hint {
+    font-size: 12px;
+    color: #b0c4de;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.enter-key-hint kbd {
+    background: #ffffff;
+    color: #000000;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 800;
+}
+
+/* In-Progress Race Start Button */
+.btn-pitstop-race-start {
+    background: #db0a40 !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    color: #ffffff !important;
+    border-radius: 9999px;
+    padding: 7px 20px;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    box-shadow: 0 2px 12px rgba(219, 10, 64, 0.45);
+    transition: all 150ms var(--ease-snappy);
+    font-family: var(--font-display);
+    animation: btn-race-start-pulse 2s infinite ease-in-out;
+}
+
+.btn-pitstop-race-start:hover {
+    background: #c2073a !important;
+    transform: translateY(-1px) scale(1.03);
+    box-shadow: 0 4px 18px rgba(219, 10, 64, 0.75);
+}
+
+.btn-pitstop-race-start i {
+    color: #ffd600;
+}
+
+/* In-Progress Skip Button */
+.btn-pitstop-skip {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #b0c4de;
+    border-radius: 9999px;
+    padding: 7px 20px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 150ms var(--ease-snappy);
+}
+
+.btn-pitstop-skip:hover {
+    background: rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .pitstop-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+    .radio-hud-card, .stopwatch-hud-card {
+        width: 100%;
+    }
+    .chassis-wrapper {
+        width: 220px;
+        height: 180px;
+    }
+}
+
