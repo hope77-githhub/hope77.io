@@ -211,7 +211,7 @@ export default function HeroSection({ onOpenTerminal, onNavigateToProjects, onNa
                     <i className="fas fa-stream"></i>
                     <h3>{t('프로젝트 타임라인 (Project Timeline)', 'Project Timeline')}</h3>
                   </div>
-                  <span className="compact-count-badge">4 Milestones</span>
+                  <span className="compact-count-badge">{MILESTONES_DATA.length} Milestones</span>
                 </div>
                 <div className="compact-timeline-list">
                   {MILESTONES_DATA.map((milestone) => (

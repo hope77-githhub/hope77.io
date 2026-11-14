@@ -992,5 +992,259 @@ Confirmed that in privacy-sensitive domains, zero-server in-memory sandboxes pro
 Reaffirmed that deeply understanding domain-specific quirks (such as unique byte rules) and building precision tools delivers immense real-world productivity gains.`
       }
     ]
+  },
+  // =========================================================================
+  // 5. FCO Live Boost (FC온라인 UCL 라이브 부스트 예측)
+  // =========================================================================
+  {
+    id: 'log-entry-fco-liveboost',
+    category: 'Sports Data & Predictive Modeling',
+    badgeTextKo: '진행 중 (Active)',
+    badgeTextEn: 'Active Project',
+    badgeType: 'info',
+    titleKo: 'FCO Live Boost — FC온라인 챔스 라이브 부스트 예측',
+    titleEn: 'FCO Live Boost — FC Online Champions League Live Boost Predictor',
+    tabLabelKo: 'FCO 라이브 부스트',
+    tabLabelEn: 'FCO Live Boost',
+    oneLinerKo: '실제 UEFA 챔피언스리그 경기 스탯과 지난 라운드 라이브 부스트 결과로, 공개되지 않은 경기 평점을 거꾸로 추정해 선수별 다음 라운드 오버롤(OVR)을 예측하는 분석 도구',
+    oneLinerEn: 'Reverse-engineers the hidden match ratings behind FC Online UCL Live Boosts from real match stats and past boost results, then predicts each player\'s next-round OVR.',
+    roleKo: '개인 프로젝트 · 데이터 수집, 모델링, 풀스택 개발',
+    roleEn: 'Personal Project · Data Collection, Modeling & Full-Stack Development',
+    period: '2026.11 – 현재 (Active)',
+    techStack: ['Python', 'FastAPI', 'React & TypeScript', 'BeautifulSoup', 'NumPy (Ridge Regression)', 'scikit-learn (Random Forest)', 'SHAP', 'Claude API (Vision)', 'pytest'],
+
+    metricsHeadingKo: '현재까지의 결과 (Progress So Far)',
+    metricsHeadingEn: 'Progress So Far',
+    keyMetrics: [
+      {
+        valueKo: '스탯만으로 부스트 단계 ±1 이내 적중 88.2%',
+        valueEn: '88.2% Within ±1 Boost Step from Stats Alone',
+        icon: 'fas fa-bullseye'
+      },
+      {
+        valueKo: '16강 16경기 · 선수 기록 499건 약 45초 수집',
+        valueEn: 'Round of 16: 16 Matches, 499 Player Records in ~45s',
+        icon: 'fas fa-cloud-arrow-down'
+      },
+      {
+        valueKo: '경기 스탯 38종 → 내부 평점 역산 모델',
+        valueEn: '38 Match Stats → Reverse-Engineered Rating Model',
+        icon: 'fas fa-calculator'
+      },
+      {
+        valueKo: '부스트 표 이미지 붙여넣기 → 자동 인식 · 검증',
+        valueEn: 'Paste a Boost Table Image → Auto-Read & Validated',
+        icon: 'fas fa-image'
+      }
+    ],
+
+    pipelineFlow: [
+      { step: '01', titleKo: '라운드 경기 스탯 수집 (FotMob)', titleEn: 'Round Match Stats (FotMob)' },
+      { step: '02', titleKo: '라이브 부스트 결과 입력 · 검증', titleEn: 'Live Boost Results Input & Validation' },
+      { step: '03', titleKo: '선수 매칭 & 스탯 표준화', titleEn: 'Player Matching & Stat Standardization' },
+      { step: '04', titleKo: '내부 평점 역산 모델 학습', titleEn: 'Hidden Rating Model Training' },
+      { step: '05', titleKo: '선수별 다음 라운드 OVR 예측', titleEn: 'Next-Round OVR Prediction' }
+    ],
+
+    beforeAfter: {
+      beforeKo: '라이브 부스트는 비공개 경기 평점으로 정해져, 어떤 선수가 얼마나 오를지는 경기 하이라이트나 외부 평점을 보고 감으로 짐작할 수밖에 없었습니다. 선수 카드 구매·강화 판단에 쓸 근거가 부족했습니다.',
+      beforeEn: 'Live Boosts depend on hidden match ratings, so predicting who would rise was guesswork based on highlights or third-party ratings, leaving little basis for card decisions.',
+      afterKo: '라운드가 끝나면 경기 스탯을 한 번에 모으고, 지난 라운드 결과로 학습한 모델이 선수별 내부 평점과 예상 OVR을 보여줍니다. 어떤 스탯이 부스트를 가르는지도 데이터로 확인할 수 있습니다.',
+      afterEn: 'After each round, match stats are collected in one pass and a model trained on past results shows each player\'s estimated rating and expected OVR, along with which stats drive boosts.'
+    },
+
+    sections: [
+      {
+        num: '01',
+        titleKo: '01. Background & Problem (배경 및 문제점)',
+        titleEn: '01. Background & Problem (Hidden Ratings Behind Live Boosts)',
+        contentKo: `### 1. 실제 경기 결과가 게임 카드 능력치로 이어지는 라이브 부스트
+FC온라인 UEFA 챔피언스리그 시즌 카드는 실제 토너먼트 경기(1차·2차전) 활약에 따라 라운드마다 오버롤(OVR)이 오르거나 내립니다. 기준 OVR 구간마다 최대 상승·하락 폭이 정해져 있고, 라운드가 진행될수록 MAX OVR도 올라갑니다.
+
+### 2. 결과를 정하는 평점은 공개되지 않는다
+부스트 폭은 경기별 평점의 평균으로 정해지지만, 그 평점은 공개되지 않습니다. 외부 사이트 평점과도 눈금이 달라, 유저는 "누가 얼마나 오를지"를 감으로 짐작할 수밖에 없었습니다.
+
+### 3. 흩어진 데이터와 수작업
+라이브 부스트 결과는 공지 이미지로, 경기 스탯은 외부 사이트에 흩어져 있어 직접 모아 비교하는 데 시간이 오래 걸렸습니다.`,
+        contentEn: `### 1. Live Boosts Tie Real Matches to Card Stats
+FC Online UCL cards gain or lose OVR each round based on real knockout performances. Each OVR band has a maximum rise and drop, and the MAX OVR climbs as the tournament progresses.
+
+### 2. The Deciding Ratings Are Hidden
+Boost size follows the average of per-match ratings that are never published and don't match third-party rating scales, leaving players to guess.
+
+### 3. Scattered Data, Manual Work
+Boost results live in announcement images and match stats on external sites, so gathering and comparing them took a long time.`
+      },
+      {
+        num: '02',
+        titleKo: '02. Introduction & Objective (개발 목표)',
+        titleEn: '02. Introduction & Objective',
+        contentKo: `### 1. 정답에서 거꾸로 평점을 찾는다
+공개된 정답은 라이브 부스트 결과뿐입니다. 그래서 외부 평점에 기대지 않고, 경기 스탯과 실제 부스트 결과만으로 "보이지 않는 평점"을 역산하는 모델을 목표로 했습니다.
+
+### 2. 라운드가 끝나면 한 번에
+시즌과 라운드만 고르면 그 라운드 모든 경기의 선수 스탯을 모으고, 부스트 표는 이미지를 붙여넣기만 하면 읽어 들이도록 데이터 준비 과정을 자동화합니다.
+
+### 3. 숫자로 확인하는 예측
+선수마다 경기별 추정 평점, 평균, 현재 OVR → 예상 OVR을 한 화면에서 보여주고, 어떤 스탯이 부스트를 가르는지 데이터 탐색 화면으로 설명합니다.`,
+        contentEn: `### 1. Work Backward from the Only Ground Truth
+Boost results are the only public answer, so the model reverse-engineers hidden ratings from match stats and actual boosts, without relying on third-party ratings.
+
+### 2. One Pass per Round
+Pick a season and round to collect every player's stats; paste the boost table image to load results.
+
+### 3. Explainable Predictions
+Per-match estimated ratings, averages, and current → expected OVR on one screen, plus exploration views showing which stats separate boosts.`
+      },
+      {
+        num: '03',
+        titleKo: '03. System Architecture & Data Flow (시스템 아키텍처 및 데이터 흐름)',
+        titleEn: '03. System Architecture & Data Flow',
+        architectureDiagrams: [
+          {
+            id: 'diag-fco-system',
+            tabTitleKo: '시스템 아키텍쳐',
+            tabTitleEn: 'System Architecture',
+            titleKo: '시스템 아키텍쳐',
+            titleEn: 'System Architecture',
+            defaultScale: 0.75,
+            mermaidChart: `flowchart TD
+    subgraph Sources["데이터 소스"]
+        FM["FotMob 경기 페이지<br/>(대회 일정 · 선수 경기 스탯)"]
+        IMG["라이브 부스트 공지 이미지"]
+        HM["히트맵 캡처"]
+    end
+
+    subgraph Backend["FastAPI 백엔드"]
+        CR["라운드 크롤러<br/>(1~2초 대기 · 캐시 · 차단 시 중단)"]
+        EX["표 이미지 인식<br/>(Claude API)"]
+        VA["표 검증<br/>(변동폭 규칙 · 이름 제안)"]
+        ST["선수 스탯 저장소<br/>(시즌 · 라운드 · 팀)"]
+        MD["평점 역산 모델<br/>(릿지 회귀)"]
+        SH["데이터 탐색<br/>(랜덤 포레스트 + SHAP)"]
+    end
+
+    subgraph Frontend["React + TypeScript"]
+        P1["예측"]
+        P2["예측 모델"]
+        P3["데이터 탐색 1 · 2"]
+    end
+
+    FM --> CR --> ST
+    IMG --> EX --> VA --> ST
+    HM --> ST
+    ST --> MD --> P1
+    ST --> SH --> P3
+    MD --> P2`
+          },
+          {
+            id: 'diag-fco-model',
+            tabTitleKo: '예측 모델',
+            tabTitleEn: 'Prediction Model',
+            titleKo: '예측 모델 흐름',
+            titleEn: 'Prediction Model Flow',
+            defaultScale: 1.0,
+            mermaidChart: `flowchart LR
+    S["경기 스탯 38종<br/>+ 경기 결과"] --> Z["표준화<br/>z = (값 − 평균) / 표준편차"]
+    Z --> M["경기 점수<br/>s = b + Σ w · z"]
+    M --> R["라운드 점수<br/>S = Σ s / 경기 수"]
+    R --> C["구간 상한 · 하한으로 자르기<br/>(라운드 종료 MAX OVR 반영)"]
+    C --> O["예상 부스트 → 예상 OVR"]
+    M --> G["추정 내부 평점<br/>6.0 + 0.5 · s"]
+    T["실제 라이브 부스트 결과<br/>(정답)"] -. "학습 · LOO 검증" .-> M`
+          }
+        ]
+      },
+      {
+        num: '04',
+        titleKo: '04. Method & Engineering (모델링 및 엔지니어링)',
+        titleEn: '04. Method & Engineering',
+        contentKo: `### 1. 스탯 → 내부 평점 역산 모델
+- 경기 스탯 38종(득점, xG, 패스, 경합, 수비, 선방 등)과 경기 결과를 같은 선수군 평균·표준편차로 표준화한 뒤, 가중합으로 경기 점수를 만듭니다. 라운드 점수는 경기 점수의 평균이고, 이를 OVR 구간별 최대 상승·하락 폭과 MAX OVR로 잘라 예상 부스트를 냅니다.
+- 학습은 릿지 회귀이며, 출전 비율 항만 벌점 없이 두고 스탯에는 벌점을 줍니다. 벌점 크기와 화면에 보이는 정확도는 모두 한 명씩 빼고 맞히기(LOO) 기준입니다.
+- **외부 평점은 쓰지 않습니다.** 외부 평점을 넣으면 정확도가 오르지만 정답이 아니므로, 스탯만으로 평점을 잘 뽑는 것을 과제로 남겼습니다.
+
+### 2. 부스트를 가르는 스탯 찾기 (SHAP)
+- 선수를 오름·변동 없음·내림 세 그룹으로 나누고, 랜덤 포레스트 분류기와 TreeSHAP으로 어떤 스탯이 그룹을 가르는지 선수별로 보여줍니다. 팀 하나를 빼고 학습하는 교차 검증으로 신뢰도도 함께 표시합니다.
+
+### 3. 예의 바른 크롤러
+- 대회 일정 페이지 한 번으로 라운드 경기 목록을 얻고, 경기 페이지 하나에 담긴 데이터로 출전 선수 전원의 스탯을 읽어 요청 수를 최소화했습니다.
+- 요청 사이 1~2초 무작위 대기, 프로그램 이름을 밝힌 User-Agent, 받은 페이지 캐시, 403·429 응답 시 즉시 중단을 지키고, robots.txt가 막은 경로는 쓰지 않습니다.
+
+### 4. 이미지 한 장으로 정답 입력
+- 라이브 부스트 공지 표 이미지를 붙여넣으면 Claude API로 표를 읽고, 변동폭이 OVR 구간 규칙 안에 있는지, 이름이 팀 명단과 맞는지 검증해 비슷한 이름을 제안합니다. 키가 없으면 이미지를 띄워 두고 직접 입력으로 넘어갑니다.
+
+### 5. 토너먼트 규칙 반영
+- 1·2차전 합산 스코어와 승부차기 승자를 계산하고(원정 다득점 폐지 반영), 결승처럼 경기 수가 다른 라운드와 미출전 경기(변동 0으로 처리)를 규칙으로 다룹니다.`,
+        contentEn: `### 1. Stats → Hidden Rating Model
+- 38 match stats plus match results are standardized against the player pool and combined into a per-match score; the round score is their average, clipped to each OVR band's max rise/drop and the MAX OVR.
+- Ridge regression with an unpenalized appearance term; penalty strength and reported accuracy both use leave-one-out validation.
+- **No third-party ratings.** They raise accuracy but aren't ground truth, so improving stat-only estimates remains the goal.
+
+### 2. Which Stats Separate Boosts (SHAP)
+- Players are grouped into up / unchanged / down; a random forest with TreeSHAP shows per-player stat contributions, with leave-one-team-out accuracy.
+
+### 3. A Polite Crawler
+- One schedule page per round plus one page per match covers every player, minimizing requests.
+- 1–2s random delays, an identifying User-Agent, page caching, immediate stop on 403/429, and robots.txt-disallowed paths left alone.
+
+### 4. Ground Truth from One Image
+- Pasted boost-table images are read via the Claude API and validated against band rules and team rosters, with name suggestions; manual entry is the fallback.
+
+### 5. Tournament Rules
+- Aggregate scores and shoot-out winners (no away-goals rule), single-match finals, and non-appearances (treated as no change) are handled explicitly.`
+      },
+      {
+        num: '05',
+        titleKo: '05. Results & Current Status (현재 결과 및 진행 상황)',
+        titleEn: '05. Results & Current Status',
+        highlight: true,
+        contentKo: `### 25/26 챔스 16강 기준 모델 성능 (진행 중)
+라이브 부스트 표와 경기 스탯이 같은 선수로 이어진 15개 팀 162명으로 학습했고, 반복 10겹 교차검증 기준 결과는 아래와 같습니다.
+
+- **부스트 단계 정확 적중 39.0%, ±1 이내 88.2%, 평균 오차 0.74단계** (외부 평점 없이 스탯만 사용)
+- 16강 16경기 · 선수 기록 499건을 약 45초에 수집
+- 24/25, 25/26 두 시즌 데이터 구조를 갖추고, 다음 시즌은 설정만 바꿔 추가할 수 있게 구성
+
+### 화면 구성
+- **예측**: 라운드 · 팀을 고르면 선수별 경기 평점(추정), 평균, 현재 OVR → 예상 OVR을 표시합니다.
+- **예측 모델**: 부스트 표 이미지 붙여넣기, 라운드 전체 가져오기, 저장된 데이터 관리, 모델 학습과 적용 규칙을 한 곳에서 다룹니다.
+- **데이터 탐색 1 · 2**: 최대 상승폭별 부스트 분포와, SHAP으로 본 부스트를 가르는 스탯을 보여줍니다.`,
+        contentEn: `### Model Performance on 25/26 Round of 16 (In Progress)
+Trained on 162 players across 15 teams where boost tables and match stats link to the same player; repeated 10-fold cross-validation:
+
+- **39.0% exact, 88.2% within ±1 boost step, mean error 0.74 steps** (stats only)
+- 16 matches / 499 player records collected in ~45 seconds
+- Data structured for 24/25 and 25/26; future seasons are added via configuration
+
+### Screens
+- **Predict**: per-player estimated match ratings, averages, and current → expected OVR by round and team.
+- **Model**: boost-table image paste, full-round import, stored data, training, and rules.
+- **Explore 1 · 2**: boost distributions by max-rise band, and SHAP views of the stats that separate boosts.`
+      },
+      {
+        num: '06',
+        titleKo: '06. Next Steps & Lessons (다음 단계 및 배운 점)',
+        titleEn: '06. Next Steps & Lessons',
+        contentKo: `### 1. 정답이 무엇인지부터 정한다
+- 외부 평점을 넣으면 숫자는 좋아지지만 정답이 아닌 값에 맞추는 셈이 됩니다. 무엇을 맞힐지 먼저 정하고 그 기준을 지키는 것이 모델의 신뢰를 만든다는 점을 확인했습니다.
+
+### 2. 작은 데이터에서는 검증 방식이 성능만큼 중요하다
+- 선수 수가 많지 않아 LOO와 팀 단위 교차 검증으로 과적합을 경계하고, 화면에 보이는 정확도도 같은 기준으로 맞췄습니다.
+
+### 3. 다음 단계
+- 스탯만으로 평점 추정 정확도 높이기 (포지션별 가중치, 히트맵 구역 활동 비중 활용)
+- 8강 · 4강 · 결승 결과가 쌓이는 대로 재학습하고, 26/27 시즌으로 확장`,
+        contentEn: `### 1. Define the Ground Truth First
+- Third-party ratings improve the numbers but fit the wrong target; holding to the real answer is what makes the model trustworthy.
+
+### 2. With Small Data, Validation Matters as Much as Accuracy
+- Leave-one-out and leave-one-team-out validation guard against overfitting, and the UI reports the same metrics.
+
+### 3. Next Steps
+- Improve stat-only rating estimates (position-specific weights, heatmap zone shares)
+- Retrain as later rounds arrive and extend to the 26/27 season`
+      }
+    ]
   }
 ];

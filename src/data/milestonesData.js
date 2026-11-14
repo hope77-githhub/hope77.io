@@ -66,5 +66,22 @@ export const MILESTONES_DATA = [
     summaryEn: '60Hz UDP lossless parsing, 24-circuit mapping & AI voice coaching',
     bodyKo: 'F1 게임 UDP 20777 포트로부터 고빈도 주행 텔레메트리 데이터를 실시간 인덱싱하고 공식 서킷 좌표계에 트랙 매핑을 완료했으며, 최적 피트 스탑 타이밍을 알려주는 AI Voice 음성 피드백 에이전트를 개발하고 있습니다.',
     bodyEn: 'Implemented 60Hz UDP telemetry parsing and true-to-scale circuit track mapping, developing a real-time AI voice coach for live pit stop strategy advice.'
+  },
+  {
+    id: 'm5',
+    projectId: 'log-entry-fco-liveboost',
+    periodKo: '2026.11 – 현재',
+    periodEn: '2026.11 – Present',
+    titleKo: 'FCO Live Boost 라이브 부스트 예측 모델 개발',
+    titleEn: 'FCO Live Boost Prediction Model',
+    shortTitleKo: 'FCO Live Boost',
+    shortTitleEn: 'FCO Live Boost',
+    statusKo: '진행 중',
+    statusEn: 'In Progress',
+    chipType: 'info',
+    summaryKo: '실제 챔스 경기 스탯으로 비공개 평점을 역산해 다음 라운드 OVR 예측',
+    summaryEn: 'Predicts next-round OVR by reverse-engineering hidden ratings from real UCL stats',
+    bodyKo: 'FotMob 경기 스탯 38종과 지난 라운드 라이브 부스트 결과로 비공개 경기 평점을 역산하는 모델을 만들어, FC온라인 챔스 카드의 다음 라운드 오버롤을 예측합니다. (스탯만으로 ±1 단계 이내 88.2%)',
+    bodyEn: 'Reverse-engineers hidden match ratings from 38 FotMob stats and past Live Boost results to predict next-round OVR for FC Online UCL cards (88.2% within ±1 step, stats only).'
   }
 ];
