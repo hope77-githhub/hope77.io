@@ -1041,9 +1041,9 @@ Reaffirmed that deeply understanding domain-specific quirks (such as unique byte
         icon: 'fas fa-gauge-high'
       },
       {
-        valueKo: '3개 시즌 전 선수 경기별 세부 기록 2,626건 수집',
-        valueEn: '2,626 Detailed Player-Match Records over 3 Seasons',
-        icon: 'fas fa-database'
+        valueKo: '경기 종료 → 수집 → 예측 → 렌더링 실시간 파이프라인',
+        valueEn: 'Real-Time Pipeline: Match End → Crawl → Predict → Render',
+        icon: 'fas fa-bolt'
       }
     ],
 
@@ -1209,11 +1209,13 @@ Crawling FotMob match pages collects **detailed per-match records for every play
         titleEn: '03. Live Boost Prediction Tab',
         highlight: true,
         contentKo: `### 라운드 단위로 보는 라이브 부스트 예측
+- **실시간 예측 파이프라인**: 라운드 경기가 끝나면 시즌 · 라운드만 골라 수집을 시작하고(진행률 표시), 데이터가 저장되는 즉시 학습된 모델이 선수별 예측을 계산해 경기 라인업 화면과 팀 목록에 바로 그립니다. 넥슨 발표를 기다리지 않고 경기 직후에 결과를 볼 수 있고, 발표가 나오면 같은 화면에서 적중 여부가 채워집니다.
 - **대회 진행 단계**: 라운드별 MAX OVR 사다리와 "지금 여기" 표시, 그리고 예측이 얼마나 믿을 만한지(유력 범위 적중률 · 가장 유력 적중률 · 오를지 가려내는 힘)를 맨 위에 보여줍니다.
 - **경기 라인업 화면**: 끝난 경기를 고르면 두 팀 선수가 실제 포지션 위에 시즌 카드 얼굴로 서고, 경기별 자체 평점과 예측 부스트 · 오를 확률 배지가 붙습니다. 1차전 · 2차전을 바꿔 보고 교체 선수도 확인합니다.
 - **팀별 예측 목록**: 선수마다 시작 OVR → 예측 OVR, 오를 확률 막대, 예측 범위를 보여주고, 넥슨 발표가 나오면 실제 OVR과 적중 여부(✓ / ✕)를 함께 표시합니다. 오를 확률 · 예측 OVR · 자체 평점 순 정렬과 오름 · 내림 필터, 줄을 펼치면 부스트별 확률이 나옵니다.
 - **새 시즌 대응**: 아직 공지가 없는 시즌은 시즌 카드 출시 OVR에서 출발해 예측만 보여줍니다.`,
         contentEn: `### Live Boost Predictions, Round by Round
+- **Real-time prediction pipeline**: once a round's matches end, pick the season and round to start collection (with progress); as data lands, the trained model scores every player and the lineup view and team lists render immediately, before Nexon announces, with hits filled in on the same screen afterward.
 - **Tournament stage**: MAX OVR ladder with a "you are here" marker, plus how reliable the predictions are.
 - **Match lineup view**: both teams on the pitch with season card faces, per-match ratings, and predicted boost / rise odds badges; switch legs and see substitutes.
 - **Team prediction list**: start → expected OVR, rise-odds bars, and likely range, with actual OVR and ✓ / ✕ once Nexon announces; sort, filter, and expand for per-boost odds.
@@ -1351,7 +1353,7 @@ Starting from the top 2,000 rankers, the tool gathers recent official matches fr
 ### 6. 모든 선수의 경기별 세부 데이터를 모으는 수집기
 - **문제**: 실제 경기에서 각 선수가 무엇을 했는지 세부 기록이 필요했지만 공개 API는 없었고, 선수 팝업을 하나씩 여는 방식으로는 라운드마다 수백 명을 모을 수 없었습니다. 외부 사이트는 영어 이름 · 공지는 한글 이름이라 같은 선수를 잇는 것도 어려웠고, 받아 둔 페이지 캐시에 기대다 보니 캐시가 없는 PC에서는 모델이 돌지 않았습니다.
 - **시도**: FotMob 경기 페이지 하나에 그 경기 출전 선수 전원의 통계가 담겨 있다는 점을 찾아, 경기 페이지 한 번으로 양 팀 모든 선수의 세부 기록을 읽도록 했습니다. 대회 일정에서 라운드 경기를 찾고 반대쪽 차전까지 따라가며, 요청 사이 무작위 대기 · 캐시 · 차단 응답 시 즉시 중단 · robots.txt 준수로 예의 있게 수집합니다. 선수 ID ↔ 한글 이름 등록부를 두고, 모델에 필요한 경기 상황 정보는 따로 저장해 캐시 의존을 없앴습니다.
-- **결과**: 3개 시즌 챔피언스리그 토너먼트에서 출전 선수 전원의 경기별 세부 기록 **2,626건**(기록당 60여 개 항목)과 경기 상황 데이터를 확보했고, 이것이 데이터 마이닝의 토대가 되었습니다. 데이터 폴더만 있으면 어느 PC에서나 같은 결과가 나옵니다.`,
+- **결과**: 수집 → 저장 → 예측 → 화면이 하나로 이어진 파이프라인이 완성되어, 라운드 경기가 끝나면 넥슨 발표 전에 바로 예측 결과를 렌더링합니다. 3개 시즌 출전 선수 전원의 경기별 세부 기록(기록당 60여 개 항목)과 경기 상황 데이터가 쌓여 데이터 마이닝의 토대가 되었고, 데이터 폴더만 있으면 어느 PC에서나 같은 결과가 나옵니다.`,
         contentEn: `### 1. No Published Ground Truth — Redefine What to Predict
 - **Problem**: The deciding ratings are hidden; the first model hit only 45.2% on a held-out season, with no baseline to judge it.
 - **Approach**: Built three seasons of ground truth, set "always 0" and simple baselines, then iterated a data-mining search over candidate models under identical conditions.
@@ -1380,7 +1382,7 @@ Starting from the top 2,000 rankers, the tool gathers recent official matches fr
 ### 6. A Crawler for Every Player's Match Details
 - **Problem**: Per-player match details had no public API, opening player popups one by one could not scale, English and Korean names differed, and the model depended on an untracked page cache.
 - **Approach**: One FotMob match page holds every player's stats, so a single request per match covers both squads; rounds are discovered from the schedule and the other leg followed, with delays, caching, stop-on-block, and robots.txt compliance; a player ID ↔ Korean name registry; match context stored separately.
-- **Result**: **2,626** detailed player-match records (60+ fields each) across three seasons plus match context, the foundation for data mining, reproducible on any machine with the data folder.`
+- **Result**: An end-to-end crawl → store → predict → render pipeline that shows predictions right after a round ends, before Nexon announces. Three seasons of full-squad match details (60+ fields each) plus match context became the foundation for data mining, reproducible on any machine with the data folder.`
       },
       {
         num: '06',
