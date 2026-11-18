@@ -72,16 +72,16 @@ export const MILESTONES_DATA = [
     projectId: 'log-entry-fco-liveboost',
     periodKo: '2026.11 – 현재',
     periodEn: '2026.11 – Present',
-    titleKo: 'FCO Live Boost 라이브 부스트 예측 모델 개발',
-    titleEn: 'FCO Live Boost Prediction Model',
+    titleKo: 'FCO Live Boost Lab — 라부 예측 & 전적분석',
+    titleEn: 'FCO Live Boost Lab — Boost Prediction & Record Analysis',
     shortTitleKo: 'FCO Live Boost',
     shortTitleEn: 'FCO Live Boost',
     statusKo: '진행 중',
     statusEn: 'In Progress',
     chipType: 'info',
-    summaryKo: '실제 챔스 경기 스탯으로 비공개 평점을 역산해 다음 라운드 OVR 예측',
-    summaryEn: 'Predicts next-round OVR by reverse-engineering hidden ratings from real UCL stats',
-    bodyKo: 'FotMob 경기 스탯 38종과 지난 라운드 라이브 부스트 결과로 비공개 경기 평점을 역산하는 모델을 만들어, FC온라인 챔스 카드의 다음 라운드 오버롤을 예측합니다. (스탯만으로 ±1 단계 이내 88.2%)',
-    bodyEn: 'Reverse-engineers hidden match ratings from 38 FotMob stats and past Live Boost results to predict next-round OVR for FC Online UCL cards (88.2% within ±1 step, stats only).'
+    summaryKo: '라이브 부스트 확률 예측 & 공식경기 전적 진단',
+    summaryEn: 'Live Boost odds prediction & official match record diagnosis',
+    bodyKo: '데이터 마이닝으로 찾은 예측 모델로 FC온라인 챔스 카드의 라이브 부스트를 확률로 예측하고, 넥슨 Open API 공식경기 기록으로 내 플레이를 랭커와 견줘 진단합니다. (학습에 쓰지 않은 시즌 적중률 45.2% → 56.0%)',
+    bodyEn: 'Predicts FC Online UCL Live Boosts as probabilities with a model found through data mining, and diagnoses official match records against top rankers (held-out season accuracy 45.2% → 56.0%).'
   }
 ];

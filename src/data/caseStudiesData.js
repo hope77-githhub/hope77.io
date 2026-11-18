@@ -2,6 +2,14 @@ import f1Img1 from '../assets/images/f1/01_session_configuration.png';
 import f1Img2 from '../assets/images/f1/02_lap_history_and_setup.png';
 import f1Img3 from '../assets/images/f1/03_corner_analysis_matrix.png';
 import f1Img4 from '../assets/images/f1/04_circuit_map_and_sectors.png';
+import fcoImg1 from '../assets/images/fco/01_boost_stage.png';
+import fcoImg2 from '../assets/images/fco/02_boost_pitch.png';
+import fcoImg3 from '../assets/images/fco/03_boost_team.png';
+import fcoImg4 from '../assets/images/fco/04_record_identity.png';
+import fcoImg5 from '../assets/images/fco/05_record_matchups.png';
+import fcoImg6 from '../assets/images/fco/06_record_improve.png';
+import fcoImg7 from '../assets/images/fco/07_record_shots.png';
+import fcoImg8 from '../assets/images/fco/08_record_picks.png';
 
 export const CASE_STUDIES_DATA = [
   // =========================================================================
@@ -994,256 +1002,400 @@ Reaffirmed that deeply understanding domain-specific quirks (such as unique byte
     ]
   },
   // =========================================================================
-  // 5. FCO Live Boost (FC온라인 UCL 라이브 부스트 예측)
+  // 5. FCO Live Boost Lab (라부 예측 & 전적분석)
+  //    예측 모델의 구체적인 식 · 입력 · 가중치는 공개하지 않음
   // =========================================================================
   {
     id: 'log-entry-fco-liveboost',
-    category: 'Sports Data & Predictive Modeling',
+    category: 'Sports Data & Game Analytics',
     badgeTextKo: '진행 중 (Active)',
     badgeTextEn: 'Active Project',
     badgeType: 'info',
-    titleKo: 'FCO Live Boost — FC온라인 챔스 라이브 부스트 예측',
-    titleEn: 'FCO Live Boost — FC Online Champions League Live Boost Predictor',
+    titleKo: 'FCO Live Boost Lab — 라이브 부스트 예측 & 전적분석',
+    titleEn: 'FCO Live Boost Lab — Live Boost Prediction & Match Record Analysis',
     tabLabelKo: 'FCO 라이브 부스트',
     tabLabelEn: 'FCO Live Boost',
-    oneLinerKo: '실제 UEFA 챔피언스리그 경기 스탯과 지난 라운드 라이브 부스트 결과로, 공개되지 않은 경기 평점을 거꾸로 추정해 선수별 다음 라운드 오버롤(OVR)을 예측하는 분석 도구',
-    oneLinerEn: 'Reverse-engineers the hidden match ratings behind FC Online UCL Live Boosts from real match stats and past boost results, then predicts each player\'s next-round OVR.',
-    roleKo: '개인 프로젝트 · 데이터 수집, 모델링, 풀스택 개발',
-    roleEn: 'Personal Project · Data Collection, Modeling & Full-Stack Development',
+    oneLinerKo: '실제 UEFA 챔피언스리그 경기 데이터로 FC온라인 챔스 카드의 라이브 부스트를 확률로 예측하고, 넥슨 Open API 공식경기 기록으로 내 플레이를 랭커와 견줘 진단하는 FC온라인 분석 서비스',
+    oneLinerEn: 'An FC Online analytics service that predicts Live Boosts for Champions League cards as probabilities from real UCL match data, and diagnoses your play against top rankers using Nexon Open API match records.',
+    roleKo: '개인 프로젝트 · 기획, 데이터 수집, 모델링, 풀스택 개발',
+    roleEn: 'Personal Project · Planning, Data Collection, Modeling & Full-Stack Development',
     period: '2026.11 – 현재 (Active)',
-    techStack: ['Python', 'FastAPI', 'React & TypeScript', 'BeautifulSoup', 'NumPy (Ridge Regression)', 'scikit-learn (Random Forest)', 'SHAP', 'Claude API (Vision)', 'pytest'],
+    techStack: ['Python', 'FastAPI', 'React & TypeScript', 'Nexon Open API', 'Web Crawling', 'Data Mining', 'Claude API (Vision)', 'pytest'],
 
     metricsHeadingKo: '현재까지의 결과 (Progress So Far)',
     metricsHeadingEn: 'Progress So Far',
     keyMetrics: [
       {
-        valueKo: '스탯만으로 부스트 단계 ±1 이내 적중 88.2%',
-        valueEn: '88.2% Within ±1 Boost Step from Stats Alone',
+        valueKo: '학습에 쓰지 않은 시즌 적중률 45.2% → 56.0%',
+        valueEn: 'Held-Out Season Accuracy 45.2% → 56.0%',
         icon: 'fas fa-bullseye'
       },
       {
-        valueKo: '16강 16경기 · 선수 기록 499건 약 45초 수집',
-        valueEn: 'Round of 16: 16 Matches, 499 Player Records in ~45s',
-        icon: 'fas fa-cloud-arrow-down'
+        valueKo: '유력 범위 적중 80% · 오를지 가려내는 힘 0.90',
+        valueEn: '80% Likely-Range Hit · 0.90 Rise Discrimination',
+        icon: 'fas fa-chart-simple'
       },
       {
-        valueKo: '경기 스탯 38종 → 내부 평점 역산 모델',
-        valueEn: '38 Match Stats → Reverse-Engineered Rating Model',
-        icon: 'fas fa-calculator'
+        valueKo: '전적분석 첫 결과 380초 → 약 90초, 재분석 3초',
+        valueEn: 'Record Analysis: 380s → ~90s First Run, 3s Re-Run',
+        icon: 'fas fa-gauge-high'
       },
       {
-        valueKo: '부스트 표 이미지 붙여넣기 → 자동 인식 · 검증',
-        valueEn: 'Paste a Boost Table Image → Auto-Read & Validated',
-        icon: 'fas fa-image'
+        valueKo: '3개 시즌 · 723명 정답 데이터 직접 구축',
+        valueEn: '3 Seasons, 723 Labeled Players Built from Scratch',
+        icon: 'fas fa-database'
       }
     ],
 
     pipelineFlow: [
-      { step: '01', titleKo: '라운드 경기 스탯 수집 (FotMob)', titleEn: 'Round Match Stats (FotMob)' },
-      { step: '02', titleKo: '라이브 부스트 결과 입력 · 검증', titleEn: 'Live Boost Results Input & Validation' },
-      { step: '03', titleKo: '선수 매칭 & 스탯 표준화', titleEn: 'Player Matching & Stat Standardization' },
-      { step: '04', titleKo: '내부 평점 역산 모델 학습', titleEn: 'Hidden Rating Model Training' },
-      { step: '05', titleKo: '선수별 다음 라운드 OVR 예측', titleEn: 'Next-Round OVR Prediction' }
+      { step: '01', titleKo: '경기 · 전적 데이터 수집', titleEn: 'Match & Record Data Collection' },
+      { step: '02', titleKo: '라이브 부스트 정답 데이터 정리', titleEn: 'Live Boost Ground Truth' },
+      { step: '03', titleKo: '데이터 마이닝으로 예측 모델 탐색', titleEn: 'Model Search via Data Mining' },
+      { step: '04', titleKo: '라부 예측: 경기 · 선수별 확률', titleEn: 'Boost Prediction: Per-Match, Per-Player Odds' },
+      { step: '05', titleKo: '전적분석: 진단 · 개선점 · 처방', titleEn: 'Record Analysis: Diagnosis, Fixes, Prescriptions' }
     ],
 
     beforeAfter: {
-      beforeKo: '라이브 부스트는 비공개 경기 평점으로 정해져, 어떤 선수가 얼마나 오를지는 경기 하이라이트나 외부 평점을 보고 감으로 짐작할 수밖에 없었습니다. 선수 카드 구매·강화 판단에 쓸 근거가 부족했습니다.',
-      beforeEn: 'Live Boosts depend on hidden match ratings, so predicting who would rise was guesswork based on highlights or third-party ratings, leaving little basis for card decisions.',
-      afterKo: '라운드가 끝나면 경기 스탯을 한 번에 모으고, 지난 라운드 결과로 학습한 모델이 선수별 내부 평점과 예상 OVR을 보여줍니다. 어떤 스탯이 부스트를 가르는지도 데이터로 확인할 수 있습니다.',
-      afterEn: 'After each round, match stats are collected in one pass and a model trained on past results shows each player\'s estimated rating and expected OVR, along with which stats drive boosts.'
+      beforeKo: '라이브 부스트는 공개되지 않은 경기 평점으로 정해져, 어떤 선수가 오를지는 하이라이트를 보고 감으로 짐작해야 했습니다. 공식경기 전적도 승패 숫자뿐이라 "왜 지는지, 누구에게 약한지, 랭커와 무엇이 다른지"를 알 방법이 없었습니다.',
+      beforeEn: 'Live Boosts follow unpublished match ratings, so predicting who would rise was guesswork. Official match history showed only wins and losses, with no way to see why you lose, who you struggle against, or how you differ from top rankers.',
+      afterKo: '라운드가 끝나면 경기를 골라 선수마다 예측 OVR과 오를 확률을 보고, 넥슨 발표 뒤에는 적중 여부까지 확인합니다. 전적분석은 닉네임 하나로 내 성향, 상대 유형별 상성, 고칠 점과 추천 특성을 랭커의 실제 경기와 견줘 보여줍니다.',
+      afterEn: 'After each round, pick a match to see each player\'s expected OVR and rise odds, then check hits once Nexon announces. Record analysis turns a nickname into play style, matchups, fixes, and trait picks benchmarked against rankers\' real games.'
     },
 
     sections: [
       {
         num: '01',
         titleKo: '01. Background & Problem (배경 및 문제점)',
-        titleEn: '01. Background & Problem (Hidden Ratings Behind Live Boosts)',
-        contentKo: `### 1. 실제 경기 결과가 게임 카드 능력치로 이어지는 라이브 부스트
-FC온라인 UEFA 챔피언스리그 시즌 카드는 실제 토너먼트 경기(1차·2차전) 활약에 따라 라운드마다 오버롤(OVR)이 오르거나 내립니다. 기준 OVR 구간마다 최대 상승·하락 폭이 정해져 있고, 라운드가 진행될수록 MAX OVR도 올라갑니다.
+        titleEn: '01. Background & Problem',
+        contentKo: `### 1. 실제 경기 결과가 카드 능력치를 바꾸는 라이브 부스트
+FC온라인 UEFA 챔피언스리그 시즌 카드는 실제 토너먼트 경기 활약에 따라 라운드마다 오버롤(OVR)이 오르거나 내립니다. 하지만 부스트 폭을 정하는 경기 평점은 공개되지 않아, 유저는 카드 구매·강화 판단을 감에 의존할 수밖에 없었습니다.
 
-### 2. 결과를 정하는 평점은 공개되지 않는다
-부스트 폭은 경기별 평점의 평균으로 정해지지만, 그 평점은 공개되지 않습니다. 외부 사이트 평점과도 눈금이 달라, 유저는 "누가 얼마나 오를지"를 감으로 짐작할 수밖에 없었습니다.
+### 2. 승패 숫자만 남는 공식경기 전적
+공식경기 기록은 승·무·패와 몇 가지 합계로만 보입니다. 내가 어떤 유형의 플레이어인지, 어떤 상대에게 유독 약한지, 같은 포메이션을 쓰는 상위 랭커와 무엇이 다른지는 직접 수십 경기를 돌려 보지 않고는 알기 어려웠습니다.
 
-### 3. 흩어진 데이터와 수작업
-라이브 부스트 결과는 공지 이미지로, 경기 스탯은 외부 사이트에 흩어져 있어 직접 모아 비교하는 데 시간이 오래 걸렸습니다.`,
+### 3. 흩어진 데이터
+라이브 부스트 결과는 공지 이미지로, 실제 경기 기록은 외부 사이트에, 공식경기 기록은 넥슨 Open API에 흩어져 있고 선수 이름 표기도 서로 달라, 데이터를 모으고 잇는 일부터가 큰 작업이었습니다.`,
         contentEn: `### 1. Live Boosts Tie Real Matches to Card Stats
-FC Online UCL cards gain or lose OVR each round based on real knockout performances. Each OVR band has a maximum rise and drop, and the MAX OVR climbs as the tournament progresses.
+FC Online UCL cards gain or lose OVR each round based on real knockout performances, but the match ratings that decide the boost are never published.
 
-### 2. The Deciding Ratings Are Hidden
-Boost size follows the average of per-match ratings that are never published and don't match third-party rating scales, leaving players to guess.
+### 2. Official Records Show Only Wins and Losses
+Match history shows results and a few totals, not your play style, the opponents you struggle against, or how you differ from top rankers on the same formation.
 
-### 3. Scattered Data, Manual Work
-Boost results live in announcement images and match stats on external sites, so gathering and comparing them took a long time.`
+### 3. Scattered Data
+Boost results live in announcement images, real match data on external sites, and official records in the Nexon Open API, with player names spelled differently in each.`
       },
       {
         num: '02',
-        titleKo: '02. Introduction & Objective (개발 목표)',
-        titleEn: '02. Introduction & Objective',
-        contentKo: `### 1. 정답에서 거꾸로 평점을 찾는다
-공개된 정답은 라이브 부스트 결과뿐입니다. 그래서 외부 평점에 기대지 않고, 경기 스탯과 실제 부스트 결과만으로 "보이지 않는 평점"을 역산하는 모델을 목표로 했습니다.
+        titleKo: '02. Service Overview (서비스 개요)',
+        titleEn: '02. Service Overview',
+        contentKo: `### 1. 라부 예측 탭
+지난 시즌들의 실제 경기 데이터와 라이브 부스트 결과를 모아, **데이터 마이닝으로 예측 확률이 높은 모델을 찾아** 선수마다 다음 라운드 OVR과 오를 확률을 보여줍니다. 모델의 구체적인 구성은 이 프로젝트의 핵심 자산이라 공개하지 않습니다.
 
-### 2. 라운드가 끝나면 한 번에
-시즌과 라운드만 고르면 그 라운드 모든 경기의 선수 스탯을 모으고, 부스트 표는 이미지를 붙여넣기만 하면 읽어 들이도록 데이터 준비 과정을 자동화합니다.
+### 2. 전적분석 탭
+넥슨 Open API의 공식경기 매치 상세 데이터로 내 최근 경기와 같은 포메이션 상위 랭커들의 경기를 비교해, 내 성향 · 상대 유형별 상성 · 고칠 점 · 추천 획득 특성(신특)까지 한 화면에서 진단합니다.
 
-### 3. 숫자로 확인하는 예측
-선수마다 경기별 추정 평점, 평균, 현재 OVR → 예상 OVR을 한 화면에서 보여주고, 어떤 스탯이 부스트를 가르는지 데이터 탐색 화면으로 설명합니다.`,
-        contentEn: `### 1. Work Backward from the Only Ground Truth
-Boost results are the only public answer, so the model reverse-engineers hidden ratings from match stats and actual boosts, without relying on third-party ratings.
+### 3. 함께 쓰는 기반
+두 탭 모두 같은 수집기(요청 간격 · 캐시 · 요청 한도 관리)와 같은 화면 디자인 시스템 위에 올라가 있고, 백엔드는 FastAPI, 화면은 React + TypeScript로 만들었습니다.`,
+        contentEn: `### 1. Live Boost Prediction
+Using past seasons' real match data and boost results, **a high-accuracy model found through data mining** shows each player's next-round OVR and rise odds. The model's internals are the project's core asset and are not disclosed.
 
-### 2. One Pass per Round
-Pick a season and round to collect every player's stats; paste the boost table image to load results.
+### 2. Record Analysis
+Nexon Open API match details compare your recent games with top rankers on the same formation, diagnosing play style, matchups, fixes, and recommended traits on one screen.
 
-### 3. Explainable Predictions
-Per-match estimated ratings, averages, and current → expected OVR on one screen, plus exploration views showing which stats separate boosts.`
-      },
-      {
-        num: '03',
-        titleKo: '03. System Architecture & Data Flow (시스템 아키텍처 및 데이터 흐름)',
-        titleEn: '03. System Architecture & Data Flow',
+### 3. Shared Foundation
+Both tabs share one collector (request pacing, caching, quota control) and one design system, on FastAPI and React + TypeScript.`,
         architectureDiagrams: [
           {
             id: 'diag-fco-system',
-            tabTitleKo: '시스템 아키텍쳐',
-            tabTitleEn: 'System Architecture',
-            titleKo: '시스템 아키텍쳐',
-            titleEn: 'System Architecture',
-            defaultScale: 0.75,
+            tabTitleKo: '시스템 구성',
+            tabTitleEn: 'System Overview',
+            titleKo: '시스템 구성',
+            titleEn: 'System Overview',
+            defaultScale: 0.8,
             mermaidChart: `flowchart TD
     subgraph Sources["데이터 소스"]
-        FM["FotMob 경기 페이지<br/>(대회 일정 · 선수 경기 스탯)"]
+        FM["실제 챔스 경기 기록"]
+        NX["넥슨 Open API<br/>(공식경기 매치 상세)"]
+        DC["넥슨 데이터센터<br/>(랭킹 · 시즌 카드 · 인기 특성)"]
         IMG["라이브 부스트 공지 이미지"]
-        HM["히트맵 캡처"]
     end
 
     subgraph Backend["FastAPI 백엔드"]
-        CR["라운드 크롤러<br/>(1~2초 대기 · 캐시 · 차단 시 중단)"]
-        EX["표 이미지 인식<br/>(Claude API)"]
-        VA["표 검증<br/>(변동폭 규칙 · 이름 제안)"]
-        ST["선수 스탯 저장소<br/>(시즌 · 라운드 · 팀)"]
-        MD["평점 역산 모델<br/>(릿지 회귀)"]
-        SH["데이터 탐색<br/>(랜덤 포레스트 + SHAP)"]
+        COL["수집기<br/>(요청 간격 · 캐시 · 한도 관리)"]
+        REC["공지 표 인식 · 검증<br/>(Claude API)"]
+        MODEL["라부 예측 모델<br/>(데이터 마이닝으로 선정)"]
+        ANA["전적 분석 엔진"]
     end
 
-    subgraph Frontend["React + TypeScript"]
-        P1["예측"]
-        P2["예측 모델"]
-        P3["데이터 탐색 1 · 2"]
+    subgraph Front["React + TypeScript"]
+        T1["라부 예측 탭"]
+        T2["전적분석 탭"]
     end
 
-    FM --> CR --> ST
-    IMG --> EX --> VA --> ST
-    HM --> ST
-    ST --> MD --> P1
-    ST --> SH --> P3
-    MD --> P2`
+    FM --> COL
+    DC --> COL
+    NX --> COL
+    IMG --> REC
+    COL --> MODEL
+    REC --> MODEL
+    COL --> ANA
+    MODEL --> T1
+    ANA --> T2`
+          }
+        ]
+      },
+      {
+        num: '03',
+        titleKo: '03. 라부 예측 탭 (Live Boost Prediction)',
+        titleEn: '03. Live Boost Prediction Tab',
+        highlight: true,
+        contentKo: `### 라운드 단위로 보는 라이브 부스트 예측
+- **대회 진행 단계**: 라운드별 MAX OVR 사다리와 "지금 여기" 표시, 그리고 예측이 얼마나 믿을 만한지(유력 범위 적중률 · 가장 유력 적중률 · 오를지 가려내는 힘)를 맨 위에 보여줍니다.
+- **경기 라인업 화면**: 끝난 경기를 고르면 두 팀 선수가 실제 포지션 위에 시즌 카드 얼굴로 서고, 경기별 자체 평점과 예측 부스트 · 오를 확률 배지가 붙습니다. 1차전 · 2차전을 바꿔 보고 교체 선수도 확인합니다.
+- **팀별 예측 목록**: 선수마다 시작 OVR → 예측 OVR, 오를 확률 막대, 예측 범위를 보여주고, 넥슨 발표가 나오면 실제 OVR과 적중 여부(✓ / ✕)를 함께 표시합니다. 오를 확률 · 예측 OVR · 자체 평점 순 정렬과 오름 · 내림 필터, 줄을 펼치면 부스트별 확률이 나옵니다.
+- **새 시즌 대응**: 아직 공지가 없는 시즌은 시즌 카드 출시 OVR에서 출발해 예측만 보여줍니다.`,
+        contentEn: `### Live Boost Predictions, Round by Round
+- **Tournament stage**: MAX OVR ladder with a "you are here" marker, plus how reliable the predictions are.
+- **Match lineup view**: both teams on the pitch with season card faces, per-match ratings, and predicted boost / rise odds badges; switch legs and see substitutes.
+- **Team prediction list**: start → expected OVR, rise-odds bars, and likely range, with actual OVR and ✓ / ✕ once Nexon announces; sort, filter, and expand for per-boost odds.
+- **New seasons**: starts from release OVR and shows predictions only until announcements arrive.`,
+        screenshots: [
+          {
+            src: fcoImg1,
+            titleKo: '1. 대회 진행 단계와 예측 신뢰도',
+            titleEn: '1. Tournament Stage & Prediction Reliability',
+            descKo: '라운드별 MAX OVR 사다리에서 지금 위치를 보여주고, 유력 범위 적중 80% · 가장 유력 적중 50% · 오를지 가려내는 힘 0.90 같은 예측 신뢰도를 함께 표시합니다.',
+            descEn: 'Shows the current position on the MAX OVR ladder alongside prediction reliability: 80% likely-range hit, 50% most-likely hit, 0.90 rise discrimination.'
           },
           {
-            id: 'diag-fco-model',
-            tabTitleKo: '예측 모델',
-            tabTitleEn: 'Prediction Model',
-            titleKo: '예측 모델 흐름',
-            titleEn: 'Prediction Model Flow',
-            defaultScale: 1.0,
-            mermaidChart: `flowchart LR
-    S["경기 스탯 38종<br/>+ 경기 결과"] --> Z["표준화<br/>z = (값 − 평균) / 표준편차"]
-    Z --> M["경기 점수<br/>s = b + Σ w · z"]
-    M --> R["라운드 점수<br/>S = Σ s / 경기 수"]
-    R --> C["구간 상한 · 하한으로 자르기<br/>(라운드 종료 MAX OVR 반영)"]
-    C --> O["예상 부스트 → 예상 OVR"]
-    M --> G["추정 내부 평점<br/>6.0 + 0.5 · s"]
-    T["실제 라이브 부스트 결과<br/>(정답)"] -. "학습 · LOO 검증" .-> M`
+            src: fcoImg2,
+            titleKo: '2. 경기 라인업 · 선수별 예측 배지',
+            titleEn: '2. Match Lineup with Per-Player Prediction Badges',
+            descKo: '실제 라인업 위치에 시즌 카드 얼굴을 놓고, 경기별 자체 평점과 예측 부스트 · 오를 확률을 배지로 붙였습니다. 1·2차전 전환과 교체 투입 선수까지 한 화면에서 봅니다.',
+            descEn: 'Season card faces at real lineup positions with per-match ratings and predicted boost / rise odds; switch legs and view substitutes.'
+          },
+          {
+            src: fcoImg3,
+            titleKo: '3. 팀별 예측과 실제 결과 대조',
+            titleEn: '3. Team Predictions vs Actual Results',
+            descKo: '시작 → 예측 OVR, 오를 확률, 예측 범위를 선수별로 보여주고, 넥슨 발표 후에는 실제 OVR과 적중 여부를 표시합니다. 이 팀은 13명 중 10명 적중.',
+            descEn: 'Per-player start → expected OVR, rise odds, and likely range, checked against Nexon\'s announcement: 10 of 13 correct for this team.'
           }
         ]
       },
       {
         num: '04',
-        titleKo: '04. Method & Engineering (모델링 및 엔지니어링)',
-        titleEn: '04. Method & Engineering',
-        contentKo: `### 1. 스탯 → 내부 평점 역산 모델
-- 경기 스탯 38종(득점, xG, 패스, 경합, 수비, 선방 등)과 경기 결과를 같은 선수군 평균·표준편차로 표준화한 뒤, 가중합으로 경기 점수를 만듭니다. 라운드 점수는 경기 점수의 평균이고, 이를 OVR 구간별 최대 상승·하락 폭과 MAX OVR로 잘라 예상 부스트를 냅니다.
-- 학습은 릿지 회귀이며, 출전 비율 항만 벌점 없이 두고 스탯에는 벌점을 줍니다. 벌점 크기와 화면에 보이는 정확도는 모두 한 명씩 빼고 맞히기(LOO) 기준입니다.
-- **외부 평점은 쓰지 않습니다.** 외부 평점을 넣으면 정확도가 오르지만 정답이 아니므로, 스탯만으로 평점을 잘 뽑는 것을 과제로 남겼습니다.
+        titleKo: '04. 전적분석 탭 (Match Record Analysis)',
+        titleEn: '04. Match Record Analysis Tab',
+        highlight: true,
+        contentKo: `### 닉네임 하나로 내 플레이를 랭커와 견주기
+랭킹 상위 2,000명에서 출발해 나와 같은 포메이션을 쓰는 랭커들의 최근 공식경기를 모으고, 그중 나와 성향이 닮은 랭커가 이긴 경기를 기준으로 내 경기를 비교합니다.
 
-### 2. 부스트를 가르는 스탯 찾기 (SHAP)
-- 선수를 오름·변동 없음·내림 세 그룹으로 나누고, 랜덤 포레스트 분류기와 TreeSHAP으로 어떤 스탯이 그룹을 가르는지 선수별로 보여줍니다. 팀 하나를 빼고 학습하는 교차 검증으로 신뢰도도 함께 표시합니다.
+- **성향 카드**: 6가지 플레이 유형 레이더(나 · 닮은 랭커 · 랭커 평균), 한 줄 성향, 천적과 먹잇감, 해결사, 득점 · 실점 루트와 시간대를 한눈에 보여줍니다.
+- **상성표**: 상대 유형별 내 승률을 천적부터 먹잇감까지 늘어놓고, 표본이 적으면 표시합니다. 그 상대를 만나면 내 경기가 평소와 어떻게 달라지는지도 비교합니다.
+- **개선점**: 닮은 랭커의 승리 경기와 견줘 "무엇을 · 왜 · 어떻게" 고칠지를 급한 순서로 제시합니다.
+- **슈팅 분석**: 직전 패스 선까지 그린 슈팅 지도와 구역별 전환율, 선수별 기록을 보여주고, 상대 유형 · 공격/수비 · 나/랭커 · 슈팅 방식 · 경기별로 걸러 봅니다.
+- **선수 구성 · 처방**: 같은 포메이션 감독들이 자리마다 쓴 선수, 그리고 약점을 메우는 포지션별 획득 특성(신특)을 추천합니다.`,
+        contentEn: `### Benchmark Your Play Against Rankers with One Nickname
+Starting from the top 2,000 rankers, the tool gathers recent official matches from those on your formation and compares your games with wins by rankers whose style resembles yours.
 
-### 3. 예의 바른 크롤러
-- 대회 일정 페이지 한 번으로 라운드 경기 목록을 얻고, 경기 페이지 하나에 담긴 데이터로 출전 선수 전원의 스탯을 읽어 요청 수를 최소화했습니다.
-- 요청 사이 1~2초 무작위 대기, 프로그램 이름을 밝힌 User-Agent, 받은 페이지 캐시, 403·429 응답 시 즉시 중단을 지키고, robots.txt가 막은 경로는 쓰지 않습니다.
-
-### 4. 이미지 한 장으로 정답 입력
-- 라이브 부스트 공지 표 이미지를 붙여넣으면 Claude API로 표를 읽고, 변동폭이 OVR 구간 규칙 안에 있는지, 이름이 팀 명단과 맞는지 검증해 비슷한 이름을 제안합니다. 키가 없으면 이미지를 띄워 두고 직접 입력으로 넘어갑니다.
-
-### 5. 토너먼트 규칙 반영
-- 1·2차전 합산 스코어와 승부차기 승자를 계산하고(원정 다득점 폐지 반영), 결승처럼 경기 수가 다른 라운드와 미출전 경기(변동 0으로 처리)를 규칙으로 다룹니다.`,
-        contentEn: `### 1. Stats → Hidden Rating Model
-- 38 match stats plus match results are standardized against the player pool and combined into a per-match score; the round score is their average, clipped to each OVR band's max rise/drop and the MAX OVR.
-- Ridge regression with an unpenalized appearance term; penalty strength and reported accuracy both use leave-one-out validation.
-- **No third-party ratings.** They raise accuracy but aren't ground truth, so improving stat-only estimates remains the goal.
-
-### 2. Which Stats Separate Boosts (SHAP)
-- Players are grouped into up / unchanged / down; a random forest with TreeSHAP shows per-player stat contributions, with leave-one-team-out accuracy.
-
-### 3. A Polite Crawler
-- One schedule page per round plus one page per match covers every player, minimizing requests.
-- 1–2s random delays, an identifying User-Agent, page caching, immediate stop on 403/429, and robots.txt-disallowed paths left alone.
-
-### 4. Ground Truth from One Image
-- Pasted boost-table images are read via the Claude API and validated against band rules and team rosters, with name suggestions; manual entry is the fallback.
-
-### 5. Tournament Rules
-- Aggregate scores and shoot-out winners (no away-goals rule), single-match finals, and non-appearances (treated as no change) are handled explicitly.`
+- **Identity card**: six-style radar (you / similar rankers / ranker average), play-style summary, nemesis and prey, top scorer, scoring/conceding routes and minutes.
+- **Matchup board**: win rate by opponent style from nemesis to prey, with low-sample flags and how your game shifts against each style.
+- **Fixes**: what, why, and how to change, ordered by urgency, benchmarked against similar rankers' wins.
+- **Shot analysis**: shot maps with pre-shot pass lines, zone conversion, and per-player stats, filterable by style, attack/defence, me/rankers, shot type, and match.
+- **Squad & prescriptions**: players managers used in each slot of your formation, plus position-by-position trait recommendations.`,
+        screenshots: [
+          {
+            src: fcoImg4,
+            titleKo: '1. 성향 카드 — 나는 어떤 플레이어인가',
+            titleEn: '1. Identity Card — What Kind of Player Am I?',
+            descKo: '6가지 플레이 유형 레이더로 나와 닮은 랭커 · 랭커 평균을 겹쳐 보고, 천적 · 먹잇감, 해결사, 득점 · 실점 루트와 시간대를 요약합니다. (닉네임은 가렸습니다)',
+            descEn: 'Six-style radar against similar rankers and the ranker average, with nemesis/prey, top scorer, and scoring/conceding routes and minutes (nickname hidden).'
+          },
+          {
+            src: fcoImg5,
+            titleKo: '2. 상성표 — 어떤 상대에게 강하고 약한가',
+            titleEn: '2. Matchup Board — Who Do I Beat and Lose To?',
+            descKo: '상대 유형별 승률을 천적부터 먹잇감까지 정리하고, 내 평소 승률 · 랭커 승률과 나란히 놓아 상성을 판단합니다. 표본이 적은 상대는 따로 표시합니다.',
+            descEn: 'Win rate by opponent style, from nemesis to prey, against my usual rate and the rankers\'; low-sample opponents are flagged.'
+          },
+          {
+            src: fcoImg6,
+            titleKo: '3. 개선점 — 무엇을 · 왜 · 어떻게',
+            titleEn: '3. Fixes — What, Why, How',
+            descKo: '닮은 랭커가 이긴 경기와 견줘 차이가 큰 지표를 고르고, 지표와 차이 방향 · 크기에 맞춘 설명과 구체적인 플레이 팁을 급한 순서로 보여줍니다.',
+            descEn: 'Picks the biggest gaps against similar rankers\' wins and explains each with direction- and size-aware text and concrete tips, ordered by urgency.'
+          },
+          {
+            src: fcoImg7,
+            titleKo: '4. 슈팅 분석 — 어디서 때리고 맞았나',
+            titleEn: '4. Shot Analysis — Where Did Shots Come From?',
+            descKo: '슈팅 위치와 직전 패스 선, 골 · 유효슛 · 빗나감을 지도에 그리고, 구역별 전환율을 비교 대상과 나란히 보여줍니다. 슈팅 방식 · 구역 · 선수 · 경기를 누르면 지도가 그것만 보여줍니다.',
+            descEn: 'Shot locations with pre-shot pass lines and outcomes, plus zone conversion side by side with the benchmark; click a type, zone, player, or match to filter.'
+          },
+          {
+            src: fcoImg8,
+            titleKo: '5. 선수 구성 — 같은 포메이션 감독들의 선택',
+            titleEn: '5. Squad — What Managers on My Formation Use',
+            descKo: '같은 포메이션을 쓴 랭커와 상대 감독들이 자리마다 어떤 선수를 썼는지 비율로 보여주고, 내 선수와 나란히 비교합니다.',
+            descEn: 'Shows which players managers on the same formation used in each slot, next to my own picks.'
+          }
+        ]
       },
       {
         num: '05',
-        titleKo: '05. Results & Current Status (현재 결과 및 진행 상황)',
-        titleEn: '05. Results & Current Status',
-        highlight: true,
-        contentKo: `### 25/26 챔스 16강 기준 모델 성능 (진행 중)
-라이브 부스트 표와 경기 스탯이 같은 선수로 이어진 15개 팀 162명으로 학습했고, 반복 10겹 교차검증 기준 결과는 아래와 같습니다.
+        titleKo: '05. Problem Solving — 라부 예측 (문제 해결 과정)',
+        titleEn: '05. Problem Solving — Live Boost Prediction',
+        contentKo: `### 1. 정답이 공개되지 않은 문제 — 무엇을 맞힐지부터 다시 정하기
+- **문제**: 라부를 정하는 경기 평점은 공개되지 않습니다. 첫 모델은 학습에 쓰지 않은 시즌에서 정확 적중 45.2%에 머물렀고, 어디까지가 모델의 실력인지 판단할 기준도 없었습니다.
+- **시도**: 23/24 · 24/25 · 25/26 세 시즌의 정답 데이터를 직접 모은 뒤, 아무것도 하지 않을 때(항상 변동 0)와 단순한 기준선 모델부터 세웠습니다. 그 위에서 여러 후보 모델을 같은 조건으로 비교하는 데이터 마이닝을 반복하며, 각 단계가 정확도를 얼마나 올리는지 숫자로 확인했습니다.
+- **결과**: 학습에 쓰지 않은 23/24 시즌 적중률이 **45.2% → 56.0%**, 처음 보는 팀 기준으로는 50.6%(항상 0 대비 +17.8%p)까지 올랐습니다.
 
-- **부스트 단계 정확 적중 39.0%, ±1 이내 88.2%, 평균 오차 0.74단계** (외부 평점 없이 스탯만 사용)
-- 16강 16경기 · 선수 기록 499건을 약 45초에 수집
-- 24/25, 25/26 두 시즌 데이터 구조를 갖추고, 다음 시즌은 설정만 바꿔 추가할 수 있게 구성
+### 2. 정확도가 부풀려지는 검증 함정
+- **문제**: 같은 팀 선수들은 같은 경기 결과를 공유합니다. 선수 단위로 학습 · 검증을 나누면 같은 팀 동료가 양쪽에 섞여 정확도가 실제보다 높게 나왔습니다.
+- **시도**: 팀 · 시즌을 통째로 떼어 내고 맞히는 방식으로 검증을 바꾸고, 한 시즌은 끝까지 학습에 넣지 않는 최종 시험용으로 남겼습니다. 모델 간 차이가 우연인지는 팀 단위로 다시 뽑아(부트스트랩) 확인했습니다.
+- **결과**: 낙관적인 숫자 대신 "처음 보는 팀"에서도 통하는 숫자를 얻었고, 화면에 보이는 정확도도 같은 기준으로 맞췄습니다.
 
-### 화면 구성
-- **예측**: 라운드 · 팀을 고르면 선수별 경기 평점(추정), 평균, 현재 OVR → 예상 OVR을 표시합니다.
-- **예측 모델**: 부스트 표 이미지 붙여넣기, 라운드 전체 가져오기, 저장된 데이터 관리, 모델 학습과 적용 규칙을 한 곳에서 다룹니다.
-- **데이터 탐색 1 · 2**: 최대 상승폭별 부스트 분포와, SHAP으로 본 부스트를 가르는 스탯을 보여줍니다.`,
-        contentEn: `### Model Performance on 25/26 Round of 16 (In Progress)
-Trained on 162 players across 15 teams where boost tables and match stats link to the same player; repeated 10-fold cross-validation:
+### 3. 숫자 하나보다 확률 — 예측을 "쓸 수 있게" 만들기
+- **문제**: "+1"처럼 값 하나만 보여주면, 틀렸을 때 신뢰를 잃고 유저가 정말 궁금한 "오를 가능성"은 알 수 없었습니다.
+- **시도**: 처음 보는 팀에서 예측과 실제가 얼마나 어긋나는지를 학습해, 부스트별 확률 · 가장 유력한 값 · 유력 범위(인접한 두 값) · 오를 확률을 함께 내도록 바꾸고, 그 확률이 맞는지도 따로 측정했습니다.
+- **결과**: 유력 범위 적중 **80%**, 오를지 가려내는 힘 **0.90**(1에 가까울수록 정확). 넥슨 발표 뒤에는 선수마다 적중 여부가 바로 표시됩니다.
 
-- **39.0% exact, 88.2% within ±1 boost step, mean error 0.74 steps** (stats only)
-- 16 matches / 499 player records collected in ~45 seconds
-- Data structured for 24/25 and 25/26; future seasons are added via configuration
+### 4. 이름은 같은데 다른 선수 — 카드 얼굴 매핑 오류
+- **문제**: 라부 공지는 "디아스"처럼 짧은 한글 이름을 씁니다. 성이 같은 카드 중 OVR이 가까운 쪽을 고르던 규칙 때문에 루이스 디아스에게 후벵 디아스의 얼굴이 붙는 등 엉뚱한 카드가 연결됐습니다.
+- **시도**: 공지가 있는 팀은 "최종 OVR이 정확히 같은 카드"만 연결하도록 바꿨습니다(세 시즌 모든 정답 선수에서 성립하는 것을 확인). 공지가 없는 새 시즌은 성 · 이름 첫 글자 · 포지션으로 거르고, 딱 한 장만 남을 때만 붙이고 아니면 이니셜로 표시합니다.
+- **결과**: 잘못 붙는 카드가 사라졌고, 문제가 된 사례들을 테스트로 남겨 다시 생기지 않게 막았습니다.
 
-### Screens
-- **Predict**: per-player estimated match ratings, averages, and current → expected OVR by round and team.
-- **Model**: boost-table image paste, full-round import, stored data, training, and rules.
-- **Explore 1 · 2**: boost distributions by max-rise band, and SHAP views of the stats that separate boosts.`
+### 5. 정답표가 없는 팀
+- **문제**: 라부 공지 표가 없는 팀(예: 16강 탈락 팀)은 학습과 검증에서 통째로 빠졌습니다.
+- **시도**: 넥슨 데이터센터에 남아 있는 탈락 시점의 현재 OVR에서 출시 OVR을 빼는 방식으로 라부 결과를 거꾸로 복원했습니다.
+- **결과**: 정답 데이터가 **723명**으로 늘었고, 테스트에서는 "표가 없는 팀" 경우를 일부러 남겨 두 경로를 모두 확인합니다.
+
+### 6. 흩어진 데이터를 모으고 잇는 일
+- **문제**: 정답은 공지 이미지, 경기 기록은 외부 사이트에 있고, 외부 사이트는 영어 이름 · 공지는 한글 이름이라 같은 선수를 잇는 것부터 어려웠습니다. 수집한 페이지 캐시에 기대다 보니 캐시가 없는 PC에서는 모델이 돌지 않는 문제도 있었습니다.
+- **시도**: 라운드 단위 일괄 수집(경기 페이지 한 번으로 출전 선수 전원), 요청 사이 무작위 대기 · 캐시 · 차단 응답 시 즉시 중단 · robots.txt 준수로 예의 있게 수집했습니다. 공지 이미지는 붙여넣기만 하면 Claude API로 표를 읽고 게임 규칙으로 검증해 비슷한 이름을 제안합니다. 선수 ID ↔ 한글 이름 등록부를 두고, 모델에 필요한 경기 상황 정보는 따로 저장해 캐시 의존을 없앴습니다.
+- **결과**: 16강 16경기 · 선수 기록 499건을 약 45초에 모으고, 데이터 폴더만 있으면 어느 PC에서나 같은 결과가 나옵니다.`,
+        contentEn: `### 1. No Published Ground Truth — Redefine What to Predict
+- **Problem**: The deciding ratings are hidden; the first model hit only 45.2% on a held-out season, with no baseline to judge it.
+- **Approach**: Built three seasons of ground truth, set "always 0" and simple baselines, then iterated a data-mining search over candidate models under identical conditions.
+- **Result**: Held-out 23/24 accuracy rose from **45.2% to 56.0%**; 50.6% on unseen teams (+17.8pp over always-0).
+
+### 2. Validation That Inflates Accuracy
+- **Problem**: Teammates share match outcomes, so player-level splits leaked information and overstated accuracy.
+- **Approach**: Held out whole team-seasons, kept one season as a final test, and checked model gaps with team-level bootstrap.
+- **Result**: Numbers that hold on unseen teams, reported the same way in the UI.
+
+### 3. Probabilities over a Single Number
+- **Problem**: A lone "+1" loses trust when wrong and hides what users want: the chance of a rise.
+- **Approach**: Learned how far predictions miss on unseen teams to output per-boost odds, most likely value, likely range, and rise probability, and measured their calibration.
+- **Result**: **80%** likely-range hit and **0.90** rise discrimination; hits are marked per player after announcements.
+
+### 4. Same Name, Different Player
+- **Problem**: Short Korean names like "디아스" mapped Luis Díaz to Rúben Dias's card face.
+- **Approach**: With announcements, link only the card whose OVR equals the final OVR (true for every labeled player across three seasons); otherwise filter by surname, initial, and position and attach only a unique match.
+- **Result**: Mismatches eliminated and locked in with regression tests.
+
+### 5. Teams Without a Results Table
+- **Problem**: Teams lacking a boost table were excluded from training.
+- **Approach**: Reconstructed their boosts from Nexon datacenter OVR at elimination minus release OVR.
+- **Result**: Ground truth grew to **723 players**; tests keep the "no table" path covered.
+
+### 6. Collecting and Linking Scattered Data
+- **Problem**: Images, external sites, English vs Korean names, and a model that depended on an untracked page cache.
+- **Approach**: Round-level crawling with delays, caching, stop-on-block, and robots.txt compliance; Claude API table reading with rule validation; a player ID ↔ name registry; match context stored separately.
+- **Result**: 16 matches / 499 player records in ~45s, reproducible on any machine with the data folder.`
       },
       {
         num: '06',
-        titleKo: '06. Next Steps & Lessons (다음 단계 및 배운 점)',
-        titleEn: '06. Next Steps & Lessons',
+        titleKo: '06. Problem Solving — 전적분석 (문제 해결 과정)',
+        titleEn: '06. Problem Solving — Match Record Analysis',
+        contentKo: `### 1. 느린 첫 분석과 API 요청 한도
+- **문제**: 넥슨 Open API 개발 키는 초당 5건 · 하루 1,000건으로 제한되고, 첫 분석은 랭킹 페이지를 다 받은 뒤 경기 기록을 차례로 받느라 **380초**가 걸렸습니다.
+- **시도**: 랭킹 페이지는 옆 스레드에서 받으면서 같은 포메이션 랭커가 보이는 대로 바로 경기 수집을 시작하고, API는 4개씩 동시에 요청하되 전체를 초당 4.5건 상한으로 묶었습니다. 결과를 먼저 보여주고 전체 통계는 랭킹을 다 받은 뒤 채우며, 오늘 사용량을 화면에 띄웠습니다.
+- **결과**: 첫 결과까지 **약 90초**, 저장된 기록으로 다시 분석하면 **3초**(API 0건).
+
+### 2. 실제 데이터는 문서와 달랐다
+- **문제**: 공식 문서만 믿고 계산하니 숫자가 어긋났습니다. 경기 평점에 뛰지 않은 교체 선수가 0점으로 섞여 평균이 낮게 나왔고, 문서에 없는 슈팅 종류 코드도 등장했습니다.
+- **시도**: 실제로 뛴 선수만으로 평점을 다시 계산하고, 정의되지 않은 코드는 "기타"로 안전하게 묶었습니다. 앞의 자동화 테스트 툴에서 다룬 "데이터 정합성 확인"을 실제 데이터에 그대로 적용한 셈입니다.
+- **결과**: 화면 숫자가 게임 안 기록과 맞게 되었고, 같은 실수를 막는 테스트를 추가했습니다.
+
+### 3. 누구와 비교할 것인가 — 표본과 기준의 문제
+- **문제**: 특정 유형 상대와의 경기는 몇 판 되지 않아 승률이 크게 흔들렸고, 랭커 전체 평균과 비교하면 플레이 스타일이 달라 조언이 엉뚱하게 나왔습니다.
+- **시도**: 경기 수가 적은 승률은 평균 쪽으로 보정하고, 비교 기준을 "나와 성향이 닮은 랭커"로 바꿨습니다. 그 랭커들의 승리 경기가 부족하면 같은 포메이션 랭커 전체로 넓히고, 어느 기준을 썼는지와 "표본 적음"을 화면에 표시했습니다.
+- **결과**: 유저가 납득할 수 있는 비교가 되었고, 숫자가 약할 때는 화면이 먼저 알려줍니다.
+
+### 4. 표 대신 답부터 — 화면 구조 다시 짜기
+- **문제**: 처음에는 분석 5단계를 순서대로 표로 보여줘서, 정작 "그래서 뭘 고쳐야 하지?"는 맨 아래에 있었습니다. 개선 문장도 지표만 바뀌고 내용은 비슷했습니다.
+- **시도**: 결과 우선 대시보드로 한 번, 다시 유저가 궁금한 순서(나는 어떤 유형? → 누구에게 약한가? → 무엇을 고칠까? → 어디서 때리고 맞았나?)로 재배치했습니다. 단계별 근거 표는 맨 아래에 접어 두고, 개선 카드는 지표 · 차이 방향 · 차이 크기마다 "무엇을 · 왜 · 어떻게"를 따로 쓰도록 바꿨습니다.
+- **결과**: 성향 카드 → 상성표 → 개선점 → 슈팅 분석 → 선수 구성 · 처방으로 이어지는 지금의 흐름이 되었습니다.
+
+### 5. 요청 한도 안에서 반복 개선하기
+- **문제**: 분석 코드나 화면을 고칠 때마다 다시 분석하면 하루 요청 한도가 금방 바닥났습니다.
+- **시도**: 분석 결과와 원자료를 함께 저장해, API 호출 없이 "지금 코드로 다시 계산"하는 디버깅 모드를 만들었습니다. 원자료는 넥슨 약관에 맞춰 30일 뒤 지우고, 다른 유저 닉네임이 담긴 파일은 저장소에 올리지 않습니다. 저장 버튼이 꺼져 있으면 이유를 함께 보여주고, 새로고침해도 마지막 결과가 돌아옵니다.
+- **결과**: 같은 경기로 API 0건 반복 개선이 가능해져 개발 속도가 크게 빨라졌습니다.
+
+### 6. API에 없는 데이터 채우기
+- **문제**: 넥슨 Open API에는 선수 획득 특성(신특) 데이터가 없어, 처방을 내릴 근거가 부족했습니다.
+- **시도**: 데이터센터의 포지션별 인기 특성 통계를 기준 시각과 함께 정리해 두고, 내 약점 보완과 상대 유형 대응을 더해 포지션마다 추천합니다. 통계가 없는 포지션은 가까운 포지션으로 대신하고 화면에 알립니다.
+- **결과**: "무엇을 고칠지"에서 끝나지 않고 "어떤 특성을 달지"까지 이어지는 처방이 되었습니다.`,
+        contentEn: `### 1. Slow First Run and API Quotas
+- **Problem**: Dev keys allow 5 req/s and 1,000/day; sequential ranking + match downloads took **380s**.
+- **Approach**: Ranking pages load in a side thread while matching rankers are fetched immediately; 4 concurrent requests under a shared 4.5/s cap; results first, full stats later; daily usage shown.
+- **Result**: First result in **~90s**, re-analysis in **3s** with zero API calls.
+
+### 2. Real Data Differed from the Docs
+- **Problem**: Unused substitutes counted as 0 in match ratings, and undocumented shot type codes appeared.
+- **Approach**: Rated only players who played and grouped unknown codes as "other" — the same integrity mindset as the Automation Test Tool.
+- **Result**: Numbers match the game, guarded by tests.
+
+### 3. Who to Compare Against
+- **Problem**: Few games per opponent style made win rates swing, and ranker averages gave advice for a different play style.
+- **Approach**: Shrunk small-sample win rates, benchmarked against rankers with a similar style, fell back to all same-formation rankers when needed, and flagged the choice and low samples on screen.
+- **Result**: Comparisons users can trust, with the UI warning when evidence is thin.
+
+### 4. Answers Before Tables
+- **Problem**: The first UI walked through five analysis steps in tables, burying "what should I change?"
+- **Approach**: Reordered around user questions (who am I → who beats me → what to fix → where shots happen), collapsed step tables, and wrote fix cards per metric, direction, and gap size.
+- **Result**: Today's identity → matchups → fixes → shots → squad & prescriptions flow.
+
+### 5. Iterating Within Quotas
+- **Problem**: Every code or UI change burned daily quota.
+- **Approach**: A debugging mode that stores results and raw inputs and recomputes with current code without API calls; raw data deleted after 30 days per Nexon terms; files with other users' nicknames kept out of the repo.
+- **Result**: Zero-API iteration on the same matches.
+
+### 6. Filling Data the API Lacks
+- **Problem**: The API has no acquired-trait data.
+- **Approach**: Curated datacenter trait popularity by position with a timestamp, combined with my weaknesses and opponent style.
+- **Result**: Prescriptions extend from "what to fix" to "which traits to add".`
+      },
+      {
+        num: '07',
+        titleKo: '07. Next Steps & Lessons (다음 단계 및 배운 점)',
+        titleEn: '07. Next Steps & Lessons',
         contentKo: `### 1. 정답이 무엇인지부터 정한다
-- 외부 평점을 넣으면 숫자는 좋아지지만 정답이 아닌 값에 맞추는 셈이 됩니다. 무엇을 맞힐지 먼저 정하고 그 기준을 지키는 것이 모델의 신뢰를 만든다는 점을 확인했습니다.
+- 보이지 않는 값을 맞히는 문제일수록, 무엇을 정답으로 볼지와 어떻게 검증할지를 먼저 정해야 숫자를 믿을 수 있다는 점을 배웠습니다.
 
-### 2. 작은 데이터에서는 검증 방식이 성능만큼 중요하다
-- 선수 수가 많지 않아 LOO와 팀 단위 교차 검증으로 과적합을 경계하고, 화면에 보이는 정확도도 같은 기준으로 맞췄습니다.
+### 2. 문서보다 실제 데이터
+- 공식 문서와 실제 응답이 다른 경우가 적지 않았습니다. 데이터를 받자마자 정합성을 확인하는 습관이 분석 결과 전체의 신뢰를 지켜 줬습니다.
 
-### 3. 다음 단계
-- 스탯만으로 평점 추정 정확도 높이기 (포지션별 가중치, 히트맵 구역 활동 비중 활용)
-- 8강 · 4강 · 결승 결과가 쌓이는 대로 재학습하고, 26/27 시즌으로 확장`,
+### 3. 숫자보다 답
+- 같은 분석이라도 유저가 궁금한 순서로 보여줄 때 비로소 쓰이는 도구가 된다는 것을 화면 구조를 두 번 크게 바꾸며 체감했습니다.
+
+### 4. 다음 단계
+- 8강 · 4강 · 결승 결과가 쌓이는 대로 모델을 다시 학습하고, 26/27 시즌으로 확장
+- 전적분석의 상대 유형 분류와 개선 문장을 더 많은 유저 데이터로 다듬기`,
         contentEn: `### 1. Define the Ground Truth First
-- Third-party ratings improve the numbers but fit the wrong target; holding to the real answer is what makes the model trustworthy.
+- When predicting hidden values, deciding what counts as correct and how to validate it comes before any model.
 
-### 2. With Small Data, Validation Matters as Much as Accuracy
-- Leave-one-out and leave-one-team-out validation guard against overfitting, and the UI reports the same metrics.
+### 2. Real Data over Documentation
+- Responses often differed from the docs; checking integrity on arrival protected every downstream result.
 
-### 3. Next Steps
-- Improve stat-only rating estimates (position-specific weights, heatmap zone shares)
-- Retrain as later rounds arrive and extend to the 26/27 season`
+### 3. Answers over Numbers
+- Restructuring the screen twice showed that analysis becomes useful only when ordered by the user's questions.
+
+### 4. Next Steps
+- Retrain as later rounds arrive and extend to 26/27
+- Refine opponent-style classification and fix wording with more user data`
       }
     ]
   }
