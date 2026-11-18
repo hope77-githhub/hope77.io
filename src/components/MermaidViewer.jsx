@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useId, useRef } from 'react';
 import mermaid from 'mermaid';
+import { useLanguage } from '../context/LanguageContext';
 
 mermaid.initialize({
   startOnLoad: false,
@@ -14,6 +15,7 @@ mermaid.initialize({
 });
 
 export default function MermaidViewer({ chart, title, defaultScale = 1.0 }) {
+  const { t } = useLanguage();
   const uniqueId = useId().replace(/:/g, '_');
   const [svgHtml, setSvgHtml] = useState('');
   const [error, setError] = useState(null);
@@ -64,7 +66,7 @@ export default function MermaidViewer({ chart, title, defaultScale = 1.0 }) {
       <div className="mermaid-error-fallback">
         <div className="mermaid-error-head">
           <i className="fas fa-triangle-exclamation"></i>
-          <span>Mermaid 다이어그램 렌더링 오류</span>
+          <span>{t('Mermaid 다이어그램 렌더링 오류', 'Mermaid diagram render error')}</span>
         </div>
         <pre>{chart}</pre>
       </div>
@@ -85,14 +87,14 @@ export default function MermaidViewer({ chart, title, defaultScale = 1.0 }) {
 
         {/* Size & Zoom Controller Toolbar */}
         <div className="cs-mermaid-zoom-toolbar">
-          <span className="zoom-label">크기 조절:</span>
+          <span className="zoom-label">{t('크기 조절:', 'Zoom:')}</span>
 
           <div className="zoom-btn-group">
             <button
               type="button"
               className="btn-zoom-ctrl"
               onClick={handleZoomOut}
-              title="축소 (Zoom Out)"
+              title={t('축소', 'Zoom out')}
               disabled={scale <= 0.4}
             >
               <i className="fas fa-minus"></i>
@@ -104,7 +106,7 @@ export default function MermaidViewer({ chart, title, defaultScale = 1.0 }) {
               type="button"
               className="btn-zoom-ctrl"
               onClick={handleZoomIn}
-              title="확대 (Zoom In)"
+              title={t('확대', 'Zoom in')}
               disabled={scale >= 2.0}
             >
               <i className="fas fa-plus"></i>
@@ -116,7 +118,7 @@ export default function MermaidViewer({ chart, title, defaultScale = 1.0 }) {
               type="button"
               className={`btn-zoom-preset ${Math.round(scale * 100) === 60 ? 'is-active' : ''}`}
               onClick={() => handlePreset(0.60)}
-              title="60% 크기"
+              title={t('60% 크기', '60% size')}
             >
               60%
             </button>
@@ -124,7 +126,7 @@ export default function MermaidViewer({ chart, title, defaultScale = 1.0 }) {
               type="button"
               className={`btn-zoom-preset ${Math.round(scale * 100) === 100 ? 'is-active' : ''}`}
               onClick={() => handlePreset(1.0)}
-              title="100% 크기"
+              title={t('100% 크기', '100% size')}
             >
               100%
             </button>
@@ -132,7 +134,7 @@ export default function MermaidViewer({ chart, title, defaultScale = 1.0 }) {
               type="button"
               className={`btn-zoom-preset ${Math.round(scale * 100) === 110 ? 'is-active' : ''}`}
               onClick={() => handlePreset(1.10)}
-              title="110% 크기"
+              title={t('110% 크기', '110% size')}
             >
               110%
             </button>
@@ -142,20 +144,20 @@ export default function MermaidViewer({ chart, title, defaultScale = 1.0 }) {
             type="button"
             className="btn-zoom-reset"
             onClick={handleReset}
-            title={`기본 크기 (${Math.round(defaultScale * 100)}%)로 복원`}
+            title={t(`기본 크기 (${Math.round(defaultScale * 100)}%)로 복원`, `Reset to default (${Math.round(defaultScale * 100)}%)`)}
           >
             <i className="fas fa-rotate-left"></i>
-            <span>리셋</span>
+            <span>{t('리셋', 'Reset')}</span>
           </button>
 
           <button
             type="button"
             className={`btn-zoom-wide ${isWide ? 'is-active' : ''}`}
             onClick={toggleWide}
-            title={isWide ? '기본 너비로 복원' : '화면 전체 너비로 확장'}
+            title={isWide ? t('기본 너비로 복원', 'Back to default width') : t('화면 전체 너비로 확장', 'Expand to full width')}
           >
             <i className={`fas ${isWide ? 'fa-compress' : 'fa-expand'}`}></i>
-            <span>{isWide ? '기본 너비' : '넓게 보기'}</span>
+            <span>{isWide ? t('기본 너비', 'Default width') : t('넓게 보기', 'Wide view')}</span>
           </button>
         </div>
       </div>

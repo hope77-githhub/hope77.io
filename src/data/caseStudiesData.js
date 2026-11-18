@@ -242,6 +242,7 @@ Gained methodological mastery in combining quantitative telemetry/SNA metrics ($
     roleKo: '개인 프로젝트 · 설계 및 풀스택 개발',
     roleEn: 'Personal Project · Design & Full-Stack Development',
     period: '2025.12 – 현재 (Active)',
+    periodEn: '2025.12 – Present (Active)',
     techStack: ['Python', 'FastAPI', 'React', 'Data Schema Validation', 'pandas', 'FFmpeg & OpenCV', 'RapidFuzz', 'cx_Freeze'],
 
     metricsHeadingKo: '기대 효과 요약 (Expected Benefits)',
@@ -385,6 +386,37 @@ A single match holds per-participant \`matchDetail\`, \`shoot\`, \`shootDetail[]
     R1 --> R4
     VID --> SYNC
     CHK --> SYNC
+    SYNC --> R3`,
+            mermaidChartEn: `flowchart TD
+    subgraph Source["Input"]
+        API["FC Online match detail data<br/>(match-detail)"]
+        META["Metadata<br/>spid · spposition · season · matchtype"]
+        VID["Screen recording"]
+    end
+
+    subgraph Engine["FastAPI Validation Engine"]
+        SPEC["Data schema reference"]
+        RULE["Per-field rule modules"]
+        CHK["Validation runner"]
+        SYNC["Time sync"]
+    end
+
+    subgraph UI["React Dashboard (tab-based)"]
+        R1["Validation report"]
+        R2["Pitch visualization 2D / 3D"]
+        R3["Scene clip player"]
+        R4["Integrity trend tracking"]
+    end
+
+    API --> CHK
+    META --> CHK
+    SPEC --> CHK
+    RULE --> CHK
+    CHK --> R1
+    CHK --> R2
+    R1 --> R4
+    VID --> SYNC
+    CHK --> SYNC
     SYNC --> R3`
           },
           {
@@ -411,6 +443,25 @@ A single match holds per-participant \`matchDetail\`, \`shoot\`, \`shootDetail[]
     end
 
     OUT["통과 / 실패 리포트<br/>+ 장면 · 좌표 확인"]
+
+    IN --> A1 --> A2 --> A3 --> A4 --> OUT`,
+            mermaidChartEn: `flowchart LR
+    IN["matchInfo[]<br/>matchDetail · shoot · shootDetail[]<br/>pass · defence · player[]"]
+
+    subgraph L1["1. Format"]
+        A1["Allowed values · types<br/>coordinates within 0–1"]
+    end
+    subgraph L2["2. Summary ↔ Detail"]
+        A2["shootTotal = shootDetail count<br/>goalTotal = goal-result shots"]
+    end
+    subgraph L3["3. Relations"]
+        A3["success ≤ attempt<br/>assist ↔ assistSpId"]
+    end
+    subgraph L4["4. Cross-participant"]
+        A4["possession sums to 100<br/>goals ↔ matchResult"]
+    end
+
+    OUT["Pass / fail report<br/>+ scene · coordinate check"]
 
     IN --> A1 --> A2 --> A3 --> A4 --> OUT`
           }
@@ -462,8 +513,8 @@ A single match holds per-participant \`matchDetail\`, \`shoot\`, \`shootDetail[]
 - Per-player \`player[].status\` sums vs team \`shoot\`/\`pass\` summaries
 
 ### 3. Relations — Do the Numbers Make Sense?
-- Successes never exceed attempts (\`passSuccess ≤ passTry\`, \`tackleSuccess ≤ tackleTry\`, \`effectiveShootTotal ≤ shootTotal\`)
-- \`assist: false\` implies \`assistSpId = -1\`
+- Successes never exceed attempts (\`passSuccess ≤ passTry\`, \`tackleSuccess ≤ tackleTry\`, \`effectiveShootTotal ≤ shootTotal\`, \`goalHeading ≤ shootHeading\`)
+- \`assist: false\` implies \`assistSpId = -1\`, and \`assist: true\` requires a real player ID
 - \`inPenalty\` agrees with whether the shot coordinates fall inside the box
 
 ### 4. Cross-Participant — Do Both Sides Agree?
@@ -552,6 +603,7 @@ A single match holds per-participant \`matchDetail\`, \`shoot\`, \`shootDetail[]
     roleKo: '텔레메트리 시스템 & 풀스택 엔지니어 (전체 파이프라인 기획, UDP 파서, 물리 역산 엔진, 서킷 Canvas 렌더링, AI 음성 연동)',
     roleEn: 'Telemetry Systems & Full-Stack Engineer (Pipeline Architecture, UDP Parser, Kinematics Engine, Canvas Map, AI Voice)',
     period: '2026.09 – 현재 (Active)',
+    periodEn: '2026.09 – Present (Active)',
     repoUrl: 'https://github.com/hope77-githhub/F125_Personal_RaceEngineer',
     techStack: ['Python', 'FastAPI', 'UDP Socket (:20777)', 'Circular Ring Buffer', 'WebSocket', 'React & SVG', 'AI Voice (TTS)'],
 
@@ -829,6 +881,7 @@ Achieved 60Hz lossless parsing, sub-5ms buffer indexing, ~28ms disk caching, and
     roleKo: '프론트엔드 엔지니어 (텍스트 엔진, SheetJS 엑셀 파서, 전산 규격 알고리즘 구현)',
     roleEn: 'Frontend Engineer (Text Engine, SheetJS Parser, System Spec Compliance Algorithm)',
     period: '2026.09 (완료)',
+    periodEn: '2026.09 (Completed)',
     techStack: ['React', 'JavaScript (ES6+)', 'SheetJS (xlsx)', 'RegEx', 'Client In-Memory'],
 
     metricsHeadingKo: '결과 요약 (Summary of Results)',
@@ -1020,6 +1073,7 @@ Reaffirmed that deeply understanding domain-specific quirks (such as unique byte
     roleKo: '개인 프로젝트 · 기획, 데이터 수집, 모델링, 풀스택 개발',
     roleEn: 'Personal Project · Planning, Data Collection, Modeling & Full-Stack Development',
     period: '2026.11 – 현재 (Active)',
+    periodEn: '2026.11 – Present (Active)',
     techStack: ['Python', 'FastAPI', 'React & TypeScript', 'FotMob Crawling', 'Nexon Open API', 'Data Mining', 'pytest'],
 
     metricsHeadingKo: '현재까지의 결과 (Progress So Far)',
@@ -1076,7 +1130,7 @@ FC온라인 UEFA 챔피언스리그 시즌 카드는 실제 토너먼트 경기 
 ### 3. 흩어진 데이터
 라이브 부스트 결과, 실제 경기 기록, 공식경기 기록이 서로 다른 곳에 흩어져 있고 선수 이름 표기도 달라, 데이터를 모으고 잇는 일부터가 큰 작업이었습니다.`,
         contentEn: `### 1. Live Boosts Tie Real Matches to Card Stats
-FC Online UCL cards gain or lose OVR each round based on real knockout performances, but the match ratings that decide the boost are never published.
+FC Online UCL cards gain or lose OVR each round based on real knockout performances, but the match ratings that decide the boost are never published, so players had to rely on gut feeling when buying or upgrading cards.
 
 ### 2. Official Records Show Only Wins and Losses
 Match history shows results and a few totals, not your play style, the opponents you struggle against, or how you differ from top rankers.
@@ -1139,6 +1193,34 @@ FotMob crawling collects **detailed per-match data for every player on both team
     GT --> ML
     ML --> T1
     NX --> NC --> RA
+    RA --> T2`,
+            mermaidChartEn: `flowchart TD
+    subgraph Sources["Data Sources"]
+        FM["FotMob<br/>(real matches · full-squad details)"]
+        LB["Nexon official data<br/>(Live Boost announcements · card info)"]
+        NX["Nexon Open API<br/>(user ID → official match logs)"]
+    end
+
+    subgraph Backend["FastAPI Backend"]
+        CR["Match data collection pipeline"]
+        PS["Player match record store"]
+        GT["Ground truth preparation"]
+        ML["Live Boost prediction model<br/>(selected via data mining)"]
+        NC["Nexon API collector"]
+        RA["Match log analysis engine"]
+    end
+
+    subgraph Front["React + TypeScript"]
+        T1["Live Boost tab<br/>(match lineups · per-player odds)"]
+        T2["Record analysis tab<br/>(play style report · prescriptions)"]
+    end
+
+    FM --> CR --> PS
+    LB --> GT
+    PS --> ML
+    GT --> ML
+    ML --> T1
+    NX --> NC --> RA
     RA --> T2`
           },
           {
@@ -1170,7 +1252,30 @@ FotMob crawling collects **detailed per-match data for every player on both team
         E1["넥슨 발표 후<br/>적중 평가"] --> E2["새 라운드 결과로<br/>재학습"]
     end
     Data --> Prep --> Mining --> Serve --> Eval
-    Eval -. "피드백 루프" .-> Prep`
+    Eval -. "피드백 루프" .-> Prep`,
+            mermaidChartEn: `flowchart TD
+    subgraph Data["1. Data Preparation"]
+        direction LR
+        D1["Per-match player details"] ~~~ D2["Live Boost ground truth"] ~~~ D3["Season · card rules"]
+    end
+    subgraph Prep["2. Preprocessing · Features"]
+        direction LR
+        P1["Player matching · cleaning"] --> P2["Missing-value handling"] --> P3["Feature generation"]
+    end
+    subgraph Mining["3. Data Mining · Model Selection"]
+        direction LR
+        M1["Baseline model"] --> M2["Candidate model search"] --> M3["Cross-validation"] --> M4["Held-out season<br/>final test"]
+    end
+    subgraph Serve["4. Prediction"]
+        direction LR
+        S1["Final model"] --> S2["Probability output"] --> S3["Per-boost odds · likely range<br/>· rise probability"]
+    end
+    subgraph Eval["5. Evaluation · Retraining"]
+        direction LR
+        E1["Hit check after<br/>Nexon announcement"] --> E2["Retrain with<br/>new round results"]
+    end
+    Data --> Prep --> Mining --> Serve --> Eval
+    Eval -. "feedback loop" .-> Prep`
           },
           {
             id: 'diag-fco-report',
@@ -1195,6 +1300,26 @@ FotMob crawling collects **detailed per-match data for every player on both team
     subgraph Out["4. 리포트"]
         direction LR
         R1["플레이 스타일 리포트"] --> R2["상성표 · 개선점"] --> R3["처방"]
+    end
+    Me --> Feat
+    Rk --> Feat
+    Feat --> Out`,
+            mermaidChartEn: `flowchart TD
+    subgraph Me["1. My Matches"]
+        direction LR
+        U["User ID search"] --> L["Collect recent<br/>official match logs"]
+    end
+    subgraph Rk["2. Benchmark"]
+        direction LR
+        RK["Top rankers"] --> RL["Ranker match logs"]
+    end
+    subgraph Feat["3. Analysis"]
+        direction LR
+        F["Match log analysis engine"] --> T["Play style classification"] --> SIM["Ranker comparison"]
+    end
+    subgraph Out["4. Report"]
+        direction LR
+        R1["Play style report"] --> R2["Matchups · fixes"] --> R3["Prescriptions"]
     end
     Me --> Feat
     Rk --> Feat
@@ -1272,6 +1397,8 @@ Searching a user ID pulls recent official match logs from the Nexon Open API and
 - **Similar rankers**: rankers who play like you, overlaid on the radar
 - **Nemesis & prey**: weakest and strongest opponent styles with records
 - **Match report**: recent form, top scorer, scoring/conceding routes, and goal/concede time bands
+
+> Example report · Possession build-up type — "Plays lots of short passes and keeps the ball for long spells." Nemesis: the same possession build-up style (1W 0D 3L); prey: long-shot teams (3W 0D 0L). Scoring route: tiki-taka (33%); conceding route: through-ball runs (36%). Scores most in the 60–75th minute and concedes most in the 75–90th.
 
 ### Benchmarking Against Rankers
 - **Matchup board**: win rate by opponent style from nemesis to prey, and how your game shifts against each.
@@ -1351,7 +1478,7 @@ Searching a user ID pulls recent official match logs from the Nexon Open API and
 - **결과**: 수집 → 저장 → 예측 → 화면이 하나로 이어진 파이프라인이 완성되어, 라운드 경기가 끝나면 넥슨 발표 전에 바로 예측 결과를 렌더링합니다. 쌓인 세 시즌의 데이터가 데이터 마이닝의 토대가 되었습니다.`,
         contentEn: `### 1. No Published Ground Truth — Redefine What to Predict
 - **Problem**: The deciding ratings are hidden; the first model hit only 45.2% on a held-out season, with no baseline to judge it.
-- **Approach**: Built three seasons of ground truth, set simple baselines, then iterated a data-mining search over candidate models under identical conditions.
+- **Approach**: Built three seasons of ground truth, set simple baselines, then iterated a data-mining search over candidate models under identical conditions, measuring how much each step improved accuracy.
 - **Result**: Held-out 23/24 accuracy rose from **45.2% to 56.0%**; 50.6% on unseen teams (+17.8pp over always predicting 0).
 
 ### 2. Validation That Inflates Accuracy
@@ -1425,16 +1552,16 @@ Searching a user ID pulls recent official match logs from the Nexon Open API and
 ### 3. Who to Compare Against
 - **Problem**: Few games per opponent style made win rates swing, and all-ranker comparisons gave advice for a different play style.
 - **Approach**: Corrected small samples, benchmarked against rankers who play like you, and flagged weak evidence on screen.
-- **Result**: Comparisons users can trust.
+- **Result**: Comparisons users can trust, and the screen speaks up first when the numbers are weak.
 
 ### 4. Answers Before Tables
 - **Problem**: The first UI walked through the analysis in tables, burying "what should I change?"
-- **Approach**: Reordered around user questions and collapsed the supporting tables.
+- **Approach**: Moved to a results-first dashboard, then reordered again around user questions (what kind of player am I → who beats me → what should I fix → where do shots come from) and collapsed the supporting tables at the bottom.
 - **Result**: Today's report → matchups → fixes → shots → squad & prescriptions flow.
 
 ### 5. Iterating Within Quotas
 - **Problem**: Every code or UI change burned daily quota.
-- **Approach**: A debugging mode that checks the latest code against stored data without API calls, with data retention following Nexon's terms.
+- **Approach**: A debugging mode that checks the latest code against stored data without API calls, with data retention following Nexon's terms; files containing other users' nicknames are kept out of the repository.
 - **Result**: Zero-API iteration on the same matches.
 
 ### 6. Filling Data the API Lacks

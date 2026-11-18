@@ -109,7 +109,7 @@ export default function ProjectsPage({ selectedProjectId, onSelectProject, onNav
                 </span>
                 <span className="cs-period-pill">
                   <i className="far fa-calendar-alt"></i>
-                  <span>{currentProject.period}</span>
+                  <span>{(lang === 'en' && currentProject.periodEn) || currentProject.period}</span>
                 </span>
               </div>
 
@@ -301,7 +301,7 @@ export default function ProjectsPage({ selectedProjectId, onSelectProject, onNav
                           return (
                             <div className="cs-architecture-diagram-block">
                               <MermaidViewer
-                                chart={activeDiag.mermaidChart}
+                                chart={(lang === 'en' && activeDiag.mermaidChartEn) || activeDiag.mermaidChart}
                                 title={lang === 'en' ? activeDiag.titleEn : activeDiag.titleKo}
                                 defaultScale={activeDiag.defaultScale || 1.10}
                               />
