@@ -1003,7 +1003,7 @@ Reaffirmed that deeply understanding domain-specific quirks (such as unique byte
   },
   // =========================================================================
   // 5. FCO Live Boost Lab (라부 예측 & 전적분석)
-  //    예측 모델의 구체적인 식 · 입력 · 가중치는 공개하지 않음
+  //    서비스 재현에 쓰일 수 있는 수집 방법 · 모델 · 분석 설계는 공개하지 않음
   // =========================================================================
   {
     id: 'log-entry-fco-liveboost',
@@ -1015,12 +1015,12 @@ Reaffirmed that deeply understanding domain-specific quirks (such as unique byte
     titleEn: 'FCO Live Boost Lab — Live Boost Prediction & Match Record Analysis',
     tabLabelKo: 'FCO 라이브 부스트',
     tabLabelEn: 'FCO Live Boost',
-    oneLinerKo: '실제 UEFA 챔피언스리그 경기 데이터로 FC온라인 챔스 카드의 라이브 부스트를 확률로 예측하고, 넥슨 Open API 공식경기 기록으로 내 플레이를 랭커와 견줘 진단하는 FC온라인 분석 서비스',
-    oneLinerEn: 'An FC Online analytics service that predicts Live Boosts for Champions League cards as probabilities from real UCL match data, and diagnoses your play against top rankers using Nexon Open API match records.',
+    oneLinerKo: '실제 UEFA 챔피언스리그 경기 데이터로 FC온라인 챔스 카드의 라이브 부스트를 확률로 예측하고, 유저 ID 하나로 공식경기 기록을 분석해 플레이 스타일을 진단하는 FC온라인 분석 서비스',
+    oneLinerEn: 'An FC Online analytics service that predicts Live Boosts for Champions League cards as probabilities from real UCL match data, and diagnoses play style from official match records with a single user ID.',
     roleKo: '개인 프로젝트 · 기획, 데이터 수집, 모델링, 풀스택 개발',
     roleEn: 'Personal Project · Planning, Data Collection, Modeling & Full-Stack Development',
     period: '2026.11 – 현재 (Active)',
-    techStack: ['Python', 'FastAPI', 'React & TypeScript', 'FotMob Crawling (BeautifulSoup)', 'Nexon Open API', 'Data Mining', 'pytest'],
+    techStack: ['Python', 'FastAPI', 'React & TypeScript', 'FotMob Crawling', 'Nexon Open API', 'Data Mining', 'pytest'],
 
     metricsHeadingKo: '현재까지의 결과 (Progress So Far)',
     metricsHeadingEn: 'Progress So Far',
@@ -1048,7 +1048,7 @@ Reaffirmed that deeply understanding domain-specific quirks (such as unique byte
     ],
 
     pipelineFlow: [
-      { step: '01', titleKo: 'FotMob 전 선수 경기 세부 데이터 수집', titleEn: 'FotMob Full-Squad Match Detail Crawling' },
+      { step: '01', titleKo: 'FotMob 전 선수 경기 세부 데이터 수집', titleEn: 'FotMob Full-Squad Match Data Collection' },
       { step: '02', titleKo: '라이브 부스트 정답 데이터 정리', titleEn: 'Live Boost Ground Truth' },
       { step: '03', titleKo: '데이터 마이닝으로 예측 모델 탐색', titleEn: 'Model Search via Data Mining' },
       { step: '04', titleKo: '라부 예측: 경기 · 선수별 확률', titleEn: 'Boost Prediction: Per-Match, Per-Player Odds' },
@@ -1058,8 +1058,8 @@ Reaffirmed that deeply understanding domain-specific quirks (such as unique byte
     beforeAfter: {
       beforeKo: '라이브 부스트는 공개되지 않은 경기 평점으로 정해져, 어떤 선수가 오를지는 하이라이트를 보고 감으로 짐작해야 했습니다. 공식경기 전적도 승패 숫자뿐이라 "왜 지는지, 누구에게 약한지, 랭커와 무엇이 다른지"를 알 방법이 없었습니다.',
       beforeEn: 'Live Boosts follow unpublished match ratings, so predicting who would rise was guesswork. Official match history showed only wins and losses, with no way to see why you lose, who you struggle against, or how you differ from top rankers.',
-      afterKo: '라운드가 끝나면 경기를 골라 선수마다 예측 OVR과 오를 확률을 보고, 넥슨 발표 뒤에는 적중 여부까지 확인합니다. 전적분석은 닉네임 하나로 내 성향, 상대 유형별 상성, 고칠 점과 추천 특성을 랭커의 실제 경기와 견줘 보여줍니다.',
-      afterEn: 'After each round, pick a match to see each player\'s expected OVR and rise odds, then check hits once Nexon announces. Record analysis turns a nickname into play style, matchups, fixes, and trait picks benchmarked against rankers\' real games.'
+      afterKo: '라운드가 끝나면 경기를 골라 선수마다 예측 OVR과 오를 확률을 보고, 넥슨 발표 뒤에는 적중 여부까지 확인합니다. 전적분석은 유저 ID 하나로 내 플레이 스타일, 상대 유형별 상성, 고칠 점과 처방을 랭커의 실제 경기와 견줘 보여줍니다.',
+      afterEn: 'After each round, pick a match to see each player\'s expected OVR and rise odds, then check hits once Nexon announces. Record analysis turns a user ID into play style, matchups, fixes, and prescriptions benchmarked against rankers\' real games.'
     },
 
     sections: [
@@ -1068,21 +1068,21 @@ Reaffirmed that deeply understanding domain-specific quirks (such as unique byte
         titleKo: '01. Background & Problem (배경 및 문제점)',
         titleEn: '01. Background & Problem',
         contentKo: `### 1. 실제 경기 결과가 카드 능력치를 바꾸는 라이브 부스트
-FC온라인 UEFA 챔피언스리그 시즌 카드는 실제 토너먼트 경기 활약에 따라 라운드마다 오버롤(OVR)이 오르거나 내립니다. 하지만 부스트 폭을 정하는 경기 평점은 공개되지 않아, 유저는 카드 구매·강화 판단을 감에 의존할 수밖에 없었습니다.
+FC온라인 UEFA 챔피언스리그 시즌 카드는 실제 토너먼트 경기 활약에 따라 라운드마다 오버롤(OVR)이 오르거나 내립니다. 하지만 부스트 폭을 정하는 경기 평점은 공개되지 않아, 유저는 카드 구매 · 강화 판단을 감에 의존할 수밖에 없었습니다.
 
 ### 2. 승패 숫자만 남는 공식경기 전적
-공식경기 기록은 승·무·패와 몇 가지 합계로만 보입니다. 내가 어떤 유형의 플레이어인지, 어떤 상대에게 유독 약한지, 같은 포메이션을 쓰는 상위 랭커와 무엇이 다른지는 직접 수십 경기를 돌려 보지 않고는 알기 어려웠습니다.
+공식경기 기록은 승 · 무 · 패와 몇 가지 합계로만 보입니다. 내가 어떤 유형의 플레이어인지, 어떤 상대에게 유독 약한지, 상위 랭커와 무엇이 다른지는 직접 수십 경기를 돌려 보지 않고는 알기 어려웠습니다.
 
 ### 3. 흩어진 데이터
-라이브 부스트 결과는 공지 이미지로, 실제 경기 기록은 외부 사이트에, 공식경기 기록은 넥슨 Open API에 흩어져 있고 선수 이름 표기도 서로 달라, 데이터를 모으고 잇는 일부터가 큰 작업이었습니다.`,
+라이브 부스트 결과, 실제 경기 기록, 공식경기 기록이 서로 다른 곳에 흩어져 있고 선수 이름 표기도 달라, 데이터를 모으고 잇는 일부터가 큰 작업이었습니다.`,
         contentEn: `### 1. Live Boosts Tie Real Matches to Card Stats
 FC Online UCL cards gain or lose OVR each round based on real knockout performances, but the match ratings that decide the boost are never published.
 
 ### 2. Official Records Show Only Wins and Losses
-Match history shows results and a few totals, not your play style, the opponents you struggle against, or how you differ from top rankers on the same formation.
+Match history shows results and a few totals, not your play style, the opponents you struggle against, or how you differ from top rankers.
 
 ### 3. Scattered Data
-Boost results live in announcement images, real match data on external sites, and official records in the Nexon Open API, with player names spelled differently in each.`
+Boost results, real match data, and official records live in different places with player names spelled differently in each.`
       },
       {
         num: '02',
@@ -1092,18 +1092,18 @@ Boost results live in announcement images, real match data on external sites, an
 지난 시즌들의 실제 경기 데이터와 라이브 부스트 결과를 모아, **데이터 마이닝으로 예측 확률이 높은 모델을 찾아** 선수마다 다음 라운드 OVR과 오를 확률을 보여줍니다. 모델의 구체적인 구성은 이 프로젝트의 핵심 자산이라 공개하지 않습니다.
 
 ### 2. 전적분석 탭
-유저 ID(닉네임)를 검색하면 넥슨 Open API로 그 유저의 최근 공식경기 매치 로그를 받아 분석해 **플레이 스타일 리포트**를 만들고, 같은 포메이션 상위 랭커들의 경기와 견줘 상대 유형별 상성 · 고칠 점 · 추천 획득 특성(신특)까지 한 화면에서 진단합니다.
+유저 ID(닉네임)를 검색하면 넥슨 Open API로 그 유저의 최근 공식경기 매치 로그를 받아 자체 분석 엔진으로 **플레이 스타일 리포트**를 만들고, 상위 랭커들의 실제 경기와 견줘 상성 · 고칠 점 · 처방까지 한 화면에서 진단합니다.
 
-### 3. 데이터 기반: 모든 선수의 경기별 세부 데이터
-FotMob 경기 페이지를 크롤링해 한 경기에 출전한 **양 팀 모든 선수의 경기별 세부 기록**(득점 · xG · xA, 슈팅, 패스 정확도 · 라인 브레이킹 패스 · 크로스, 볼 경합 · 태클 · 가로채기, 이동 거리 · 스프린트 · 최고 속도, 골키퍼 선방 등 60여 개 항목)과 경기 상황(골 타임라인, 교체, 슈팅 지도, 팀 통계)을 모읍니다. 두 탭 모두 같은 수집 원칙(요청 간격 · 캐시 · 요청 한도 관리)과 같은 디자인 시스템 위에 있고, 백엔드는 FastAPI, 화면은 React + TypeScript입니다.`,
+### 3. 데이터 기반
+FotMob 크롤링으로 경기에 출전한 **양 팀 모든 선수의 경기별 세부 데이터**를 수집하고, 이것이 데이터 마이닝과 예측의 토대가 됩니다. 백엔드는 FastAPI, 화면은 React + TypeScript입니다.`,
         contentEn: `### 1. Live Boost Prediction
 Using past seasons' real match data and boost results, **a high-accuracy model found through data mining** shows each player's next-round OVR and rise odds. The model's internals are the project's core asset and are not disclosed.
 
 ### 2. Record Analysis
-Searching a user ID pulls that user's recent official match logs from the Nexon Open API and builds a **play style report**, then benchmarks against top rankers on the same formation for matchups, fixes, and trait recommendations.
+Searching a user ID pulls recent official match logs from the Nexon Open API, builds a **play style report** with an in-house analysis engine, and benchmarks against top rankers' real games for matchups, fixes, and prescriptions.
 
-### 3. Data Foundation: Every Player's Match Details
-Crawling FotMob match pages collects **detailed per-match records for every player on both teams** (goals, xG, xA, shots, passing, line-breaking passes, crosses, duels, tackles, interceptions, distance, sprints, top speed, keeper saves: 60+ fields) plus match context (goal timeline, substitutions, shot map, team stats). Both tabs share the same collection rules and design system on FastAPI and React + TypeScript.`,
+### 3. Data Foundation
+FotMob crawling collects **detailed per-match data for every player on both teams**, the foundation for data mining and prediction. Built on FastAPI and React + TypeScript.`,
         architectureDiagrams: [
           {
             id: 'diag-fco-system',
@@ -1111,21 +1111,21 @@ Crawling FotMob match pages collects **detailed per-match records for every play
             tabTitleEn: 'System Architecture',
             titleKo: '시스템 아키텍쳐',
             titleEn: 'System Architecture',
-            defaultScale: 0.7,
+            defaultScale: 0.75,
             mermaidChart: `flowchart TD
     subgraph Sources["데이터 소스"]
-        FM["FotMob 경기 페이지<br/>(양 팀 전 선수 경기별 세부 기록 · 경기 상황)"]
-        LB["라이브 부스트 공지 · 넥슨 데이터센터<br/>(정답 데이터 · 시즌 카드 · 랭킹 · 인기 특성)"]
+        FM["FotMob<br/>(실제 경기 · 전 선수 세부 데이터)"]
+        LB["넥슨 공식 데이터<br/>(라이브 부스트 발표 · 카드 정보)"]
         NX["넥슨 Open API<br/>(유저 ID → 공식경기 매치 로그)"]
     end
 
     subgraph Backend["FastAPI 백엔드"]
-        CR["FotMob 크롤러<br/>(라운드 일괄 · 요청 간격 · 캐시 · robots 준수)"]
-        PS["선수 경기 기록 저장소<br/>(3개 시즌 · 2,626건)"]
-        GT["정답 데이터 정리<br/>(선수 매칭 · 결과 복원)"]
+        CR["경기 데이터 수집 파이프라인"]
+        PS["선수 경기 기록 저장소"]
+        GT["정답 데이터 정리"]
         ML["라부 예측 모델<br/>(데이터 마이닝으로 선정)"]
-        NC["넥슨 API 클라이언트<br/>(동시 요청 · 한도 관리 · 캐시)"]
-        RA["매치 로그 분석 엔진<br/>(플레이 유형 · 상성 · 개선점)"]
+        NC["넥슨 API 수집기"]
+        RA["매치 로그 분석 엔진"]
     end
 
     subgraph Front["React + TypeScript"]
@@ -1139,7 +1139,6 @@ Crawling FotMob match pages collects **detailed per-match records for every play
     GT --> ML
     ML --> T1
     NX --> NC --> RA
-    LB --> RA
     RA --> T2`
           },
           {
@@ -1152,19 +1151,19 @@ Crawling FotMob match pages collects **detailed per-match records for every play
             mermaidChart: `flowchart TD
     subgraph Data["1. 데이터 준비"]
         direction LR
-        D1["경기별 선수 세부 기록<br/>(FotMob · 3개 시즌)"] ~~~ D2["라이브 부스트 정답<br/>(공지 · 데이터센터 복원)"] ~~~ D3["시즌 · 카드 규칙"]
+        D1["경기별 선수 세부 기록"] ~~~ D2["라이브 부스트 정답"] ~~~ D3["시즌 · 카드 규칙"]
     end
     subgraph Prep["2. 전처리 · 특징 생성"]
         direction LR
-        P1["선수 매칭 · 정제"] --> P2["결측 · 미출전 처리"] --> P3["특징 생성"]
+        P1["선수 매칭 · 정제"] --> P2["결측 처리"] --> P3["특징 생성"]
     end
     subgraph Mining["3. 데이터 마이닝 · 모델 선택"]
         direction LR
-        M1["기준선 모델"] --> M2["후보 모델 탐색"] --> M3["팀 · 시즌 단위<br/>교차 검증"] --> M4["미사용 시즌<br/>최종 테스트"]
+        M1["기준선 모델"] --> M2["후보 모델 탐색"] --> M3["교차 검증"] --> M4["미사용 시즌<br/>최종 테스트"]
     end
     subgraph Serve["4. 예측"]
         direction LR
-        S1["최종 모델 선정"] --> S2["확률 보정"] --> S3["부스트별 확률 · 유력 범위<br/>· 오를 확률"]
+        S1["최종 모델 선정"] --> S2["확률 산출"] --> S3["부스트별 확률 · 유력 범위<br/>· 오를 확률"]
     end
     subgraph Eval["5. 평가 · 재학습"]
         direction LR
@@ -1181,21 +1180,21 @@ Crawling FotMob match pages collects **detailed per-match records for every play
             titleEn: 'User ID Search → Play Style Report',
             defaultScale: 0.85,
             mermaidChart: `flowchart TD
-    subgraph Rk["2. 비교 대상"]
-        direction LR
-        RK["랭킹 상위 2,000명"] --> SF["같은 포메이션 랭커"] --> RL["랭커 매치 로그"]
-    end
     subgraph Me["1. 내 경기"]
         direction LR
-        U["유저 ID 검색"] --> O["계정 식별 ·<br/>최근 공식경기 목록"] --> L["매치 로그 수집<br/>(매치 상세)"]
+        U["유저 ID 검색"] --> L["최근 공식경기<br/>매치 로그 수집"]
     end
-    subgraph Feat["3. 매치 로그 분석"]
+    subgraph Rk["2. 비교 대상"]
         direction LR
-        F["경기별 특징 추출<br/>(점유 · 패스 종류 · 드리블<br/>· 슈팅 · 수비)"] --> T["플레이 유형 점수<br/>(6가지 스타일)"] --> SIM["닮은 랭커 찾기"]
+        RK["상위 랭커"] --> RL["랭커 매치 로그"]
+    end
+    subgraph Feat["3. 분석"]
+        direction LR
+        F["매치 로그 분석 엔진"] --> T["플레이 유형 판정"] --> SIM["랭커 비교"]
     end
     subgraph Out["4. 리포트"]
         direction LR
-        R1["플레이 스타일 리포트<br/>(대표 유형 · 한 줄 성향 ·<br/>해결사 · 득실 루트 · 시간대)"] --> R2["상성표 · 개선점"] --> R3["처방<br/>(획득 특성 · 선수 구성)"]
+        R1["플레이 스타일 리포트"] --> R2["상성표 · 개선점"] --> R3["처방"]
     end
     Me --> Feat
     Rk --> Feat
@@ -1209,17 +1208,17 @@ Crawling FotMob match pages collects **detailed per-match records for every play
         titleEn: '03. Live Boost Prediction Tab',
         highlight: true,
         contentKo: `### 라운드 단위로 보는 라이브 부스트 예측
-- **실시간 예측 파이프라인**: 라운드 경기가 끝나면 시즌 · 라운드만 골라 수집을 시작하고(진행률 표시), 데이터가 저장되는 즉시 학습된 모델이 선수별 예측을 계산해 경기 라인업 화면과 팀 목록에 바로 그립니다. 넥슨 발표를 기다리지 않고 경기 직후에 결과를 볼 수 있고, 발표가 나오면 같은 화면에서 적중 여부가 채워집니다.
-- **대회 진행 단계**: 라운드별 MAX OVR 사다리와 "지금 여기" 표시, 그리고 예측이 얼마나 믿을 만한지(유력 범위 적중률 · 가장 유력 적중률 · 오를지 가려내는 힘)를 맨 위에 보여줍니다.
+- **실시간 예측 파이프라인**: 라운드 경기가 끝나면 수집을 시작하고(진행률 표시), 데이터가 저장되는 즉시 학습된 모델이 선수별 예측을 계산해 경기 라인업 화면과 팀 목록에 바로 그립니다. 넥슨 발표를 기다리지 않고 경기 직후에 결과를 볼 수 있고, 발표가 나오면 같은 화면에서 적중 여부가 채워집니다.
+- **대회 진행 단계**: 라운드별 MAX OVR 사다리와 "지금 여기" 표시, 그리고 예측이 얼마나 믿을 만한지를 맨 위에 보여줍니다.
 - **경기 라인업 화면**: 끝난 경기를 고르면 두 팀 선수가 실제 포지션 위에 시즌 카드 얼굴로 서고, 경기별 자체 평점과 예측 부스트 · 오를 확률 배지가 붙습니다. 1차전 · 2차전을 바꿔 보고 교체 선수도 확인합니다.
-- **팀별 예측 목록**: 선수마다 시작 OVR → 예측 OVR, 오를 확률 막대, 예측 범위를 보여주고, 넥슨 발표가 나오면 실제 OVR과 적중 여부(✓ / ✕)를 함께 표시합니다. 오를 확률 · 예측 OVR · 자체 평점 순 정렬과 오름 · 내림 필터, 줄을 펼치면 부스트별 확률이 나옵니다.
-- **새 시즌 대응**: 아직 공지가 없는 시즌은 시즌 카드 출시 OVR에서 출발해 예측만 보여줍니다.`,
+- **팀별 예측 목록**: 선수마다 시작 OVR → 예측 OVR, 오를 확률 막대, 예측 범위를 보여주고, 넥슨 발표가 나오면 실제 OVR과 적중 여부(✓ / ✕)를 함께 표시합니다. 정렬 · 필터와 부스트별 확률 펼쳐 보기를 지원합니다.
+- **새 시즌 대응**: 아직 공지가 없는 시즌도 예측을 먼저 보여줍니다.`,
         contentEn: `### Live Boost Predictions, Round by Round
-- **Real-time prediction pipeline**: once a round's matches end, pick the season and round to start collection (with progress); as data lands, the trained model scores every player and the lineup view and team lists render immediately, before Nexon announces, with hits filled in on the same screen afterward.
+- **Real-time prediction pipeline**: once a round's matches end, collection starts (with progress); as data lands, the trained model scores every player and the lineup view and team lists render immediately, before Nexon announces, with hits filled in afterward.
 - **Tournament stage**: MAX OVR ladder with a "you are here" marker, plus how reliable the predictions are.
 - **Match lineup view**: both teams on the pitch with season card faces, per-match ratings, and predicted boost / rise odds badges; switch legs and see substitutes.
-- **Team prediction list**: start → expected OVR, rise-odds bars, and likely range, with actual OVR and ✓ / ✕ once Nexon announces; sort, filter, and expand for per-boost odds.
-- **New seasons**: starts from release OVR and shows predictions only until announcements arrive.`,
+- **Team prediction list**: start → expected OVR, rise-odds bars, and likely range, with actual OVR and ✓ / ✕ once Nexon announces; sorting, filters, and per-boost odds.
+- **New seasons**: predictions are shown even before any announcement.`,
         screenshots: [
           {
             src: fcoImg1,
@@ -1250,74 +1249,70 @@ Crawling FotMob match pages collects **detailed per-match records for every play
         titleEn: '04. Match Record Analysis Tab',
         highlight: true,
         contentKo: `### 유저 ID 검색 → 매치 로그 분석 → 플레이 스타일 리포트
-유저 ID(닉네임)를 검색하면 넥슨 Open API로 그 유저의 최근 공식경기 매치 로그(매치 상세)를 받아, 경기마다 점유 · 패스 종류 · 드리블 · 슈팅 위치와 방식 · 수비 기록을 수십 개 특징으로 바꿔 분석합니다. 리포트에는 다음이 담깁니다.
+유저 ID(닉네임)를 검색하면 넥슨 Open API로 그 유저의 최근 공식경기 매치 로그를 받아, 자체 분석 엔진으로 경기 기록을 분석해 플레이 스타일 리포트를 만듭니다. 리포트에는 다음이 담깁니다.
 
-- **플레이 유형**: 점유 빌드업 · 침투 패스 · 크로스·헤더 · 드리블 돌파 · 역습·다이렉트 · 중거리 슈팅 6가지 유형 점수와 대표 유형
-- **한 줄 성향**: 랭커 평균과 비교해 가장 두드러진 특징을 문장으로 요약 (예: 숏패스 비중 79.4%, 랭커 70.3%)
-- **닮은 랭커**: 같은 포메이션 랭커 중 플레이 유형이 나와 비슷한 랭커와 그 평균 모양을 레이더에 겹쳐 표시
+- **플레이 유형**: 6가지 플레이 유형 점수와 대표 유형
+- **한 줄 성향**: 랭커와 비교해 가장 두드러진 특징을 문장으로 요약
+- **닮은 랭커**: 나와 플레이가 비슷한 랭커를 레이더에 겹쳐 표시
 - **천적 · 먹잇감**: 가장 약한 상대 유형과 가장 잘 잡는 상대 유형, 그 상대와의 전적
-- **경기 리포트**: 최근 10경기 흐름, 해결사(팀 득점 비중), 득점 · 실점 루트(슈팅을 만든 방식), 골 넣는 · 먹는 시간대
+- **경기 리포트**: 최근 경기 흐름, 해결사, 득점 · 실점 루트, 골 넣는 · 먹는 시간대
 
 > 예시 리포트 · 점유 빌드업형 — "짧게 주고받는 패스가 많고 공을 오래 쥐는 유형". 천적은 같은 점유 빌드업(1승 0무 3패), 먹잇감은 중거리 슈팅(3승 0무 0패). 득점 루트는 티키타카(33%), 실점 루트는 스루패스 침투(36%). 골은 60~75분에 가장 많이 넣고 75~90분에 가장 많이 먹습니다.
 
 ### 랭커와 견주는 진단
-랭킹 상위 2,000명에서 출발해 나와 같은 포메이션을 쓰는 랭커들의 최근 공식경기를 모으고, 그중 나와 성향이 닮은 랭커가 이긴 경기를 기준으로 내 경기를 비교합니다.
-
-- **상성표**: 상대 유형별 내 승률을 천적부터 먹잇감까지 늘어놓고, 표본이 적으면 표시합니다. 그 상대를 만나면 내 경기가 평소와 어떻게 달라지는지도 비교합니다.
-- **개선점**: 닮은 랭커의 승리 경기와 견줘 "무엇을 · 왜 · 어떻게" 고칠지를 급한 순서로 제시합니다.
-- **슈팅 분석**: 직전 패스 선까지 그린 슈팅 지도와 구역별 전환율, 선수별 기록을 보여주고, 상대 유형 · 공격/수비 · 나/랭커 · 슈팅 방식 · 경기별로 걸러 봅니다.
-- **선수 구성 · 처방**: 같은 포메이션 감독들이 자리마다 쓴 선수, 그리고 약점을 메우는 포지션별 획득 특성(신특)을 추천합니다.`,
+- **상성표**: 상대 유형별 내 승률을 천적부터 먹잇감까지 늘어놓고, 그 상대를 만나면 내 경기가 평소와 어떻게 달라지는지 비교합니다.
+- **개선점**: 랭커의 경기와 견줘 "무엇을 · 왜 · 어떻게" 고칠지를 급한 순서로 제시합니다.
+- **슈팅 분석**: 슈팅 지도와 구역별 전환율, 선수별 기록을 보여주고 여러 조건으로 걸러 봅니다.
+- **선수 구성 · 처방**: 같은 포메이션 감독들이 자리마다 쓴 선수와, 약점을 메우는 포지션별 획득 특성(신특)을 추천합니다.`,
         contentEn: `### User ID Search → Match Log Analysis → Play Style Report
-Searching a user ID pulls recent official match logs from the Nexon Open API and turns each game's possession, pass types, dribbles, shot locations and types, and defensive actions into dozens of features. The report includes:
+Searching a user ID pulls recent official match logs from the Nexon Open API and an in-house analysis engine builds a play style report:
 
-- **Play type**: scores across six styles (possession build-up, through balls, crosses & headers, dribbling, counter/direct, long shots) and the main style
-- **One-line profile**: the most distinctive traits versus the ranker average
-- **Similar rankers**: same-formation rankers with a similar style, overlaid on the radar
+- **Play type**: scores across six play styles and the main style
+- **One-line profile**: the most distinctive traits compared with rankers
+- **Similar rankers**: rankers who play like you, overlaid on the radar
 - **Nemesis & prey**: weakest and strongest opponent styles with records
-- **Match report**: recent form, top scorer share, scoring/conceding routes, and goal/concede time bands
+- **Match report**: recent form, top scorer, scoring/conceding routes, and goal/concede time bands
 
 ### Benchmarking Against Rankers
-Starting from the top 2,000 rankers, the tool gathers recent official matches from those on your formation and compares your games with wins by rankers whose style resembles yours.
-
-- **Matchup board**: win rate by opponent style from nemesis to prey, with low-sample flags and how your game shifts against each style.
-- **Fixes**: what, why, and how to change, ordered by urgency, benchmarked against similar rankers' wins.
-- **Shot analysis**: shot maps with pre-shot pass lines, zone conversion, and per-player stats, filterable by style, attack/defence, me/rankers, shot type, and match.
-- **Squad & prescriptions**: players managers used in each slot of your formation, plus position-by-position trait recommendations.`,
+- **Matchup board**: win rate by opponent style from nemesis to prey, and how your game shifts against each.
+- **Fixes**: what, why, and how to change, ordered by urgency.
+- **Shot analysis**: shot maps, zone conversion, and per-player stats with filters.
+- **Squad & prescriptions**: players managers on your formation use in each slot, plus trait recommendations by position.`,
         screenshots: [
           {
             src: fcoImg4,
             titleKo: '1. 플레이 스타일 리포트 — 나는 어떤 플레이어인가',
             titleEn: '1. Play Style Report — What Kind of Player Am I?',
-            descKo: '6가지 플레이 유형 레이더로 나와 닮은 랭커 · 랭커 평균을 겹쳐 보고, 천적 · 먹잇감, 해결사, 득점 · 실점 루트와 시간대를 요약합니다. (닉네임은 가렸습니다)',
-            descEn: 'Six-style radar against similar rankers and the ranker average, with nemesis/prey, top scorer, and scoring/conceding routes and minutes (nickname hidden).'
+            descKo: '플레이 유형 레이더에 닮은 랭커 · 랭커 평균을 겹쳐 보고, 천적 · 먹잇감, 해결사, 득점 · 실점 루트와 시간대를 요약합니다. (닉네임은 가렸습니다)',
+            descEn: 'Play-style radar against similar rankers and the ranker average, with nemesis/prey, top scorer, and scoring/conceding routes and minutes (nickname hidden).'
           },
           {
             src: fcoImg5,
             titleKo: '2. 상성표 — 어떤 상대에게 강하고 약한가',
             titleEn: '2. Matchup Board — Who Do I Beat and Lose To?',
-            descKo: '상대 유형별 승률을 천적부터 먹잇감까지 정리하고, 내 평소 승률 · 랭커 승률과 나란히 놓아 상성을 판단합니다. 표본이 적은 상대는 따로 표시합니다.',
-            descEn: 'Win rate by opponent style, from nemesis to prey, against my usual rate and the rankers\'; low-sample opponents are flagged.'
+            descKo: '상대 유형별 승률을 천적부터 먹잇감까지 정리하고, 내 평소 승률 · 랭커 승률과 나란히 놓아 상성을 보여줍니다.',
+            descEn: 'Win rate by opponent style, from nemesis to prey, next to my usual rate and the rankers\'.'
           },
           {
             src: fcoImg6,
             titleKo: '3. 개선점 — 무엇을 · 왜 · 어떻게',
             titleEn: '3. Fixes — What, Why, How',
-            descKo: '닮은 랭커가 이긴 경기와 견줘 차이가 큰 지표를 고르고, 지표와 차이 방향 · 크기에 맞춘 설명과 구체적인 플레이 팁을 급한 순서로 보여줍니다.',
-            descEn: 'Picks the biggest gaps against similar rankers\' wins and explains each with direction- and size-aware text and concrete tips, ordered by urgency.'
+            descKo: '랭커와 차이가 큰 부분을 골라, 이유와 구체적인 플레이 팁을 급한 순서로 보여줍니다.',
+            descEn: 'Highlights the biggest gaps with rankers, with reasons and concrete tips ordered by urgency.'
           },
           {
             src: fcoImg7,
             titleKo: '4. 슈팅 분석 — 어디서 때리고 맞았나',
             titleEn: '4. Shot Analysis — Where Did Shots Come From?',
-            descKo: '슈팅 위치와 직전 패스 선, 골 · 유효슛 · 빗나감을 지도에 그리고, 구역별 전환율을 비교 대상과 나란히 보여줍니다. 슈팅 방식 · 구역 · 선수 · 경기를 누르면 지도가 그것만 보여줍니다.',
-            descEn: 'Shot locations with pre-shot pass lines and outcomes, plus zone conversion side by side with the benchmark; click a type, zone, player, or match to filter.'
+            descKo: '슈팅 위치와 결과를 지도에 그리고, 구역별 전환율을 비교 대상과 나란히 보여줍니다. 조건을 누르면 지도가 그것만 보여줍니다.',
+            descEn: 'Shot locations and outcomes on the pitch, with zone conversion side by side; click a filter to focus the map.'
           },
           {
             src: fcoImg8,
             titleKo: '5. 선수 구성 — 같은 포메이션 감독들의 선택',
             titleEn: '5. Squad — What Managers on My Formation Use',
-            descKo: '같은 포메이션을 쓴 랭커와 상대 감독들이 자리마다 어떤 선수를 썼는지 비율로 보여주고, 내 선수와 나란히 비교합니다.',
-            descEn: 'Shows which players managers on the same formation used in each slot, next to my own picks.'
+            descKo: '같은 포메이션 감독들이 자리마다 어떤 선수를 썼는지 보여주고, 내 선수와 나란히 비교합니다.',
+            descEn: 'Shows which players managers on the same formation use in each slot, next to my own picks.'
           }
         ]
       },
@@ -1327,124 +1322,124 @@ Starting from the top 2,000 rankers, the tool gathers recent official matches fr
         titleEn: '05. Problem Solving — Live Boost Prediction',
         contentKo: `### 1. 정답이 공개되지 않은 문제 — 무엇을 맞힐지부터 다시 정하기
 - **문제**: 라부를 정하는 경기 평점은 공개되지 않습니다. 첫 모델은 학습에 쓰지 않은 시즌에서 정확 적중 45.2%에 머물렀고, 어디까지가 모델의 실력인지 판단할 기준도 없었습니다.
-- **시도**: 23/24 · 24/25 · 25/26 세 시즌의 정답 데이터를 직접 모은 뒤, 아무것도 하지 않을 때(항상 변동 0)와 단순한 기준선 모델부터 세웠습니다. 그 위에서 여러 후보 모델을 같은 조건으로 비교하는 데이터 마이닝을 반복하며, 각 단계가 정확도를 얼마나 올리는지 숫자로 확인했습니다.
-- **결과**: 학습에 쓰지 않은 23/24 시즌 적중률이 **45.2% → 56.0%**, 처음 보는 팀 기준으로는 50.6%(항상 0 대비 +17.8%p)까지 올랐습니다.
+- **시도**: 세 시즌의 정답 데이터를 직접 모은 뒤 단순한 기준선부터 세우고, 그 위에서 여러 후보 모델을 같은 조건으로 비교하는 데이터 마이닝을 반복하며 각 단계가 정확도를 얼마나 올리는지 숫자로 확인했습니다.
+- **결과**: 학습에 쓰지 않은 23/24 시즌 적중률이 **45.2% → 56.0%**, 처음 보는 팀 기준으로는 50.6%(항상 0으로 찍을 때 대비 +17.8%p)까지 올랐습니다.
 
 ### 2. 정확도가 부풀려지는 검증 함정
-- **문제**: 같은 팀 선수들은 같은 경기 결과를 공유합니다. 선수 단위로 학습 · 검증을 나누면 같은 팀 동료가 양쪽에 섞여 정확도가 실제보다 높게 나왔습니다.
-- **시도**: 팀 · 시즌을 통째로 떼어 내고 맞히는 방식으로 검증을 바꾸고, 한 시즌은 끝까지 학습에 넣지 않는 최종 시험용으로 남겼습니다. 모델 간 차이가 우연인지는 팀 단위로 다시 뽑아(부트스트랩) 확인했습니다.
-- **결과**: 낙관적인 숫자 대신 "처음 보는 팀"에서도 통하는 숫자를 얻었고, 화면에 보이는 정확도도 같은 기준으로 맞췄습니다.
+- **문제**: 같은 팀 선수들은 같은 경기 결과를 공유해서, 검증 데이터를 대충 나누면 정확도가 실제보다 높게 나왔습니다.
+- **시도**: "처음 보는 팀"을 맞히는 조건으로 검증을 다시 설계하고, 한 시즌은 끝까지 학습에 넣지 않는 최종 시험용으로 남겼습니다.
+- **결과**: 낙관적인 숫자 대신 실제로 통하는 숫자를 얻었고, 화면에 보이는 정확도도 같은 기준으로 맞췄습니다.
 
 ### 3. 숫자 하나보다 확률 — 예측을 "쓸 수 있게" 만들기
 - **문제**: "+1"처럼 값 하나만 보여주면, 틀렸을 때 신뢰를 잃고 유저가 정말 궁금한 "오를 가능성"은 알 수 없었습니다.
-- **시도**: 처음 보는 팀에서 예측과 실제가 얼마나 어긋나는지를 학습해, 부스트별 확률 · 가장 유력한 값 · 유력 범위(인접한 두 값) · 오를 확률을 함께 내도록 바꾸고, 그 확률이 맞는지도 따로 측정했습니다.
+- **시도**: 결과를 부스트별 확률 · 가장 유력한 값 · 유력 범위 · 오를 확률로 함께 제공하도록 바꾸고, 그 확률이 실제로 맞는지도 따로 측정했습니다.
 - **결과**: 유력 범위 적중 **80%**, 오를지 가려내는 힘 **0.90**(1에 가까울수록 정확). 넥슨 발표 뒤에는 선수마다 적중 여부가 바로 표시됩니다.
 
 ### 4. 이름은 같은데 다른 선수 — 카드 얼굴 매핑 오류
-- **문제**: 라부 공지는 "디아스"처럼 짧은 한글 이름을 씁니다. 성이 같은 카드 중 OVR이 가까운 쪽을 고르던 규칙 때문에 루이스 디아스에게 후벵 디아스의 얼굴이 붙는 등 엉뚱한 카드가 연결됐습니다.
-- **시도**: 공지가 있는 팀은 "최종 OVR이 정확히 같은 카드"만 연결하도록 바꿨습니다(세 시즌 모든 정답 선수에서 성립하는 것을 확인). 공지가 없는 새 시즌은 성 · 이름 첫 글자 · 포지션으로 거르고, 딱 한 장만 남을 때만 붙이고 아니면 이니셜로 표시합니다.
+- **문제**: 공지에 쓰이는 짧은 한글 이름 때문에 루이스 디아스에게 후벵 디아스의 얼굴이 붙는 등 엉뚱한 카드가 연결됐습니다.
+- **시도**: 이름 하나에 기대지 않고 여러 단서를 교차 확인해 확실할 때만 카드를 붙이고, 애매하면 틀린 얼굴 대신 빈 얼굴을 보여주도록 원칙을 바꿨습니다.
 - **결과**: 잘못 붙는 카드가 사라졌고, 문제가 된 사례들을 테스트로 남겨 다시 생기지 않게 막았습니다.
 
 ### 5. 정답표가 없는 팀
-- **문제**: 라부 공지 표가 없는 팀(예: 16강 탈락 팀)은 학습과 검증에서 통째로 빠졌습니다.
-- **시도**: 넥슨 데이터센터에 남아 있는 탈락 시점의 현재 OVR에서 출시 OVR을 빼는 방식으로 라부 결과를 거꾸로 복원했습니다.
-- **결과**: 정답 데이터가 **723명**으로 늘었고, 테스트에서는 "표가 없는 팀" 경우를 일부러 남겨 두 경로를 모두 확인합니다.
+- **문제**: 라부 공지 표가 없는 팀은 학습과 검증에서 통째로 빠졌습니다.
+- **시도**: 공개된 다른 공식 데이터로 그 팀의 라부 결과를 복원했습니다.
+- **결과**: 정답 데이터가 **723명**으로 늘었고, "표가 없는 팀" 경우도 테스트로 함께 확인합니다.
 
-### 6. 모든 선수의 경기별 세부 데이터를 모으는 수집기
-- **문제**: 실제 경기에서 각 선수가 무엇을 했는지 세부 기록이 필요했지만 공개 API는 없었고, 선수 팝업을 하나씩 여는 방식으로는 라운드마다 수백 명을 모을 수 없었습니다. 외부 사이트는 영어 이름 · 공지는 한글 이름이라 같은 선수를 잇는 것도 어려웠고, 받아 둔 페이지 캐시에 기대다 보니 캐시가 없는 PC에서는 모델이 돌지 않았습니다.
-- **시도**: FotMob 경기 페이지 하나에 그 경기 출전 선수 전원의 통계가 담겨 있다는 점을 찾아, 경기 페이지 한 번으로 양 팀 모든 선수의 세부 기록을 읽도록 했습니다. 대회 일정에서 라운드 경기를 찾고 반대쪽 차전까지 따라가며, 요청 사이 무작위 대기 · 캐시 · 차단 응답 시 즉시 중단 · robots.txt 준수로 예의 있게 수집합니다. 선수 ID ↔ 한글 이름 등록부를 두고, 모델에 필요한 경기 상황 정보는 따로 저장해 캐시 의존을 없앴습니다.
-- **결과**: 수집 → 저장 → 예측 → 화면이 하나로 이어진 파이프라인이 완성되어, 라운드 경기가 끝나면 넥슨 발표 전에 바로 예측 결과를 렌더링합니다. 3개 시즌 출전 선수 전원의 경기별 세부 기록(기록당 60여 개 항목)과 경기 상황 데이터가 쌓여 데이터 마이닝의 토대가 되었고, 데이터 폴더만 있으면 어느 PC에서나 같은 결과가 나옵니다.`,
+### 6. 모든 선수의 경기별 세부 데이터를 모으는 수집 파이프라인
+- **문제**: 실제 경기에서 각 선수가 무엇을 했는지 세부 기록이 필요했지만 공개 API가 없었고, 선수를 하나씩 조회하는 방식으로는 라운드마다 수백 명을 모을 수 없었습니다. 서비스마다 선수 이름 표기도 달랐습니다.
+- **시도**: FotMob을 대상으로 라운드 단위로 출전 선수 전원의 세부 기록을 한 번에 모으는 수집기를 만들고, 서버에 부담을 주지 않도록 요청 간격 · 캐시 · 차단 시 즉시 중단 · robots.txt 준수 원칙을 지켰습니다. 이름이 다른 선수는 하나로 이어 주는 매칭 단계를 두었습니다.
+- **결과**: 수집 → 저장 → 예측 → 화면이 하나로 이어진 파이프라인이 완성되어, 라운드 경기가 끝나면 넥슨 발표 전에 바로 예측 결과를 렌더링합니다. 쌓인 세 시즌의 데이터가 데이터 마이닝의 토대가 되었습니다.`,
         contentEn: `### 1. No Published Ground Truth — Redefine What to Predict
 - **Problem**: The deciding ratings are hidden; the first model hit only 45.2% on a held-out season, with no baseline to judge it.
-- **Approach**: Built three seasons of ground truth, set "always 0" and simple baselines, then iterated a data-mining search over candidate models under identical conditions.
-- **Result**: Held-out 23/24 accuracy rose from **45.2% to 56.0%**; 50.6% on unseen teams (+17.8pp over always-0).
+- **Approach**: Built three seasons of ground truth, set simple baselines, then iterated a data-mining search over candidate models under identical conditions.
+- **Result**: Held-out 23/24 accuracy rose from **45.2% to 56.0%**; 50.6% on unseen teams (+17.8pp over always predicting 0).
 
 ### 2. Validation That Inflates Accuracy
-- **Problem**: Teammates share match outcomes, so player-level splits leaked information and overstated accuracy.
-- **Approach**: Held out whole team-seasons, kept one season as a final test, and checked model gaps with team-level bootstrap.
-- **Result**: Numbers that hold on unseen teams, reported the same way in the UI.
+- **Problem**: Teammates share match outcomes, so careless splits overstated accuracy.
+- **Approach**: Redesigned validation around predicting unseen teams and kept one season as a final test.
+- **Result**: Numbers that actually hold, reported the same way in the UI.
 
 ### 3. Probabilities over a Single Number
 - **Problem**: A lone "+1" loses trust when wrong and hides what users want: the chance of a rise.
-- **Approach**: Learned how far predictions miss on unseen teams to output per-boost odds, most likely value, likely range, and rise probability, and measured their calibration.
+- **Approach**: Output per-boost odds, most likely value, likely range, and rise probability, and measured how well they hold up.
 - **Result**: **80%** likely-range hit and **0.90** rise discrimination; hits are marked per player after announcements.
 
 ### 4. Same Name, Different Player
-- **Problem**: Short Korean names like "디아스" mapped Luis Díaz to Rúben Dias's card face.
-- **Approach**: With announcements, link only the card whose OVR equals the final OVR (true for every labeled player across three seasons); otherwise filter by surname, initial, and position and attach only a unique match.
+- **Problem**: Short Korean names mapped Luis Díaz to Rúben Dias's card face.
+- **Approach**: Cross-check several clues and attach a card only when certain; show a blank face rather than a wrong one.
 - **Result**: Mismatches eliminated and locked in with regression tests.
 
 ### 5. Teams Without a Results Table
 - **Problem**: Teams lacking a boost table were excluded from training.
-- **Approach**: Reconstructed their boosts from Nexon datacenter OVR at elimination minus release OVR.
-- **Result**: Ground truth grew to **723 players**; tests keep the "no table" path covered.
+- **Approach**: Reconstructed their results from other public official data.
+- **Result**: Ground truth grew to **723 players**, with the "no table" path covered by tests.
 
-### 6. A Crawler for Every Player's Match Details
-- **Problem**: Per-player match details had no public API, opening player popups one by one could not scale, English and Korean names differed, and the model depended on an untracked page cache.
-- **Approach**: One FotMob match page holds every player's stats, so a single request per match covers both squads; rounds are discovered from the schedule and the other leg followed, with delays, caching, stop-on-block, and robots.txt compliance; a player ID ↔ Korean name registry; match context stored separately.
-- **Result**: An end-to-end crawl → store → predict → render pipeline that shows predictions right after a round ends, before Nexon announces. Three seasons of full-squad match details (60+ fields each) plus match context became the foundation for data mining, reproducible on any machine with the data folder.`
+### 6. A Collection Pipeline for Every Player's Match Data
+- **Problem**: No public API for per-player match details, one-by-one lookups could not scale, and names differed across services.
+- **Approach**: A FotMob collector that gathers full-squad details per round, with request pacing, caching, stop-on-block, and robots.txt compliance, plus a player-matching step.
+- **Result**: An end-to-end crawl → store → predict → render pipeline that shows predictions right after a round ends, before Nexon announces; three seasons of data became the foundation for data mining.`
       },
       {
         num: '06',
         titleKo: '06. Problem Solving — 전적분석 (문제 해결 과정)',
         titleEn: '06. Problem Solving — Match Record Analysis',
         contentKo: `### 1. 느린 첫 분석과 API 요청 한도
-- **문제**: 넥슨 Open API 개발 키는 초당 5건 · 하루 1,000건으로 제한되고, 첫 분석은 랭킹 페이지를 다 받은 뒤 경기 기록을 차례로 받느라 **380초**가 걸렸습니다.
-- **시도**: 랭킹 페이지는 옆 스레드에서 받으면서 같은 포메이션 랭커가 보이는 대로 바로 경기 수집을 시작하고, API는 4개씩 동시에 요청하되 전체를 초당 4.5건 상한으로 묶었습니다. 결과를 먼저 보여주고 전체 통계는 랭킹을 다 받은 뒤 채우며, 오늘 사용량을 화면에 띄웠습니다.
+- **문제**: 넥슨 Open API는 요청 수가 엄격히 제한되고, 첫 분석은 필요한 데이터를 차례로 받느라 **380초**가 걸렸습니다.
+- **시도**: 수집 순서를 다시 짜 기다리는 시간을 겹치고, 요청 한도 안에서 속도를 최대한 끌어올렸습니다. 결과를 먼저 보여주고 나머지 통계는 뒤에서 채우며, 오늘 사용량을 화면에 띄웠습니다.
 - **결과**: 첫 결과까지 **약 90초**, 저장된 기록으로 다시 분석하면 **3초**(API 0건).
 
 ### 2. 실제 데이터는 문서와 달랐다
-- **문제**: 공식 문서만 믿고 계산하니 숫자가 어긋났습니다. 경기 평점에 뛰지 않은 교체 선수가 0점으로 섞여 평균이 낮게 나왔고, 문서에 없는 슈팅 종류 코드도 등장했습니다.
-- **시도**: 실제로 뛴 선수만으로 평점을 다시 계산하고, 정의되지 않은 코드는 "기타"로 안전하게 묶었습니다. 앞의 자동화 테스트 툴에서 다룬 "데이터 정합성 확인"을 실제 데이터에 그대로 적용한 셈입니다.
+- **문제**: 공식 문서만 믿고 계산하니 일부 숫자가 실제 게임 기록과 어긋났습니다.
+- **시도**: 실제 응답을 기준으로 정합성을 확인하고, 문서와 다른 부분은 안전하게 보정했습니다. 앞의 자동화 테스트 툴에서 다룬 "데이터 정합성 확인"을 실제 데이터에 그대로 적용한 셈입니다.
 - **결과**: 화면 숫자가 게임 안 기록과 맞게 되었고, 같은 실수를 막는 테스트를 추가했습니다.
 
 ### 3. 누구와 비교할 것인가 — 표본과 기준의 문제
-- **문제**: 특정 유형 상대와의 경기는 몇 판 되지 않아 승률이 크게 흔들렸고, 랭커 전체 평균과 비교하면 플레이 스타일이 달라 조언이 엉뚱하게 나왔습니다.
-- **시도**: 경기 수가 적은 승률은 평균 쪽으로 보정하고, 비교 기준을 "나와 성향이 닮은 랭커"로 바꿨습니다. 그 랭커들의 승리 경기가 부족하면 같은 포메이션 랭커 전체로 넓히고, 어느 기준을 썼는지와 "표본 적음"을 화면에 표시했습니다.
+- **문제**: 특정 유형 상대와의 경기는 몇 판 되지 않아 승률이 크게 흔들렸고, 랭커 전체와 비교하면 플레이 스타일이 달라 조언이 엉뚱하게 나왔습니다.
+- **시도**: 표본이 적은 수치는 보정하고, 비교 기준을 나와 플레이가 비슷한 랭커로 맞췄습니다. 근거가 약할 때는 어떤 기준을 썼는지와 "표본 적음"을 화면에 표시합니다.
 - **결과**: 유저가 납득할 수 있는 비교가 되었고, 숫자가 약할 때는 화면이 먼저 알려줍니다.
 
 ### 4. 표 대신 답부터 — 화면 구조 다시 짜기
-- **문제**: 처음에는 분석 5단계를 순서대로 표로 보여줘서, 정작 "그래서 뭘 고쳐야 하지?"는 맨 아래에 있었습니다. 개선 문장도 지표만 바뀌고 내용은 비슷했습니다.
-- **시도**: 결과 우선 대시보드로 한 번, 다시 유저가 궁금한 순서(나는 어떤 유형? → 누구에게 약한가? → 무엇을 고칠까? → 어디서 때리고 맞았나?)로 재배치했습니다. 단계별 근거 표는 맨 아래에 접어 두고, 개선 카드는 지표 · 차이 방향 · 차이 크기마다 "무엇을 · 왜 · 어떻게"를 따로 쓰도록 바꿨습니다.
-- **결과**: 성향 카드 → 상성표 → 개선점 → 슈팅 분석 → 선수 구성 · 처방으로 이어지는 지금의 흐름이 되었습니다.
+- **문제**: 처음에는 분석 과정을 순서대로 표로 보여줘서, 정작 "그래서 뭘 고쳐야 하지?"는 맨 아래에 있었습니다.
+- **시도**: 결과 우선 대시보드로 한 번, 다시 유저가 궁금한 순서(나는 어떤 유형? → 누구에게 약한가? → 무엇을 고칠까? → 어디서 때리고 맞았나?)로 재배치하고, 근거 표는 맨 아래에 접어 두었습니다.
+- **결과**: 플레이 스타일 리포트 → 상성표 → 개선점 → 슈팅 분석 → 선수 구성 · 처방으로 이어지는 지금의 흐름이 되었습니다.
 
 ### 5. 요청 한도 안에서 반복 개선하기
 - **문제**: 분석 코드나 화면을 고칠 때마다 다시 분석하면 하루 요청 한도가 금방 바닥났습니다.
-- **시도**: 분석 결과와 원자료를 함께 저장해, API 호출 없이 "지금 코드로 다시 계산"하는 디버깅 모드를 만들었습니다. 원자료는 넥슨 약관에 맞춰 30일 뒤 지우고, 다른 유저 닉네임이 담긴 파일은 저장소에 올리지 않습니다. 저장 버튼이 꺼져 있으면 이유를 함께 보여주고, 새로고침해도 마지막 결과가 돌아옵니다.
+- **시도**: API를 다시 부르지 않고 저장된 데이터로 최신 코드를 바로 확인하는 디버깅 모드를 만들고, 데이터 보관은 넥슨 약관에 맞췄습니다. 다른 유저 닉네임이 담긴 파일은 저장소에 올리지 않습니다.
 - **결과**: 같은 경기로 API 0건 반복 개선이 가능해져 개발 속도가 크게 빨라졌습니다.
 
 ### 6. API에 없는 데이터 채우기
-- **문제**: 넥슨 Open API에는 선수 획득 특성(신특) 데이터가 없어, 처방을 내릴 근거가 부족했습니다.
-- **시도**: 데이터센터의 포지션별 인기 특성 통계를 기준 시각과 함께 정리해 두고, 내 약점 보완과 상대 유형 대응을 더해 포지션마다 추천합니다. 통계가 없는 포지션은 가까운 포지션으로 대신하고 화면에 알립니다.
+- **문제**: 넥슨 Open API만으로는 처방(획득 특성 추천)을 내릴 근거가 부족했습니다.
+- **시도**: 공개된 공식 통계로 빈 부분을 보완하고, 근거가 부족한 경우는 화면에 알립니다.
 - **결과**: "무엇을 고칠지"에서 끝나지 않고 "어떤 특성을 달지"까지 이어지는 처방이 되었습니다.`,
         contentEn: `### 1. Slow First Run and API Quotas
-- **Problem**: Dev keys allow 5 req/s and 1,000/day; sequential ranking + match downloads took **380s**.
-- **Approach**: Ranking pages load in a side thread while matching rankers are fetched immediately; 4 concurrent requests under a shared 4.5/s cap; results first, full stats later; daily usage shown.
+- **Problem**: The Nexon Open API is tightly rate-limited, and the first analysis took **380s** fetching data in sequence.
+- **Approach**: Reordered collection to overlap waits, pushed throughput as far as the quota allows, showed results first, and displayed daily usage.
 - **Result**: First result in **~90s**, re-analysis in **3s** with zero API calls.
 
 ### 2. Real Data Differed from the Docs
-- **Problem**: Unused substitutes counted as 0 in match ratings, and undocumented shot type codes appeared.
-- **Approach**: Rated only players who played and grouped unknown codes as "other" — the same integrity mindset as the Automation Test Tool.
+- **Problem**: Trusting the docs alone left some numbers out of line with the game.
+- **Approach**: Checked integrity against real responses and safely corrected mismatches — the same mindset as the Automation Test Tool.
 - **Result**: Numbers match the game, guarded by tests.
 
 ### 3. Who to Compare Against
-- **Problem**: Few games per opponent style made win rates swing, and ranker averages gave advice for a different play style.
-- **Approach**: Shrunk small-sample win rates, benchmarked against rankers with a similar style, fell back to all same-formation rankers when needed, and flagged the choice and low samples on screen.
-- **Result**: Comparisons users can trust, with the UI warning when evidence is thin.
+- **Problem**: Few games per opponent style made win rates swing, and all-ranker comparisons gave advice for a different play style.
+- **Approach**: Corrected small samples, benchmarked against rankers who play like you, and flagged weak evidence on screen.
+- **Result**: Comparisons users can trust.
 
 ### 4. Answers Before Tables
-- **Problem**: The first UI walked through five analysis steps in tables, burying "what should I change?"
-- **Approach**: Reordered around user questions (who am I → who beats me → what to fix → where shots happen), collapsed step tables, and wrote fix cards per metric, direction, and gap size.
-- **Result**: Today's identity → matchups → fixes → shots → squad & prescriptions flow.
+- **Problem**: The first UI walked through the analysis in tables, burying "what should I change?"
+- **Approach**: Reordered around user questions and collapsed the supporting tables.
+- **Result**: Today's report → matchups → fixes → shots → squad & prescriptions flow.
 
 ### 5. Iterating Within Quotas
 - **Problem**: Every code or UI change burned daily quota.
-- **Approach**: A debugging mode that stores results and raw inputs and recomputes with current code without API calls; raw data deleted after 30 days per Nexon terms; files with other users' nicknames kept out of the repo.
+- **Approach**: A debugging mode that checks the latest code against stored data without API calls, with data retention following Nexon's terms.
 - **Result**: Zero-API iteration on the same matches.
 
 ### 6. Filling Data the API Lacks
-- **Problem**: The API has no acquired-trait data.
-- **Approach**: Curated datacenter trait popularity by position with a timestamp, combined with my weaknesses and opponent style.
+- **Problem**: The API alone could not support trait prescriptions.
+- **Approach**: Filled gaps with public official statistics and flagged thin evidence on screen.
 - **Result**: Prescriptions extend from "what to fix" to "which traits to add".`
       },
       {
@@ -1462,7 +1457,7 @@ Starting from the top 2,000 rankers, the tool gathers recent official matches fr
 
 ### 4. 다음 단계
 - 8강 · 4강 · 결승 결과가 쌓이는 대로 모델을 다시 학습하고, 26/27 시즌으로 확장
-- 전적분석의 상대 유형 분류와 개선 문장을 더 많은 유저 데이터로 다듬기`,
+- 전적분석 리포트와 처방을 더 많은 유저 데이터로 다듬기`,
         contentEn: `### 1. Define the Ground Truth First
 - When predicting hidden values, deciding what counts as correct and how to validate it comes before any model.
 
@@ -1474,7 +1469,7 @@ Starting from the top 2,000 rankers, the tool gathers recent official matches fr
 
 ### 4. Next Steps
 - Retrain as later rounds arrive and extend to 26/27
-- Refine opponent-style classification and fix wording with more user data`
+- Refine reports and prescriptions with more user data`
       }
     ]
   }
