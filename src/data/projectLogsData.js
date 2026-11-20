@@ -144,12 +144,12 @@ export const PROJECT_LOGS_DATA = [
   },
 
   // =========================================================================
-  // 3. [2026.09 - PRESENT] Real-Time AI Race Engineer Project
+  // 3. [2026.07 - 2026.11] Real-Time AI Race Engineer Project
   // =========================================================================
   {
     id: 'log-entry-f1',
     categories: ['projects'],
-    timestamp: '2026.09 - 2026.11',
+    timestamp: '2026.07 - 2026.11',
     service: 'service.f1.race_engineer',
     tagPrimary: 'TELEMETRY',
     tagSecondary: 'UDP_SOCKET_20777',
@@ -159,7 +159,7 @@ export const PROJECT_LOGS_DATA = [
     summaryKo: 'F1 실시간 UDP 텔레메트리 주행 데이터를 초당 수십 회 파싱하여 차량 속도, 타이어 마모도, 델타 타임을 서킷 맵 위에 렌더링하고, 음성 AI를 결합하여 최적의 피트 스탑 타이밍과 실시간 레이스 전략 조언을 제공하는 풀스택 솔루션입니다.',
     summaryEn: 'A high-frequency UDP telemetry processing system that maps live vehicle dynamics, tire degradation, and delta times onto circuit tracks, integrating real-time AI voice feedback for strategic pit stop decisions.',
     jsonPayload: {
-      timestamp: "2026-09-01T12:00:00Z",
+      timestamp: "2026-07-01T12:00:00Z",
       network_protocol: "UDP Socket :20777",
       stream_frequency: "60Hz real-time high-throughput stream",
       telemetry_signals: [

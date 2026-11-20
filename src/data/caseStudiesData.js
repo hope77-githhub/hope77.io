@@ -2,6 +2,7 @@ import f1Img1 from '../assets/images/f1/01_session_configuration.png';
 import f1Img2 from '../assets/images/f1/02_lap_history_and_setup.png';
 import f1Img3 from '../assets/images/f1/03_corner_analysis_matrix.png';
 import f1Img4 from '../assets/images/f1/04_circuit_map_and_sectors.png';
+import f1Img5 from '../assets/images/f1/05_tv_overlay_hud.webp';
 import fcoImg1 from '../assets/images/fco/01_boost_stage.png';
 import fcoImg2 from '../assets/images/fco/02_boost_pitch.png';
 import fcoImg3 from '../assets/images/fco/03_boost_team.png';
@@ -605,8 +606,8 @@ A single match holds per-participant \`matchDetail\`, \`shoot\`, \`shootDetail[]
     oneLinerEn: 'A sim-racing coach that reads the 60-per-second car data sent by the F1 game and talks to you over the radio in a race-engineer voice I fine-tuned myself.',
     roleKo: '개인 프로젝트 · 전체 기획, 데이터 수신 · 분석 서버, 무전 규칙, 음성 파인튜닝, 대시보드 · 오버레이',
     roleEn: 'Personal Project · Planning, Data Server, Radio Rules, Voice Fine-Tuning, Dashboard & Overlay',
-    period: '2026.09 – 2026.11 (Demo 완성)',
-    periodEn: '2026.09 – 2026.11 (Demo Complete)',
+    period: '2026.07 – 2026.11 (Demo 완성)',
+    periodEn: '2026.07 – 2026.11 (Demo Complete)',
     repoUrl: 'https://github.com/hope77-githhub/F125_Personal_RaceEngineer',
     techStack: ['Python', 'FastAPI', 'UDP Socket (:20777)', 'WebSocket', 'React & SVG', 'GPT-SoVITS (Few-shot Fine-tuning)', 'faster-whisper', 'Electron Overlay'],
 
@@ -960,30 +961,37 @@ Teaching speech from scratch needs thousands of hours of audio. Instead, I took 
 Enter a session and the dashboard starts receiving data; corner braking calls begin on lap 2, and in races you also get pace, gap, and pit calls. Ask the engineer and it answers by voice from live data, while the TV overlay runs on top of the game. Recorded runs can be replayed.`,
         screenshots: [
           {
+            src: f1Img5,
+            titleKo: '1. TV 중계 오버레이 · 헤일로 HUD (실제 주행 화면)',
+            titleEn: '1. TV Broadcast Overlay & Halo HUD (Live Run)',
+            descKo: '게임 화면 위에 실제 중계처럼 순위표, 섹터 비교 카드, 패스티스트 랩 배너, 랩 카드(베스트 · 이전 랩 · 델타)를 그리고, 화면 가운데에는 속도 · 기어 · RPM · 브레이크/스로틀 · 배터리 · 오버테이크 · 액티브 에어로 · 코너 번호(T10)를 보여 주는 헤일로 HUD를 띄웁니다. 모두 게임이 보내는 텔레메트리로 움직입니다.',
+            descEn: 'Broadcast-style graphics drawn over the game — timing tower, sector comparison cards, fastest-lap banner, and lap card (best / previous / delta) — plus a centred halo HUD showing speed, gear, RPM, brake / throttle, battery, overtake, active aero, and the turn number (T10), all driven by the game’s telemetry.'
+          },
+          {
             src: f1Img1,
-            titleKo: '1. 세션 설정 및 리플레이 (Session Configuration & Replay)',
-            titleEn: '1. Session Configuration & Replay',
+            titleKo: '2. 세션 설정 및 리플레이 (Session Configuration & Replay)',
+            titleEn: '2. Session Configuration & Replay',
             descKo: '실시간 게임 연결(UDP 20777)과 녹화 주행 리플레이 중 선택하고, 한 · 영 전환, 단위(km/h · mph), 엔지니어 목소리, 무전(TTS) · TV 오버레이 켜기를 고르는 시작 화면입니다.',
             descEn: 'Start screen to choose live game (UDP 20777) or a recorded replay, language, units, engineer voice, and radio (TTS) / TV overlay toggles.'
           },
           {
             src: f1Img2,
-            titleKo: '2. 랩 기록 · 코너별 상세 카드 · 차량 셋업 (Lap Archive & Setup)',
-            titleEn: '2. Lap Archive, Corner Cards & Setup',
+            titleKo: '3. 랩 기록 · 코너별 상세 카드 · 차량 셋업 (Lap Archive & Setup)',
+            titleEn: '3. Lap Archive, Corner Cards & Setup',
             descKo: '랩별 기록과 베스트 랩 대비 차이, 4개 타이어 마모율, 차량 셋업 값, 고른 코너의 진입 · 정점 · 탈출 속도와 제동 · 가속 지점을 보여 줍니다.',
             descEn: 'Lap history with deltas, tyre wear for all four tyres, car setup, and entry / apex / exit speed with braking and throttle points for the selected corner.'
           },
           {
             src: f1Img3,
-            titleKo: '3. 코너별 주행 분석 표 (Turn-by-Turn Matrix)',
-            titleEn: '3. Turn-by-Turn Matrix',
+            titleKo: '4. 코너별 주행 분석 표 (Turn-by-Turn Matrix)',
+            titleEn: '4. Turn-by-Turn Matrix',
             descKo: '모든 코너의 진입 · 정점 · 탈출 속도, 기어, 제동 지점, 가속 시작 지점, 최대 횡G를 한 표로 모아 앞차 · 선두와 비교합니다.',
             descEn: 'Every corner\'s entry / apex / exit speed, gear, braking point, throttle-on point, and peak lateral G in one table, compared with the car ahead and the leader.'
           },
           {
             src: f1Img4,
-            titleKo: '4. 서킷 지도 · 섹터 분석 (Circuit Map & Sectors)',
-            titleEn: '4. Circuit Map & Sectors',
+            titleKo: '5. 서킷 지도 · 섹터 분석 (Circuit Map & Sectors)',
+            titleEn: '5. Circuit Map & Sectors',
             descKo: '실제 주행 라인 위에 코너 번호(T1~TN)를 표시하고, 코너를 누르면 그 코너 기록이 열립니다. 섹터 1 · 2 · 3 구간 기록도 비교합니다.',
             descEn: 'Turn numbers (T1–TN) on the racing line; click a corner to open its data, and compare sector 1 / 2 / 3 times.'
           }

@@ -39,7 +39,7 @@ const ProjectLogsFeed = forwardRef(function ProjectLogsFeed({ onSelectSection },
       statusTextKo: 'Demo 완성',
       statusTextEn: 'Demo Complete',
       statusType: 'success',
-      timestamp: '2026.09 - 2026.11'
+      timestamp: '2026.07 - 2026.11'
     },
     {
       id: 'log-entry-neis',

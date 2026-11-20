@@ -34,6 +34,23 @@ export const MILESTONES_DATA = [
     bodyEn: 'Combines schema-referenced format checks, cross-field consistency rules, video sync, and pitch visualization to verify match data in one pass.'
   },
   {
+    id: 'm3',
+    projectId: 'log-entry-f1',
+    periodKo: '2026.07 – 2026.11',
+    periodEn: '2026.07 – 2026.11',
+    titleKo: 'Real-Time AI Race Engineer — 실시간 텔레메트리 & AI 음성 엔지니어',
+    titleEn: 'Real-Time AI Race Engineer — Live Telemetry & AI Voice Engineer',
+    shortTitleKo: 'Real-Time AI Race Engineer',
+    shortTitleEn: 'Real-Time AI Race Engineer',
+    statusKo: 'Demo 완성',
+    statusEn: 'Demo Complete',
+    chipType: 'success',
+    summaryKo: '게임 데이터 실시간 분석 & 파인튜닝한 엔지니어 목소리 무전',
+    summaryEn: 'Live game-data analysis & radio in a fine-tuned engineer voice',
+    bodyKo: 'F1 게임이 1초에 60번 보내는 차량 데이터를 받아 코너 · 랩별로 분석하고, 직접 파인튜닝한 레이스 엔지니어 목소리로 제동 · 페이스 · 피트 무전과 질문 답변을 들려주는 데모를 완성했습니다.',
+    bodyEn: 'Completed a demo that analyzes the F1 game\'s 60 Hz car data by corner and lap, and gives braking, pace, and pit calls plus spoken answers in a race-engineer voice I fine-tuned.'
+  },
+  {
     id: 'm4',
     projectId: 'log-entry-neis',
     periodKo: '2026.09',
@@ -49,23 +66,6 @@ export const MILESTONES_DATA = [
     summaryEn: 'NEIS byte spec compliance & zero-leak in-memory duplicate detector',
     bodyKo: '나이스 규격에 맞춘 공백 포함/제외 및 UTF-8, EUC-KR 기반 실시간 정밀 Byte 계산기 구현과 함께, 엑셀 시트 내 중복 문장 발생 위치(Row 번호)를 직관적으로 탐지하는 SheetJS 인메모리 클라이언트 툴을 배포 완료했습니다.',
     bodyEn: 'Deployed a zero-server-leakage text utility providing exact NEIS byte counting and automated row-level duplicate sentence detection across large Excel files.'
-  },
-  {
-    id: 'm3',
-    projectId: 'log-entry-f1',
-    periodKo: '2026.09 – 2026.11',
-    periodEn: '2026.09 – 2026.11',
-    titleKo: 'Real-Time AI Race Engineer — 실시간 텔레메트리 & AI 음성 엔지니어',
-    titleEn: 'Real-Time AI Race Engineer — Live Telemetry & AI Voice Engineer',
-    shortTitleKo: 'Real-Time AI Race Engineer',
-    shortTitleEn: 'Real-Time AI Race Engineer',
-    statusKo: 'Demo 완성',
-    statusEn: 'Demo Complete',
-    chipType: 'success',
-    summaryKo: '게임 데이터 실시간 분석 & 파인튜닝한 엔지니어 목소리 무전',
-    summaryEn: 'Live game-data analysis & radio in a fine-tuned engineer voice',
-    bodyKo: 'F1 게임이 1초에 60번 보내는 차량 데이터를 받아 코너 · 랩별로 분석하고, 직접 파인튜닝한 레이스 엔지니어 목소리로 제동 · 페이스 · 피트 무전과 질문 답변을 들려주는 데모를 완성했습니다.',
-    bodyEn: 'Completed a demo that analyzes the F1 game\'s 60 Hz car data by corner and lap, and gives braking, pace, and pit calls plus spoken answers in a race-engineer voice I fine-tuned.'
   },
   {
     id: 'm5',
