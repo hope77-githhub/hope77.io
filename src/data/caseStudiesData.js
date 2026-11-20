@@ -589,280 +589,436 @@ A single match holds per-participant \`matchDetail\`, \`shoot\`, \`shootDetail[]
     ]
   },
   // =========================================================================
-  // 3. Real-Time AI Race Engineer (실시간 텔레메트리 & AI 음성 솔루션)
+  // 3. Real-Time AI Race Engineer (실시간 텔레메트리 & AI 음성 엔지니어) — Demo 완성
   // =========================================================================
   {
     id: 'log-entry-f1',
-    category: 'Real-Time Telemetry & Systems',
-    badgeTextKo: '진행 중 (Active)',
-    badgeTextEn: 'Active Project',
-    badgeType: 'info',
-    titleKo: 'Real-Time AI Race Engineer Project — 실시간 텔레메트리 & 음성 AI 솔루션',
-    titleEn: 'Real-Time AI Race Engineer — Live Telemetry & AI Voice Solution',
+    category: 'Real-Time Telemetry & AI Voice',
+    badgeTextKo: 'Demo 완성',
+    badgeTextEn: 'Demo Complete',
+    badgeType: 'success',
+    titleKo: 'Real-Time AI Race Engineer — 게임 속 F1 차에 붙는 나만의 레이스 엔지니어',
+    titleEn: 'Real-Time AI Race Engineer — Your Own Race Engineer for the F1 Game',
     tabLabelKo: 'F1 텔레메트리 AI',
     tabLabelEn: 'F1 Telemetry AI',
-    oneLinerKo: '60Hz 고주파 UDP 텔레메트리 파싱, 24개 공식 서킷 실좌표 매핑 및 실제 레이스 엔지니어 음성 코칭을 제공하는 심레이싱 전문 분석 대시보드',
-    oneLinerEn: 'Institutional-grade telemetry dashboard capturing 60Hz UDP packets, mapping 24 official circuits, and delivering auditory race engineer coaching.',
-    roleKo: '텔레메트리 시스템 & 풀스택 엔지니어 (전체 파이프라인 기획, UDP 파서, 물리 역산 엔진, 서킷 Canvas 렌더링, AI 음성 연동)',
-    roleEn: 'Telemetry Systems & Full-Stack Engineer (Pipeline Architecture, UDP Parser, Kinematics Engine, Canvas Map, AI Voice)',
-    period: '2026.09 – 현재 (Active)',
-    periodEn: '2026.09 – Present (Active)',
+    oneLinerKo: 'F1 게임이 1초에 60번 보내 주는 차량 데이터를 실시간으로 받아 분석하고, 직접 파인튜닝한 레이스 엔지니어 목소리로 무전을 해 주는 심레이싱 코칭 프로그램',
+    oneLinerEn: 'A sim-racing coach that reads the 60-per-second car data sent by the F1 game and talks to you over the radio in a race-engineer voice I fine-tuned myself.',
+    roleKo: '개인 프로젝트 · 전체 기획, 데이터 수신 · 분석 서버, 무전 규칙, 음성 파인튜닝, 대시보드 · 오버레이',
+    roleEn: 'Personal Project · Planning, Data Server, Radio Rules, Voice Fine-Tuning, Dashboard & Overlay',
+    period: '2026.09 – 2026.11 (Demo 완성)',
+    periodEn: '2026.09 – 2026.11 (Demo Complete)',
     repoUrl: 'https://github.com/hope77-githhub/F125_Personal_RaceEngineer',
-    techStack: ['Python', 'FastAPI', 'UDP Socket (:20777)', 'Circular Ring Buffer', 'WebSocket', 'React & SVG', 'AI Voice (TTS)'],
+    techStack: ['Python', 'FastAPI', 'UDP Socket (:20777)', 'WebSocket', 'React & SVG', 'GPT-SoVITS (Few-shot Fine-tuning)', 'faster-whisper', 'Electron Overlay'],
 
     metricsHeadingKo: '결과 요약 (Summary of Results)',
     metricsHeadingEn: 'Results Summary',
     keyMetrics: [
       {
-        valueKo: '60Hz 고주파 UDP 텔레메트리 무손실 실시간 파싱',
-        valueEn: '60Hz Lossless Real-Time UDP Telemetry Parsing',
+        valueKo: '게임 데이터 초당 60번 실시간 수신 · 해석',
+        valueEn: 'Game Data Received & Decoded 60 Times per Second',
         icon: 'fas fa-network-wired'
       },
       {
-        valueKo: '5ms 미만 링 버퍼 인덱싱 및 28ms 초고속 디스크 캐싱',
-        valueEn: 'Sub-5ms Ring Buffer & ~28ms High-Speed Disk Cache',
-        icon: 'fas fa-bolt'
+        valueKo: '목소리 3분 36초로 파인튜닝 → 무전 · 답변 음성 639개',
+        valueEn: '3 min 36 s of Voice → 639 Radio & Answer Clips',
+        icon: 'fas fa-headset'
       },
       {
-        valueKo: '24개 공식 서킷 실좌표 매핑 및 동적 에이펙스 탐색',
-        valueEn: '24 Official Tracks Coordinate & Dynamic Apex Mapping',
+        valueKo: '24개 서킷 코너 맵 · 엔지니어에게 질문 7종',
+        valueEn: '24 Track Corner Maps · 7 Ask-the-Engineer Questions',
         icon: 'fas fa-map-location-dot'
       },
       {
-        valueKo: 'AI 음성 페르소나 실시간 핸즈프리 피트월 코칭',
-        valueEn: 'Live Hands-Free Pitwall AI Voice Persona Coaching',
-        icon: 'fas fa-headphones'
+        valueKo: '게임 화면 위 TV 중계 오버레이 연동',
+        valueEn: 'TV Broadcast Overlay on Top of the Game',
+        icon: 'fas fa-tv'
       }
     ],
 
     pipelineFlow: [
-      { step: '01', titleKo: 'F1 UDP Socket (:20777)', titleEn: 'F1 UDP Socket (:20777)' },
-      { step: '02', titleKo: 'CircuitDataManager & 트랙 보간', titleEn: 'CircuitDataManager & Track Interpolation' },
-      { step: '03', titleKo: 'StateManager & 동적 에이펙스 탐색', titleEn: 'StateManager & Dynamic Apex Recovery' },
-      { step: '04', titleKo: '초고속 디스크 캐시 (~28ms)', titleEn: 'Ultra-Fast Disk Cache (~28ms)' },
-      { step: '05', titleKo: 'WebSocket 실시간 스트림 & 대시보드', titleEn: 'WebSocket Live Stream & Dashboard' }
+      { step: '01', titleKo: '게임이 데이터 보내기 (초당 60번)', titleEn: 'Game Sends Data (60 Hz)' },
+      { step: '02', titleKo: '해석 · 랩 · 코너별 기록', titleEn: 'Decode & Record Laps / Corners' },
+      { step: '03', titleKo: '엔지니어 두뇌가 상황 판단', titleEn: 'Engineer Brain Decides' },
+      { step: '04', titleKo: '파인튜닝한 목소리로 무전', titleEn: 'Radio in the Fine-Tuned Voice' },
+      { step: '05', titleKo: '대시보드 · TV 오버레이 표시', titleEn: 'Dashboard & TV Overlay' }
     ],
 
     beforeAfter: {
-      beforeKo: '시속 300km/h 주행 중 미세한 계기판 수치(타이어 마모율, 델타 타임)를 눈으로 확인하느라 전방 시야가 분산되고, 주행 후에도 내가 왜 특정 코너에서 느렸는지 자가 피드백할 수 있는 전문 도구가 전무했습니다.',
-      beforeEn: 'Checking dense gauges at 300 km/h caused dangerous visual distraction, and drivers lacked empirical tools to analyze why they lost time in specific corners or evaluate their driving.',
-      afterKo: '실제 F1 엔지니어(Bono, GP, Ricky)의 음성으로 타이어 상태와 피트스탑 시점을 귀로 실시간 전달받고, 랩 종료 후 코너별 제동 거리, 동적 에이펙스 궤적, 라이벌 대비 속도 델타를 한눈에 비교 분석할 수 있습니다.',
-      afterEn: 'Real-time radio briefings from AI engineer personas deliver tactical calls hands-free, while post-session matrices reveal braking points, dynamic apex drift, and rival velocity deltas.'
+      beforeKo: '시속 300km로 달리면서 화면 구석의 작은 숫자(타이어 마모, 랩 타임 차이)를 읽기는 어렵고, 주행이 끝나도 "어느 코너에서 왜 느렸는지" 알려 주는 사람이 없었습니다.',
+      beforeEn: 'Reading tiny numbers (tyre wear, lap deltas) at 300 km/h is hard, and after a run nobody tells you which corner cost you time and why.',
+      afterKo: '달리는 동안에는 엔지니어가 귀로 "1번 코너 제동이 13m 빨랐어", "이번 랩 박스!"처럼 알려 주고, 궁금한 건 직접 물어볼 수 있습니다. 주행이 끝나면 코너별 기록과 서킷 지도로 내 주행을 다시 확인합니다.',
+      afterEn: 'While driving, the engineer tells you things like "braking was 13 m early into Turn 1" or "box this lap", and you can ask questions. Afterward, corner tables and the track map show exactly where time went.'
     },
 
     sections: [
       {
         num: '01',
         titleKo: '01. Background & Problem (배경 및 문제점)',
-        titleEn: '01. Background & Problem (Simulation Context & Tooling Gap)',
-        contentKo: `### 1. 시속 300km/h 극한의 주행과 시야 분산의 위험성
-F1 25 / 26과 같은 고속 심레이싱 환경에서는 시속 300km/h를 넘나드는 극한의 속도로 코너를 공략하며 0.1초 단위의 랩타임을 다툽니다. 주행 중 온스크린 계기판의 미세한 수치(타이어 마모도, 연료 잔여 랩, 델타 타임)를 눈으로 확인하려 하면 전방 시야가 분산되어 치명적인 브레이크 락업(Lock-up)과 랩타임 손실이 발생합니다.
+        titleEn: '01. Background & Problem',
+        contentKo: `### 1. 실제 F1에는 '귀로 듣는 코치'가 있다
+실제 F1 드라이버는 운전에만 집중하고, 피트월의 레이스 엔지니어가 무전으로 "앞차와 0.8초, DRS 가능", "이번 랩 박스"처럼 필요한 정보를 말해 줍니다. 하지만 F1 게임을 하는 사람에게는 그런 엔지니어가 없습니다.
 
-### 2. 심레이싱 유저를 위한 전문 엔지니어링 분석 도구의 부재
-"내가 왜 특정 코너에서 느렸는지, 브레이킹 포인트(Braking Point)는 적절했는지, 타이어 관리는 올바르게 이루어지고 있는지"를 스스로 분석하고 피드백할 수 있는 전문적인 툴이 시장에 부재했습니다.
+### 2. 화면 숫자는 달리면서 볼 수 없다
+게임 화면에도 숫자는 나오지만, 시속 300km로 코너에 들어가면서 작은 숫자를 읽으면 실수가 납니다. 그렇다고 주행이 끝난 뒤 수만 개의 숫자를 혼자 뒤져 "어디서 느렸는지" 찾기도 어렵습니다.
 
-### 3. 단순 수치 나열을 넘어선 '실질적 피드백 루프' 필요
-기존 UI와 원시 텔레메트리 뷰어들은 숫자를 나열하는 데 그쳐, 드라이버가 주행 직후 자신의 주행 라인과 페달 조작을 입체적으로 점검하고 실력을 향상시키기 위한 실행 가능한 피드백을 제공하지 못했습니다.`,
-        contentEn: `### 1. Cognitive Distraction at 300+ km/h Speeds
-Piloting Formula 1 cars at 300+ km/h requires absolute visual focus. Glancing at dense on-screen telemetry gauges to check tire wear or fuel deltas causes dangerous visual disruption and costly lock-ups.
+### 3. 게임은 데이터를 이미 보내 주고 있었다
+F1 게임은 설정만 켜면 차의 속도 · 기어 · 페달 · 위치 · 타이어 상태를 **1초에 60번** 네트워크(UDP)로 보내 줍니다. 이 데이터를 받아서 해석하고, 사람 엔지니어처럼 말해 주는 프로그램을 직접 만들기로 했습니다.`,
+        contentEn: `### 1. Real F1 Drivers Have a Coach in Their Ear
+In real F1, the driver focuses on driving while a race engineer radios things like "0.8 seconds to the car ahead, DRS available" or "box this lap". Players of the F1 game have no such engineer.
 
-### 2. Critical Gap in Driver Analytics Tooling
-Sim racers lacked professional engineering feedback tools to evaluate why they lost time in specific corners, whether braking points were optimal, and how tire degradation evolved over a stint.
+### 2. You Can't Read Numbers at 300 km/h
+The game shows numbers, but reading them while braking into a corner causes mistakes, and digging through tens of thousands of numbers after a run is just as hard.
 
-### 3. Need for Actionable Feedback Loops
-Rudimentary telemetry viewers merely list raw numbers without dynamic kinematics context, failing to provide actionable self-coaching insights for systematic lap-by-lap improvements.`
+### 3. The Game Was Already Sending the Data
+With one setting, the F1 game sends speed, gear, pedals, position, and tyre data **60 times per second** over the network (UDP). I built a program that receives it, makes sense of it, and talks like a real engineer.`
       },
       {
         num: '02',
-        titleKo: '02. Introduction & Objective (도입 배경 및 개발 목표)',
-        titleEn: '02. Introduction & Objective (Race Engineer Persona & Realism)',
-        contentKo: `### 1. 실제 F1 피트월 무전(Radio) 경험의 현실화
-실제 F1에서는 피트월의 전담 레이스 엔지니어가 무전을 통해 타이어 마모 상태, 경쟁 차량과의 코너 속도 득실, 최적 피트 윈도우를 실시간 브리핑합니다.
+        titleKo: '02. What I Built (무엇을 만들었나)',
+        titleEn: '02. What I Built',
+        contentKo: `### 1. 실시간 대시보드
+- 지금 속도 · 기어 · 페달, 랩별 기록, 코너별 진입 · 정점 · 탈출 속도와 제동 지점을 보여 줍니다. 녹화한 주행을 1~4배속으로 다시 볼 수도 있습니다.
 
-### 2. 유명 레이스 엔지니어 AI 음성 페르소나 구현
-Max Verstappen의 "GP", Lewis Hamilton의 "Bono", Carlos Sainz의 "Ricky" 등 실제 F1 엔지니어들의 보이스 톤을 음성 합성(TTS)으로 구현하여, 드라이버가 화면을 보지 않고 귀로 상황을 파악하는 핸즈프리 몰입감을 완성했습니다.
+### 2. 엔지니어 자동 무전
+- 프랙티스 · 퀄리파잉 · 레이스를 스스로 알아보고, 상황에 맞춰 말합니다.
+- **코너 제동**: 2랩부터, 코너를 빠져나오면 이번 세션 가장 빠른 랩과 제동 지점을 비교해 "제동이 13m 빨랐어"처럼 알려 줍니다.
+- **페이스 · 앞차 간격 · 피트**: 랩 타임이 좋아지거나 떨어지면, 앞차와의 간격, 타이어가 많이 닳아 피트인할 때를 알려 줍니다.
+- **셋업 조언**: 프랙티스에서 타이어 온도와 마모를 보고 "프런트 윙 36 → 38"처럼 바꿀 값을 제안합니다.
+- 무전끼리는 최소 6초 간격을 두고, 세이프티카 · 피트인 랩은 비교에서 빼서 엉뚱한 무전이 나오지 않게 했습니다.
 
-### 3. 실시간 오디오 브리핑과 사후 정밀 텔레메트리의 결합
-"주행 중에는 귀로 실시간 코칭을 받고, 주행 후에는 코너별 키네마틱스 분석을 통해 스스로 드라이빙을 개선하는 올인원 레이스 엔지니어링 솔루션" 구축을 목표로 설정했습니다.`,
-        contentEn: `### 1. Replicating the Real-World F1 Pitwall Radio Dynamic
-In real Formula 1 races, pitwall engineers continuously broadcast live tire degradation, competitor pace deltas, and strategic pit windows over team radio.
+### 3. 엔지니어에게 물어보기
+- "1등 하려면 어떻게 해야 해?", "앞차 잡을 수 있어?", "어디서 시간을 잃고 있어?", "언제 피트인 해야 해?" 같은 7가지 질문에 지금 데이터로 계산한 숫자와 함께 음성으로 답합니다. (한국어 · 영어 질문 모두 가능)
 
-### 2. Authentic Race Engineer AI Voice Personas
-Synthesized recognizable engineer personas (Max Verstappen's "GP", Lewis Hamilton's "Bono", Carlos Sainz's "Ricky") via text-to-speech, enabling hands-free situational awareness during high-speed racing.
+### 4. 24개 서킷 코너 맵
+- 서킷마다 공식 코너 번호와 위치를 정리해, 어느 코너에서 무슨 일이 있었는지 정확히 짚을 수 있습니다.
 
-### 3. Fusing Auditory Briefings with Post-Session Kinematics
-Architected a closed-loop system where drivers receive real-time audio calls during racing and inspect deep turn-by-turn kinematics post-session for continuous driver improvement.`
+### 5. TV 중계 오버레이
+- 게임 화면 위에 실제 중계처럼 순위표, 랩 카드, 속도 · 기어 · 페달 HUD를 투명하게 그립니다. 오픈소스 오버레이(MIT)를 가져와 우리 데이터와 연결했습니다.`,
+        contentEn: `### 1. Live Dashboard
+- Speed, gear, pedals, lap history, and per-corner entry / apex / exit speed and braking point; recorded runs replay at 1–4x.
+
+### 2. Automatic Engineer Radio
+- Detects practice / qualifying / race and talks accordingly.
+- **Corner braking**: from lap 2, after each corner it compares the braking point with the session's fastest lap ("braking was 13 m early").
+- **Pace, gap, pit calls**: pace gains or drops, the gap ahead, and when worn tyres mean it's time to pit.
+- **Setup advice**: in practice, tyre temperatures and wear lead to suggestions like "front wing 36 → 38".
+- At least 6 seconds between calls; safety-car and pit laps are excluded so no false calls go out.
+
+### 3. Ask the Engineer
+- Seven questions such as "How can I win?", "Can I catch the car ahead?", "Where am I losing time?", and "When should I pit?" are answered by voice with the numbers behind them (Korean or English).
+
+### 4. Corner Maps for 24 Tracks
+- Official turn numbers and positions for every track, so events are pinned to the right corner.
+
+### 5. TV Broadcast Overlay
+- A transparent broadcast-style timing tower, lap card, and speed / gear / pedal HUD over the game, built by connecting an open-source (MIT) overlay to our data.`
       },
       {
         num: '03',
-        titleKo: '03. System Architecture & Data Flow (시스템 아키텍처 및 데이터 흐름)',
-        titleEn: '03. System Architecture & Data Flow',
+        titleKo: '03. System Architecture (시스템 구조)',
+        titleEn: '03. System Architecture',
+        contentKo: `### 데이터가 무전이 되기까지 5단계
+1. **받기**: 게임이 1초에 60번 보내는 데이터 묶음(패킷)을 내 PC의 Python 서버가 받습니다. 편지가 쉬지 않고 쏟아지는 우체통이라고 생각하면 됩니다.
+2. **해석하기**: 패킷은 0과 1로 된 정해진 모양이라, 게임 회사가 공개한 형식대로 잘라 "속도 287km/h, 기어 7단, 브레이크 0%" 같은 값으로 바꿉니다.
+3. **기록하기**: 차 위치를 코너 맵과 맞춰 보면서 랩마다, 코너마다 제동 지점 · 최저 속도 · 탈출 속도를 정리합니다.
+4. **판단하기**: '엔지니어 두뇌'가 정해 둔 규칙으로 지금 무전할 일이 있는지 결정합니다. 판단은 빠르고 정확해야 해서 AI가 아닌 규칙으로 만들었습니다.
+5. **말하기 · 보여 주기**: 미리 만들어 둔 목소리 파일을 골라 재생하고, 같은 내용을 대시보드와 TV 오버레이에 보여 줍니다.
+
+> 핵심 설계: **판단은 규칙으로, 목소리는 AI로.** 숫자 판단은 규칙이 더 정확하고, 사람 같은 목소리는 AI가 잘합니다.`,
+        contentEn: `### Five Steps from Data to Radio
+1. **Receive**: the Python server on my PC catches the data packets the game sends 60 times per second — like a mailbox that never stops filling.
+2. **Decode**: packets are fixed patterns of 0s and 1s; following the game's published format turns them into values like "287 km/h, 7th gear, 0% brake".
+3. **Record**: matching the car's position to the corner map, it logs braking point, minimum speed, and exit speed for every corner of every lap.
+4. **Decide**: the "engineer brain" checks fixed rules to see whether something is worth saying. Decisions must be fast and exact, so they use rules, not AI.
+5. **Speak & show**: it plays a pre-made voice clip and shows the same message on the dashboard and TV overlay.
+
+> Key design: **rules for decisions, AI for the voice.** Rules are more exact with numbers; AI is better at sounding human.`,
         architectureDiagrams: [
           {
             id: 'diag-system-runtime',
-            tabTitleKo: '시스템 아키텍쳐',
-            tabTitleEn: 'System Architecture',
-            titleKo: '시스템 아키텍쳐',
-            titleEn: 'System Architecture',
-            defaultScale: 0.60,
+            tabTitleKo: '전체 구조',
+            tabTitleEn: 'Overall Architecture',
+            titleKo: '전체 구조 — 게임 데이터가 무전과 화면이 되기까지',
+            titleEn: 'Overall Architecture — From Game Data to Radio and Screens',
+            defaultScale: 0.75,
             mermaidChart: `flowchart TD
-    subgraph GameSource["F1 25 / 26 Game Engine"]
-        UDP["UDP Packet Stream (Port 20777)<br/>Packet 0, 1, 2, 4, 5, 6, 7, 10, 11"]
-        REC["Pre-recorded Laps (.jsonl)<br/>Catalunya / Austria / Monaco"]
+    subgraph Input["입력"]
+        G["F1 25 게임<br/>차 상태를 1초에 60번 전송<br/>(UDP 20777)"]
+        RP["녹화한 주행 파일<br/>(리플레이 모드)"]
     end
 
-    subgraph Backend["Python FastAPI Engine (project/backend)"]
-        LS["telemetry/listener.py<br/>(4MB SO_RCVBUF, Non-blocking Batch Drain)"]
-        CD["circuit_data/manager.py<br/>(Curvature & Track Interpolation)"]
-        SM["state_mgmt/manager.py<br/>(Kinematics Recovery, Corner Mapping, Lap Cache)"]
+    subgraph Server["내 PC의 Python 서버 (FastAPI)"]
+        L["① 수신기<br/>데이터 묶음(패킷) 받기"]
+        P["② 해석기<br/>0과 1 → 속도 · 기어 · 위치 · 타이어"]
+        C["코너 맵 24개<br/>(서킷별 공식 코너 번호)"]
+        S["③ 기록 관리자<br/>랩 · 코너 · 타이어 정리"]
+        B["④ 엔지니어 두뇌<br/>규칙으로 무전 · 답변 결정"]
+        V["⑤ 음성 창고<br/>미리 만든 목소리 639개"]
     end
 
-    subgraph Frontend["React Frontend (project/frontend)"]
-        WS["WebSocket Client (ws://localhost:8080/ws)"]
-        UI1["Top Hero: Live Speed & Classification"]
-        UI2["Band 2: Lap History & Corner Detail"]
-        UI3["Band 3: Corner Analysis Full Matrix"]
-        UI4["Band 4: Interactive Circuit Map & Sectors"]
+    subgraph Screens["보고 듣는 곳"]
+        O["TV 중계 오버레이<br/>(게임 화면 위에 표시)"]
+        D["웹 대시보드<br/>(React · 실시간 WebSocket)"]
+        H["엔지니어 무전<br/>음성 + 자막 + 근거 숫자"]
     end
 
-    UDP --> LS
-    REC --> SM
-    LS --> SM
-    CD --> SM
-    SM -- "5Hz ~ 60Hz JSON Stream" --> WS
-    WS --> UI1
-    WS --> UI2
-    WS --> UI3
-    WS --> UI4`
+    G --> L
+    RP -. "다시 보기" .-> L
+    L --> P --> S
+    C --> S
+    S --> B --> V --> H
+    S -- "실시간 전송" --> D
+    L -- "같은 데이터 복사 (20778)" --> O`,
+            mermaidChartEn: `flowchart TD
+    subgraph Input["Input"]
+        G["F1 25 game<br/>sends car state 60 times per second<br/>(UDP 20777)"]
+        RP["Recorded run files<br/>(replay mode)"]
+    end
+
+    subgraph Server["Python Server on My PC (FastAPI)"]
+        L["① Receiver<br/>catches data packets"]
+        P["② Decoder<br/>0s and 1s → speed · gear · position · tyres"]
+        C["24 corner maps<br/>(official turn numbers)"]
+        S["③ Recorder<br/>organizes laps · corners · tyres"]
+        B["④ Engineer brain<br/>rules decide radio · answers"]
+        V["⑤ Voice library<br/>639 pre-made clips"]
+    end
+
+    subgraph Screens["Where You See and Hear It"]
+        O["TV broadcast overlay<br/>(drawn over the game)"]
+        D["Web dashboard<br/>(React · live WebSocket)"]
+        H["Engineer radio<br/>voice + caption + numbers"]
+    end
+
+    G --> L
+    RP -. "replay" .-> L
+    L --> P --> S
+    C --> S
+    S --> B --> V --> H
+    S -- "live stream" --> D
+    L -- "copies the same data (20778)" --> O`
           },
           {
-            id: 'diag-data-rendering-pipeline',
-            tabTitleKo: '데이터 파이프라인',
-            tabTitleEn: 'Data Pipeline',
-            titleKo: '데이터 파이프라인',
-            titleEn: 'Data Pipeline',
-            defaultScale: 1.10,
-            mermaidChart: `flowchart LR
-    subgraph Sources["1. 원본 데이터 소스 (Data Sources)"]
-        UDP["F1 25/26 실시간 UDP 패킷<br/>또는 녹화본 (.jsonl)"]
-        TRACK["서킷 레퍼런스 레이싱 라인<br/>(docs/tracks/*_racingline.txt)"]
-        CORNER["서킷 코너 구간 정의<br/>(circuit_data/*_corners.json)"]
+            id: 'diag-f1-radio',
+            tabTitleKo: '무전이 나오기까지',
+            tabTitleEn: 'How a Radio Call Happens',
+            titleKo: '무전이 나오기까지 — 지켜보기 → 판단하기 → 말하기',
+            titleEn: 'How a Radio Call Happens — Watch → Decide → Speak',
+            defaultScale: 0.85,
+            mermaidChart: `flowchart TD
+    subgraph Watch["1. 지켜보기"]
+        direction LR
+        W1["코너를 빠져나옴"] ~~~ W2["한 랩을 마침"] ~~~ W3["타이어 마모 · 앞차 간격 변화"]
     end
-
-    subgraph Backend["2. 백엔드 처리 엔진 (FastAPI / Python)"]
-        CM["CircuitDataManager<br/>(트랙 좌표·곡률 보간 및 코너 기준점 로드)"]
-        SM["StateManager<br/>(랩 세그먼트 분리, 물리 역산, 코너별 매핑)"]
-        CACHE["사전 파싱 캐시<br/>(_parsed_laps_cache_v3.json)"]
+    subgraph Ask["드라이버가 물어볼 때"]
+        direction LR
+        Q1["질문 입력 · 버튼<br/>(앞차 잡을 수 있어?)"] --> Q2["질문 종류 알아보기<br/>(키워드)"] --> Q3["지금 데이터로 답 계산"]
     end
-
-    subgraph Frontend["3. 프론트엔드 대시보드 (React / SVG)"]
-        HERO["실시간 텔레메트리 & 리더보드"]
-        LAP["Lap History & 코너별 상세 카드"]
-        CA["Corner Analysis 전체 매트릭스"]
-        MAP["Interactive Circuit Map (T1~TN)"]
-        SEC["섹터 비교 & 셋업/타이어/AI 전략"]
+    subgraph Judge["2. 판단하기 (규칙)"]
+        direction LR
+        J1["이번 세션 가장 빠른 랩과 비교"] --> J2["차이가 기준 안인가?<br/>(예: 제동 5~45m)"] --> J3["지난 무전 후 6초 지났나?<br/>세이프티카 · 피트 랩은 제외"]
     end
-
-    UDP --> SM
-    TRACK --> CM
-    CORNER --> CM
-    CM --> SM
-    SM <--> CACHE
-    SM -- "WebSocket (ws://localhost:8080/ws)" --> HERO
-    SM -- "WebSocket" --> LAP
-    SM -- "WebSocket" --> CA
-    SM -- "WebSocket" --> MAP
-    SM -- "WebSocket" --> SEC`
+    subgraph Speak["3. 말하기"]
+        direction LR
+        K1["숫자까지 들어간 문장 고르기"] --> K2["미리 만든 목소리 재생"] --> K3["무전 패널에 자막 · 근거 숫자"]
+    end
+    Watch --> Judge --> Speak
+    Ask --> Speak`,
+            mermaidChartEn: `flowchart TD
+    subgraph Watch["1. Watch"]
+        direction LR
+        W1["Car leaves a corner"] ~~~ W2["Lap completed"] ~~~ W3["Tyre wear · gap changes"]
+    end
+    subgraph Ask["When the Driver Asks"]
+        direction LR
+        Q1["Typed question · preset<br/>(Can I catch the car ahead?)"] --> Q2["Detect question type<br/>(keywords)"] --> Q3["Compute answer from live data"]
+    end
+    subgraph Judge["2. Decide (rules)"]
+        direction LR
+        J1["Compare with the session's fastest lap"] --> J2["Is the gap in range?<br/>(e.g. braking 5–45 m)"] --> J3["6 s since last call?<br/>skip safety-car · pit laps"]
+    end
+    subgraph Speak["3. Speak"]
+        direction LR
+        K1["Pick the sentence with the number"] --> K2["Play pre-made voice"] --> K3["Caption · numbers in radio panel"]
+    end
+    Watch --> Judge --> Speak
+    Ask --> Speak`
+          },
+          {
+            id: 'diag-f1-voice',
+            tabTitleKo: '목소리 파인튜닝',
+            tabTitleEn: 'Voice Fine-Tuning',
+            titleKo: '목소리 파인튜닝 — 3분 36초 녹음이 엔지니어 목소리가 되기까지',
+            titleEn: 'Voice Fine-Tuning — From 3 min 36 s of Audio to an Engineer Voice',
+            defaultScale: 0.85,
+            mermaidChart: `flowchart TD
+    subgraph Base["2. 이미 말할 줄 아는 모델"]
+        direction LR
+        B1["수천 시간 음성으로 미리 학습된<br/>GPT-SoVITS v2ProPlus"]
+    end
+    subgraph Data["1. 재료 준비"]
+        direction LR
+        A1["엔지니어 목소리 녹음<br/>9개 · 3분 36초"] --> A2["조용한 부분에서 자르기<br/>문장 44개 (3~10초)"] --> A3["받아쓰기<br/>(Whisper · 대본 있으면 대본)"]
+    end
+    subgraph Tune["3. 살짝 맞추기 (파인튜닝)"]
+        direction LR
+        T1["목소리 색깔(음색) 배우기<br/>SoVITS · 12번 반복"] --> T2["말투 · 억양 배우기<br/>GPT · 10번째 결과 선택"]
+    end
+    subgraph Bake["4. 무전 문장 미리 만들기"]
+        direction LR
+        K1["문장마다 6~12번 생성"] --> K2["Whisper로 다시 받아쓰기"] --> K3["대본과 가장 같은 것 채택<br/>(평균 일치율 0.92)"]
+    end
+    OUT["무전 · 답변 음성 파일<br/>(앱은 골라서 재생만)"]
+    Data --> Tune
+    Base --> Tune
+    Tune --> Bake --> OUT`,
+            mermaidChartEn: `flowchart TD
+    subgraph Base["2. A Model That Already Speaks"]
+        direction LR
+        B1["GPT-SoVITS v2ProPlus<br/>pre-trained on thousands of hours"]
+    end
+    subgraph Data["1. Prepare the Material"]
+        direction LR
+        A1["Engineer voice recordings<br/>9 clips · 3 min 36 s"] --> A2["Cut at silences<br/>44 sentences (3–10 s)"] --> A3["Transcribe<br/>(Whisper · script if known)"]
+    end
+    subgraph Tune["3. Nudge It (Fine-Tuning)"]
+        direction LR
+        T1["Learn the timbre<br/>SoVITS · 12 rounds"] --> T2["Learn delivery · intonation<br/>GPT · round 10 chosen"]
+    end
+    subgraph Bake["4. Pre-Make Every Line"]
+        direction LR
+        K1["Generate each line 6–12 times"] --> K2["Transcribe back with Whisper"] --> K3["Keep the closest match<br/>(avg 0.92)"]
+    end
+    OUT["Radio & answer clips<br/>(the app just picks and plays)"]
+    Data --> Tune
+    Base --> Tune
+    Tune --> Bake --> OUT`
           }
         ]
       },
       {
         num: '04',
-        titleKo: '04. Method & Engineering (분석 방법론 및 엔지니어링)',
-        titleEn: '04. Method & Engineering (Kinematics & Dynamic Apex Algorithms)',
-        contentKo: `### 1. 동적 에이펙스(Dynamic Apex) 탐색 알고리즘
-- 서킷 맵의 코너 마커는 고정 좌표가 아니며, 코너 윈도우 \`[entry_dist - 15m, exit_dist + 15m]\` 내에서 드라이버가 실제 기록한 최저 속도 지점(\`min(apex_window, key=lambda p: p["speed"])\`)을 동적으로 추출합니다. 이를 통해 조기 제동 여부와 레이트 브레이킹 깊이를 랩마다 실제 주행 궤적으로 정확히 표시합니다.
+        titleKo: '04. Voice Fine-Tuning, Explained Simply (목소리 파인튜닝 쉽게 이해하기)',
+        titleEn: '04. Voice Fine-Tuning, Explained Simply',
+        contentKo: `### 1. 파인튜닝이란? — 이미 잘하는 학생에게 '말투'만 가르치기
+처음부터 말하는 법을 가르치려면 수천 시간의 녹음이 필요합니다. 그래서 이미 수천 시간 동안 말하기를 배운 AI 모델(GPT-SoVITS)을 가져와, 엔지니어 목소리 **3분 36초**만 들려주며 "이 사람처럼 말해 봐" 하고 **조금만 고쳐 주는** 방식을 썼습니다. 이걸 소량의 데이터로 맞춘다고 해서 '퓨샷(few-shot) 파인튜닝'이라고 부릅니다.
 
-### 2. 코너별 정밀 키네마틱스 지표 역산
-- **Braking Point**: 브레이크 답력이 5% 이상 인가되기 시작한 최초 지점 거리(m)
-- **Throttle-On Point**: 에이펙스 통과 직후 가속을 25% 이상 재개한 지점 거리(m)
-- **Max Lateral G**: 코너링 중 발생한 피크 횡가속도(G)
-- **vs Ahead / vs Leader**: 동일 코너에서 앞차 및 선두 차량의 에이펙스 최저 속도와 페달 답력을 내 기록과 비교
+### 2. 목소리는 두 단계로 만들어진다
+- **① 무엇을 어떻게 말할지 (GPT 단계)**: 글자를 발음 기호로 바꾸고, 어디서 높이고 얼마나 빠르게 말할지 '말소리 설계도'를 그립니다. 여기서 **말투와 억양**을 배웁니다.
+- **② 누구 목소리로 낼지 (SoVITS 단계)**: 설계도를 실제 소리로 바꾸면서 **목소리 색깔(음색)** 을 입힙니다.
+- 숫자는 미리 영어 단어로 풀어 씁니다. (13 → thirteen, 0.8 → zero point eight)
 
-### 3. 물리 기반 결측 패킷 역산 복원 엔진
-- 과거 녹화본(.jsonl)에서 UDP 패킷 누락 감지 시, 주행 거리와 경과 시간 변화율로부터 구간 속도($v = \Delta d / \Delta t \times 3.6$), 가감속도($a = \Delta v / \Delta t$), 횡가속도($G_{lat} = v^2 \cdot |\kappa| / 9.81$)를 역산하여 무결성을 100% 보장`,
-        contentEn: `### 1. Dynamic Apex Tracking Algorithm
-- Evaluates the corner window \`[entry_dist - 15m, exit_dist + 15m]\` to identify the absolute minimum velocity point (\`min(apex_window, key=lambda p: p["speed"])\`), tracking actual driver late-braking trajectory per lap.
+### 3. 학습 과정
+1. 녹음 9개(3분 36초)를 조용한 부분에서 잘라 3~10초 문장 44개로 만들고, 받아쓰기 AI(Whisper)로 글자를 붙였습니다. 대본을 알고 있는 녹음은 받아쓰기 대신 대본을 썼습니다.
+2. **음색 학습**을 12번 반복하고, **말투 학습**을 15번 반복했습니다.
+3. 그런데 말투를 15번까지 배우자 오히려 발음이 불안정해졌습니다. 시험 문제만 외운 학생이 새 문제를 못 푸는 것과 같은 **과학습(overfitting)** 이라, **10번째 결과**를 골라 썼습니다.
+4. 집에 있는 그래픽카드(RTX 3070 8GB)로 몇 분이면 학습이 끝납니다.
 
-### 2. Corner Kinematics Matrix
-- **Braking Point**: Distance (m) where brake pedal input first exceeds 5%
-- **Throttle-On Point**: Distance (m) where throttle re-application exceeds 25% post-apex
-- **Max Lateral G**: Peak lateral cornering acceleration load (G)
-- **Rival Comparison**: Turn-by-turn velocity and pedal deltas benchmarked against the car ahead and session leader
+### 4. 품질 검사 — AI가 만든 목소리를 AI가 채점
+- 같은 문장을 6~12번 만들고, 각각을 받아쓰기 AI로 다시 글자로 바꿔 **원래 대본과 가장 똑같은 것**을 골랐습니다. 평균 일치율은 0.92입니다.
+- "제동이 13m 빨랐어"처럼 숫자가 들어간 문장은 숫자마다 **문장 전체를 따로** 만들어, 조각을 이어 붙인 것보다 자연스럽게 들리게 했습니다.
 
-### 3. Physics-Based Packet Reconstruction Engine
-- Reconstructs missing motion telemetry from distance and elapsed time differentials, computing velocity ($v = \Delta d / \Delta t \times 3.6$) and lateral G ($G_{lat} = v^2 \cdot |\kappa| / 9.81$) with zero data loss.`
+### 5. 왜 '미리' 만들어 둘까?
+- 게임이 그래픽카드를 거의 다 쓰기 때문에, 달리는 중에 목소리를 새로 만들면 게임이 끊길 수 있습니다. 그래서 무전 · 답변 문장 **639개를 미리 만들어 두고**, 실제 주행 중에는 상황에 맞는 파일을 **골라서 재생만** 합니다.
+
+### 6. 시도했다가 버린 방법
+- **학습 없이 바로 따라 하는 모델(XTTS-v2)**: 목소리가 덜 닮았고 짧은 문장 뒤에 잡음이 붙었습니다.
+- **더 큰 최신 모델(Fish Audio S2 Pro)**: 그래픽카드 메모리가 16~24GB 필요해 8GB로는 돌릴 수 없었습니다.`,
+        contentEn: `### 1. What Is Fine-Tuning? — Teaching a Good Student a New Accent
+Teaching speech from scratch needs thousands of hours of audio. Instead, I took an AI model that had already learned to speak from thousands of hours (GPT-SoVITS) and, with just **3 min 36 s** of the engineer's voice, **nudged it slightly** to "speak like this person". Using so little data is called few-shot fine-tuning.
+
+### 2. A Voice Is Made in Two Steps
+- **① What to say and how (GPT step)**: turns letters into pronunciation symbols and draws a "speech blueprint" of pitch and pace. This step learns **delivery and intonation**.
+- **② Whose voice (SoVITS step)**: turns the blueprint into sound and applies the **timbre**.
+- Numbers are spelled out first (13 → thirteen, 0.8 → zero point eight).
+
+### 3. Training
+1. Nine recordings (3 min 36 s) were cut at silences into 44 sentences of 3–10 s and transcribed with Whisper; recordings with a known script used the script instead.
+2. **Timbre** was trained for 12 rounds and **delivery** for 15.
+3. At 15 rounds, pronunciation became unstable — like a student who memorized the practice test and fails new questions (**overfitting**) — so the **round-10** result was used.
+4. Training takes a few minutes on a home graphics card (RTX 3070 8 GB).
+
+### 4. Quality Check — AI Grading AI
+- Each line was generated 6–12 times, transcribed back with Whisper, and the take **closest to the script** was kept (average match 0.92).
+- Lines with numbers ("braking was 13 m early") were made as **whole sentences for each number**, which sounds more natural than stitching pieces.
+
+### 5. Why Make Them in Advance?
+- The game uses almost all of the graphics card, so generating speech mid-race could make it stutter. All **639 radio and answer lines are pre-made**, and the app only **picks and plays** the right file.
+
+### 6. Tried and Dropped
+- **Zero-shot cloning (XTTS-v2)**: less similar voice and noise after short phrases.
+- **A larger new model (Fish Audio S2 Pro)**: needs 16–24 GB of graphics memory; won't run on 8 GB.`
       },
       {
         num: '05',
-        titleKo: '05. Results & UI Implementation (구현 성과 및 대시보드 화면)',
-        titleEn: '05. Results & UI Implementation (Live Dashboard Screens & Telemetry)',
+        titleKo: '05. Results & UI (구현 성과 및 대시보드 화면)',
+        titleEn: '05. Results & UI',
         highlight: true,
-        contentKo: `### 엔지니어링 피트월급 고밀도 대시보드 구현
-60Hz 무손실 패킷 파싱, 5ms 초저지연 버퍼링, 28ms 초고속 디스크 캐싱을 달성하고 24개 공식 F1 서킷 좌표를 100% 매핑 완료했습니다. 다크 히어로 밴드와 JetBrains Mono 고밀도 타이포그래피를 채택한 4대 핵심 화면 인터페이스입니다.`,
-        contentEn: `### High-Density Pitwall Telemetry Interface
-Achieved 60Hz lossless parsing, sub-5ms buffer indexing, ~28ms disk caching, and 100% coordinate mapping across 24 official F1 tracks. High data-density views built with JetBrains Mono typography.`,
+        contentKo: `### Demo 완성 — 실제 주행에서 엔지니어가 말을 겁니다
+게임을 켜고 세션에 들어가면 대시보드가 데이터를 받기 시작하고, 2랩부터 코너 제동 무전이, 레이스에서는 페이스 · 앞차 간격 · 피트 무전이 나옵니다. 엔지니어에게 질문하면 지금 데이터로 계산한 답을 목소리로 들려주고, 게임 화면 위에는 TV 중계 오버레이가 함께 뜹니다. 녹화한 주행은 리플레이로 다시 볼 수 있습니다.`,
+        contentEn: `### Demo Complete — The Engineer Talks During a Real Run
+Enter a session and the dashboard starts receiving data; corner braking calls begin on lap 2, and in races you also get pace, gap, and pit calls. Ask the engineer and it answers by voice from live data, while the TV overlay runs on top of the game. Recorded runs can be replayed.`,
         screenshots: [
           {
             src: f1Img1,
-            titleKo: '1. 세션 환경 설정 및 리플레이 제어 (Session Configuration & Replay)',
-            titleEn: '1. Session Configuration & Replay Mode',
-            descKo: '실시간 게임 UDP(20777) 수신 또는 녹화 세션(카탈루냐 9 Laps, 오스트리아) 1x~4x 리플레이 선택, 한/영 및 단위(km/h, °C / mph, °F) 전환, AI 레이스 엔지니어 음성 페르소나(GP, Bono, Ricky) 선택 인터페이스.',
-            descEn: 'Toggle live 60Hz UDP streaming or replay recorded telemetry files (Catalunya 9 Laps, Austria) at 1x to 4x playback speed, with i18n and AI voice persona selection (GP, Bono, Ricky).'
+            titleKo: '1. 세션 설정 및 리플레이 (Session Configuration & Replay)',
+            titleEn: '1. Session Configuration & Replay',
+            descKo: '실시간 게임 연결(UDP 20777)과 녹화 주행 리플레이 중 선택하고, 한 · 영 전환, 단위(km/h · mph), 엔지니어 목소리, 무전(TTS) · TV 오버레이 켜기를 고르는 시작 화면입니다.',
+            descEn: 'Start screen to choose live game (UDP 20777) or a recorded replay, language, units, engineer voice, and radio (TTS) / TV overlay toggles.'
           },
           {
             src: f1Img2,
-            titleKo: '2. 랩 아카이브, 코너별 상세 카드 및 차량 셋업 (Lap Archive & Setup)',
-            titleEn: '2. Lap Archive, Corner Telemetry Cards & Setup',
-            descKo: 'Lap 1~9 전체 기록 및 베스트 랩 대비 델타 타임, 4륜 타이어 표면 마모율, 차량 에어로/브레이크 셋업 수치, 선택된 코너의 Entry/Apex/Exit 속도 및 제동점·가속점 카드.',
-            descEn: 'Comprehensive lap archive (Lap 1~9) with delta times, 4-wheel tire surface wear %, car aerodynamic/brake setup, and corner entry/apex/exit velocity cards.'
+            titleKo: '2. 랩 기록 · 코너별 상세 카드 · 차량 셋업 (Lap Archive & Setup)',
+            titleEn: '2. Lap Archive, Corner Cards & Setup',
+            descKo: '랩별 기록과 베스트 랩 대비 차이, 4개 타이어 마모율, 차량 셋업 값, 고른 코너의 진입 · 정점 · 탈출 속도와 제동 · 가속 지점을 보여 줍니다.',
+            descEn: 'Lap history with deltas, tyre wear for all four tyres, car setup, and entry / apex / exit speed with braking and throttle points for the selected corner.'
           },
           {
             src: f1Img3,
-            titleKo: '3. 코너별 주행 키네마틱스 매트릭스 (Turn-by-Turn Kinematics Matrix)',
-            titleEn: '3. Turn-by-Turn Kinematics Matrix Table',
-            descKo: 'Turn 1부터 Turn N까지 전 코너의 진입/정점/탈출 속도(km/h), 기어단수, 브레이킹 포인트(m), 가속 재개 지점(m), 최대 횡G, 앞차/선두와의 속도 득실 비교 종합 표.',
-            descEn: 'Full corner table (T1~TN) detailing entry/apex/exit speed, gear selection, braking point distance, throttle-on distance, lateral G-load, and live rival comparison bars.'
+            titleKo: '3. 코너별 주행 분석 표 (Turn-by-Turn Matrix)',
+            titleEn: '3. Turn-by-Turn Matrix',
+            descKo: '모든 코너의 진입 · 정점 · 탈출 속도, 기어, 제동 지점, 가속 시작 지점, 최대 횡G를 한 표로 모아 앞차 · 선두와 비교합니다.',
+            descEn: 'Every corner\'s entry / apex / exit speed, gear, braking point, throttle-on point, and peak lateral G in one table, compared with the car ahead and the leader.'
           },
           {
             src: f1Img4,
-            titleKo: '4. 인터랙티브 서킷 맵 및 섹터 분석 (Interactive Circuit Map & Sectors)',
-            titleEn: '4. Interactive Circuit Map & Sector Analysis',
-            descKo: 'SVG 벡터 레이싱 라인, 랩별 실제 최저 속도 지점을 반영하는 동적 에이펙스 마커(T1~TN), 코너 클릭 시 인스펙터 팝업, 섹터 1·2·3 공식 분할선 및 득실 분석.',
-            descEn: 'Vector racing line, clickable dynamic apex markers tracking true minimum velocity per lap, S1/S2/S3 sector split lines, and comparative sector timing analysis.'
+            titleKo: '4. 서킷 지도 · 섹터 분석 (Circuit Map & Sectors)',
+            titleEn: '4. Circuit Map & Sectors',
+            descKo: '실제 주행 라인 위에 코너 번호(T1~TN)를 표시하고, 코너를 누르면 그 코너 기록이 열립니다. 섹터 1 · 2 · 3 구간 기록도 비교합니다.',
+            descEn: 'Turn numbers (T1–TN) on the racing line; click a corner to open its data, and compare sector 1 / 2 / 3 times.'
           }
         ]
       },
       {
         num: '06',
-        titleKo: '06. Conclusion & User Feedback Applications (결론 및 유저 피드백 활용 방향)',
-        titleEn: '06. Conclusion & User Feedback Applications (Actionable Driver Coaching)',
-        contentKo: `### 1. 코너별 브레이킹 & 트레일 브레이킹 자가 교정
-- "Turn 1에서 브레이킹 포인트가 지난 랩 대비 8m 빨라 턴인 속도를 잃었다"거나 "선두 드라이버 대비 스로틀 전개 시점(Throttle-On)이 12m 늦다"는 점을 키네마틱스 매트릭스로 즉각 확인하여 제동 지점을 과감하게 교정할 수 있습니다.
+        titleKo: '06. Lessons & Next Steps (배운 점 및 다음 단계)',
+        titleEn: '06. Lessons & Next Steps',
+        contentKo: `### 1. AI는 꼭 필요한 곳에만
+- 처음에는 판단까지 AI에게 맡기려 했지만, 1초에 60번 들어오는 숫자를 빠르고 정확하게 판단하는 데는 규칙이 더 낫다는 걸 알았습니다. AI는 사람처럼 들리는 목소리에 집중해서 썼습니다.
 
-### 2. 동적 에이펙스(Dynamic Apex) 및 레이싱 라인 시각 진단
-- 서킷 맵 위에 랩마다 찍힌 실제 동적 에이펙스 위치를 비교하여 이상적인 레이싱 라인 대비 언더스티어로 밀려났는지를 자가 진단하고 최적 진입 궤적을 수정합니다.
+### 2. 데이터가 적을수록 '덜 배운' 모델이 나을 때가 있다
+- 3분 36초라는 적은 데이터에서는 오래 학습할수록 오히려 발음이 무너졌습니다. 숫자(학습 횟수)보다 실제 결과를 귀로 듣고 고르는 과정이 중요했습니다.
 
-### 3. 전방 시야 확보 상태에서의 실시간 AI 무전 피드백
-- 시속 300km/h 주행 중 화면에 시야를 빼앗기지 않고도 타이어 마모율 임계치 도달 알림, 경쟁 차량과의 코너 속도 득실, 최적 피트스탑 윈도우를 실제 엔지니어 음성으로 귀로 전달받아 모터스포츠 현장의 현실감과 전략적 판단을 경험합니다.`,
-        contentEn: `### 1. Corner-by-Corner Braking & Throttle-On Optimization
-- Drivers immediately identify when braking was executed 8m prematurely or when throttle re-application lagged 12m behind rivals, providing exact benchmarks to fine-tune trail braking.
+### 3. 환경의 한계가 설계를 바꾼다
+- 게임과 그래픽카드를 나눠 써야 한다는 한계 때문에 '실시간 생성' 대신 '미리 만들어 두기'를 택했고, 그 덕분에 무전이 끊기지 않고 바로 나옵니다.
 
-### 2. Dynamic Apex & Trajectory Visualization
-- Comparing dynamic apex positions against the ideal racing line allows drivers to diagnose understeer drift and calibrate turn-in entry trajectories.
+### 4. 다음 단계
+- 아직 코너 맵이 없는 반대 방향 서킷과 마드리드 추가
+- 차가 막혀서 느려진 랩이 피트 무전을 잘못 부르는 경우 줄이기
+- 새 무전 문장을 더 쉽게 추가할 수 있도록 목소리 생성 과정 자동화`,
+        contentEn: `### 1. Use AI Only Where It's Needed
+- I first planned to let AI make decisions too, but rules proved faster and more exact for numbers arriving 60 times per second. AI went where it shines: a human-sounding voice.
 
-### 3. Hands-Free Real-Time Pitwall Coaching
-- Tactical radio updates—tire degradation thresholds, rival corner speed deltas, and strategic pit windows—are spoken aloud by authentic engineer personas, allowing drivers to maintain visual track focus.`
+### 2. With Little Data, Less Training Can Be Better
+- With only 3 min 36 s, longer training made pronunciation worse. Listening to the results mattered more than the round count.
+
+### 3. Constraints Shape the Design
+- Sharing the graphics card with the game led to pre-made lines instead of live generation, so radio calls play instantly without stutter.
+
+### 4. Next Steps
+- Add corner maps for reverse layouts and Madrid
+- Cut false pit calls on laps slowed by traffic
+- Automate voice generation so new lines are easy to add`
       }
     ]
   },

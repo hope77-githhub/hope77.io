@@ -149,11 +149,11 @@ export const PROJECT_LOGS_DATA = [
   {
     id: 'log-entry-f1',
     categories: ['projects'],
-    timestamp: '2026.09 - PRESENT',
+    timestamp: '2026.09 - 2026.11',
     service: 'service.f1.race_engineer',
     tagPrimary: 'TELEMETRY',
     tagSecondary: 'UDP_SOCKET_20777',
-    statusChip: { textKo: '진행 중 (ACTIVE)', textEn: 'In Progress', type: 'info' },
+    statusChip: { textKo: 'Demo 완성', textEn: 'Demo Complete', type: 'success' },
     titleKo: 'Real-Time AI Race Engineer Project — 실시간 텔레메트리 & 음성 AI 솔루션',
     titleEn: 'Real-Time AI Race Engineer — Live Telemetry & AI Voice Feedback Solution',
     summaryKo: 'F1 실시간 UDP 텔레메트리 주행 데이터를 초당 수십 회 파싱하여 차량 속도, 타이어 마모도, 델타 타임을 서킷 맵 위에 렌더링하고, 음성 AI를 결합하여 최적의 피트 스탑 타이밍과 실시간 레이스 전략 조언을 제공하는 풀스택 솔루션입니다.',

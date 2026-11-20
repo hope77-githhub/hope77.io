@@ -36,10 +36,10 @@ const ProjectLogsFeed = forwardRef(function ProjectLogsFeed({ onSelectSection },
       nameKo: 'AI Race Engineer (F1 텔레메트리)',
       nameEn: 'Live AI Race Engineer (F1 UDP)',
       tag: 'TELEMETRY / AI',
-      statusTextKo: '진행 중',
-      statusTextEn: 'In Progress',
-      statusType: 'info',
-      timestamp: '2026.09 - PRESENT'
+      statusTextKo: 'Demo 완성',
+      statusTextEn: 'Demo Complete',
+      statusType: 'success',
+      timestamp: '2026.09 - 2026.11'
     },
     {
       id: 'log-entry-neis',
