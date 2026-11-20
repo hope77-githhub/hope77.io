@@ -10,6 +10,9 @@ import fcoImg5 from '../assets/images/fco/05_record_matchups.png';
 import fcoImg6 from '../assets/images/fco/06_record_improve.png';
 import fcoImg7 from '../assets/images/fco/07_record_shots.png';
 import fcoImg8 from '../assets/images/fco/08_record_picks.png';
+import traitImg1 from '../assets/images/fco-trait/01_icon_heel_impact.png';
+import traitImg2 from '../assets/images/fco-trait/02_activation_conditions.png';
+import traitImg3 from '../assets/images/fco-trait/03_usage_post_play.png';
 
 export const CASE_STUDIES_DATA = [
   // =========================================================================
@@ -1597,6 +1600,215 @@ Searching a user ID pulls recent official match logs from the Nexon Open API and
 ### 4. Next Steps
 - Retrain as later rounds arrive and extend to 26/27
 - Refine reports and prescriptions with more user data`
+      }
+    ]
+  },
+  // =========================================================================
+  // 6. FC 온라인 신규 특성 제안 — 블라인드 링커 (my 신특 공모전)
+  // =========================================================================
+  {
+    id: 'log-entry-fco-trait',
+    category: 'Game Design · Data-Driven Proposal',
+    badgeTextKo: '공모전 제출 완료',
+    badgeTextEn: 'Submitted',
+    badgeType: 'success',
+    titleKo: 'FC 온라인 신규 특성 제안 — 블라인드 링커 (my 신특 공모전)',
+    titleEn: 'FC Online New Trait Proposal — Blind Linker (Trait Idea Contest)',
+    tabLabelKo: '신규 특성 제안',
+    tabLabelEn: 'New Trait Proposal',
+    oneLinerKo: '골문을 등지고 받은 공을 힐 · 노룩 원터치로 등 뒤 동료에게 연결할 때 정확도를 높이는 신규 특성을, 신규 특성 17종 전수 조사와 공식 데이터센터 사용률을 근거로 설계해 넥슨 공모전에 제출',
+    oneLinerEn: 'Designed and submitted a new FC Online trait that improves back-to-goal heel / no-look one-touch passes, grounded in a full audit of all 17 new traits and official usage data.',
+    roleKo: '개인 · 기획, 근거 데이터 조사, 특성 설계, 아이콘 · 발표 자료 제작',
+    roleEn: 'Solo · Concept, Evidence Research, Trait Design, Icon & Deck Production',
+    period: '2026.11.20 (제출 완료)',
+    periodEn: '2026.11.20 (Submitted)',
+    techStack: ['Game Design', 'FC Online 공식 데이터센터', 'Competitive Analysis', 'SVG Icon Design', 'PptxGenJS'],
+
+    metricsHeadingKo: '핵심 근거 (Key Evidence)',
+    metricsHeadingEn: 'Key Evidence',
+    keyMetrics: [
+      {
+        valueKo: '신규 특성 17종 전수 조사 → 패스 계열은 커맨더 1종',
+        valueEn: 'All 17 New Traits Audited → Only 1 Passing Trait',
+        icon: 'fas fa-magnifying-glass-chart'
+      },
+      {
+        valueKo: 'ST · CAM 상위 5개 특성 100% 돌파 · 마무리 계열',
+        valueEn: 'ST & CAM Top-5 Traits: 100% Dribbling / Finishing',
+        icon: 'fas fa-chart-column'
+      },
+      {
+        valueKo: '중원(CM · CDM)에서도 패스 특성 사용률 8~9%',
+        valueEn: 'Passing Trait Usage Only 8–9% Even in Midfield',
+        icon: 'fas fa-percent'
+      },
+      {
+        valueKo: '커맨더 공식 설명: 논스톱 · 플레어 패스 효과 제한',
+        valueEn: 'Official: Commander Limited on One-Touch / Flair',
+        icon: 'fas fa-puzzle-piece'
+      }
+    ],
+
+    pipelineFlow: [
+      { step: '01', titleKo: '실축 장면 관찰', titleEn: 'Real-Match Observation', descKo: '외질 · 사비 · 이니에스타 · 지루의 등진 원터치 힐 연계', descEn: 'Back-to-goal one-touch heel links' },
+      { step: '02', titleKo: '신규 특성 17종 전수 조사', titleEn: 'Audit of 17 Traits', descKo: '공식 공지 · 데이터센터 아이콘 목록으로 분류', descEn: 'Classified via notices & data center' },
+      { step: '03', titleKo: '사용률 데이터로 공백 확인', titleEn: 'Gap via Usage Data', descKo: '포지션별 8강 획득 특성 사용률 비교', descEn: 'Position-level trait usage' },
+      { step: '04', titleKo: '특성 설계', titleEn: 'Trait Design', descKo: '효과 · 4가지 발동 조건 · 밸런스 레버', descEn: 'Effect, 4 conditions, balance levers' },
+      { step: '05', titleKo: '아이콘 · 발표 자료 제출', titleEn: 'Icon & Deck Submitted', descKo: '공식 아이콘 문법 기반 아이콘 + 15쪽 PDF', descEn: 'Official-style icon + 15-page PDF' }
+    ],
+
+    sections: [
+      {
+        num: '01',
+        titleKo: '01. 제안 개요 (무엇을 제안했나)',
+        titleEn: '01. Proposal Overview',
+        contentKo: `### 블라인드 링커 (Blind Linker)
+골문을 등지고 공을 받는 상황에서, 등 뒤로 보내는 힐 · 힐훅 · 노룩 원터치 패스의 정확도를 높이고 전용 모션을 우선 발동시키는 신규 특성입니다. 티키타카, 그 시절 바르셀로나와 아스날의 연계 축구를 좋아하는 유저를 위한 '연계형' 특성입니다.
+
+### 발동 조건 (네 가지 모두 충족 시)
+- **등진 상태**: 몸 방향이 공격 방향의 반대쪽 ±60° 이내
+- **다이렉트**: 퍼스트 터치 없는 원터치 (선입력 인정)
+- **입력**: C+S(땅볼) 또는 C+W(스루) 플레어 패스
+- **방향**: 몸 기준 등 뒤 180° 반원 안으로 보내는 패스
+- 빠른 공 · 수비 근접 · 약발 사용 시 보정 감소, 밸런스 레버(발동 각도 180° → 150° → 120° 등)로 사후 조정
+
+### 활용 상황
+- **포스트 플레이 원투**: 센터백을 등진 ST가 침투하는 CAM에게 힐패스 → 레이저 슈터로 마무리
+- **측면 백힐 오버래핑**: 등진 윙어가 오버래핑 풀백에게 힐 스루 → 크로스 포쳐로 마무리
+- **중원 탈압박**: 압박 속 CM이 돌아서지 않고 힐 원터치 → 커맨더 로빙 스루로 전환
+
+### 아이콘
+기존 신규 특성 아이콘의 규칙(금색 육각 배지 + 단색 실루엣)을 지키고, 유일한 패스 특성인 커맨더의 '공 + 굵은 회전 화살표' 문법을 따라 뒤꿈치가 공을 치는 순간을 그렸습니다.`,
+        contentEn: `### Blind Linker
+A new trait that improves the accuracy of heel / heel-hook / no-look one-touch passes sent behind the player when receiving with the back to goal, and prioritizes dedicated flick animations — built for fans of tiki-taka style link-up play.
+
+### Activation (all four required)
+- **Back to goal**: body facing within ±60° of the opposite of the attack direction
+- **Direct**: one-touch, no first touch (pre-input allowed)
+- **Input**: C+S (ground) or C+W (through) flair pass
+- **Direction**: pass sent into the rear 180° half-circle
+- Reduced bonus for fast incoming balls, close pressure and weak foot; tunable via balance levers (activation angle 180° → 150° → 120°, etc.)
+
+### Use Cases
+- **Post-play one-two**: ST with back to the CB heels into a running CAM → finished with Laser Shooter
+- **Wide back-heel overlap**: winger heels a through ball to the overlapping full-back → Cross Poacher finish
+- **Escaping midfield pressure**: CM flicks first-time without turning → switch via Commander's lofted through ball
+
+### Icon
+Follows the existing new-trait icon rules (gold hexagon badge, single-color silhouette) and Commander's "ball + bold spin arrow" grammar, showing the heel striking the ball.`,
+        screenshots: [
+          {
+            src: traitImg1,
+            titleKo: '신규 특성 아이콘 — 힐 임팩트',
+            titleEn: 'Trait Icon — Heel Impact',
+            descKo: '뒤꿈치가 공을 치는 순간과 뒤로 감기는 회전 화살표로 "등 뒤로 보내는 힐 원터치"를 표현했습니다.',
+            descEn: 'The heel striking the ball with a backward spin arrow conveys a one-touch heel pass behind the player.'
+          },
+          {
+            src: traitImg2,
+            titleKo: '발동 조건 — 등 뒤 180° 발동 구역',
+            titleEn: 'Activation — Rear 180° Zone',
+            descKo: '네 가지 조건과 발동 구역 도식. 레이저 슈터처럼 "방향"을 발동 조건으로 삼아 구현 선례를 함께 제시했습니다.',
+            descEn: 'Four conditions with the activation-zone diagram; direction-based conditions already exist (Laser Shooter).'
+          },
+          {
+            src: traitImg3,
+            titleKo: '활용 상황 — 포스트 플레이 원투',
+            titleEn: 'Use Case — Post-Play One-Two',
+            descKo: '받는 패스 → 블라인드 링커 발동 → 다음 연결 순서로 장면별 전술 도식과 조작법을 정리했습니다.',
+            descEn: 'Each use case is laid out as receive → trait triggers → next action, with a tactical diagram and controls.'
+          }
+        ]
+      },
+      {
+        num: '02',
+        titleKo: '02. 데이터적 근거 (왜 이 특성인가)',
+        titleEn: '02. Data Rationale',
+        contentKo: `### 1. 신규 특성 17종 전수 조사 — 패스 계열은 1종뿐
+- 공식 업데이트 공지와 데이터센터 아이콘 목록으로 신규 특성 17종을 모두 분류했습니다: 돌파 · 침투 3 / 마무리 3 / 피지컬 2 / **패스 1(커맨더)** / 수비 5 / GK 3.
+- 커맨더는 롱패스 전환 특성이며, 공식 설명에서 **"논스톱 · 플레어 패스와 같은 상황에서는 효과가 제한"**된다고 명시되어 있습니다. 즉 짧은 원터치 · 플레어 연계는 설계상 비어 있는 영역입니다.
+
+### 2. 실제 사용률 — 공격은 개인기 · 마무리에 쏠려 있다
+> 출처: FC 온라인 공식 데이터센터 '포지션 별 인기 특성', 2026.11.20 10:00 기준, 1:1 공식경기 슈퍼챔피언스~월드클래스3, 8강 획득(신규) 특성
+- **ST**: 아크로바틱 피니셔 24.1% · 트릭스터 19.0% · 라인 브레이커 17.8% · 크로스 포쳐 17.5% · 스피드스터 9.8% → 상위 5개 모두 돌파 · 마무리 (합계 88.2%)
+- **CAM**: 트릭스터 28.2% · 스피드스터 18.0% · 라인 브레이커 18.0% · 크로스 포쳐 11.3% · 아크로바틱 피니셔 9.8% → 상위 5개 모두 돌파 · 마무리 (합계 85.3%)
+- **CM**: 레이저 슈터 26.1% · 2개의 심장 14.2% · 스피드스터 11.5% · 트릭스터 11.4% · 커맨더 8.8%
+- **CDM**: 레이저 슈터 34.7% · 파이터 18.6% · 2개의 심장 14.3% · 체이서 10.6% · 커맨더 8.0%
+- 해석: 연계의 중심인 2선과 중원까지 슈팅 · 돌파 특성이 1순위이고, 유일한 패스 특성은 5위(8~9%)에 머뭅니다. **연계형 플레이스타일을 뒷받침할 특성 선택지 자체가 부족하다**는 점이 사용 데이터로 확인됩니다.
+
+### 3. 실제 축구 근거
+- 신규 특성의 목적은 '실제 축구에서 간헐적으로 드러나는 플레이를 조건부로 재현'하는 것입니다. 외질 · 사비 · 이니에스타 · 지루 · 피르미누의 등진 원터치 힐 연계는 매 경기 나오는 장면이지만, 게임에서는 정확도 문제로 실전 선택지가 되지 못합니다.
+
+### 4. 구현 가능성 근거
+- 레이저 슈터가 이미 '공이 굴러오는 방향'을 발동 조건으로 사용합니다. 방향 기반 조건은 검증된 설계 방식입니다.
+- 모션은 기존 플레어 패스(힐 · 노룩) 모션을 재사용할 수 있고, EA FC 본가에도 원터치 백힐을 다루는 PlayStyle(Pinged Pass)이 존재합니다.`,
+        contentEn: `### 1. Audit of All 17 New Traits — Only One Passing Trait
+- Classified all 17 traits from official notices and the data center icon list: Dribbling 3 / Finishing 3 / Physical 2 / **Passing 1 (Commander)** / Defense 5 / GK 3.
+- Commander targets long transition passes, and the official notice states its effect is **limited for one-touch and flair passes** — short one-touch link-up is an unaddressed design space.
+
+### 2. Usage Data — Attack Skews to Dribbling & Finishing
+> Source: FC Online official data center, as of 2026.11.20 10:00, 1v1 ranked (Super Champions ~ World Class 3), tier-8 (new) traits
+- **ST**: Acrobatic Finisher 24.1%, Trickster 19.0%, Line Breaker 17.8%, Cross Poacher 17.5%, Speedster 9.8% → all top-5 dribbling/finishing (88.2%)
+- **CAM**: Trickster 28.2%, Speedster 18.0%, Line Breaker 18.0%, Cross Poacher 11.3%, Acrobatic Finisher 9.8% → all top-5 dribbling/finishing (85.3%)
+- **CM**: Laser Shooter 26.1%, Two Hearts 14.2%, Speedster 11.5%, Trickster 11.4%, Commander 8.8%
+- **CDM**: Laser Shooter 34.7%, Fighter 18.6%, Two Hearts 14.3%, Chaser 10.6%, Commander 8.0%
+- Takeaway: even in the link-up zones, shooting/dribbling traits rank first while the sole passing trait sits fifth (8–9%) — **there are too few options that support a link-up play style**.
+
+### 3. Real-Football Basis
+- New traits aim to reproduce occasional real-match plays under conditions. Back-to-goal one-touch heel links (Özil, Xavi, Iniesta, Giroud, Firmino) happen every match, yet in-game they are too inaccurate to use.
+
+### 4. Feasibility
+- Laser Shooter already uses ball direction as a trigger, so direction-based conditions are proven.
+- Existing flair (heel / no-look) animations can be reused; EA FC's Pinged Pass PlayStyle also covers first-time back-heels.`
+      },
+      {
+        num: '03',
+        titleKo: '03. 사업적 타당성 (왜 넣을 만한가)',
+        titleEn: '03. Business Rationale',
+        highlight: true,
+        contentKo: `### 1. 운영 방향과 일치 — 선택지 다변화
+- 개발진은 저사용 신규 특성을 상향하며 "선택지로서의 의미가 충분히 있어야 된다"는 방향을 밝혔습니다. 돌파 · 마무리에 쏠린 공격 메타에 '연계'라는 새 루트를 더하는 것은 이 방향과 정확히 맞닿습니다.
+
+### 2. 카드 · 이벤트 가치 (BM 관점)
+- 신규 특성은 신규 클래스의 고유 특성, '신규특성 100% 선수팩' 같은 이벤트 보상의 핵심 셀링 포인트로 쓰이고 있습니다.
+- 블라인드 링커는 외질 · 사비 · 이니에스타 · 지루형 플레이메이커 카드와 짧은 패스 · 시야 능력치에 새로운 수요를 만들어, 기존에 덜 쓰이던 선수군의 가치를 재조명할 수 있습니다.
+
+### 3. 낮은 개발 · 밸런스 리스크
+- **겹침 없음**: 커맨더가 효과를 제한한 논스톱 · 플레어 영역만 담당해 기존 특성을 잠식하지 않고, 오히려 '짧게 연계 → 길게 전환'으로 커맨더와 시너지를 냅니다.
+- **좁은 조건**: 네 가지 조건을 모두 만족해야 해 메타 붕괴 위험이 낮고, 발동 각도 · 보정치 · 압박 거리 · 공 속도 · 발동 구역 5단계 레버로 출시 후 조정이 가능합니다.
+- **재사용**: 기존 플레어 패스 모션과 방향 조건 설계를 재사용해 신규 리소스 부담이 작습니다.
+
+### 4. 보는 재미 (e스포츠 · 콘텐츠)
+- 힐 · 노룩 원터치 골은 FSL 하이라이트와 스트리밍 클립으로 소비되기 좋은 장면이라, 경쟁전 플레이를 넘어 콘텐츠 화제성까지 기대할 수 있습니다.`,
+        contentEn: `### 1. Aligned with the Live-Ops Direction
+- Developers have buffed under-used new traits, stating each trait must be a meaningful choice. Adding a 'link-up' route to a dribbling/finishing-heavy meta fits that direction.
+
+### 2. Card & Event Value (Monetization)
+- New traits are a core selling point of new classes and event rewards such as guaranteed new-trait player packs.
+- Blind Linker creates fresh demand for playmaker cards (Özil, Xavi, Iniesta, Giroud types) and for short passing / vision stats.
+
+### 3. Low Development & Balance Risk
+- **No overlap**: it covers only the one-touch/flair space Commander excludes, and pairs with it ("short link → long switch").
+- **Narrow trigger**: all four conditions are required, and five post-launch levers (angle, bonus, pressure distance, ball speed, zone) allow tuning.
+- **Reuse**: existing flair animations and direction-based trigger design keep new asset cost low.
+
+### 4. Spectacle (Esports & Content)
+- Heel / no-look one-touch goals are highly clippable moments for FSL highlights and streams.`
+      },
+      {
+        num: '04',
+        titleKo: '04. 배운 점',
+        titleEn: '04. Lessons',
+        contentKo: `### 1. 만들기 전에 있는 것부터 전수 조사
+- 처음에는 '연계 특성이 없다'고 가정했지만, 17종을 모두 확인하며 커맨더의 존재와 공식 제한 문구를 찾았습니다. 주장의 범위를 '짧은 원터치 연계'로 좁히자 오히려 차별점이 더 선명해졌습니다.
+
+### 2. 아이디어는 데이터로, 디자인은 기존 문법으로
+- 사용률 데이터가 '왜 지금 필요한가'를 설득했고, 아이콘은 새로운 은유보다 공식 패스 아이콘의 문법(공 + 궤적)을 따를 때 '원래 게임에 있던 특성'처럼 보였습니다.`,
+        contentEn: `### 1. Audit What Exists Before Designing
+- I first assumed no link-up trait existed; auditing all 17 surfaced Commander and its official limitation. Narrowing the claim to short one-touch link-up made the differentiation sharper.
+
+### 2. Data for the Idea, Existing Grammar for the Design
+- Usage data explained why the trait is needed now, and the icon looked native once it followed the official passing-icon grammar (ball + trajectory).`
       }
     ]
   }

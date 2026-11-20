@@ -83,5 +83,22 @@ export const MILESTONES_DATA = [
     summaryEn: 'Live Boost odds prediction & official match record diagnosis',
     bodyKo: '데이터 마이닝으로 찾은 예측 모델로 FC온라인 챔스 카드의 라이브 부스트를 확률로 예측하고, 넥슨 Open API 공식경기 기록으로 내 플레이를 랭커와 견줘 진단합니다. (학습에 쓰지 않은 시즌 적중률 45.2% → 56.0%)',
     bodyEn: 'Predicts FC Online UCL Live Boosts as probabilities with a model found through data mining, and diagnoses official match records against top rankers (held-out season accuracy 45.2% → 56.0%).'
+  },
+  {
+    id: 'm6',
+    projectId: 'log-entry-fco-trait',
+    periodKo: '2026.11.20',
+    periodEn: '2026.11.20',
+    titleKo: 'FC 온라인 신규 특성 제안 — 블라인드 링커',
+    titleEn: 'FC Online New Trait Proposal — Blind Linker',
+    shortTitleKo: '신규 특성 제안',
+    shortTitleEn: 'New Trait Proposal',
+    statusKo: '완료',
+    statusEn: 'Completed',
+    chipType: 'success',
+    summaryKo: '등진 힐 · 노룩 원터치 연계 특성 기획 및 공모전 제출',
+    summaryEn: 'Designed & submitted a back-to-goal heel/no-look one-touch trait',
+    bodyKo: '신규 특성 17종 전수 조사와 공식 데이터센터 포지션별 사용률(ST · CAM 상위 5개 100% 돌파 · 마무리, 중원 패스 특성 8~9%)을 근거로, 비어 있는 짧은 원터치 연계 영역을 채우는 신규 특성을 설계하고 아이콘 · 발표 자료와 함께 제출했습니다.',
+    bodyEn: 'Audited all 17 new traits and official position-level usage data (ST/CAM top-5 all dribbling/finishing; passing trait 8–9% in midfield), then designed and submitted a trait for the empty short one-touch link-up space, with an icon and deck.'
   }
 ];
