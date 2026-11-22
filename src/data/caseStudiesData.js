@@ -1,8 +1,11 @@
 import f1Img1 from '../assets/images/f1/01_session_configuration.png';
-import f1Img2 from '../assets/images/f1/02_lap_history_and_setup.png';
-import f1Img3 from '../assets/images/f1/03_corner_analysis_matrix.png';
-import f1Img4 from '../assets/images/f1/04_circuit_map_and_sectors.png';
 import f1Img5 from '../assets/images/f1/05_tv_overlay_hud.webp';
+import f1Img6 from '../assets/images/f1/06_team_radio_setup_board.png';
+import f1Img7 from '../assets/images/f1/07_corner_analysis_silverstone.png';
+import f1Img8 from '../assets/images/f1/08_circuit_map_sectors.png';
+import f1Img9 from '../assets/images/f1/09_practice_setup_analysis.png';
+import f1DemoPoster from '../assets/images/f1/demo_poster.webp';
+import f1DemoVideo from '../assets/videos/f1_demo_silverstone.mp4';
 import fcoImg1 from '../assets/images/fco/01_boost_stage.png';
 import fcoImg2 from '../assets/images/fco/02_boost_pitch.png';
 import fcoImg3 from '../assets/images/fco/03_boost_team.png';
@@ -684,7 +687,8 @@ With one setting, the F1 game sends speed, gear, pedals, position, and tyre data
 - 프랙티스 · 퀄리파잉 · 레이스를 스스로 알아보고, 상황에 맞춰 말합니다.
 - **코너 제동**: 2랩부터, 코너를 빠져나오면 이번 세션 가장 빠른 랩과 제동 지점을 비교해 "제동이 13m 빨랐어"처럼 알려 줍니다.
 - **페이스 · 앞차 간격 · 피트**: 랩 타임이 좋아지거나 떨어지면, 앞차와의 간격, 타이어가 많이 닳아 피트인할 때를 알려 줍니다.
-- **셋업 조언**: 프랙티스에서 타이어 온도와 마모를 보고 "프런트 윙 36 → 38"처럼 바꿀 값을 제안합니다.
+- **프랙티스 셋업 분석**: 내 베스트 랩을 프랙티스 기준 차(다른 차 최고 기록)와 비교해 최고 속도와 저속 · 중속 · 고속 코너별 속도 차이를 보여 주고, 타이어 공기압 · 윙 · 밸런스를 항목마다 "유지 / 변경 추천"으로 판정해 "FL 27 → 27.4 psi"처럼 바꿀 값을 제안합니다.
+- **팀 라디오 패널**: 방금 나간 무전을 "7랩 제동 지점 vs 기준 랩"처럼 근거 숫자와 함께 자막으로 보여 줍니다.
 - 무전끼리는 최소 6초 간격을 두고, 세이프티카 · 피트인 랩은 비교에서 빼서 엉뚱한 무전이 나오지 않게 했습니다.
 
 ### 3. 엔지니어에게 물어보기
@@ -702,7 +706,8 @@ With one setting, the F1 game sends speed, gear, pedals, position, and tyre data
 - Detects practice / qualifying / race and talks accordingly.
 - **Corner braking**: from lap 2, after each corner it compares the braking point with the session's fastest lap ("braking was 13 m early").
 - **Pace, gap, pit calls**: pace gains or drops, the gap ahead, and when worn tyres mean it's time to pit.
-- **Setup advice**: in practice, tyre temperatures and wear lead to suggestions like "front wing 36 → 38".
+- **Practice setup analysis**: compares my best lap with the practice reference car (the best rival time) for top speed and slow / medium / fast corner speeds, rates tyre pressure, wing, and balance as "keep" or "change", and suggests values such as "FL 27 → 27.4 psi".
+- **Team radio panel**: shows each call as a caption with the numbers behind it (e.g. lap 7 braking point vs the reference lap).
 - At least 6 seconds between calls; safety-car and pit laps are excluded so no false calls go out.
 
 ### 3. Ask the Engineer
@@ -956,9 +961,21 @@ Teaching speech from scratch needs thousands of hours of audio. Instead, I took 
         titleEn: '05. Results & UI',
         highlight: true,
         contentKo: `### Demo 완성 — 실제 주행에서 엔지니어가 말을 겁니다
+아래 데모 영상(약 1분 40초)은 실버스톤 프랙티스 1에서 실제로 주행하는 화면입니다. 게임 화면 위에서 TV 중계 오버레이와 헤일로 HUD가 실시간으로 움직이고, 엔지니어 무전이 함께 나옵니다.
+
 게임을 켜고 세션에 들어가면 대시보드가 데이터를 받기 시작하고, 2랩부터 코너 제동 무전이, 레이스에서는 페이스 · 앞차 간격 · 피트 무전이 나옵니다. 엔지니어에게 질문하면 지금 데이터로 계산한 답을 목소리로 들려주고, 게임 화면 위에는 TV 중계 오버레이가 함께 뜹니다. 녹화한 주행은 리플레이로 다시 볼 수 있습니다.`,
         contentEn: `### Demo Complete — The Engineer Talks During a Real Run
+The demo video below (about 1 min 40 s) is a real practice run at Silverstone, with the TV overlay and halo HUD updating live over the game and the engineer radio playing along.
+
 Enter a session and the dashboard starts receiving data; corner braking calls begin on lap 2, and in races you also get pace, gap, and pit calls. Ask the engineer and it answers by voice from live data, while the TV overlay runs on top of the game. Recorded runs can be replayed.`,
+        video: {
+          src: f1DemoVideo,
+          poster: f1DemoPoster,
+          titleKo: '데모 영상 — 실버스톤 프랙티스 1 실제 주행 (약 1분 40초)',
+          titleEn: 'Demo Video — Live Practice Run at Silverstone (about 1 min 40 s)',
+          descKo: '게임 화면 위에서 순위표 · 섹터 카드 · 랩 델타 · 헤일로 HUD(속도 · 기어 · 코너 번호)가 텔레메트리에 맞춰 실시간으로 움직이고, 엔지니어 무전이 함께 나옵니다. 소리를 켜고 보세요.',
+          descEn: 'The timing tower, sector cards, lap delta, and halo HUD (speed, gear, turn number) update live from telemetry over the game, with the engineer radio playing. Turn the sound on.'
+        },
         screenshots: [
           {
             src: f1Img5,
@@ -975,25 +992,32 @@ Enter a session and the dashboard starts receiving data; corner braking calls be
             descEn: 'Start screen to choose live game (UDP 20777) or a recorded replay, language, units, engineer voice, and radio (TTS) / TV overlay toggles.'
           },
           {
-            src: f1Img2,
-            titleKo: '3. 랩 기록 · 코너별 상세 카드 · 차량 셋업 (Lap Archive & Setup)',
-            titleEn: '3. Lap Archive, Corner Cards & Setup',
-            descKo: '랩별 기록과 베스트 랩 대비 차이, 4개 타이어 마모율, 차량 셋업 값, 고른 코너의 진입 · 정점 · 탈출 속도와 제동 · 가속 지점을 보여 줍니다.',
-            descEn: 'Lap history with deltas, tyre wear for all four tyres, car setup, and entry / apex / exit speed with braking and throttle points for the selected corner.'
+            src: f1Img6,
+            titleKo: '3. 랩 기록 · 차량 셋업 · 팀 라디오 (Lap Archive, Setup & Team Radio)',
+            titleEn: '3. Lap Archive, Car Setup & Team Radio',
+            descKo: '랩별 기록과 베스트 랩 대비 차이, 고른 랩의 코너별 카드(진입 · 정점 · 탈출), 차량 셋업 값과 4개 타이어 마모율을 보여 줍니다. 오른쪽 아래 팀 라디오 패널에는 방금 나간 무전("9m 늦게 제동")과 근거 숫자, 엔지니어에게 질문하는 버튼이 있습니다.',
+            descEn: 'Lap history with deltas, per-corner cards (entry / apex / exit) for the chosen lap, car setup, and tyre wear. The team radio panel shows the latest call ("braking 9 m late") with its numbers and the ask-the-engineer buttons.'
           },
           {
-            src: f1Img3,
-            titleKo: '4. 코너별 주행 분석 표 (Turn-by-Turn Matrix)',
+            src: f1Img7,
+            titleKo: '4. 코너별 정밀 분석 표 (Turn-by-Turn Matrix)',
             titleEn: '4. Turn-by-Turn Matrix',
-            descKo: '모든 코너의 진입 · 정점 · 탈출 속도, 기어, 제동 지점, 가속 시작 지점, 최대 횡G를 한 표로 모아 앞차 · 선두와 비교합니다.',
-            descEn: 'Every corner\'s entry / apex / exit speed, gear, braking point, throttle-on point, and peak lateral G in one table, compared with the car ahead and the leader.'
+            descKo: '실버스톤의 모든 코너를 실제 이름(Abbey, Farm, Village …)과 함께 진입 · 정점 · 탈출 속도, 기어, 스로틀 · 브레이크, 제동 지점, 최대 횡G, 앞차 대비 시간 차이로 정리하고, 랩을 바꿔 가며 비교합니다.',
+            descEn: 'Every Silverstone corner by its real name (Abbey, Farm, Village …) with entry / apex / exit speed, gear, throttle / brake, braking point, peak lateral G, and time vs the car ahead, switchable by lap.'
           },
           {
-            src: f1Img4,
-            titleKo: '5. 서킷 지도 · 섹터 분석 (Circuit Map & Sectors)',
-            titleEn: '5. Circuit Map & Sectors',
-            descKo: '실제 주행 라인 위에 코너 번호(T1~TN)를 표시하고, 코너를 누르면 그 코너 기록이 열립니다. 섹터 1 · 2 · 3 구간 기록도 비교합니다.',
-            descEn: 'Turn numbers (T1–TN) on the racing line; click a corner to open its data, and compare sector 1 / 2 / 3 times.'
+            src: f1Img8,
+            titleKo: '5. 서킷 맵 · 섹터 분석 (Circuit Map & Sectors)',
+            titleEn: '5. Circuit Map & Sector Analysis',
+            descKo: '주행 라인 위에 코너 번호(T1~T18)를 찍고, 코너를 누르면 그 코너의 진입 · 정점 · 탈출 기록이 열립니다. 오른쪽에는 랩별 공식 섹터 기록과 경쟁 차 대비 섹터별 시간 차이를 보여 줍니다.',
+            descEn: 'Turn numbers (T1–T18) on the racing line; click a corner for its entry / apex / exit data. On the right, official sector times per lap and sector deltas against a rival.'
+          },
+          {
+            src: f1Img9,
+            titleKo: '6. 프랙티스 셋업 분석 (Practice Setup Analysis)',
+            titleEn: '6. Practice Setup Analysis',
+            descKo: '내 베스트 랩을 프랙티스 기준 차와 비교해 최고 속도와 저 · 중 · 고속 코너 속도 차이를 보여 주고, 타이어 공기압 · 윙 · 밸런스를 항목별로 "유지 / 변경 추천"으로 판정해 바꿀 값을 제안합니다.',
+            descEn: 'Compares my best lap with the practice reference car (top speed and slow / medium / fast corner speeds), rates tyre pressure, wing, and balance as keep or change, and suggests new values.'
           }
         ]
       },

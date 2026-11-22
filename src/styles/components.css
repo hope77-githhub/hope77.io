@@ -4090,6 +4090,23 @@
 }
 
 /* Screenshots Gallery Grid */
+.cs-video-card {
+    margin: 24px 0 0;
+    background: #ffffff;
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-md);
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.cs-video {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    background: #000000;
+}
+
 .cs-screenshots-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

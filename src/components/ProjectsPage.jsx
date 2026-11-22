@@ -311,6 +311,28 @@ export default function ProjectsPage({ selectedProjectId, onSelectProject, onNav
                       </div>
                     )}
 
+                    {/* Demo video (full width, above the screenshot gallery) */}
+                    {section.video && (
+                      <figure className="cs-video-card">
+                        <video
+                          className="cs-video"
+                          src={section.video.src}
+                          poster={section.video.poster}
+                          controls
+                          playsInline
+                          preload="metadata"
+                        />
+                        <figcaption className="cs-screenshot-caption">
+                          <strong className="cs-screenshot-title">
+                            {lang === 'en' ? section.video.titleEn : section.video.titleKo}
+                          </strong>
+                          <p className="cs-screenshot-desc">
+                            {lang === 'en' ? section.video.descEn : section.video.descKo}
+                          </p>
+                        </figcaption>
+                      </figure>
+                    )}
+
                     {/* Screenshots Gallery (For F1 project results) */}
                     {section.screenshots && (
                       <div className="cs-screenshots-grid">
