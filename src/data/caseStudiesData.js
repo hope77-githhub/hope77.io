@@ -593,7 +593,7 @@ A single match holds per-participant \`matchDetail\`, \`shoot\`, \`shootDetail[]
     ]
   },
   // =========================================================================
-  // 3. Real-Time AI Race Engineer (실시간 텔레메트리 & AI 음성 엔지니어) — Demo 완성
+  // 3. F125 Tool (실시간 텔레메트리 & AI 음성 엔지니어) — Demo 완성
   // =========================================================================
   {
     id: 'log-entry-f1',
@@ -601,10 +601,10 @@ A single match holds per-participant \`matchDetail\`, \`shoot\`, \`shootDetail[]
     badgeTextKo: 'Demo 완성',
     badgeTextEn: 'Demo Complete',
     badgeType: 'success',
-    titleKo: 'Real-Time AI Race Engineer — 게임 속 F1 차에 붙는 나만의 레이스 엔지니어',
-    titleEn: 'Real-Time AI Race Engineer — Your Own Race Engineer for the F1 Game',
-    tabLabelKo: 'F1 텔레메트리 AI',
-    tabLabelEn: 'F1 Telemetry AI',
+    titleKo: 'F125 Tool — 게임 속 F1 차에 붙는 나만의 AI 레이스 엔지니어',
+    titleEn: 'F125 Tool — Your Own AI Race Engineer for the F1 Game',
+    tabLabelKo: 'F125 Tool',
+    tabLabelEn: 'F125 Tool',
     oneLinerKo: 'F1 게임이 1초에 60번 보내 주는 차량 데이터를 실시간으로 받아 분석하고, 직접 파인튜닝한 레이스 엔지니어 목소리로 무전을 해 주는 심레이싱 코칭 프로그램',
     oneLinerEn: 'A sim-racing coach that reads the 60-per-second car data sent by the F1 game and talks to you over the radio in a race-engineer voice I fine-tuned myself.',
     roleKo: '개인 프로젝트 · 전체 기획, 데이터 수신 · 분석 서버, 무전 규칙, 음성 파인튜닝, 대시보드 · 오버레이',
@@ -979,10 +979,10 @@ Enter a session and the dashboard starts receiving data; corner braking calls be
         screenshots: [
           {
             src: f1Img5,
-            titleKo: '1. TV 중계 오버레이 · 헤일로 HUD (실제 주행 화면)',
-            titleEn: '1. TV Broadcast Overlay & Halo HUD (Live Run)',
-            descKo: '게임 화면 위에 실제 중계처럼 순위표, 섹터 비교 카드, 패스티스트 랩 배너, 랩 카드(베스트 · 이전 랩 · 델타)를 그리고, 화면 가운데에는 속도 · 기어 · RPM · 브레이크/스로틀 · 배터리 · 오버테이크 · 액티브 에어로 · 코너 번호(T10)를 보여 주는 헤일로 HUD를 띄웁니다. 모두 게임이 보내는 텔레메트리로 움직입니다.',
-            descEn: 'Broadcast-style graphics drawn over the game — timing tower, sector comparison cards, fastest-lap banner, and lap card (best / previous / delta) — plus a centred halo HUD showing speed, gear, RPM, brake / throttle, battery, overtake, active aero, and the turn number (T10), all driven by the game’s telemetry.'
+            titleKo: '1. TV 중계 오버레이 · 헤일로 HUD (오버레이 그래픽)',
+            titleEn: '1. TV Broadcast Overlay & Halo HUD (Overlay Graphics)',
+            descKo: '게임 화면 위에 투명하게 겹쳐 그리는 중계 그래픽만 따로 본 모습입니다. 왼쪽 순위표(랩 수 · 간격 · 타이어), 패스티스트 랩 배너, 오른쪽 섹터 카드, 가운데 헤일로 HUD(속도 · 기어 · RPM · 브레이크/스로틀 · 배터리 · 오버테이크 · 액티브 에어로 · 코너 번호 T15)가 모두 게임이 보내는 텔레메트리로 움직입니다.',
+            descEn: 'The broadcast graphics on their own, as drawn transparently over the game: timing tower (lap count, intervals, tyres), fastest-lap banner, sector card, and a centred halo HUD showing speed, gear, RPM, brake / throttle, battery, overtake, active aero, and the turn number (T15), all driven by the game’s telemetry.'
           },
           {
             src: f1Img1,

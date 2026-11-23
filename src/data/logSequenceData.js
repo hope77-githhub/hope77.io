@@ -34,7 +34,7 @@ export const LOG_SEQUENCE = [
   {
     level: 'INGEST',
     tag: 'telemetry:f1-udp',
-    msg: 'Binding UDP socket [<span class="accent">PORT 20777</span>] for Race Engineer real-time parser (tire wear, AI voice)... <span class="success-text">STREAM READY</span>.',
+    msg: 'Binding UDP socket [<span class="accent">PORT 20777</span>] for F125 Tool real-time parser (tire wear, AI voice)... <span class="success-text">STREAM READY</span>.',
     duration: 300,
     progress: 72,
     events: 10830
@@ -42,7 +42,7 @@ export const LOG_SEQUENCE = [
   {
     level: 'PIPELINE',
     tag: 'sync:arch',
-    msg: 'Ingesting Core Tooling &amp; Pipelines: <span class="highlight">[LoL SNA, Automation Test Tool, Race Engineer, NEIS Counter]</span>.',
+    msg: 'Ingesting Core Tooling &amp; Pipelines: <span class="highlight">[LoL SNA, Automation Test Tool, F125 Tool, NEIS Counter]</span>.',
     duration: 300,
     progress: 84,
     events: 12450

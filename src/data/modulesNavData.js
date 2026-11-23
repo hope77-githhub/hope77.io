@@ -21,7 +21,7 @@ export const MODULES_NAV_DATA = [
   },
   {
     id: '04',
-    name: 'AI Race Engineer',
+    name: 'F125 Tool',
     target: '#log-entry-f1',
     chip: { text: 'ACTIVE', type: 'info' },
     subTitleKo: '실시간 텔레메트리 & 음성 AI 솔루션',

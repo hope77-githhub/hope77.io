@@ -144,7 +144,7 @@ export const PROJECT_LOGS_DATA = [
   },
 
   // =========================================================================
-  // 3. [2026.07 - 2026.11] Real-Time AI Race Engineer Project
+  // 3. [2026.07 - 2026.11] F125 Tool
   // =========================================================================
   {
     id: 'log-entry-f1',
@@ -154,8 +154,8 @@ export const PROJECT_LOGS_DATA = [
     tagPrimary: 'TELEMETRY',
     tagSecondary: 'UDP_SOCKET_20777',
     statusChip: { textKo: 'Demo 완성', textEn: 'Demo Complete', type: 'success' },
-    titleKo: 'Real-Time AI Race Engineer Project — 실시간 텔레메트리 & 음성 AI 솔루션',
-    titleEn: 'Real-Time AI Race Engineer — Live Telemetry & AI Voice Feedback Solution',
+    titleKo: 'F125 Tool — 실시간 텔레메트리 & 음성 AI 솔루션',
+    titleEn: 'F125 Tool — Live Telemetry & AI Voice Feedback Solution',
     summaryKo: 'F1 실시간 UDP 텔레메트리 주행 데이터를 초당 수십 회 파싱하여 차량 속도, 타이어 마모도, 델타 타임을 서킷 맵 위에 렌더링하고, 음성 AI를 결합하여 최적의 피트 스탑 타이밍과 실시간 레이스 전략 조언을 제공하는 풀스택 솔루션입니다.',
     summaryEn: 'A high-frequency UDP telemetry processing system that maps live vehicle dynamics, tire degradation, and delta times onto circuit tracks, integrating real-time AI voice feedback for strategic pit stop decisions.',
     jsonPayload: {
@@ -194,7 +194,7 @@ export const PROJECT_LOGS_DATA = [
         descEn: 'Renders dynamic racing lines and sector timing telemetry across true-to-scale official circuit coordinates.'
       },
       {
-        titleKo: 'AI Race Engineer 음성 에이전트 구축 (진행 중)',
+        titleKo: 'F125 Tool 음성 엔지니어 구축',
         titleEn: 'AI Voice Tactical Feedback Agent',
         descKo: '드라이버의 랩 페이스, 타이어 상태, 연료 소모율을 분석하여 최적 피트 스탑 타이밍과 주행 조언을 실시간 AI 음성으로 출력하여 현실감 넘치는 피드백을 제공합니다.',
         descEn: 'Developing an AI voice coach that analyzes live pace and tire wear to deliver real-time auditory pit stop instructions.'
