@@ -12,6 +12,7 @@ permissions:
   contents: write
   pages: write
   id-token: write
+  actions: read   # lets deploy-pages read the uploaded "github-pages" artifact metadata
 
 # Allow one concurrent deployment
 concurrency:
