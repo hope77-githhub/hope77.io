@@ -128,19 +128,9 @@ export const HISTORY_DATA = {
       orgKo: 'EA 코리아 (Electronic Arts Korea)',
       orgEn: 'EA Korea (Electronic Arts Korea)',
       period: '2025.12 – 현재',
-      roleKo: '게임 데이터 품질 검증 · 테스트 자동화',
-      roleEn: 'Game Data Quality Verification & Test Automation',
-      type: 'Career / Data Quality',
-      dutiesKo: [
-        '게임 플레이 로그 데이터가 명세대로, 빠짐없이, 서로 모순 없이 기록되는지 검증',
-        '반복 검증을 자동화하는 데이터 품질 관리 툴을 직접 기획 · 개발해 실무에 적용 (129개 항목 확인 120~180분 → 20~30분)',
-        '로그 · 녹화 영상 동기화와 기존 이슈 대조로 문제 원인 확인과 중복 보고를 줄임'
-      ],
-      dutiesEn: [
-        'Verify that gameplay log data is recorded to spec, completely, and without internal contradictions',
-        'Planned and built a data quality tool that automates repetitive checks, now used in daily work (129 checks: 120–180 min → 20–30 min)',
-        'Sync logs with gameplay recordings and match findings against known issues to speed up root-cause checks and avoid duplicate reports'
-      ],
+      roleKo: '테스트 자동화 · 데이터 검증 (Test Automation)',
+      roleEn: 'Test Automation & Data Verification',
+      type: 'Career / Test Automation',
       relatedProjectId: 'entry-data-quality-guard',
     }
   ],

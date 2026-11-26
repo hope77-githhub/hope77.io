@@ -311,183 +311,183 @@ Gained methodological mastery in combining quantitative telemetry/SNA metrics (p
     ]
   },
   // =========================================================================
-  // 2. Game Data Quality Guard (게임 플레이 로그 데이터 품질 관리 툴)
-  //    실무 데이터 · 화면은 비공개 → 수치는 실무 적용 결과(사내 명칭 제외),
-  //    기술 상세 예시는 같은 원리를 넥슨 Open API의 FC Online 매치 상세 데이터에 적용해 서술
+  // 2. Game Data Quality Guard (게임 경기 데이터 품질 관리 툴)
+  //    실무 데이터 · 상황 · 수치는 비공개 → 페이지 전체를 넥슨 Open API의
+  //    FC Online 매치 상세 데이터에 빗대어 서술 (실무 수치 · 사내 맥락 사용 금지)
   // =========================================================================
   {
     id: 'entry-data-quality-guard',
     aliases: ['entry-automation-test'],
     category: 'Data Quality & Validation Automation',
-    badgeTextKo: '실무 적용 중',
-    badgeTextEn: 'In Production Use',
+    badgeTextKo: '진행 중 (Active)',
+    badgeTextEn: 'Active Project',
     badgeType: 'info',
-    titleKo: '게임 데이터 품질 가드 — 플레이 로그가 정확하게 쌓이도록 지키는 자동 검증 툴',
-    titleEn: 'Game Data Quality Guard — Keeping Gameplay Logs Accurate, Automatically',
+    titleKo: '게임 데이터 품질 가드 — 경기 기록 데이터가 정확하게 쌓이도록 지키는 자동 검증 툴',
+    titleEn: 'Game Data Quality Guard — Keeping Match Data Accurate, Automatically',
     tabLabelKo: '데이터 품질 가드',
     tabLabelEn: 'Data Quality Guard',
-    oneLinerKo: '게임이 플레이 중에 남기는 로그 데이터는 출시 후 유저 분석 · 밸런스 조정 · 기능 개선의 근거가 됩니다. 이 데이터가 빠짐없이, 형식에 맞게, 서로 모순 없이 기록되는지를 사람 대신 자동으로 확인해 확인 시간을 약 80% 줄인 데이터 품질 관리 툴입니다.',
-    oneLinerEn: 'Gameplay log data is what post-launch player analytics, balancing, and feature decisions are built on. This data quality tool automatically checks that the data is complete, well-formed, and internally consistent, cutting checking time by about 80%.',
-    roleKo: '기획 · 설계 · 풀스택 개발 (개인 주도로 시작 → 실무 데이터 검증에 적용)',
-    roleEn: 'Planning, design & full-stack development (started on my own initiative, now used in day-to-day data verification)',
-    noticeKo: '회사 내부 데이터와 화면은 공개할 수 없어, 수치는 실무 적용 결과를 사내 명칭 없이 적었고 기술 상세의 예시는 같은 원리를 넥슨 Open API에 공개된 FC Online 매치 데이터에 적용해 설명합니다.',
-    noticeEn: 'Internal data and screens are confidential. Figures come from real use with internal names removed, and the deep-dive examples apply the same approach to public FC Online match data from the Nexon Open API.',
+    oneLinerKo: 'FC온라인 경기 한 판이 남기는 수백 개의 기록처럼, 게임 데이터가 빠짐없이 · 형식에 맞게 · 서로 모순 없이 쌓였는지를 사람 대신 자동으로 확인하는 데이터 품질 관리 툴입니다.',
+    oneLinerEn: 'A data quality tool that automatically checks, in place of a person, that game data such as the hundreds of values an FC Online match leaves behind is complete, well-formed, and free of contradictions.',
+    roleKo: '개인 프로젝트 · 설계 및 풀스택 개발',
+    roleEn: 'Personal Project · Design & Full-Stack Development',
+    noticeKo: '실무 데이터와 화면은 공개할 수 없어, 이 페이지의 모든 설명은 같은 원리를 넥슨 Open API에 공개된 FC Online 매치 상세 데이터에 빗대어 설명합니다.',
+    noticeEn: 'Real data and screens are confidential, so everything on this page explains the same approach using the public FC Online match detail data from the Nexon Open API.',
     period: '2025.12 – 현재 (Active)',
     periodEn: '2025.12 – Present (Active)',
     techStack: ['Python', 'FastAPI', 'React', 'YAML Data Schema', 'pandas', 'FFmpeg & OpenCV', 'RapidFuzz', 'cx_Freeze'],
 
     story: {
       problem: {
-        headlineKo: '게임이 남기는 플레이 로그 데이터가 정확한지, 사람이 하나하나 눈으로 확인하고 있었습니다.',
-        headlineEn: 'People were checking, one value at a time, whether the gameplay log data recorded by the game was correct.',
+        headlineKo: '경기 한 판이 남기는 수백 개의 기록이 정확한지, 사람이 눈으로 하나하나 확인하기에는 한계가 있습니다.',
+        headlineEn: 'A single match leaves hundreds of recorded values, and checking by eye that every one is correct does not scale.',
         pointsKo: [
-          '게임은 플레이 중 패스 · 슈팅 · 태클 같은 행동이 일어날 때마다 **로그 데이터**를 남깁니다. 이 데이터는 출시 후 유저 행동 분석, 밸런스 조정, 기능 개선의 근거가 되기 때문에, 값 하나만 빠지거나 틀려도 그 위에서 내린 판단이 모두 어긋납니다.',
-          '하지만 확인은 사람 손으로 이뤄졌습니다. 로그를 직접 내려받아 값을 하나씩 열어 대조하다 보니, **7개 기능 · 129개 확인 항목을 한 번 점검하는 데 숙련자도 120~180분**이 걸렸습니다.',
-          '새로 만든 기능은 참고할 기록이 없어서, **누가 확인하느냐에 따라 판정 기준과 품질이 달라졌습니다.**'
+          'FC온라인 경기 한 판이 끝나면 매치 데이터에 두 참가자의 결과 · 점유율 · 슈팅 · 패스 · 수비 기록, 슈팅마다의 시간 · 좌표 · 결과, 선수별 개인 기록까지 **수백 개의 값**이 남습니다. 이 데이터는 전적 검색, 통계, 밸런스 분석의 근거가 되기 때문에 **값 하나만 빠지거나 틀려도 그 위의 분석이 모두 어긋납니다.**',
+          '사람이 확인하려면 경기마다 데이터를 열어 "총 골 수 = 골로 끝난 슈팅 수", "두 팀 점유율 합 = 100%" 같은 관계를 **손으로 계산해 대조**해야 하고, 경기 수만큼 시간이 늘어납니다.',
+          '값 하나하나는 형식이 맞아도 **서로 어긋나는 경우**는 눈으로 찾기 어렵고, 확인하는 사람마다 기준이 달라 결과가 흔들립니다.'
         ],
         pointsEn: [
-          'Every pass, shot, and tackle during play leaves a line of **log data**. After launch this data drives player analytics, balancing, and feature decisions, so a single missing or wrong value skews every decision built on it.',
-          'Checking was manual: download the logs, open each value, compare by hand. **One pass over 7 features and 129 check items took even an experienced tester 120–180 minutes.**',
-          'New features had no history to compare against, so **results depended on who did the checking.**'
+          'When an FC Online match ends, its match data holds **hundreds of values**: each participant\'s result, possession, shots, passes, and defending, plus time, position, and outcome for every shot and per-player stats. Match history, statistics, and balance analysis all build on this data, so **one missing or wrong value skews everything built on top of it.**',
+          'Checking by hand means opening each match and **calculating relations yourself**, such as "total goals = shots that ended in a goal" or "both teams\' possession adds up to 100%", and the time grows with every match.',
+          'Values can each look well-formed yet **contradict each other**, which is hard to spot by eye, and results vary with whoever is checking.'
         ]
       },
       approach: {
-        headlineKo: '"무엇이 정상인가"를 규칙으로 한 번 정해 두고, 반복 확인은 툴이, 판단이 필요한 예외는 사람이 맡도록 일을 나눴습니다.',
+        headlineKo: '"무엇이 정상인가"를 규칙으로 한 번 정해 두고, 반복 확인은 툴이, 판단이 필요한 예외는 사람이 맡도록 나눴습니다.',
         headlineEn: 'Define "what correct looks like" once as rules, let the tool do the repetitive checks, and leave judgment calls on exceptions to people.',
         pointsKo: [
-          '사람이 머릿속으로 하던 확인 기준(예: "성공 횟수는 시도 횟수보다 클 수 없다")을 **코드 규칙으로 옮기면**, 누가 언제 돌려도 같은 결과가 나옵니다.',
-          '데이터 구조가 바뀔 때마다 툴을 고치지 않도록, 검사 기준을 코드가 아니라 **데이터 명세(스키마) 파일에서 읽어 오게** 설계했습니다.',
-          '목표는 세 가지였습니다. ① 확인 시간 단축 ② 사람마다 다르지 않은 **일관된 Pass / Fail 판정** ③ 아낀 시간을 드물지만 중요한 **예외 상황(엣지 케이스)** 확인에 쓰기.'
+          '"패스 성공 수는 패스 시도 수보다 클 수 없다", "어시스트가 없으면 어시스트 선수 ID는 -1이어야 한다"처럼 사람이 머릿속으로 하던 확인 기준을 **코드 규칙으로 옮기면**, 누가 언제 돌려도 같은 결과가 나옵니다.',
+          '데이터 구조가 바뀌어도 툴을 고치지 않도록, 검사 기준을 코드가 아니라 **데이터 명세(스키마) 파일에서 읽어 오게** 설계했습니다.',
+          '목표는 세 가지입니다. ① 반복 확인 시간 줄이기 ② 누가 확인해도 **같은 Pass / Fail 판정** ③ 아낀 시간을 연장전 · 승부차기 · 몰수 경기 같은 **드문 예외 상황(엣지 케이스)** 확인에 쓰기.'
         ],
         pointsEn: [
-          'Turning the checks people did in their heads (e.g. "successes can never exceed attempts") **into code rules** gives the same answer no matter who runs it, or when.',
-          'So the tool would not need rewriting whenever the data changed, the criteria are **read from a data specification (schema) file** rather than hard-coded.',
-          'Three goals: ① less checking time, ② **consistent pass / fail calls** regardless of who checks, ③ more time for rare but important **edge cases**.'
+          'Turning the checks people do in their heads, such as "pass successes can never exceed pass attempts" or "with no assist, the assisting player ID must be -1", **into code rules** gives the same answer no matter who runs it, or when.',
+          'So the tool does not need rewriting whenever the data changes, the criteria are **read from a data specification (schema) file** rather than hard-coded.',
+          'Three goals: ① less repetitive checking, ② **the same pass / fail call** whoever checks, ③ more time for rare **edge cases** such as extra time, penalty shoot-outs, and forfeits.'
         ]
       },
       method: {
-        headlineKo: '플레이 로그 · 데이터 명세 · 녹화 영상을 재료로, 데이터 품질의 네 가지 기준을 자동 검사로 바꿨습니다.',
-        headlineEn: 'Using gameplay logs, the data spec, and recordings, I turned four data quality criteria into automatic checks.',
+        headlineKo: 'FC온라인 매치 데이터 · 메타데이터 · 경기 녹화 영상을 재료로, 데이터 품질의 네 가지 기준을 자동 검사로 바꿨습니다.',
+        headlineEn: 'Using FC Online match data, metadata, and match recordings, I turned four data quality criteria into automatic checks.',
         data: [
           {
-            nameKo: '게임 플레이 로그',
-            nameEn: 'Gameplay logs',
-            descKo: '경기 중 행동(이벤트)이 일어날 때마다 남는 기록. 이벤트 **35종**과 모든 로그에 공통으로 붙는 **공통 항목 40개**',
-            descEn: 'A record written every time an in-game event happens: **35 event types** plus **40 common fields** shared by every log'
+            nameKo: '매치 상세 데이터 (넥슨 Open API)',
+            nameEn: 'Match detail data (Nexon Open API)',
+            descKo: '경기마다 참가자별 `matchDetail` · `shoot` · `shootDetail[]` · `pass` · `defence` · `player[]` 기록',
+            descEn: 'Per-participant `matchDetail`, `shoot`, `shootDetail[]`, `pass`, `defence`, and `player[]` records for every match'
+          },
+          {
+            nameKo: '메타데이터',
+            nameEn: 'Metadata',
+            descKo: '선수(spid) · 포지션 · 시즌 · 매치 종류 목록. 기록된 ID가 실제로 있는 값인지 대조하는 기준',
+            descEn: 'Lists of players (spid), positions, seasons, and match types, used to confirm recorded IDs really exist'
           },
           {
             nameKo: '데이터 명세 (스키마)',
             nameEn: 'Data specification (schema)',
-            descKo: '각 값이 어떤 형식 · 범위여야 하는지 정리한 설계 문서. YAML 파일로 관리해 툴이 직접 읽음',
-            descEn: 'The document saying what format and range each value must have, kept as YAML files the tool reads directly'
+            descKo: '각 값의 형식 · 허용 범위 · 코드(예: 슈팅 결과 1~3)를 정리해 YAML 파일로 관리',
+            descEn: 'Format, allowed range, and codes for each value (e.g. shot result 1–3), kept as YAML files'
           },
           {
-            nameKo: '플레이 녹화 영상',
-            nameEn: 'Gameplay recordings',
-            descKo: '기록된 값이 실제 화면과 맞는지 눈으로 대조하기 위한 자료',
-            descEn: 'Video used to confirm that recorded values match what actually happened on screen'
-          },
-          {
-            nameKo: '기존 이슈 목록',
-            nameEn: 'Known-issue list',
-            descKo: '이미 보고된 문제 기록. 같은 문제를 다시 보고하지 않기 위해 사용',
-            descEn: 'Previously reported problems, used to avoid filing the same issue twice'
+            nameKo: '경기 녹화 영상',
+            nameEn: 'Match recordings',
+            descKo: '기록된 골 시간 · 슈팅 위치가 실제 장면과 맞는지 눈으로 대조하는 자료',
+            descEn: 'Video used to confirm that recorded goal times and shot positions match the actual scene'
           }
         ],
         methods: [
           {
             nameKo: '데이터 품질 4가지 기준',
             nameEn: 'Four data quality criteria',
-            descKo: '**완전성**(빠짐없이) → **유효성**(정해진 형식 · 범위) → **정합성**(값끼리 앞뒤가 맞게) → **일관성**(서로 다른 기록끼리 일치) 순서로 검사',
-            descEn: 'Checked in order: **completeness** (nothing missing) → **validity** (right format and range) → **consistency** (values agree) → **cross-record agreement** (separate records match)'
+            descKo: '**완전성**(필수 값이 빠짐없이) → **유효성**(좌표 0~1, 정해진 코드) → **정합성**(총 골 수 = 골 슈팅 수) → **일관성**(양 팀 점유율 합 100) 순서로 검사',
+            descEn: 'Checked in order: **completeness** (no required value missing) → **validity** (coordinates 0–1, agreed codes) → **consistency** (total goals = goal shots) → **cross-record agreement** (possession sums to 100)'
           },
           {
             nameKo: '규칙 모듈 + 스키마 참조',
             nameEn: 'Rule modules + schema reference',
-            descKo: '이벤트마다 검사 규칙을 독립 모듈로 두고, 기준값은 명세에서 읽어 자동으로 판정',
-            descEn: 'One independent rule module per event type, with expected values read from the spec'
+            descKo: '검사 영역마다 규칙을 독립 모듈로 두고, 기준값은 명세에서 읽어 자동으로 판정',
+            descEn: 'One independent rule module per check area, with expected values read from the spec'
           },
           {
             nameKo: '시간 동기화',
             nameEn: 'Time synchronization',
-            descKo: '로그 시각과 영상 시각을 맞춰, 문제가 된 기록의 장면을 클릭 한 번으로 재생',
-            descEn: 'Aligns log time with video time so the scene behind a flagged record plays in one click'
+            descKo: '`goalTime` 같은 기록 시각을 영상 시각과 맞춰, 문제가 된 골 장면을 클릭 한 번으로 재생',
+            descEn: 'Aligns recorded times such as `goalTime` with the video so the flagged goal plays in one click'
           },
           {
             nameKo: '유사도 매칭',
             nameEn: 'Similarity matching',
-            descKo: '새로 찾은 문제를 기존 이슈와 비교해 **처음 보는 문제만** 남김',
-            descEn: 'Compares new findings with known issues so **only genuinely new problems** remain'
+            descKo: '새로 찾은 문제를 이미 알려진 이슈 목록과 비교해 **처음 보는 문제만** 남김',
+            descEn: 'Compares new findings with the known-issue list so **only genuinely new problems** remain'
           }
         ]
       },
       solution: {
-        headlineKo: '로그 수집부터 품질 검사 · 장면 확인 · 이슈 대조 · 결과 판정까지 한 프로그램 안에서 끝나도록 만들었습니다.',
-        headlineEn: 'I built one program that covers everything from collecting logs to quality checks, scene review, issue matching, and the final verdict.',
+        headlineKo: '매치 데이터 불러오기부터 품질 검사 · 장면 확인 · 이슈 대조 · 결과 판정까지 한 프로그램 안에서 끝나도록 만들었습니다.',
+        headlineEn: 'I built one program that covers everything from loading match data to quality checks, scene review, issue matching, and the final verdict.',
         flow: [
-          { titleKo: '로그 자동 수집', titleEn: 'Collect logs automatically' },
+          { titleKo: '매치 데이터 불러오기', titleEn: 'Load match data' },
           { titleKo: '명세 기반 품질 검사', titleEn: 'Schema-based quality checks' },
-          { titleKo: '문제 장면 자동 재생', titleEn: 'Replay the flagged scene' },
+          { titleKo: '문제 장면 · 좌표 확인', titleEn: 'Review the scene & positions' },
           { titleKo: '기존 이슈와 대조', titleEn: 'Match against known issues' },
           { titleKo: 'Pass / Fail 리포트', titleEn: 'Pass / fail report' }
         ],
         pointsKo: [
-          '수동으로 내려받던 로그를 여러 테스트 서버에서 **자동으로 모으고**, 클릭 한 번으로 품질 검사까지 실행합니다.',
-          '**오탐(정상인데 문제로 잘못 잡는 것)을 줄이는 데** 가장 공을 들였습니다. 명세상 "없음"을 뜻하는 값(-1 등)과 특정 조건에서만 기록되는 값을 구분하는 규칙을 넣어, 실제 로그 기준 오탐을 **38건 → 0건**으로 줄였습니다. 경고가 너무 많은 툴은 결국 아무도 믿지 않기 때문입니다.',
-          '느린 원인을 직접 측정해 보니 검사 자체가 아니라 **선수 이름 조회**가 시간 대부분을 쓰고 있었습니다. 조회 방식을 바꿔 로그 1,001건 검사가 **116초 → 10.8초**로 빨라졌고, 바꾸기 전후 결과가 한 글자도 다르지 않은지 확인했습니다.',
-          '별도 설치 없이 실행되는 프로그램으로 빌드해 실무 환경에서 바로 쓸 수 있게 했습니다.'
+          '`matchInfo[1].player[5].status.tackle`처럼 깊숙이 들어간 값도 경로만으로 찾아, 경기 한 판의 수백 개 값을 **클릭 한 번으로** 검사합니다.',
+          '**오탐(정상인데 문제로 잘못 잡는 것)을 줄이는 데** 가장 공을 들였습니다. 어시스트가 없을 때의 `assistSpId = -1`은 "없음"을 뜻하는 정상 값이고, 몰수 경기는 골 수와 승패가 맞지 않아도 정상입니다. 이런 예외까지 규칙에 넣어야 경고를 믿을 수 있습니다.',
+          '슈팅 · 어시스트 좌표를 **2D / 3D 피치 위에** 그려, 숫자만으로는 안 보이는 이상(의미 없는 기본 좌표 등)을 눈으로 바로 구별합니다.',
+          '별도 설치 없이 실행되는 단일 프로그램으로 배포합니다.'
         ],
         pointsEn: [
-          'Logs that used to be downloaded by hand are **collected automatically** from multiple test servers, and the quality checks run with one click.',
-          'The most effort went into **cutting false alarms** (correct data flagged as wrong). Rules now recognize values the spec defines as "none" (such as -1) and fields recorded only under certain conditions, bringing false alarms on real logs from **38 to 0**. A tool that cries wolf stops being trusted.',
-          'Profiling showed the slow part was not the checking but **player-name lookups**. Changing the lookup cut a 1,001-log run from **116 s to 10.8 s**, and the output was verified to be identical before and after.',
-          'It ships as a no-install executable so it can be used straight away at work.'
+          'Deep values such as `matchInfo[1].player[5].status.tackle` are reached by path alone, so the hundreds of values in a match are checked **in one click**.',
+          'The most effort went into **cutting false alarms** (correct data flagged as wrong). With no assist, `assistSpId = -1` is a valid "none", and in a forfeit the goals need not match the result. Only when such exceptions are in the rules can the warnings be trusted.',
+          'Shot and assist positions are drawn **on a 2D / 3D pitch**, exposing problems numbers alone hide, such as meaningless default coordinates.',
+          'It ships as a single no-install executable.'
         ]
       },
       result: {
-        headlineKo: '확인 시간이 약 80% 줄었고, 누가 확인해도 같은 기준으로 판정할 수 있게 되었습니다.',
-        headlineEn: 'Checking time fell by about 80%, and anyone now gets the same verdict under the same criteria.',
+        headlineKo: '사람이 손으로 하던 반복 확인을 규칙이 대신하고, 누가 확인해도 같은 기준으로 판정할 수 있게 되었습니다.',
+        headlineEn: 'Rules now do the repetitive checking people did by hand, and anyone gets the same verdict under the same criteria.',
         metrics: [
           {
-            valueKo: '120~180분 → 20~30분',
-            valueEn: '120–180 → 20–30 min',
-            labelKo: '129개 항목(7개 기능) 전체 확인 시간',
-            labelEn: 'Time to check all 129 items (7 features)',
-            noteKo: '약 80% 이상 단축',
-            noteEn: 'About 80%+ faster'
+            valueKo: '4가지 기준',
+            valueEn: '4 criteria',
+            labelKo: '데이터 품질을 판정하는 기준',
+            labelEn: 'Criteria that define data quality',
+            noteKo: '완전성 · 유효성 · 정합성 · 일관성',
+            noteEn: 'Completeness, validity, consistency, cross-record agreement'
           },
           {
-            valueKo: '116초 → 10.8초',
-            valueEn: '116 s → 10.8 s',
-            labelKo: '로그 1,001건 자동 품질 검사',
-            labelEn: 'Automated check of 1,001 logs',
-            noteKo: '약 10배 빨라짐 · 결과는 변경 전과 동일',
-            noteEn: 'About 10× faster, identical results'
+            valueKo: '6개 영역 · 20여 개 규칙',
+            valueEn: '6 areas · 20+ rules',
+            labelKo: 'FC온라인 매치 데이터에 적용한 검사 범위',
+            labelEn: 'Checks applied to FC Online match data',
+            noteKo: '세부 규칙은 아래 기술 상세 "검사 규칙"',
+            noteEn: 'See "Rules" in the deep dive below'
           },
           {
-            valueKo: '38건 → 0건',
-            valueEn: '38 → 0',
-            labelKo: '실제 로그 기준 오탐',
-            labelEn: 'False alarms on real logs',
-            noteKo: '정상 데이터를 문제로 잘못 잡은 경우',
-            noteEn: 'Correct data wrongly flagged'
+            valueKo: '클릭 1번',
+            valueEn: 'One click',
+            labelKo: '경기 한 판 수백 개 값의 품질 검사',
+            labelEn: 'Quality check of a match\'s hundreds of values',
+            noteKo: '데이터 불러오기부터 리포트까지',
+            noteEn: 'From loading data to the report'
           },
           {
-            valueKo: '35종 · 40개',
-            valueEn: '35 · 40',
-            labelKo: '규칙이 적용된 이벤트 종류 · 공통 항목',
-            labelEn: 'Event types and common fields covered',
-            noteKo: '명세 파일만 추가하면 검사 범위 확장',
-            noteEn: 'Coverage grows by adding spec files'
+            valueKo: '코드 수정 0줄',
+            valueEn: '0 lines of code',
+            labelKo: '데이터 구조가 바뀔 때 필요한 툴 수정',
+            labelEn: 'Tool changes needed when the data changes',
+            noteKo: '명세(YAML) 파일만 갱신',
+            noteEn: 'Only the spec (YAML) file is updated'
           }
         ],
         pointsKo: [
-          '확인 기준이 규칙으로 고정되어 **담당자 숙련도에 따른 판정 차이가 줄었고**, 반복 확인을 툴이 맡으면서 사람은 규칙으로 잡기 어려운 예외 상황 검증에 시간을 쓸 수 있게 되었습니다.',
-          '라인업 추천 기능의 결과를 실제 선수 데이터와 대조하는 화면도 같은 프로그램에 통합해, 스쿼드 1개당 **20분 이상** 걸리던 수동 계산 · 대조를 자동 조회와 실시간 점수 비교로 바꿨습니다. (해당 테스트 효율 80% 이상 향상)'
+          '확인 기준이 규칙으로 고정되어 **누가 언제 확인해도 같은 판정**이 나오고, 사람은 연장전 · 승부차기 · 몰수 경기 · 자책골처럼 **규칙으로 잡기 어려운 예외 상황**에 시간을 쓸 수 있습니다.',
+          '같은 방식을 **FCO Live Boost Lab**에서 넥슨 Open API 응답의 정합성 확인에 실제로 적용해, 화면의 숫자가 게임 안 기록과 맞도록 했습니다.'
         ],
         pointsEn: [
-          'With criteria fixed as rules, **results no longer depend on who checks**, and people spend their time on edge cases that rules cannot easily capture.',
-          'A screen that compares lineup-recommendation output with the real player data was folded into the same tool, replacing **20+ minutes** of manual calculation and comparison per squad with automatic lookup and live score comparison (80%+ more efficient for that test).'
+          'With criteria fixed as rules, **anyone gets the same verdict at any time**, and people spend their time on **edge cases rules cannot easily capture**, such as extra time, shoot-outs, forfeits, and own goals.',
+          'The same approach is used in **FCO Live Boost Lab** to check Nexon Open API responses, so the numbers on screen match the game\'s records.'
         ]
       }
     },
@@ -538,8 +538,8 @@ A single match holds per-participant \`matchDetail\` (result, possession, cards,
 ### 2. 중첩 · 배열 구조 자동 탐색
 - \`matchInfo[1].player[5].status.tackle\`처럼 깊이 들어간 값도 경로만으로 찾아 검사합니다.
 
-### 3. 이벤트별 규칙 모듈과 맥락 분기
-- 이벤트마다 규칙을 독립 모듈로 두고, 판정은 모두 이 규칙 모듈에서만 내리도록 일원화해 같은 문제가 두 번 보고되지 않게 했습니다. 매치 종류 같은 맥락에 따라 기대값을 다르게 적용합니다.
+### 3. 영역별 규칙 모듈과 맥락 분기
+- 슈팅 · 패스 · 수비 · 선수 기록처럼 검사 영역마다 규칙을 독립 모듈로 두고, 판정은 모두 이 규칙 모듈에서만 내리도록 일원화해 같은 문제가 두 번 보고되지 않게 했습니다. 매치 종류 같은 맥락에 따라 기대값을 다르게 적용합니다.
 
 ### 4. 영상 동기화 · 피치 시각화
 - 녹화 영상의 시각과 데이터의 시각을 맞춰 검사 결과에서 해당 장면으로 바로 이동하고, 선수 · 공 · 슈팅 좌표를 2D / 3D 피치 위에 그려 숫자만으로는 안 보이는 이상을 눈으로 확인합니다.
@@ -552,8 +552,8 @@ A single match holds per-participant \`matchDetail\` (result, possession, cards,
 ### 2. Nested & Array Path Resolution
 - Deep values such as \`matchInfo[1].player[5].status.tackle\` are reached by path alone.
 
-### 3. Per-Event Rule Modules with Context Branching
-- Each event type has its own rule module, and every verdict comes from those modules only, so one problem is never reported twice. Expectations change with context such as match type.
+### 3. Per-Area Rule Modules with Context Branching
+- Each check area (shots, passes, defending, player stats) has its own rule module, and every verdict comes from those modules only, so one problem is never reported twice. Expectations change with context such as match type.
 
 ### 4. Video Sync & Pitch Visualization
 - Recording time is aligned with data time to jump straight to the scene, and player, ball, and shot positions are drawn on a 2D / 3D pitch to expose problems numbers alone hide.
@@ -572,13 +572,13 @@ A single match holds per-participant \`matchDetail\` (result, possession, cards,
     subgraph Source["입력"]
         API["FC Online 매치 상세 데이터<br/>(match-detail)"]
         META["메타데이터<br/>spid · spposition · season · matchtype"]
-        VID["플레이 녹화 영상"]
+        VID["경기 녹화 영상"]
         ISS["기존 이슈 목록"]
     end
 
     subgraph Engine["FastAPI 품질 검사 엔진"]
         SPEC["데이터 명세(스키마) 참조"]
-        RULE["이벤트별 규칙 모듈"]
+        RULE["영역별 규칙 모듈"]
         CHK["품질 검사 실행기"]
         SYNC["시간 동기화"]
         MATCH["유사도 매칭"]
@@ -607,13 +607,13 @@ A single match holds per-participant \`matchDetail\` (result, possession, cards,
     subgraph Source["Input"]
         API["FC Online match detail data<br/>(match-detail)"]
         META["Metadata<br/>spid · spposition · season · matchtype"]
-        VID["Gameplay recording"]
+        VID["Match recording"]
         ISS["Known-issue list"]
     end
 
     subgraph Engine["FastAPI Quality Check Engine"]
         SPEC["Data spec (schema) reference"]
-        RULE["Per-event rule modules"]
+        RULE["Per-area rule modules"]
         CHK["Quality check runner"]
         SYNC["Time sync"]
         MATCH["Similarity matching"]
@@ -757,40 +757,44 @@ A single match holds per-participant \`matchDetail\` (result, possession, cards,
         titleEn: 'Engineering Notes — Building a Checker People Trust, and Fast',
         tocKo: '엔지니어링',
         tocEn: 'Engineering',
-        contentKo: `### 1. 오탐 줄이기 — 경고가 많으면 아무도 믿지 않는다
-- **문제**: 명세를 문자 그대로 적용하니 정상 데이터도 문제로 잡혔습니다. "해당 없음"을 뜻하는 -1, 특정 조건(예: 특정 세트피스를 선택했을 때)에서만 기록되는 값, 아직 송출 전인 필드가 모두 오류로 표시됐습니다.
-- **해결**: 명세상 정상 의미를 가진 값과 조건부 필드를 규칙에서 구분하고, 관련된 값끼리 교차 확인하도록 바꿨습니다. (예: 상대 선수 ID가 -1이면 소속 팀 값도 "없음"이어야 정상) 판정도 이벤트별 규칙 모듈 한 곳으로 모아, 같은 문제가 두 개의 경고로 보고되지 않게 했습니다.
-- **결과**: 실제 로그 기준 해당 항목의 오탐 **38건 → 0건**. 세트피스 등 다른 항목도 정상 데이터에서 오탐 0건을 확인했습니다.
+        contentKo: `> 아래 예시도 모두 FC온라인 매치 데이터에 빗대어 설명합니다.
+
+### 1. 오탐 줄이기 — 경고가 많으면 아무도 믿지 않는다
+- **문제**: 명세를 문자 그대로 적용하면 정상 데이터도 문제로 잡힙니다. 어시스트가 없을 때의 \`assistSpId = -1\`, 몰수 경기에서 골 수와 맞지 않는 \`matchResult\`, 승부차기 골이 섞인 \`goalTime\`은 겉보기엔 이상하지만 모두 정상입니다.
+- **해결**: 명세상 "없음"을 뜻하는 값과 특정 조건에서만 의미가 있는 값을 규칙에서 구분하고, 관련 값끼리 교차 확인합니다. (예: \`assist\`가 false면 \`assistSpId\`는 -1이어야 정상, true면 실제 선수 ID여야 정상) 판정은 영역별 규칙 모듈 한 곳에서만 내려, 같은 문제가 두 개의 경고로 보고되지 않게 합니다.
+- **결과**: 리포트에는 실제 문제만 남고, 사람은 경고를 믿고 바로 확인할 수 있습니다.
 
 ### 2. 속도 — 느린 곳을 측정한 뒤에 고치기
-- **문제**: 로그 1,001건 검사에 116초가 걸렸고, 검사가 도는 동안 다른 화면이 멈췄습니다.
-- **해결**: 프로파일링해 보니 검사 로직이 아니라 시각화용 **선수 이름 조회**(수만 행짜리 표를 매번 검색, 로그 233건 처리에 6,270회)가 시간 대부분을 쓰고 있었습니다. 표를 한 번만 읽어 사전(dict)으로 캐시하고, 검사는 별도 스레드에서 돌려 다른 요청에 바로 응답하게 했습니다.
-- **결과**: **116초 → 10.8초**(약 10배), 검사 중 다른 화면 응답 대기 4.4초 → 0.2~0.9초. 바꾸기 전후 결과 파일의 해시(sha256)가 같아, 속도만 바뀌고 결과는 한 글자도 바뀌지 않았음을 확인했습니다.
+- **문제**: 검사 결과를 보여 줄 때 선수 ID(\`spId\`)를 이름으로 바꾸는데, 수만 명 규모의 선수 메타데이터를 매번 처음부터 검색하면 경기 수가 늘수록 급격히 느려집니다.
+- **해결**: 추측 대신 프로파일링으로 병목을 찾고, 메타데이터를 한 번만 읽어 사전(dict)으로 캐시합니다. 검사는 별도 스레드에서 돌려 검사 중에도 화면이 멈추지 않게 합니다.
+- **결과**: 검사 로직은 그대로 두고 조회 방식만 바꾸기 때문에, 바꾸기 전후 결과 파일의 해시(sha256)를 비교해 결과가 한 글자도 달라지지 않았는지까지 확인합니다.
 
-### 3. 시각화 정확도 — 같은 선수 카드를 양 팀이 쓸 때
-- **문제**: 두 팀이 같은 선수 카드를 쓰면 선수 식별자만으로는 누가 행동했는지 구분되지 않아, 상대 팀 선수에게 "패스한 선수" 같은 역할이 잘못 붙었습니다.
-- **해결**: 선수 식별자에 소속 팀 정보를 함께 써서 행동한 선수를 찾고, 팀 정보가 없을 때는 이벤트 좌표에 가장 가까운 선수로 확정하도록 바꿨습니다.
-- **결과**: 확인한 패스 로그 89건 모두 올바른 팀의 선수에게 역할이 연결되었습니다.
+### 3. 선수 식별 — 같은 선수 카드를 양 팀이 쓸 때
+- **문제**: FC온라인에서는 두 참가자가 같은 선수 카드(같은 \`spId\`)를 쓸 수 있습니다. 선수 기록을 \`spId\`만으로 묶으면 두 팀의 기록이 섞입니다.
+- **해결**: 어느 참가자(\`matchInfo[]\`)의 기록인지와 \`spId\`를 함께 써서 선수를 식별하고, 피치 위에 그릴 때 애매하면 이벤트 좌표에 가장 가까운 선수로 확정합니다.
+- **결과**: "선수별 기록 합계 = 팀 요약" 같은 검사가 올바른 팀 기준으로 계산되고, 피치 위 표시도 올바른 팀 선수에게 연결됩니다.
 
 ### 4. 확장성 — 명세 파일만 넣으면 검사 범위가 늘어난다
-- 처음에는 검사 기준이 코드에 박혀 있었지만, YAML 명세를 읽어 검사하도록 바꾸고 이벤트별 규칙 · 시각화 모듈을 분리했습니다. 지금은 이벤트 35종 모두 규칙 모듈을 갖추고 있고, 새 기능이 추가되어도 명세 파일만 넣으면 바로 검사할 수 있습니다.`,
-        contentEn: `### 1. Cutting False Alarms — Nobody Trusts a Tool That Cries Wolf
-- **Problem**: Applying the spec literally flagged correct data: -1 meaning "not applicable", values recorded only under certain conditions (such as a particular set-piece choice), and fields not yet emitted.
-- **Fix**: Rules now distinguish values the spec defines as normal and conditional fields, and related values are cross-checked (e.g. if the opposing player ID is -1, the team value must be "none"). All verdicts come from one rule module per event, so one problem never shows up as two warnings.
-- **Result**: False alarms on real logs for that item went from **38 to 0**, and other items such as set pieces showed zero false alarms on correct data.
+- 검사 기준을 코드에 박지 않고 YAML 명세에서 읽도록 하고, 영역별 규칙 · 시각화 모듈을 분리했습니다. 새 기록 항목이 생겨도 명세 파일만 추가하면 바로 검사할 수 있는 구조입니다.`,
+        contentEn: `> Every example below also uses FC Online match data as the stand-in.
+
+### 1. Cutting False Alarms — Nobody Trusts a Tool That Cries Wolf
+- **Problem**: Applying the spec literally flags correct data. \`assistSpId = -1\` when there is no assist, a \`matchResult\` that does not match the goals in a forfeit, and a \`goalTime\` that includes shoot-out goals all look odd but are valid.
+- **Fix**: Rules distinguish values the spec defines as "none" from values that only matter under certain conditions, and related values are cross-checked (if \`assist\` is false, \`assistSpId\` must be -1; if true, it must be a real player ID). Verdicts come from one rule module per area, so one problem never shows up as two warnings.
+- **Result**: Only real problems stay in the report, so people can trust a warning and act on it.
 
 ### 2. Speed — Measure Before You Fix
-- **Problem**: Checking 1,001 logs took 116 s, and other screens froze while it ran.
-- **Fix**: Profiling showed the time went not to checking but to **player-name lookups** for the visualizer (a table with tens of thousands of rows searched every time; 6,270 lookups for 233 logs). The table is now read once and cached as a dict, and checks run on a separate thread so other requests answer immediately.
-- **Result**: **116 s → 10.8 s** (about 10×), and other screens respond in 0.2–0.9 s instead of waiting 4.4 s. Output hashes (sha256) matched before and after, so only the speed changed.
+- **Problem**: Results show player names, converted from player IDs (\`spId\`); searching tens of thousands of player metadata entries from scratch every time gets slow fast as matches pile up.
+- **Fix**: Profile instead of guessing, read the metadata once and cache it as a dict, and run checks on a separate thread so the screen never freezes.
+- **Result**: Since only the lookup changes, not the check logic, output hashes (sha256) are compared before and after to confirm the results are identical.
 
-### 3. Visualization Accuracy — When Both Teams Use the Same Player Card
-- **Problem**: With the same card on both teams, the player ID alone could not tell who acted, so roles such as "passer" landed on the wrong team's player.
-- **Fix**: Actors are identified by player ID plus team, and when team info is missing, by the player closest to the event position.
-- **Result**: All 89 pass logs checked linked roles to the correct team's player.
+### 3. Player Identity — When Both Teams Use the Same Card
+- **Problem**: In FC Online both participants can field the same player card (the same \`spId\`). Grouping player stats by \`spId\` alone mixes the two teams.
+- **Fix**: Identify players by participant (\`matchInfo[]\`) plus \`spId\`, and when drawing on the pitch, resolve any ambiguity to the player closest to the event position.
+- **Result**: Checks such as "player totals = team summary" are computed for the right team, and pitch markers attach to the right team's player.
 
 ### 4. Extensibility — Add a Spec File, Get New Checks
-- Criteria started out hard-coded; they are now read from YAML specs, with rule and visualization modules split per event. All 35 event types have rule modules, and new features only need a spec file to be checked.`
+- Criteria are read from YAML specs rather than hard-coded, with rule and visualization modules split per area. A new recorded field only needs a spec file to be checked.`
       },
       {
         titleKo: '배운 점 & 다음 단계',
@@ -811,7 +815,7 @@ A single match holds per-participant \`matchDetail\` (result, possession, cards,
 
 ### 5. 다음 단계
 - 새 기능에 맞춘 검사 항목 설계와 자동 검사 범위 확장
-- 원하는 이벤트만 골라 보는 필터와 스냅샷 형태의 로그 시각화
+- 원하는 검사 영역 · 경기만 골라 보는 필터와 스냅샷 형태의 시각화
 - 시각화 화면에서 최신 규칙으로 바로 다시 검사하는 기능`,
         contentEn: `### 1. Check Relationships, Not Just Values
 - Real problems appear when summaries, details, and participants are checked against each other.
@@ -827,7 +831,7 @@ A single match holds per-participant \`matchDetail\` (result, possession, cards,
 
 ### 5. Next Steps
 - Design checks for new features and widen automatic coverage
-- Event filters and snapshot-style log visualization
+- Filters by check area or match, and snapshot-style visualization
 - Re-run the latest rules directly from the visualizer`
       }
     ]

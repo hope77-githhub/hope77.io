@@ -25,13 +25,13 @@ export const MILESTONES_DATA = [
     titleEn: 'Game Data Quality Guard',
     shortTitleKo: '데이터 품질 가드',
     shortTitleEn: 'Data Quality Guard',
-    statusKo: '실무 적용 중',
-    statusEn: 'In Use',
+    statusKo: '진행 중',
+    statusEn: 'In Progress',
     chipType: 'info',
-    summaryKo: '게임 로그 데이터가 정확하게 쌓이도록 자동으로 지키는 툴 — 확인 시간 약 80% 단축',
-    summaryEn: 'Automatically keeps gameplay log data accurate, cutting checking time by about 80%',
-    bodyKo: '게임 플레이 로그가 빠짐없이, 형식대로, 서로 모순 없이 기록되는지 데이터 명세를 참조한 규칙으로 자동 확인하고, 녹화 영상 동기화와 기존 이슈 대조까지 한 번에 처리하는 데이터 품질 관리 툴입니다.',
-    bodyEn: 'A data quality tool that checks, with spec-driven rules, that gameplay logs are complete, well-formed, and consistent, with video sync and known-issue matching in the same pass.'
+    summaryKo: '경기 기록 데이터가 빠짐없이 · 서로 모순 없이 쌓였는지 자동으로 확인하는 데이터 품질 관리 툴',
+    summaryEn: 'Automatically checks that match data is complete and free of contradictions',
+    bodyKo: '경기 기록 데이터가 빠짐없이, 형식대로, 서로 모순 없이 기록되었는지 데이터 명세를 참조한 규칙으로 자동 확인하고, 녹화 영상 동기화와 기존 이슈 대조까지 한 번에 처리하는 데이터 품질 관리 툴입니다. (FC Online 매치 데이터에 빗대어 설명)',
+    bodyEn: 'A data quality tool that checks, with spec-driven rules, that match data is complete, well-formed, and consistent, with video sync and known-issue matching in the same pass (explained with FC Online match data).'
   },
   {
     id: 'm3',
