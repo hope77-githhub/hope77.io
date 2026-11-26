@@ -1,0 +1,555 @@
+/* ==========================================================================
+   Project Story — 5-step summary (문제 → 해결 방향 → 데이터·방법 → 해결 → 결과)
+   and the "Technical Deep Dive" divider that introduces the detail sections.
+   Accent color is used only for step numbers on the result step, metric
+   values and small labels, following edit.MD §6.3.
+   ========================================================================== */
+
+.ps-section {
+    background: #ffffff;
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-lg);
+    padding: 30px 30px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+}
+
+.ps-head,
+.cs-deep-head {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.ps-eyebrow {
+    font-family: var(--font-sans);
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--color-primary);
+}
+
+.ps-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--color-ink);
+    margin: 0;
+    line-height: 1.35;
+    font-family: var(--font-display);
+}
+
+.ps-sub {
+    font-size: 14.5px;
+    color: var(--color-muted);
+    margin: 0;
+    line-height: 1.65;
+    max-width: 720px;
+    word-break: keep-all;
+}
+
+/* Reading guide chips */
+.ps-stepper {
+    list-style: none;
+    margin: 12px 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.ps-stepper-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ps-stepper-item:not(:last-child)::after {
+    content: '\2192';
+    color: #94a3b8;
+    font-size: 13px;
+}
+
+.ps-stepper-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    border: 1px solid var(--color-hairline);
+    background: #f8fafc;
+    border-radius: var(--rounded-pill);
+    padding: 5px 13px 5px 5px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-body);
+    cursor: pointer;
+    font-family: var(--font-sans);
+    transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.ps-stepper-btn:hover {
+    border-color: var(--color-hairline-blue);
+    color: var(--color-ink);
+}
+
+.ps-stepper-idx {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid var(--color-hairline);
+    font-size: 11px;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: var(--color-muted);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Steps */
+.ps-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.ps-step {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 18px;
+    scroll-margin-top: 150px;
+}
+
+.ps-rail {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.ps-rail::after {
+    content: '';
+    position: absolute;
+    top: 42px;
+    bottom: 2px;
+    width: 2px;
+    border-radius: 2px;
+    background: var(--color-hairline-soft);
+}
+
+.ps-step:last-child .ps-rail::after {
+    display: none;
+}
+
+.ps-num {
+    position: relative;
+    z-index: 1;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--color-ink);
+    color: #ffffff;
+    font-family: var(--font-mono);
+    font-size: 15px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ps-step--result .ps-num {
+    background: var(--color-primary);
+}
+
+.ps-card {
+    min-width: 0;
+    padding: 5px 0 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ps-step:last-child .ps-card {
+    padding-bottom: 0;
+}
+
+.ps-step-label {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px 10px;
+}
+
+.ps-step-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-ink);
+}
+
+.ps-step-q {
+    font-size: 13px;
+    color: var(--color-muted);
+}
+
+.ps-headline {
+    margin: 0;
+    font-size: 18.5px;
+    line-height: 1.55;
+    font-weight: 700;
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    word-break: keep-all;
+}
+
+.ps-points {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ps-points li {
+    position: relative;
+    padding-left: 16px;
+    font-size: 15px;
+    line-height: 1.72;
+    color: var(--color-body);
+    word-break: keep-all;
+}
+
+.ps-points li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 11px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #94a3b8;
+}
+
+/* Step 3 — data / methods */
+.ps-method-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.ps-method-col {
+    background: #f8fafc;
+    border: 1px solid var(--color-hairline-soft);
+    border-radius: var(--rounded-md);
+    padding: 16px 18px 18px;
+}
+
+.ps-method-title {
+    margin: 0 0 12px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-ink);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.ps-method-title i {
+    font-size: 12px;
+    color: var(--color-primary);
+}
+
+.ps-method-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ps-method-list li {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.ps-method-name {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--color-ink);
+    line-height: 1.45;
+}
+
+.ps-method-desc {
+    font-size: 13.5px;
+    line-height: 1.62;
+    color: var(--color-body);
+    word-break: keep-all;
+}
+
+/* Step 4 — process flow */
+.ps-flow {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    gap: 12px;
+}
+
+.ps-flow-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    background: #ffffff;
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-md);
+    padding: 12px 12px 13px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--color-ink);
+    line-height: 1.45;
+    word-break: keep-all;
+}
+
+.ps-flow-item:not(:last-child)::after {
+    content: '\203A';
+    position: absolute;
+    z-index: 1;
+    right: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid var(--color-hairline);
+    color: #94a3b8;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ps-flow-idx {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--color-primary-weak);
+    color: var(--color-primary);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Step 5 — metrics */
+.ps-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+}
+
+.ps-metric {
+    background: #f7f9ff;
+    border: 1px solid var(--color-hairline-blue);
+    border-radius: var(--rounded-md);
+    padding: 16px 16px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.ps-metric-value {
+    font-size: 23px;
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--color-primary);
+    font-family: var(--font-display);
+    word-break: keep-all;
+}
+
+.ps-metric-label {
+    font-size: 13.5px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--color-ink);
+    word-break: keep-all;
+}
+
+.ps-metric-note {
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--color-muted);
+    word-break: keep-all;
+}
+
+/* Confidentiality / context notice inside the header card */
+.cs-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: #f8fafc;
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-md);
+    padding: 12px 16px;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--color-body);
+    word-break: keep-all;
+}
+
+.cs-notice i {
+    color: var(--color-muted);
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+/* Technical deep dive divider */
+.cs-deep-head {
+    padding-top: 6px;
+}
+
+.cs-deep-toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.cs-deep-toc-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    border: 1px solid var(--color-hairline);
+    background: #ffffff;
+    border-radius: var(--rounded-pill);
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-body);
+    cursor: pointer;
+    font-family: var(--font-sans);
+    transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.cs-deep-toc-btn:hover {
+    border-color: var(--color-hairline-blue);
+    color: var(--color-ink);
+}
+
+.cs-deep-toc-idx {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.cs-step-block {
+    scroll-margin-top: 150px;
+}
+
+.cs-step-content-box .cs-md-p,
+.cs-step-content-box .cs-md-li {
+    word-break: keep-all;
+}
+
+@media (max-width: 720px) {
+    /* Project tabs: one swipeable row instead of four wrapped rows on phones */
+    .horizontal-tabs-container {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .horizontal-tabs-container::-webkit-scrollbar {
+        display: none;
+    }
+
+    .ps-step,
+    .cs-step-block {
+        scroll-margin-top: 190px;
+    }
+
+    .ps-section {
+        padding: 22px 18px 24px;
+        gap: 22px;
+    }
+
+    .ps-title {
+        font-size: 19px;
+    }
+
+    .ps-step {
+        grid-template-columns: 30px minmax(0, 1fr);
+        gap: 12px;
+    }
+
+    .ps-num {
+        width: 28px;
+        height: 28px;
+        font-size: 13px;
+    }
+
+    .ps-rail::after {
+        top: 34px;
+    }
+
+    .ps-card {
+        padding-top: 2px;
+        padding-bottom: 26px;
+    }
+
+    .ps-headline {
+        font-size: 16.5px;
+    }
+
+    .ps-points li {
+        font-size: 14.5px;
+    }
+
+    .ps-method-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .ps-flow {
+        grid-auto-flow: row;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 6px;
+    }
+
+    .ps-flow-item {
+        flex-direction: row;
+        align-items: center;
+        padding: 8px 12px 8px 8px;
+    }
+
+    .ps-flow-item:not(:last-child)::after {
+        display: none;
+    }
+
+    .ps-metrics {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+
+    .ps-metric-value {
+        font-size: 20px;
+    }
+
+    .ps-stepper-item:not(:last-child)::after {
+        display: none;
+    }
+}

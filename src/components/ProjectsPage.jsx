@@ -3,15 +3,28 @@ import { useLanguage } from '../context/LanguageContext';
 import { CASE_STUDIES_DATA } from '../data/caseStudiesData';
 import MermaidViewer from './MermaidViewer';
 import MarkdownContent from './MarkdownContent';
+import ProjectStory from './ProjectStory';
 
 export default function ProjectsPage({ selectedProjectId, onSelectProject, onNavigateToOverview }) {
   const { t, lang } = useLanguage();
   const tabsRef = useRef(null);
   const [activeArchTab, setActiveArchTab] = useState(0);
 
-  // Active project selection
+  // Active project selection (old ids stay valid through `aliases`)
   const currentProject =
-    CASE_STUDIES_DATA.find((p) => p.id === selectedProjectId) || CASE_STUDIES_DATA[0];
+    CASE_STUDIES_DATA.find((p) => p.id === selectedProjectId) ||
+    CASE_STUDIES_DATA.find((p) => p.aliases && p.aliases.includes(selectedProjectId)) ||
+    CASE_STUDIES_DATA[0];
+
+  // Each project starts on its first diagram tab
+  useEffect(() => {
+    setActiveArchTab(0);
+  }, [currentProject.id]);
+
+  const scrollToSection = (idx) => {
+    const el = document.getElementById(`cs-sec-${currentProject.id}-${idx}`);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   const currentIndex = CASE_STUDIES_DATA.findIndex((p) => p.id === currentProject.id);
   const prevProject = currentIndex > 0 ? CASE_STUDIES_DATA[currentIndex - 1] : null;
@@ -55,8 +68,8 @@ export default function ProjectsPage({ selectedProjectId, onSelectProject, onNav
             </h1>
             <p className="projects-sub-heading">
               {t(
-                '문제 인지 계기부터 아키텍처 설계, 구현 개선, 정량적 수치 성과 및 배운 점까지 상세히 다룬 케이스 스터디입니다.',
-                'Deep case studies detailing problem triggers, architectural decisions, quantitative metrics, and retrospectives.'
+                '모든 프로젝트를 같은 순서로 정리했습니다. 위에서는 문제 → 해결 방향 → 데이터 · 방법 → 해결 과정 → 결과(수치)를 5단계로 먼저 보여 주고, 아래 기술 상세에서 구조와 구현을 자세히 다룹니다.',
+                'Every project follows the same order: a five-step story first (problem → approach → data & methods → solution → measurable results), then a technical deep dive into architecture and implementation.'
               )}
             </p>
           </div>
@@ -151,101 +164,47 @@ export default function ProjectsPage({ selectedProjectId, onSelectProject, onNav
               </span>
               <span className="cs-role-text">{role}</span>
             </div>
+
+            {currentProject.noticeKo && (
+              <p className="cs-notice">
+                <i className="fas fa-circle-info"></i>
+                <span>{lang === 'en' ? (currentProject.noticeEn || currentProject.noticeKo) : currentProject.noticeKo}</span>
+              </p>
+            )}
           </header>
 
-          {/* Key Metrics Highlight Grid (정량 성과 카드) */}
-          {currentProject.keyMetrics && (
-            <section className="cs-metrics-section">
-              <h3 className="cs-section-subhead">
-                <i className="fas fa-chart-pie"></i>
-                <span>
-                  {currentProject.metricsHeadingKo
-                    ? (lang === 'en' ? (currentProject.metricsHeadingEn || 'Summary of Results') : currentProject.metricsHeadingKo)
-                    : t('결과 요약 (Summary of Results)', 'Summary of Results')}
-                </span>
-              </h3>
-              <div className="cs-metrics-grid">
-                {currentProject.keyMetrics.map((metric, mIdx) => (
-                  <div key={mIdx} className="cs-metric-card">
-                    {metric.icon && (
-                      <div className="cs-metric-icon">
-                        <i className={metric.icon}></i>
-                      </div>
-                    )}
-                    <div className="cs-metric-val">
-                      {lang === 'en' ? (metric.valueEn || metric.valueKo) : metric.valueKo}
-                    </div>
-                    {Boolean(metric.labelKo || metric.labelEn) && (
-                      <div className="cs-metric-lbl">
-                        {lang === 'en' ? (metric.labelEn || metric.labelKo) : metric.labelKo}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </section>
-          )}
+          {/* 5-step story: problem → approach → data & methods → solution → results */}
+          <ProjectStory key={currentProject.id} story={currentProject.story} projectId={currentProject.id} />
 
-          {/* Architecture Pipeline Flow Diagram */}
-          {currentProject.pipelineFlow && (
-            <section className="cs-diagram-section">
-              <h3 className="cs-section-subhead">
-                <i className="fas fa-diagram-project"></i>
-                <span>{t('데이터 파이프라인 및 아키텍처 흐름', 'Data Pipeline & System Architecture')}</span>
-              </h3>
-              <div className="cs-pipeline-grid">
-                {currentProject.pipelineFlow.map((flowItem, fIdx) => (
-                  <div key={fIdx} className="cs-pipeline-node">
-                    <div className="pipeline-node-top">
-                      <span className="pipeline-step-badge">{flowItem.step}</span>
-                      <strong className="pipeline-step-title">
-                        {lang === 'en' ? (flowItem.titleEn || flowItem.titleKo) : flowItem.titleKo}
-                      </strong>
-                    </div>
-                    {flowItem.descKo && (
-                      <p className="pipeline-step-desc">
-                        {lang === 'en' ? (flowItem.descEn || flowItem.descKo) : flowItem.descKo}
-                      </p>
-                    )}
-                    {fIdx < currentProject.pipelineFlow.length - 1 && (
-                      <span className="pipeline-arrow-indicator">
-                        <i className="fas fa-chevron-right"></i>
-                      </span>
-                    )}
-                  </div>
+          {/* Technical deep dive: divider + table of contents */}
+          {currentProject.sections && currentProject.sections.length > 0 && (
+            <div className="cs-deep-head">
+              <span className="ps-eyebrow">{t('기술 상세', 'Technical Deep Dive')}</span>
+              <h3 className="ps-title">{t('더 자세히 — 구조와 구현', 'In Depth — Architecture & Implementation')}</h3>
+              <p className="ps-sub">
+                {t(
+                  '위 5단계를 실제로 어떻게 만들었는지, 구조 · 화면 · 시행착오까지 자세히 정리했습니다. 궁금한 항목으로 바로 이동할 수 있습니다.',
+                  'How each of the five steps above was actually built, including architecture, screens, and trade-offs. Jump to any part below.'
+                )}
+              </p>
+              <nav className="cs-deep-toc" aria-label={t('기술 상세 목차', 'Deep dive contents')}>
+                {currentProject.sections.map((section, sIdx) => (
+                  <button
+                    key={sIdx}
+                    type="button"
+                    className="cs-deep-toc-btn"
+                    onClick={() => scrollToSection(sIdx)}
+                  >
+                    <span className="cs-deep-toc-idx">{section.num || String(sIdx + 1).padStart(2, '0')}</span>
+                    <span>
+                      {lang === 'en'
+                        ? (section.tocEn || section.titleEn)
+                        : (section.tocKo || section.titleKo)}
+                    </span>
+                  </button>
                 ))}
-              </div>
-            </section>
-          )}
-
-          {/* Before & After Comparison Grid */}
-          {currentProject.beforeAfter && (
-            <section className="cs-ba-section">
-              <h3 className="cs-section-subhead">
-                <i className="fas fa-arrows-split-up-and-left"></i>
-                <span>{t('도입 전 / 도입 후 시스템 변화 (Before & After)', 'Before vs After Transformation')}</span>
-              </h3>
-              <div className="before-after-grid">
-                <div className="ba-card ba-before">
-                  <div className="ba-header">
-                    <i className="fas fa-circle-xmark"></i>
-                    <span>{t('기존 수작업 병목 (Before)', 'Manual Bottlenecks (Before)')}</span>
-                  </div>
-                  <p className="ba-text">
-                    {lang === 'en' ? currentProject.beforeAfter.beforeEn : currentProject.beforeAfter.beforeKo}
-                  </p>
-                </div>
-                <div className="ba-card ba-after">
-                  <div className="ba-header">
-                    <i className="fas fa-circle-check"></i>
-                    <span>{t('시스템 개선 및 자동화 후 (After)', 'Automated Resolution (After)')}</span>
-                  </div>
-                  <p className="ba-text">
-                    {lang === 'en' ? currentProject.beforeAfter.afterEn : currentProject.beforeAfter.afterKo}
-                  </p>
-                </div>
-              </div>
-            </section>
+              </nav>
+            </div>
           )}
 
           {/* Detailed Case Study Framework (Custom Sections with Large Headings) */}
@@ -253,12 +212,13 @@ export default function ProjectsPage({ selectedProjectId, onSelectProject, onNav
             {currentProject.sections &&
               currentProject.sections.map((section, sIdx) => (
                 <section
-                  key={sIdx}
+                  key={`${currentProject.id}-${sIdx}`}
+                  id={`cs-sec-${currentProject.id}-${sIdx}`}
                   className={`cs-step-block ${section.highlight ? 'highlight' : ''}`}
                 >
                   <div className="cs-step-heading-row">
                     <span className={`cs-step-num ${section.highlight ? 'highlight' : ''}`}>
-                      {section.num || `0${sIdx + 1}`}
+                      {section.num || String(sIdx + 1).padStart(2, '0')}
                     </span>
                     <div className="cs-step-title-wrap">
                       <h3 className="cs-step-title">

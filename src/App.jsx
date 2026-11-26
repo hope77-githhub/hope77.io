@@ -28,7 +28,7 @@ export default function App() {
         return params.get('id') || 'log-entry-com-study';
       }
     }
-    return 'entry-automation-test';
+    return 'entry-data-quality-guard';
   });
 
   // Sync with browser back/forward buttons

@@ -3,7 +3,7 @@ import React from 'react';
 /**
  * Lightweight & secure markdown inline parser for **bold** and `code`.
  */
-function renderInline(text) {
+export function renderInline(text) {
   if (!text) return null;
   const tokens = [];
   const regex = /(\*\*.*?\*\*|`.*?`)/g;

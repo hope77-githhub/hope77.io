@@ -26,8 +26,8 @@ export default function HeroSection({ onOpenTerminal, onNavigateToProjects, onNa
       tag: 'Analysis & Modeling'
     },
     {
-      name: 'Test Automation',
-      tag: 'Test Tooling'
+      name: 'Data Quality Automation',
+      tag: 'Data Validation'
     },
     {
       name: 'UDP & Telemetry Systems',

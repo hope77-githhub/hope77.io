@@ -28,12 +28,12 @@ export const CASE_STUDIES_DATA = [
     badgeTextKo: '학술 논문 등재 (arXiv)',
     badgeTextEn: 'Published on arXiv',
     badgeType: 'purple',
-    titleKo: 'RTS (LOL) Communication pattern 연구',
-    titleEn: 'RTS (LOL) Communication Pattern Research',
+    titleKo: 'RTS (LoL) 팀 커뮤니케이션 패턴 연구 — 결정적 순간, 팀은 어떻게 대화하는가',
+    titleEn: 'RTS (LoL) Team Communication Research — How Teams Talk at Decisive Moments',
     tabLabelKo: 'RTS (LOL) 연구',
     tabLabelEn: 'RTS (LOL) Research',
-    oneLinerKo: 'League of legend (LOL)과 같은 MulitOnlineBattleArena(MOBA)게임에서 발생하는 팀원간 communication pattern이 인게임의 사전 정의된 중요 Event 지점에서 어떤 대화 패턴을 보이는지 분석한 학술 연구',
-    oneLinerEn: 'An academic research analyzing team communication patterns around pre-defined in-game critical events in MOBA games like League of Legends (LOL).',
+    oneLinerKo: '리그 오브 레전드(LoL) 팀이 한타 · 오브젝트 싸움 같은 결정적 순간에 어떻게 대화하는지를, 84경기 · 45,660개 발화를 게임 기록과 맞춰 분석해 통계적으로 밝힌 학술 연구입니다. (arXiv 논문 공개 · 2저자)',
+    oneLinerEn: 'An academic study that aligned 45,660 utterances from 84 League of Legends matches with in-game logs to show, statistically, how teams talk at decisive moments such as teamfights and objective fights (published on arXiv, second author).',
     roleKo: '리드 데이터 엔지니어 (2저자 / 파이프라인 설계, 음성-로그 동기화, 통계 모델링)',
     roleEn: 'Lead Data Engineer (2nd Author / Pipeline Architecture, Audio-Log Sync, Statistical Modeling)',
     period: '2023.09 – 2025.09',
@@ -42,83 +42,160 @@ export const CASE_STUDIES_DATA = [
     repoUrl: 'https://github.com/hope77-githhub/Proj_code',
     techStack: ['Python', 'Pandas/NumPy', 'RoBERTa', 'NetworkX (SNA)', 'Riot API', 'Discord Voice Bot'],
 
-    metricsHeadingKo: '결과 요약 (Summary of Results)',
-    metricsHeadingEn: 'Results Summary',
-    keyMetrics: [
-      {
-        valueKo: '84경기 (45,660개 발화) SNA 소통 분석',
-        valueEn: 'SNA across 84 Matches & 45,660 Utterances',
-        icon: 'fas fa-network-wired'
+    story: {
+      problem: {
+        headlineKo: 'e스포츠 팀의 대화가 경기에 어떤 영향을 주는지, 감이 아닌 숫자로 설명할 방법이 없었습니다.',
+        headlineEn: 'There was no way to explain, with numbers rather than intuition, how a team\'s communication affects the game.',
+        pointsKo: [
+          '리그 오브 레전드(LoL) 같은 5인 팀 게임은 0.1초 단위 판단과 실시간 음성 대화로 승패가 갈리지만, 기존 분석은 킬 · 데스 · 승패 같은 **결과 숫자**에만 머물렀습니다.',
+          '실제 경기 음성과 게임 기록을 대조해 보니 **말을 많이 한 팀이 이긴다는 관계는 없었습니다.** 중요한 것은 말의 양이 아니라 "언제, 누가, 어떤 말을 했는가"였습니다.',
+          '게임 기록과 음성은 기록되는 시각 기준이 서로 달라, **같은 순간을 정확히 맞춰 보는 것부터** 어려웠습니다.'
+        ],
+        pointsEn: [
+          'In five-player games like League of Legends (LoL), split-second decisions and live voice chat decide matches, yet analysis stopped at **outcome numbers** such as kills, deaths, and wins.',
+          'Comparing real match audio with game logs showed **no link between talking more and winning**. What mattered was not how much was said, but when, by whom, and what.',
+          'Game logs and voice recordings run on different clocks, so even **lining up the same moment** was hard.'
+        ]
       },
-      {
-        valueKo: '지시-수락 중심 의사결정 전환 규명 (p < .001)',
-        valueEn: 'Shift to Directive-Commissive Patterns (p < .001)',
-        icon: 'fas fa-chart-line'
+      approach: {
+        headlineKo: '결정적인 순간(한타 · 오브젝트 싸움)을 기준으로, 누가 누구에게 어떤 종류의 말을 했는지 팀의 "대화 지도"를 그려 비교하기로 했습니다.',
+        headlineEn: 'Anchor the analysis on decisive moments (teamfights, objective fights) and draw a "conversation map" of who said what kind of thing to whom.',
+        pointsKo: [
+          '대화를 단순히 세지 않고 말의 **역할**로 나눴습니다. 정보 공유("미드 플래시 없음"), 지시("원딜 먼저 물어"), 수락("내가 들어갈게") 세 가지입니다.',
+          '선수를 점, 말의 흐름을 선으로 이어 **팀의 대화 구조를 네트워크(지도)로** 만들고, 경기 초반(14분 전) vs 후반, 평상시 vs 결정적 교전 순간을 비교했습니다.',
+          '숫자로 나온 결과가 실제 팀 상황과 맞는지 **선수 설문과 코칭 스태프 인터뷰로 한 번 더 확인**하도록 설계했습니다.'
+        ],
+        pointsEn: [
+          'Instead of counting words, utterances were sorted by **role**: informing ("mid has no flash"), directing ("dive their ADC first"), and committing ("I\'ll go in").',
+          'Players became points and messages became lines, turning team talk into a **network map** that was compared across early (before 14 min) vs late game and calm play vs decisive fights.',
+          'To make sure the numbers matched reality, the design included **player surveys and coaching-staff interviews**.'
+        ]
       },
-      {
-        valueKo: '화자 독점 이상치 교차 검증 (p < .05)',
-        valueEn: 'Cross-Validation of Team Monopolies (p < .05)',
-        icon: 'fas fa-user-check'
+      method: {
+        headlineKo: '84경기 · 45,660개 발화를 모아 언어 모델, 네트워크 분석, 통계 검증으로 분석했습니다.',
+        headlineEn: '45,660 utterances from 84 matches, analyzed with a language model, network analysis, and statistical tests.',
+        data: [
+          {
+            nameKo: '인게임 이벤트 로그 (Riot API)',
+            nameEn: 'In-game event logs (Riot API)',
+            descKo: '킬 · 오브젝트 처치 등 경기 중 일어난 사건을 밀리초 단위 시각과 함께 기록한 데이터',
+            descEn: 'Match events such as kills and objectives, each stamped to the millisecond'
+          },
+          {
+            nameKo: '팀 음성 대화 (Discord 봇)',
+            nameEn: 'Team voice chat (Discord bot)',
+            descKo: '5명의 음성 채널을 녹음해 텍스트로 바꾼(STT) 발화 45,660개',
+            descEn: 'Five-player voice channels recorded and transcribed (speech-to-text): 45,660 utterances'
+          },
+          {
+            nameKo: '선수 설문 · 코칭 스태프 인터뷰',
+            nameEn: 'Player surveys & coaching interviews',
+            descKo: '숫자로 나온 결과가 실제 팀 상황과 맞는지 확인하기 위한 자료',
+            descEn: 'Used to check that the numbers matched what was really happening in the team'
+          }
+        ],
+        methods: [
+          {
+            nameKo: '시계열 보간 (Interpolation)',
+            nameEn: 'Time-series interpolation',
+            descKo: '기록 주기가 다른 두 데이터의 시각을 수학적으로 맞춰 오차를 **50ms(0.05초) 미만**으로 정렬',
+            descEn: 'Mathematically aligns two streams recorded at different rates to **under 50 ms**'
+          },
+          {
+            nameKo: 'RoBERTa 언어 모델',
+            nameEn: 'RoBERTa language model',
+            descKo: '각 발화가 정보 공유 · 지시 · 수락 중 어떤 의도인지 자동으로 분류',
+            descEn: 'Automatically labels each utterance as informing, directing, or committing'
+          },
+          {
+            nameKo: '소셜 네트워크 분석 (SNA)',
+            nameEn: 'Social network analysis (SNA)',
+            descKo: '대화가 팀 전체에 고르게 퍼졌는지(밀도), 한 사람에게 쏠렸는지(중심화)를 계산',
+            descEn: 'Measures whether talk spreads across the team (density) or concentrates on one person (centralization)'
+          },
+          {
+            nameKo: '통계 검증 + 혼합 연구',
+            nameEn: 'Statistical tests + mixed methods',
+            descKo: '차이가 우연이 아닌지 가설 검증으로 확인하고, 설문 · 인터뷰 결과와 교차 확인',
+            descEn: 'Hypothesis tests rule out chance, and results are cross-checked against surveys and interviews'
+          }
+        ]
       },
-      {
-        valueKo: '오디오·로그 기반 코칭 도구 실효성 증명',
-        valueEn: 'Empirical E-Sports Coaching Diagnostics via Logs',
-        icon: 'fas fa-bullseye'
+      solution: {
+        headlineKo: '게임 기록과 음성을 자동으로 모으고 시각을 맞추는 수집 파이프라인부터 분석 · 리포트까지 직접 만들었습니다.',
+        headlineEn: 'I built the whole chain myself: automatic collection and time alignment of game logs and voice, then analysis and reporting.',
+        flow: [
+          { titleKo: '게임 이벤트 수집 (Riot API)', titleEn: 'Collect game events (Riot API)' },
+          { titleKo: '음성 녹음 · 텍스트 변환', titleEn: 'Record & transcribe voice' },
+          { titleKo: '시각 맞추기 (보간)', titleEn: 'Align timestamps (interpolation)' },
+          { titleKo: '발화 의도 분류 (RoBERTa)', titleEn: 'Classify intent (RoBERTa)' },
+          { titleKo: '대화 네트워크 분석 (SNA)', titleEn: 'Analyze the conversation network (SNA)' }
+        ],
+        pointsKo: [
+          '경기 시작과 종료를 자동으로 감지해 모든 이벤트를 **누락 없이(누락률 0%)** 기록하고, 경기가 끝나면 데이터를 검증한 뒤 리포트를 메일로 자동 발송했습니다.',
+          'Discord 봇이 5명의 음성을 끊김 없이 녹음하고 텍스트로 바꿔, 사람이 영상과 음성을 일일이 대조하던 작업을 없앴습니다.',
+          '짧은 시간 구간마다 대화 네트워크 지표를 자동 계산해, 경기 흐름에 따라 대화 구조가 어떻게 바뀌는지 추적했습니다.'
+        ],
+        pointsEn: [
+          'Match start and end were detected automatically so every event was logged with **0% loss**; after each match the data was validated and a report was emailed automatically.',
+          'A Discord bot recorded all five voices without gaps and transcribed them, replacing manual audio-to-video matching.',
+          'Network metrics were computed for each short time window to track how the conversation structure shifted during a match.'
+        ]
+      },
+      result: {
+        headlineKo: '결정적인 순간일수록 팀 대화가 "지시 → 수락" 중심으로 바뀌고 참여가 고르게 퍼진다는 것을 통계적으로 증명해, arXiv에 논문으로 공개했습니다.',
+        headlineEn: 'I showed statistically that at decisive moments team talk shifts to "direct → commit" and participation spreads out, and published it on arXiv.',
+        metrics: [
+          {
+            valueKo: '84경기 · 45,660개',
+            valueEn: '84 matches · 45,660',
+            labelKo: '분석한 경기 · 발화 수',
+            labelEn: 'Matches and utterances analyzed',
+            noteKo: '게임 기록 + 5인 음성을 결합한 데이터셋',
+            noteEn: 'Game logs combined with five-player voice'
+          },
+          {
+            valueKo: '< 50ms',
+            valueEn: '< 50 ms',
+            labelKo: '게임 기록 ↔ 음성 시각 오차',
+            labelEn: 'Timing error between logs and voice',
+            noteKo: '이벤트 누락률 0%',
+            noteEn: '0% event loss'
+          },
+          {
+            valueKo: 'p < .001',
+            valueEn: 'p < .001',
+            labelKo: '결정적 순간의 대화 구조 변화',
+            labelEn: 'Shift in conversation structure at decisive moments',
+            noteKo: '우연히 나올 확률 0.1% 미만',
+            noteEn: 'Less than a 0.1% chance of being random'
+          },
+          {
+            valueKo: 'arXiv:2512.20116',
+            valueEn: 'arXiv:2512.20116',
+            labelKo: '국제 학술 아카이브 논문 공개',
+            labelEn: 'Paper published on arXiv',
+            noteKo: '2저자 · 파이프라인 설계와 통계 분석 담당',
+            noteEn: 'Second author; pipeline design and statistics'
+          }
+        ],
+        pointsKo: [
+          '특정 프로팀(Pro B)에서 한 사람이 대화를 독점하는 **이상 패턴**을 숫자로 찾아냈고, 선수 설문(p < .05)과 인터뷰로 실제 "화자 독점" · "코칭 피드백 부재" 문제였음을 확인했습니다.',
+          '게임 기록과 음성만으로 팀의 소통 문제를 진단할 수 있음을 보여, **데이터 기반 코칭 도구**의 가능성을 입증했습니다.'
+        ],
+        pointsEn: [
+          'The numbers flagged an **anomaly** in one pro team (Pro B), where a single player dominated the talk; player surveys (p < .05) and interviews confirmed real "speaker monopoly" and "missing coaching feedback" issues.',
+          'Showing that game logs and voice alone can diagnose team communication problems made the case for **data-driven coaching tools**.'
+        ]
       }
-    ],
-
-    pipelineFlow: [
-      { step: '01', titleKo: 'Riot API & 게임 클라이언트', descKo: 'Unix Timestamp 기준 밀리초 단위 이벤트 실시간 수집' },
-      { step: '02', titleKo: 'Discord Voice Bot', descKo: '음성 패킷 청크 수집 및 STT 텍스트 변환' },
-      { step: '03', titleKo: '수학적 시계열 보간 (Interpolation)', descKo: '서로 다른 샘플링 주기 오차를 0.05초 미만으로 동기화' },
-      { step: '04', titleKo: 'RoBERTa 감성/의도 분류', descKo: '발화 문맥의 전술적 오더 및 감정 상태 벡터 임베딩' },
-      { step: '05', titleKo: '동적 SNA 그래프 모델링', descKo: 'Node(선수)-Edge(전파력) 네트워크 및 통계 가설 검증' }
-    ],
-
-    beforeAfter: {
-      beforeKo: '수작업으로 영상과 음성을 일일이 대조하느라 시간 오차가 초 단위로 벌어졌고, 주요 한타 발생 시점의 발화가 어떤 영향을 미쳤는지 정량적으로 분석할 수 없었습니다.',
-      beforeEn: 'Manual alignment of audio and video caused seconds of drift, preventing quantitative measurement of communicative influence during decisive teamfights.',
-      afterKo: '수학적 보간법 파이프라인으로 50ms 미만 밀리초 단위 오차로 자동 정렬되며, RoBERTa와 SNA를 통해 교전 시점의 정보 전파 패턴을 객관적 수치로 증명했습니다.',
-      afterEn: 'Automated interpolation pipeline reduced sync drift to < 50ms, quantitatively validating information propagation patterns via RoBERTa and SNA.'
     },
 
     sections: [
       {
-        num: '01',
-        titleKo: '01. Background & Problem (문제 정의 및 배경)',
-        titleEn: '01. Background & Problem (Problem Context & Bottlenecks)',
-        contentKo: `### e스포츠 소통 역학의 정량화 필요성
-리그 오브 레전드(LoL)와 같은 고속 e스포츠 환경에서는 0.1초 단위의 판단과 실시간 커뮤니케이션이 경기 승패를 결정합니다. 그러나 기존 분석은 KDA나 승패 결과 등 사후 지표에만 치우쳐 있어, 실제 경기 중 어떤 소통 구조와 의사결정 흐름이 승리를 견인하는지 객관적으로 규명하지 못했습니다.
-
-### 핵심 엔지니어링 및 분석 병목
-- **멀티모달 이종 데이터 수집 주기 불일치**: 비주기적 이벤트 트리거 방식의 인게임 로그와 비동기 패킷 청크 단위로 들어오는 Discord 음성 스트림은 수집 주기가 달라 동일한 시점으로 정밀 결합하기 어려웠습니다.
-- **맥락 부재 및 단순 집계의 한계**: 기존의 단순 발화량 총합 집계 방식은 주요 교전(오브젝트 한타, 갱킹 등) 시점의 전술적 의사결정 흐름과 팀 내 상호작용 역학을 설명할 수 없었습니다.`,
-        contentEn: `### Need for Quantitative Modeling in E-Sports Communication
-In high-velocity eSports like League of Legends (LoL), split-second decisions and real-time team communication dictate match outcomes. However, traditional post-hoc metrics (e.g., KDA, win/loss rates) fail to capture which communication structures genuinely drive victories.
-
-### Engineering & Analytical Bottlenecks
-- **Temporal Discrepancy in Multimodal Streams**: Aperiodic in-game event triggers and asynchronous Discord voice packet chunks operated on disjoint clocks, preventing microsecond alignment.
-- **Absence of Context in Aggregate Counts**: Simple speech quantity counters failed to explain communication dynamics and tactical decision workflows during critical teamfights.`
-      },
-      {
-        num: '02',
-        titleKo: '02. Discovery & Trigger (문제 인지 계기)',
-        titleEn: '02. Discovery & Trigger (Discovery Context)',
-        contentKo: `### "말이 많은 팀이 승리하는가?" — 총량 분석의 한계
-실제 팀 경기 음성 데이터와 인게임 타임라인을 대조하는 과정에서, 단순 발화량 총수와 경기 승률 간에 유의미한 상관관계가 없다는 점을 확인했습니다. 찰나의 1초에 스킬 연계가 오가는 결정적 순간(MoI: Moment of Interest)에는 잡담이 아닌 '맥락에 맞는 고순도 의사결정 오더'가 오가야 함을 발견했습니다.
-
-### 프로팀 vs 아마추어팀 간의 네트워크 이상치 포착
-프로팀과 아마추어팀의 데이터 비교 분석 중, 특정 프로팀(Pro B)에서 성적 저하와 함께 비정상적인 소통 지표(현저히 낮은 네트워크 밀도, 특정 1인 중심의 발언 독점)를 감지했습니다. 이를 통해 단순한 로그 수집을 넘어 팀 내 소통 구조와 의사결정의 질적 전환을 정밀 진단할 수 있는 프레임워크 구축을 결심했습니다.`,
-        contentEn: `### "Does Talking More Equal Winning?" — Limits of Aggregate Volume
-Cross-analyzing voice streams against in-game telemetry revealed no statistically significant correlation between total utterance count and win rate. Sub-second reactions during Moments of Interest (MoI) required contextualized tactical orders rather than sheer vocal volume.
-
-### Detecting Network Anomalies in Team Communications
-During comparative analyses between professional and amateur teams, we identified anomalies in a specific professional team (Pro B): abnormal performance drops coupled with low network density and high centralization (monopolized communication). This triggered the need for an empirical diagnostic framework.`
-      },
-      {
-        num: '03',
-        titleKo: '03. Approach & Methodology (접근 전략 및 가설)',
-        titleEn: '03. Approach & Methodology (Strategic Hypotheses)',
+        titleKo: '연구 설계 — 데이터셋 · 발화 분류 · 네트워크 모델',
+        titleEn: 'Research Design — Dataset, Speech Acts, Network Model',
+        tocKo: '연구 설계',
+        tocEn: 'Research design',
         contentKo: `### 1. 대규모 멀티모달 데이터셋 구축
 - **분석 표본**: 총 **84경기, 45,660개 발화**에 이르는 대규모 멀티모달(인게임 이벤트 + 다채널 음성) 데이터셋 구축
 - **절대 시계열 정합**: Riot API와 Discord Voice Bot에 Unix Timestamp를 결합하고 수학적 보간법(Interpolation)을 적용하여 동기화 오차를 50ms 미만으로 수렴
@@ -134,10 +211,10 @@ During comparative analyses between professional and amateur teams, we identifie
 - **맥락별 분할 분석**:
   - 경기 흐름: 14분 이전 라인전 단계 vs 14분 이후 한타·운영 단계
   - 교전 구간: 일반 파밍 구간 vs 핵심 교전(MoI: Moment of Interest) 구간
-- **통계적 가설 검증**: 네트워크 밀도(Density)와 중심화(Centralization)의 변화에 대한 다변량 통계 검증 ($p < .001$)
+- **통계적 가설 검증**: 네트워크 밀도(Density)와 중심화(Centralization)의 변화에 대한 다변량 통계 검증 (p < .001)
 
 ### 4. 혼합 연구(Mixed-Methods) 기반 교차 검증 설계
-- 정량 지표의 임상적 유효성을 뒷받침하기 위해 선수단 설문($p < .05$) 및 코칭 스태프 심층 인터뷰를 병행 설계`,
+- 정량 지표의 임상적 유효성을 뒷받침하기 위해 선수단 설문(p < .05) 및 코칭 스태프 심층 인터뷰를 병행 설계`,
         contentEn: `### 1. Large-Scale Multimodal Dataset
 - **Empirical Corpus**: Ingested and structured **84 matches and 45,660 utterances** combining in-game telemetries and multichannel voice recordings.
 - **Microsecond Synchronization**: Synchronized disparate logging clocks via universal Unix timestamps and mathematical interpolation down to < 50ms.
@@ -151,15 +228,16 @@ During comparative analyses between professional and amateur teams, we identifie
 ### 3. Dynamic Social Network Analysis (SNA)
 - **Graph Topology**: Modeled players as nodes and classified tactical intents as directed weighted edges.
 - **Contextual Segmentation**: Evaluated game phases (< 14m laning vs > 14m objective warfare) and engagement states (calm vs MoI: Moment of Interest).
-- **Hypothesis Testing**: Statistically tested network density and centralization shifts ($p < .001$).
+- **Hypothesis Testing**: Statistically tested network density and centralization shifts (p < .001).
 
 ### 4. Mixed-Methods Triangulation
-- Designed player questionnaires ($p < .05$) and in-depth coaching staff interviews to validate the practical accuracy of the quantitative network metrics.`
+- Designed player questionnaires (p < .05) and in-depth coaching staff interviews to validate the practical accuracy of the quantitative network metrics.`
       },
       {
-        num: '04',
-        titleKo: '04. Implementation & System (구현 및 해결 과정)',
-        titleEn: '04. Implementation & System (Engineering Execution)',
+        titleKo: '구현 — 수집 · 동기화 파이프라인과 분석 엔진',
+        titleEn: 'Implementation — Collection & Sync Pipeline, Analysis Engine',
+        tocKo: '구현',
+        tocEn: 'Implementation',
         contentKo: `### 1. 실시간 데이터 수집 & 무결성 파이프라인
 - **Riot API & 게임 클라이언트 스키마 엔진**: 킬/데스, 주요 오브젝트 처치 등 경기 라이프사이클 이벤트를 밀리초 단위로 수집하고 무결성(0% Drop) 보장
 - **Discord Audio Capture Bot**: 5인 음성 채널을 분할 패킷 청크로 무손실 버퍼링 및 Whisper STT 텍스트 변환 파이프라인 구축
@@ -182,31 +260,32 @@ During comparative analyses between professional and amateur teams, we identifie
 - Automated post-match triage reports diagnosing communication bottlenecks and speaker monopoly via automated email delivery.`
       },
       {
-        num: '05',
-        titleKo: '05. Results & Impact (연구 결과 및 성과)',
-        titleEn: '05. Results & Impact (Measurable Impact & Publication)',
+        titleKo: '연구 결과 상세',
+        titleEn: 'Detailed Findings',
+        tocKo: '연구 결과',
+        tocEn: 'Findings',
         highlight: true,
-        contentKo: `### 1. 맥락 기반 소통 변화 규명 ($p < .001$)
+        contentKo: `### 1. 맥락 기반 소통 변화 규명 (p < .001)
 - **84경기(45,660개 발화)** 대상 SNA 네트워크 분석을 수행하여 경기 흐름 및 교전에 따른 소통의 질적 전환을 입증했습니다.
 - **의사결정 패턴 전환**: 핵심 교전(MoI) 구간 및 경기 후반부(14분 이후)로 갈수록 단순 정보 공유에서 **'지시-수락(Directive → Commissive)'** 중심의 고속 의사결정 체계로 전환됨을 규명했습니다.
-- **네트워크 구조의 유연화**: 교전 상황에서 팀원 간 발언 참여 폭(밀도)이 유의미하게 확장되고, 특정 인물에 편중되던 발언 의존도(중심화)가 완화되는 유연한 팀워크 구조를 통계적으로 증명했습니다 ($p < .001$).
+- **네트워크 구조의 유연화**: 교전 상황에서 팀원 간 발언 참여 폭(밀도)이 유의미하게 확장되고, 특정 인물에 편중되던 발언 의존도(중심화)가 완화되는 유연한 팀워크 구조를 통계적으로 증명했습니다 (p < .001).
 
-### 2. 정량 지표 기반 팀 진단 프레임워크 검증 ($p < .05$)
+### 2. 정량 지표 기반 팀 진단 프레임워크 검증 (p < .05)
 - **이상치 조기 발견**: 프로팀과 아마추어팀 비교 분석 중 발견된 특정 프로팀(Pro B)의 이상치(낮은 밀도, 비대칭적으로 높은 중심화)를 감지했습니다.
-- **설문 & 심층 인터뷰 교차 검증**: 선수단 설문($p < .05$) 및 심층 인터뷰와의 교차 검증을 통해, 오디오 및 인게임 로그만으로 도출한 네트워크 지표가 실제 팀 내 **'특정 화자 독점 현상'** 및 **'코칭 피드백 부재'** 문제를 정확히 진단해 냄을 증명했습니다.
+- **설문 & 심층 인터뷰 교차 검증**: 선수단 설문(p < .05) 및 심층 인터뷰와의 교차 검증을 통해, 오디오 및 인게임 로그만으로 도출한 네트워크 지표가 실제 팀 내 **'특정 화자 독점 현상'** 및 **'코칭 피드백 부재'** 문제를 정확히 진단해 냄을 증명했습니다.
 - **데이터 기반 이스포츠 코칭 실효성 입증**: 주관적인 감에 의존하던 기존 피드백에서 벗어나, 데이터만으로 팀의 의사소통 병목을 비침습적으로 정밀 진단하는 코칭 도구의 실효성을 확립했습니다.
 
 ### 3. 학술적 공인 및 기술 성과
 - **국제 학술 프리프린트(arXiv:2512.20116) 공식 등재**: 엄격한 통계적 가설 검증과 분석 방법론의 신뢰성을 인정받아 글로벌 학술 아카이브에 정식 논문으로 등재되었습니다.
 - **멀티모달 시계열 오차 50ms 미만 & 0% 누락률**: 이종 데이터 엔지니어링 파이프라인의 완벽한 무결성을 입증했습니다.`,
-        contentEn: `### 1. Uncovering Context-Driven Communication Shifts ($p < .001$)
+        contentEn: `### 1. Uncovering Context-Driven Communication Shifts (p < .001)
 - Conducted dynamic SNA across **84 matches (45,660 utterances)**, proving qualitative structural shifts across match phases.
 - **Shift to Directive-Commissive Patterns**: Statistically validated that during Moments of Interest (MoI) and late-game phases (> 14m), communication shifted rapidly from passive information sharing to agile **'Directive → Commissive'** decision-making.
-- **Network Democratization**: Demonstrated that decisive teamfights significantly increased team-wide participation (network density) while decreasing reliance on any single individual (centralization) ($p < .001$).
+- **Network Democratization**: Demonstrated that decisive teamfights significantly increased team-wide participation (network density) while decreasing reliance on any single individual (centralization) (p < .001).
 
-### 2. Validating Quantitative Team Diagnostic Frameworks ($p < .05$)
+### 2. Validating Quantitative Team Diagnostic Frameworks (p < .05)
 - **Anomaly Detection**: Pinpointed anomalous metrics in a professional team (Pro B) characterized by low network density and high centralization.
-- **Triangulation via Surveys & Interviews**: Cross-validated with player surveys ($p < .05$) and coaching staff interviews, proving that telemetry-derived network metrics precisely detected internal **'speaker monopoly'** and **'absence of coaching feedback'**.
+- **Triangulation via Surveys & Interviews**: Cross-validated with player surveys (p < .05) and coaching staff interviews, proving that telemetry-derived network metrics precisely detected internal **'speaker monopoly'** and **'absence of coaching feedback'**.
 - **Empirical E-Sports Coaching Tools**: Established the validity of non-invasive, data-driven coaching tools replacing subjective intuition with empirical diagnostics.
 
 ### 3. Academic Recognition & Technical Robustness
@@ -214,147 +293,273 @@ During comparative analyses between professional and amateur teams, we identifie
 - **Sub-50ms Multimodal Alignment & 0% Drop Rate**: Proven zero-loss pipeline robustness under high-volume streaming conditions.`
       },
       {
-        num: '06',
-        titleKo: '06. Learnings & Retrospective (회고 및 배운 점)',
-        titleEn: '06. Learnings & Retrospective (Key Takeaways)',
+        titleKo: '배운 점',
+        titleEn: 'Lessons Learned',
+        tocKo: '배운 점',
+        tocEn: 'Lessons',
         contentKo: `### 1. 데이터 분석의 본질은 실무 페인 포인트 해결
 데이터 엔지니어링과 분석은 단순히 숫자를 나열하는 것을 넘어, 현장의 실질적인 문제(화자 독점, 피드백 부재)를 정밀 진단하고 실행 가능한 해결책을 제시할 때 진정한 가치를 발휘함을 배웠습니다.
 
 ### 2. 정량 지표와 정성 조사의 삼각검증(Triangulation)
-단일 데이터 소스에 매몰되지 않고, 로그 기반 SNA 지표($p < .001$)를 현장 인터뷰 및 설문($p < .05$)과 교차 검증함으로써 모델의 현실 설명력을 극대화하는 혼합 연구 방법론의 가치를 체득했습니다.`,
+단일 데이터 소스에 매몰되지 않고, 로그 기반 SNA 지표(p < .001)를 현장 인터뷰 및 설문(p < .05)과 교차 검증함으로써 모델의 현실 설명력을 극대화하는 혼합 연구 방법론의 가치를 체득했습니다.`,
         contentEn: `### 1. True Data Science Solves Real Operational Bottlenecks
 Learned that data engineering and analytics achieve true impact when diagnosing real operational bottlenecks (speaker monopoly, lack of coaching feedback) and offering actionable interventions rather than mere metric reporting.
 
 ### 2. Power of Mixed-Methods Triangulation
-Gained methodological mastery in combining quantitative telemetry/SNA metrics ($p < .001$) with qualitative surveys and interviews ($p < .05$), safeguarding against analytical blindspots and ensuring grounded empirical truth.`
+Gained methodological mastery in combining quantitative telemetry/SNA metrics (p < .001) with qualitative surveys and interviews (p < .05), safeguarding against analytical blindspots and ensuring grounded empirical truth.`
       }
     ]
   },
   // =========================================================================
-  // 2. Automation Test Tool
-  //    (직접 개발한 자동화 테스트 툴의 개념을 넥슨 Open API의 FC Online 매치 상세 데이터에 확장 적용해 서술)
+  // 2. Game Data Quality Guard (게임 플레이 로그 데이터 품질 관리 툴)
+  //    실무 데이터 · 화면은 비공개 → 수치는 실무 적용 결과(사내 명칭 제외),
+  //    기술 상세 예시는 같은 원리를 넥슨 Open API의 FC Online 매치 상세 데이터에 적용해 서술
   // =========================================================================
   {
-    id: 'entry-automation-test',
-    category: 'Test Automation & Tooling',
-    badgeTextKo: '진행 중 (Active)',
-    badgeTextEn: 'Active Project',
+    id: 'entry-data-quality-guard',
+    aliases: ['entry-automation-test'],
+    category: 'Data Quality & Validation Automation',
+    badgeTextKo: '실무 적용 중',
+    badgeTextEn: 'In Production Use',
     badgeType: 'info',
-    titleKo: '자동화 테스트 툴 — 경기 데이터 정합성 자동 검증',
-    titleEn: 'Automation Test Tool — Automated Match Data Integrity Checks',
-    tabLabelKo: '자동화 테스트 툴',
-    tabLabelEn: 'Automation Test Tool',
-    oneLinerKo: '직접 개발한 자동화 테스트 툴의 개념을 넥슨 FC Online Open API 매치 상세 데이터에 확장 적용하면, 경기 한 판에서 만들어지는 수백 개의 값이 "규칙대로, 서로 모순 없이" 기록되었는지를 사람 대신 자동으로 검증할 수 있습니다.',
-    oneLinerEn: 'Extending the concept of my automation test tool to the FC Online Open API match detail data lets the hundreds of values produced by a match be verified automatically: recorded by the rules and consistent with each other.',
-    roleKo: '개인 프로젝트 · 설계 및 풀스택 개발',
-    roleEn: 'Personal Project · Design & Full-Stack Development',
+    titleKo: '게임 데이터 품질 가드 — 플레이 로그가 정확하게 쌓이도록 지키는 자동 검증 툴',
+    titleEn: 'Game Data Quality Guard — Keeping Gameplay Logs Accurate, Automatically',
+    tabLabelKo: '데이터 품질 가드',
+    tabLabelEn: 'Data Quality Guard',
+    oneLinerKo: '게임이 플레이 중에 남기는 로그 데이터는 출시 후 유저 분석 · 밸런스 조정 · 기능 개선의 근거가 됩니다. 이 데이터가 빠짐없이, 형식에 맞게, 서로 모순 없이 기록되는지를 사람 대신 자동으로 확인해 확인 시간을 약 80% 줄인 데이터 품질 관리 툴입니다.',
+    oneLinerEn: 'Gameplay log data is what post-launch player analytics, balancing, and feature decisions are built on. This data quality tool automatically checks that the data is complete, well-formed, and internally consistent, cutting checking time by about 80%.',
+    roleKo: '기획 · 설계 · 풀스택 개발 (개인 주도로 시작 → 실무 데이터 검증에 적용)',
+    roleEn: 'Planning, design & full-stack development (started on my own initiative, now used in day-to-day data verification)',
+    noticeKo: '회사 내부 데이터와 화면은 공개할 수 없어, 수치는 실무 적용 결과를 사내 명칭 없이 적었고 기술 상세의 예시는 같은 원리를 넥슨 Open API에 공개된 FC Online 매치 데이터에 적용해 설명합니다.',
+    noticeEn: 'Internal data and screens are confidential. Figures come from real use with internal names removed, and the deep-dive examples apply the same approach to public FC Online match data from the Nexon Open API.',
     period: '2025.12 – 현재 (Active)',
     periodEn: '2025.12 – Present (Active)',
-    techStack: ['Python', 'FastAPI', 'React', 'Data Schema Validation', 'pandas', 'FFmpeg & OpenCV', 'RapidFuzz', 'cx_Freeze'],
+    techStack: ['Python', 'FastAPI', 'React', 'YAML Data Schema', 'pandas', 'FFmpeg & OpenCV', 'RapidFuzz', 'cx_Freeze'],
 
-    metricsHeadingKo: '기대 효과 요약 (Expected Benefits)',
-    metricsHeadingEn: 'Expected Benefits',
-    keyMetrics: [
-      {
-        valueKo: '사람이 데이터를 하나씩 확인하던 반복 검증 시간 단축',
-        valueEn: 'Less Time Spent on Repetitive Manual Data Checks',
-        icon: 'fas fa-stopwatch'
+    story: {
+      problem: {
+        headlineKo: '게임이 남기는 플레이 로그 데이터가 정확한지, 사람이 하나하나 눈으로 확인하고 있었습니다.',
+        headlineEn: 'People were checking, one value at a time, whether the gameplay log data recorded by the game was correct.',
+        pointsKo: [
+          '게임은 플레이 중 패스 · 슈팅 · 태클 같은 행동이 일어날 때마다 **로그 데이터**를 남깁니다. 이 데이터는 출시 후 유저 행동 분석, 밸런스 조정, 기능 개선의 근거가 되기 때문에, 값 하나만 빠지거나 틀려도 그 위에서 내린 판단이 모두 어긋납니다.',
+          '하지만 확인은 사람 손으로 이뤄졌습니다. 로그를 직접 내려받아 값을 하나씩 열어 대조하다 보니, **7개 기능 · 129개 확인 항목을 한 번 점검하는 데 숙련자도 120~180분**이 걸렸습니다.',
+          '새로 만든 기능은 참고할 기록이 없어서, **누가 확인하느냐에 따라 판정 기준과 품질이 달라졌습니다.**'
+        ],
+        pointsEn: [
+          'Every pass, shot, and tackle during play leaves a line of **log data**. After launch this data drives player analytics, balancing, and feature decisions, so a single missing or wrong value skews every decision built on it.',
+          'Checking was manual: download the logs, open each value, compare by hand. **One pass over 7 features and 129 check items took even an experienced tester 120–180 minutes.**',
+          'New features had no history to compare against, so **results depended on who did the checking.**'
+        ]
       },
-      {
-        valueKo: '아낀 시간을 엣지케이스 탐색에 집중',
-        valueEn: 'Freed-Up Time Redirected to Edge-Case Hunting',
-        icon: 'fas fa-magnifying-glass'
+      approach: {
+        headlineKo: '"무엇이 정상인가"를 규칙으로 한 번 정해 두고, 반복 확인은 툴이, 판단이 필요한 예외는 사람이 맡도록 일을 나눴습니다.',
+        headlineEn: 'Define "what correct looks like" once as rules, let the tool do the repetitive checks, and leave judgment calls on exceptions to people.',
+        pointsKo: [
+          '사람이 머릿속으로 하던 확인 기준(예: "성공 횟수는 시도 횟수보다 클 수 없다")을 **코드 규칙으로 옮기면**, 누가 언제 돌려도 같은 결과가 나옵니다.',
+          '데이터 구조가 바뀔 때마다 툴을 고치지 않도록, 검사 기준을 코드가 아니라 **데이터 명세(스키마) 파일에서 읽어 오게** 설계했습니다.',
+          '목표는 세 가지였습니다. ① 확인 시간 단축 ② 사람마다 다르지 않은 **일관된 Pass / Fail 판정** ③ 아낀 시간을 드물지만 중요한 **예외 상황(엣지 케이스)** 확인에 쓰기.'
+        ],
+        pointsEn: [
+          'Turning the checks people did in their heads (e.g. "successes can never exceed attempts") **into code rules** gives the same answer no matter who runs it, or when.',
+          'So the tool would not need rewriting whenever the data changed, the criteria are **read from a data specification (schema) file** rather than hard-coded.',
+          'Three goals: ① less checking time, ② **consistent pass / fail calls** regardless of who checks, ③ more time for rare but important **edge cases**.'
+        ]
       },
-      {
-        valueKo: '형식 · 요약↔상세 · 관계 · 참가자 간 4단계 정합성 검사',
-        valueEn: '4-Layer Checks: Format, Summary↔Detail, Relations, Cross-Participant',
-        icon: 'fas fa-layer-group'
+      method: {
+        headlineKo: '플레이 로그 · 데이터 명세 · 녹화 영상을 재료로, 데이터 품질의 네 가지 기준을 자동 검사로 바꿨습니다.',
+        headlineEn: 'Using gameplay logs, the data spec, and recordings, I turned four data quality criteria into automatic checks.',
+        data: [
+          {
+            nameKo: '게임 플레이 로그',
+            nameEn: 'Gameplay logs',
+            descKo: '경기 중 행동(이벤트)이 일어날 때마다 남는 기록. 이벤트 **35종**과 모든 로그에 공통으로 붙는 **공통 항목 40개**',
+            descEn: 'A record written every time an in-game event happens: **35 event types** plus **40 common fields** shared by every log'
+          },
+          {
+            nameKo: '데이터 명세 (스키마)',
+            nameEn: 'Data specification (schema)',
+            descKo: '각 값이 어떤 형식 · 범위여야 하는지 정리한 설계 문서. YAML 파일로 관리해 툴이 직접 읽음',
+            descEn: 'The document saying what format and range each value must have, kept as YAML files the tool reads directly'
+          },
+          {
+            nameKo: '플레이 녹화 영상',
+            nameEn: 'Gameplay recordings',
+            descKo: '기록된 값이 실제 화면과 맞는지 눈으로 대조하기 위한 자료',
+            descEn: 'Video used to confirm that recorded values match what actually happened on screen'
+          },
+          {
+            nameKo: '기존 이슈 목록',
+            nameEn: 'Known-issue list',
+            descKo: '이미 보고된 문제 기록. 같은 문제를 다시 보고하지 않기 위해 사용',
+            descEn: 'Previously reported problems, used to avoid filing the same issue twice'
+          }
+        ],
+        methods: [
+          {
+            nameKo: '데이터 품질 4가지 기준',
+            nameEn: 'Four data quality criteria',
+            descKo: '**완전성**(빠짐없이) → **유효성**(정해진 형식 · 범위) → **정합성**(값끼리 앞뒤가 맞게) → **일관성**(서로 다른 기록끼리 일치) 순서로 검사',
+            descEn: 'Checked in order: **completeness** (nothing missing) → **validity** (right format and range) → **consistency** (values agree) → **cross-record agreement** (separate records match)'
+          },
+          {
+            nameKo: '규칙 모듈 + 스키마 참조',
+            nameEn: 'Rule modules + schema reference',
+            descKo: '이벤트마다 검사 규칙을 독립 모듈로 두고, 기준값은 명세에서 읽어 자동으로 판정',
+            descEn: 'One independent rule module per event type, with expected values read from the spec'
+          },
+          {
+            nameKo: '시간 동기화',
+            nameEn: 'Time synchronization',
+            descKo: '로그 시각과 영상 시각을 맞춰, 문제가 된 기록의 장면을 클릭 한 번으로 재생',
+            descEn: 'Aligns log time with video time so the scene behind a flagged record plays in one click'
+          },
+          {
+            nameKo: '유사도 매칭',
+            nameEn: 'Similarity matching',
+            descKo: '새로 찾은 문제를 기존 이슈와 비교해 **처음 보는 문제만** 남김',
+            descEn: 'Compares new findings with known issues so **only genuinely new problems** remain'
+          }
+        ]
       },
-      {
-        valueKo: '데이터 정합성의 지속적 트래킹 기반 마련',
-        valueEn: 'Foundation for Continuous Data Integrity Tracking',
-        icon: 'fas fa-chart-line'
+      solution: {
+        headlineKo: '로그 수집부터 품질 검사 · 장면 확인 · 이슈 대조 · 결과 판정까지 한 프로그램 안에서 끝나도록 만들었습니다.',
+        headlineEn: 'I built one program that covers everything from collecting logs to quality checks, scene review, issue matching, and the final verdict.',
+        flow: [
+          { titleKo: '로그 자동 수집', titleEn: 'Collect logs automatically' },
+          { titleKo: '명세 기반 품질 검사', titleEn: 'Schema-based quality checks' },
+          { titleKo: '문제 장면 자동 재생', titleEn: 'Replay the flagged scene' },
+          { titleKo: '기존 이슈와 대조', titleEn: 'Match against known issues' },
+          { titleKo: 'Pass / Fail 리포트', titleEn: 'Pass / fail report' }
+        ],
+        pointsKo: [
+          '수동으로 내려받던 로그를 여러 테스트 서버에서 **자동으로 모으고**, 클릭 한 번으로 품질 검사까지 실행합니다.',
+          '**오탐(정상인데 문제로 잘못 잡는 것)을 줄이는 데** 가장 공을 들였습니다. 명세상 "없음"을 뜻하는 값(-1 등)과 특정 조건에서만 기록되는 값을 구분하는 규칙을 넣어, 실제 로그 기준 오탐을 **38건 → 0건**으로 줄였습니다. 경고가 너무 많은 툴은 결국 아무도 믿지 않기 때문입니다.',
+          '느린 원인을 직접 측정해 보니 검사 자체가 아니라 **선수 이름 조회**가 시간 대부분을 쓰고 있었습니다. 조회 방식을 바꿔 로그 1,001건 검사가 **116초 → 10.8초**로 빨라졌고, 바꾸기 전후 결과가 한 글자도 다르지 않은지 확인했습니다.',
+          '별도 설치 없이 실행되는 프로그램으로 빌드해 실무 환경에서 바로 쓸 수 있게 했습니다.'
+        ],
+        pointsEn: [
+          'Logs that used to be downloaded by hand are **collected automatically** from multiple test servers, and the quality checks run with one click.',
+          'The most effort went into **cutting false alarms** (correct data flagged as wrong). Rules now recognize values the spec defines as "none" (such as -1) and fields recorded only under certain conditions, bringing false alarms on real logs from **38 to 0**. A tool that cries wolf stops being trusted.',
+          'Profiling showed the slow part was not the checking but **player-name lookups**. Changing the lookup cut a 1,001-log run from **116 s to 10.8 s**, and the output was verified to be identical before and after.',
+          'It ships as a no-install executable so it can be used straight away at work.'
+        ]
+      },
+      result: {
+        headlineKo: '확인 시간이 약 80% 줄었고, 누가 확인해도 같은 기준으로 판정할 수 있게 되었습니다.',
+        headlineEn: 'Checking time fell by about 80%, and anyone now gets the same verdict under the same criteria.',
+        metrics: [
+          {
+            valueKo: '120~180분 → 20~30분',
+            valueEn: '120–180 → 20–30 min',
+            labelKo: '129개 항목(7개 기능) 전체 확인 시간',
+            labelEn: 'Time to check all 129 items (7 features)',
+            noteKo: '약 80% 이상 단축',
+            noteEn: 'About 80%+ faster'
+          },
+          {
+            valueKo: '116초 → 10.8초',
+            valueEn: '116 s → 10.8 s',
+            labelKo: '로그 1,001건 자동 품질 검사',
+            labelEn: 'Automated check of 1,001 logs',
+            noteKo: '약 10배 빨라짐 · 결과는 변경 전과 동일',
+            noteEn: 'About 10× faster, identical results'
+          },
+          {
+            valueKo: '38건 → 0건',
+            valueEn: '38 → 0',
+            labelKo: '실제 로그 기준 오탐',
+            labelEn: 'False alarms on real logs',
+            noteKo: '정상 데이터를 문제로 잘못 잡은 경우',
+            noteEn: 'Correct data wrongly flagged'
+          },
+          {
+            valueKo: '35종 · 40개',
+            valueEn: '35 · 40',
+            labelKo: '규칙이 적용된 이벤트 종류 · 공통 항목',
+            labelEn: 'Event types and common fields covered',
+            noteKo: '명세 파일만 추가하면 검사 범위 확장',
+            noteEn: 'Coverage grows by adding spec files'
+          }
+        ],
+        pointsKo: [
+          '확인 기준이 규칙으로 고정되어 **담당자 숙련도에 따른 판정 차이가 줄었고**, 반복 확인을 툴이 맡으면서 사람은 규칙으로 잡기 어려운 예외 상황 검증에 시간을 쓸 수 있게 되었습니다.',
+          '라인업 추천 기능의 결과를 실제 선수 데이터와 대조하는 화면도 같은 프로그램에 통합해, 스쿼드 1개당 **20분 이상** 걸리던 수동 계산 · 대조를 자동 조회와 실시간 점수 비교로 바꿨습니다. (해당 테스트 효율 80% 이상 향상)'
+        ],
+        pointsEn: [
+          'With criteria fixed as rules, **results no longer depend on who checks**, and people spend their time on edge cases that rules cannot easily capture.',
+          'A screen that compares lineup-recommendation output with the real player data was folded into the same tool, replacing **20+ minutes** of manual calculation and comparison per squad with automatic lookup and live score comparison (80%+ more efficient for that test).'
+        ]
       }
-    ],
-
-    pipelineFlow: [
-      { step: '01', titleKo: '매치 데이터 불러오기', titleEn: 'Load Match Data' },
-      { step: '02', titleKo: '데이터 스키마 참조 형식 검사', titleEn: 'Schema-Referenced Format Checks' },
-      { step: '03', titleKo: '값 · 관계 정합성 검사', titleEn: 'Value & Relation Consistency' },
-      { step: '04', titleKo: '영상 · 피치 시각화 대조', titleEn: 'Video & Pitch Cross-Check' },
-      { step: '05', titleKo: '결과 리포트 & 추세 트래킹', titleEn: 'Reports & Trend Tracking' }
-    ],
-
-    beforeAfter: {
-      beforeKo: '경기 데이터를 사람이 직접 검증하면 수십 개 항목을 하나씩 열어 보고 합계와 내역을 손으로 계산해야 합니다. 시간 대부분이 반복 확인에 쓰여, 정작 중요한 예외 상황(엣지케이스)을 찾을 여유가 부족합니다.',
-      beforeEn: 'Manual verification means opening dozens of fields and hand-calculating totals. Most time goes to repetition, leaving little room to hunt for the edge cases that matter.',
-      afterKo: '툴이 데이터 스키마를 참조해 형식 · 관계 · 참가자 간 검사를 한 번에 끝내고, 사람은 어긋난 항목과 엣지케이스에만 집중합니다. 검증 결과가 쌓이면서 데이터 정합성을 꾸준히 추적할 수 있습니다.',
-      afterEn: 'The tool runs format, relation, and cross-participant checks against the data schema in one pass; people focus on mismatches and edge cases, and accumulated results enable ongoing integrity tracking.'
     },
 
     sections: [
       {
-        num: '01',
-        titleKo: '01. Background & Concept (배경 및 툴 개념)',
-        titleEn: '01. Background & Concept',
-        contentKo: `> 실제 적용 데이터와 화면은 공개할 수 없어, 같은 개념을 넥슨 Open API에 공개된 FC Online 매치 상세(match-detail) 데이터에 확장 적용하는 방식으로 설명합니다.
+        titleKo: '원리 — 값 하나가 맞아도 전체는 틀릴 수 있다 (공개 데이터 예시)',
+        titleEn: 'Principle — Every Value Can Be Valid While the Whole Is Wrong (Public-Data Example)',
+        tocKo: '원리',
+        tocEn: 'Principle',
+        contentKo: `> 실무 데이터와 화면은 공개할 수 없어, 같은 원리를 넥슨 Open API에 공개된 FC Online 매치 상세(match-detail) 데이터에 적용해 설명합니다.
 
-### 1. 직접 개발한 자동화 테스트 툴의 핵심 개념
-데이터 스키마를 참조해 "어떤 값이 어떤 모양으로 있어야 하는지"를 알고, 규칙을 적용해 "값끼리 서로 맞는지"를 자동으로 검증하는 구조입니다. 대상 데이터의 구조만 알면 같은 방식으로 다른 데이터에도 적용할 수 있습니다.
+### 1. 데이터 품질이란 — "빠짐없이, 형식대로, 서로 맞게"
+데이터 품질은 값이 그냥 "있는지"가 아니라, 분석에 써도 될 만큼 믿을 수 있는지를 말합니다. 이 툴은 아래 네 가지 기준으로 데이터를 확인합니다.
+- **완전성**: 있어야 할 값이 빠짐없이 기록되었는가
+- **유효성**: 값이 약속된 형식 · 범위 · 코드 안에 있는가
+- **정합성**: 요약과 상세 내역, 값과 값이 서로 앞뒤가 맞는가
+- **일관성**: 서로 다른 기록(예: 두 참가자의 기록)끼리 일치하는가
 
 ### 2. 왜 FC Online 매치 상세 데이터인가
-FC Online 매치 상세 데이터에는 매치 하나에 참가자별 \`matchDetail\`(결과, 점유율, 카드, 컨트롤러), \`shoot\`(슈팅·골 요약), \`shootDetail[]\`(슈팅마다 시간·좌표·종류·결과·선수), \`pass\`, \`defence\`, 그리고 선수별 \`player[].status\`까지 수백 개의 값이 담깁니다. 요약값과 상세 내역, 참가자와 참가자 사이가 서로 맞물려 있어 정합성 검증을 보여주기에 좋은 예시입니다.
+FC Online 매치 하나에는 참가자별 \`matchDetail\`(결과, 점유율, 카드, 컨트롤러), \`shoot\`(슈팅·골 요약), \`shootDetail[]\`(슈팅마다 시간·좌표·종류·결과·선수), \`pass\`, \`defence\`, 그리고 선수별 \`player[].status\`까지 수백 개의 값이 담깁니다. 요약값과 상세 내역, 참가자와 참가자 사이가 서로 맞물려 있어 데이터 품질 검사를 보여주기에 좋은 예시입니다.
 
 ### 3. 값 하나가 맞아도 전체는 틀릴 수 있다
-각 값의 형식이 올바르더라도 서로 맞물려야 하는 값들이 어긋나면 데이터는 신뢰할 수 없습니다. 예를 들어 \`goalTotal\`은 명세상 \`goalInPenalty + goalOutPenalty + goalPenaltyKick\`과 같아야 하고, \`shootDetail\`에서 결과가 골(\`result: 3\`)인 슈팅 수와도 맞아야 합니다. 이런 관계를 사람이 매번 손으로 확인하기에는 한계가 있습니다.`,
-        contentEn: `> Real data and screens are private, so this case study applies the same concept to the public FC Online match detail data from the Nexon Open API.
+각 값의 형식이 올바르더라도 서로 맞물려야 하는 값들이 어긋나면 데이터는 신뢰할 수 없습니다. 예를 들어 \`goalTotal\`은 명세상 \`goalInPenalty + goalOutPenalty + goalPenaltyKick\`과 같아야 하고, \`shootDetail\`에서 결과가 골(\`result: 3\`)인 슈팅 수와도 맞아야 합니다. 이런 관계는 사람이 매번 손으로 확인하기 어렵기 때문에 규칙으로 만들어 자동으로 확인합니다.`,
+        contentEn: `> Internal data and screens are confidential, so the same approach is shown on the public FC Online match detail data from the Nexon Open API.
 
-### 1. Core Concept of the Tool
-The tool references a data schema to know what each value should look like, then applies rules to verify that values agree with each other. Knowing a dataset's structure is enough to apply the same approach elsewhere.
+### 1. What Data Quality Means — Complete, Well-Formed, Consistent
+Data quality is not whether a value exists but whether it can be trusted for analysis. The tool checks four criteria:
+- **Completeness**: is every required value recorded?
+- **Validity**: is each value within its agreed format, range, and codes?
+- **Consistency**: do summaries agree with line items, and values with each other?
+- **Cross-record agreement**: do separate records (e.g. the two participants) agree?
 
 ### 2. Why FC Online Match Detail Data
-A single match holds per-participant \`matchDetail\`, \`shoot\`, \`shootDetail[]\`, \`pass\`, \`defence\`, and per-player \`player[].status\`: hundreds of interlocking values, ideal for showing integrity checks.
+A single match holds per-participant \`matchDetail\` (result, possession, cards, controller), \`shoot\` (shot and goal totals), \`shootDetail[]\` (time, position, type, result, and player per shot), \`pass\`, \`defence\`, and per-player \`player[].status\`: hundreds of interlocking values, a good showcase for quality checks.
 
 ### 3. Every Value Can Be Valid While the Whole Is Wrong
-\`goalTotal\` should equal \`goalInPenalty + goalOutPenalty + goalPenaltyKick\` and the number of \`shootDetail\` entries with \`result: 3\`. Checking such relations by hand does not scale.`
+\`goalTotal\` must equal \`goalInPenalty + goalOutPenalty + goalPenaltyKick\` and also the number of \`shootDetail\` entries with \`result: 3\` (goal). Relations like this are impractical to check by hand every time, so they become rules.`
       },
       {
-        num: '02',
-        titleKo: '02. How the Tool Works (툴 구조)',
-        titleEn: '02. How the Tool Works',
-        contentKo: `### 1. 데이터 스키마 참조
-- 데이터 스키마를 참조해 검사할 항목과 타입, 허용 값을 자동으로 정합니다. 데이터 구조가 바뀌어도 스키마만 갱신하면 툴 코드를 고칠 필요가 없습니다.
+        titleKo: '툴 구조와 데이터 흐름',
+        titleEn: 'Tool Structure & Data Flow',
+        tocKo: '구조',
+        tocEn: 'Structure',
+        contentKo: `### 1. 데이터 명세(스키마) 참조
+- 검사할 항목과 타입, 허용 값을 명세 파일(YAML)에서 읽어 옵니다. 데이터 구조가 바뀌어도 명세만 갱신하면 툴 코드를 고칠 필요가 없습니다.
 
 ### 2. 중첩 · 배열 구조 자동 탐색
 - \`matchInfo[1].player[5].status.tackle\`처럼 깊이 들어간 값도 경로만으로 찾아 검사합니다.
 
-### 3. 규칙 모듈과 맥락 분기
-- 항목별 규칙을 독립 모듈로 두고, 매치 종류 같은 맥락에 따라 다른 기대값을 적용합니다.
+### 3. 이벤트별 규칙 모듈과 맥락 분기
+- 이벤트마다 규칙을 독립 모듈로 두고, 판정은 모두 이 규칙 모듈에서만 내리도록 일원화해 같은 문제가 두 번 보고되지 않게 했습니다. 매치 종류 같은 맥락에 따라 기대값을 다르게 적용합니다.
 
 ### 4. 영상 동기화 · 피치 시각화
-- 화면 녹화 시각과 데이터의 시각을 맞춰 검사 결과에서 해당 장면으로 이동하고, 선수·공·슈팅 좌표를 2D/3D 피치 위에 그립니다.
+- 녹화 영상의 시각과 데이터의 시각을 맞춰 검사 결과에서 해당 장면으로 바로 이동하고, 선수 · 공 · 슈팅 좌표를 2D / 3D 피치 위에 그려 숫자만으로는 안 보이는 이상을 눈으로 확인합니다.
 
-### 5. 결과 리포트 · 탭 단위 확장
-- 항목별 통과/실패 리포트를 만들고, 이미 알려진 문제와 유사도로 대조해 새로 확인할 것만 남깁니다. 새 테스트 기능은 탭으로 붙일 수 있고, 별도 설치 없이 실행되는 단일 파일로 배포됩니다.`,
-        contentEn: `### 1. Data Schema Reference
-- Check targets, types, and allowed values come from the data schema; structural changes only require a schema update.
+### 5. 품질 리포트 · 탭 단위 확장
+- 항목별 Pass / Fail 리포트를 만들고, 이미 알려진 이슈와 유사도로 대조해 새로 확인할 것만 남깁니다. 새 기능은 탭으로 붙이고, 별도 설치 없이 실행되는 프로그램으로 배포합니다.`,
+        contentEn: `### 1. Data Specification (Schema) Reference
+- Check targets, types, and allowed values are read from spec files (YAML); structural changes only need a spec update, not new code.
 
 ### 2. Nested & Array Path Resolution
 - Deep values such as \`matchInfo[1].player[5].status.tackle\` are reached by path alone.
 
-### 3. Rule Modules with Context Branching
-- Independent rule modules apply different expectations depending on context such as match type.
+### 3. Per-Event Rule Modules with Context Branching
+- Each event type has its own rule module, and every verdict comes from those modules only, so one problem is never reported twice. Expectations change with context such as match type.
 
 ### 4. Video Sync & Pitch Visualization
-- Recording time is aligned with data time to jump to scenes; coordinates render on a 2D/3D pitch.
+- Recording time is aligned with data time to jump straight to the scene, and player, ball, and shot positions are drawn on a 2D / 3D pitch to expose problems numbers alone hide.
 
-### 5. Reports & Tab-Based Extension
-- Pass/fail reports, fuzzy-matched against known issues so only new findings remain. New features plug in as tabs; ships as a no-install executable.`
-      },
-      {
-        num: '03',
-        titleKo: '03. System Architecture & Data Flow (FC Online 데이터 적용 구조)',
-        titleEn: '03. System Architecture & Data Flow (Applied to FC Online Data)',
+### 5. Quality Reports & Tab-Based Extension
+- Pass / fail reports per item, fuzzy-matched against known issues so only new findings remain. New features plug in as tabs; the tool ships as a no-install executable.`,
         architectureDiagrams: [
           {
             id: 'diag-automation-system',
@@ -367,28 +572,32 @@ A single match holds per-participant \`matchDetail\`, \`shoot\`, \`shootDetail[]
     subgraph Source["입력"]
         API["FC Online 매치 상세 데이터<br/>(match-detail)"]
         META["메타데이터<br/>spid · spposition · season · matchtype"]
-        VID["화면 녹화 영상"]
+        VID["플레이 녹화 영상"]
+        ISS["기존 이슈 목록"]
     end
 
-    subgraph Engine["FastAPI 검증 엔진"]
-        SPEC["데이터 스키마 참조"]
-        RULE["항목별 규칙 모듈"]
-        CHK["검증 실행기"]
+    subgraph Engine["FastAPI 품질 검사 엔진"]
+        SPEC["데이터 명세(스키마) 참조"]
+        RULE["이벤트별 규칙 모듈"]
+        CHK["품질 검사 실행기"]
         SYNC["시간 동기화"]
+        MATCH["유사도 매칭"]
     end
 
     subgraph UI["React 대시보드 (탭 확장형)"]
-        R1["검증 결과 리포트"]
+        R1["품질 리포트<br/>(Pass / Fail)"]
         R2["피치 시각화 2D / 3D"]
-        R3["장면 클립 플레이어"]
-        R4["정합성 추세 트래킹"]
+        R3["문제 장면 재생"]
+        R4["품질 추세 트래킹"]
     end
 
     API --> CHK
     META --> CHK
     SPEC --> CHK
     RULE --> CHK
-    CHK --> R1
+    CHK --> MATCH
+    ISS --> MATCH
+    MATCH --> R1
     CHK --> R2
     R1 --> R4
     VID --> SYNC
@@ -398,28 +607,32 @@ A single match holds per-participant \`matchDetail\`, \`shoot\`, \`shootDetail[]
     subgraph Source["Input"]
         API["FC Online match detail data<br/>(match-detail)"]
         META["Metadata<br/>spid · spposition · season · matchtype"]
-        VID["Screen recording"]
+        VID["Gameplay recording"]
+        ISS["Known-issue list"]
     end
 
-    subgraph Engine["FastAPI Validation Engine"]
-        SPEC["Data schema reference"]
-        RULE["Per-field rule modules"]
-        CHK["Validation runner"]
+    subgraph Engine["FastAPI Quality Check Engine"]
+        SPEC["Data spec (schema) reference"]
+        RULE["Per-event rule modules"]
+        CHK["Quality check runner"]
         SYNC["Time sync"]
+        MATCH["Similarity matching"]
     end
 
     subgraph UI["React Dashboard (tab-based)"]
-        R1["Validation report"]
+        R1["Quality report<br/>(pass / fail)"]
         R2["Pitch visualization 2D / 3D"]
-        R3["Scene clip player"]
-        R4["Integrity trend tracking"]
+        R3["Flagged-scene replay"]
+        R4["Quality trend tracking"]
     end
 
     API --> CHK
     META --> CHK
     SPEC --> CHK
     RULE --> CHK
-    CHK --> R1
+    CHK --> MATCH
+    ISS --> MATCH
+    MATCH --> R1
     CHK --> R2
     R1 --> R4
     VID --> SYNC
@@ -428,75 +641,77 @@ A single match holds per-participant \`matchDetail\`, \`shoot\`, \`shootDetail[]
           },
           {
             id: 'diag-automation-checks',
-            tabTitleKo: '검증 단계',
-            tabTitleEn: 'Check Layers',
-            titleKo: '검증 단계 (FC Online 매치 상세 데이터 적용)',
-            titleEn: 'Check Layers (Applied to FC Online Match Detail)',
+            tabTitleKo: '품질 검사 단계',
+            tabTitleEn: 'Quality Check Layers',
+            titleKo: '품질 검사 단계 (FC Online 매치 상세 데이터 적용)',
+            titleEn: 'Quality Check Layers (Applied to FC Online Match Detail)',
             defaultScale: 1.0,
             mermaidChart: `flowchart LR
     IN["matchInfo[]<br/>matchDetail · shoot · shootDetail[]<br/>pass · defence · player[]"]
 
-    subgraph L1["1. 형식"]
-        A1["허용 값 · 타입<br/>좌표 0~1 범위"]
+    subgraph L1["1. 완전성 · 유효성"]
+        A1["필수 값 누락 없음<br/>허용 코드 · 타입<br/>좌표 0~1 범위"]
     end
-    subgraph L2["2. 요약 ↔ 상세"]
+    subgraph L2["2. 정합성 · 요약 ↔ 상세"]
         A2["shootTotal = shootDetail 수<br/>goalTotal = 골 결과 수"]
     end
-    subgraph L3["3. 관계"]
+    subgraph L3["3. 정합성 · 값 사이 관계"]
         A3["성공 ≤ 시도<br/>assist ↔ assistSpId"]
     end
-    subgraph L4["4. 참가자 간"]
+    subgraph L4["4. 일관성 · 참가자 간"]
         A4["점유율 합 100<br/>골 수 ↔ matchResult"]
     end
 
-    OUT["통과 / 실패 리포트<br/>+ 장면 · 좌표 확인"]
+    OUT["Pass / Fail 품질 리포트<br/>+ 장면 · 좌표 확인"]
 
     IN --> A1 --> A2 --> A3 --> A4 --> OUT`,
             mermaidChartEn: `flowchart LR
     IN["matchInfo[]<br/>matchDetail · shoot · shootDetail[]<br/>pass · defence · player[]"]
 
-    subgraph L1["1. Format"]
-        A1["Allowed values · types<br/>coordinates within 0–1"]
+    subgraph L1["1. Completeness · Validity"]
+        A1["No required value missing<br/>allowed codes · types<br/>coordinates within 0–1"]
     end
-    subgraph L2["2. Summary ↔ Detail"]
+    subgraph L2["2. Consistency · Summary ↔ Detail"]
         A2["shootTotal = shootDetail count<br/>goalTotal = goal-result shots"]
     end
-    subgraph L3["3. Relations"]
+    subgraph L3["3. Consistency · Relations"]
         A3["success ≤ attempt<br/>assist ↔ assistSpId"]
     end
-    subgraph L4["4. Cross-participant"]
+    subgraph L4["4. Agreement · Cross-participant"]
         A4["possession sums to 100<br/>goals ↔ matchResult"]
     end
 
-    OUT["Pass / fail report<br/>+ scene · coordinate check"]
+    OUT["Pass / fail quality report<br/>+ scene · coordinate check"]
 
     IN --> A1 --> A2 --> A3 --> A4 --> OUT`
           }
         ]
       },
       {
-        num: '04',
-        titleKo: '04. Applying to FC Online Data (FC Online 매치 상세 데이터 적용 시 검증 범위)',
-        titleEn: '04. Applying to FC Online Data (What Can Be Verified)',
+        titleKo: '품질 검사 규칙 상세 (FC Online 매치 데이터 적용 예)',
+        titleEn: 'Quality Rules in Detail (Applied to FC Online Match Data)',
+        tocKo: '검사 규칙',
+        tocEn: 'Rules',
         highlight: true,
-        contentKo: `직접 개발한 자동화 테스트 툴의 개념을 FC Online 매치 상세 데이터에 확장 적용하면, 아래와 같은 검증을 사람의 손을 거치지 않고 자동으로 수행할 수 있습니다.
+        contentKo: `같은 원리를 FC Online 매치 상세 데이터에 적용하면, 아래 검사를 사람의 손을 거치지 않고 자동으로 수행할 수 있습니다. 데이터 품질 기준별로 묶었습니다.
 
-### 1. 형식 검사 — 있어야 할 값이 올바른 모양으로 있는가
+### 1. 완전성 · 유효성 — 있어야 할 값이 올바른 모양으로 있는가
+- 슈팅마다 \`goalTime\` · \`x\` · \`y\` · \`type\` · \`result\` · \`spId\`가 빠짐없이 기록되었는지
 - \`matchResult\`는 "승"·"무"·"패", \`matchEndType\`은 0·1·2, \`controller\`는 keyboard·pad·etc 중 하나인지
 - \`shootDetail[].type\`이 1~12, \`result\`가 1~3처럼 약속된 코드 안에 있는지
 - \`x\`, \`y\`, \`assistX\`, \`assistY\` 좌표가 경기장 기준 0~1 범위 안에 있는지
 
-### 2. 요약 ↔ 상세 일치 — 합계와 내역이 맞는가
+### 2. 정합성 ① 요약 ↔ 상세 — 합계와 내역이 맞는가
 - \`shootTotal\`과 \`shootDetail\` 항목 수, \`goalTotal\`과 골로 끝난 슈팅 수가 맞는지
 - \`goalTotal = goalInPenalty + goalOutPenalty + goalPenaltyKick\`이 성립하는지
 - 선수별 \`player[].status\`의 골·패스 합계가 팀 단위 \`shoot\`·\`pass\` 요약과 맞는지
 
-### 3. 논리적 관계 — 말이 되는 숫자인가
+### 3. 정합성 ② 값 사이의 관계 — 말이 되는 숫자인가
 - 성공 수가 시도 수를 넘지 않는지 (\`passSuccess ≤ passTry\`, \`tackleSuccess ≤ tackleTry\`, \`effectiveShootTotal ≤ shootTotal\`, \`goalHeading ≤ shootHeading\`)
 - \`assist\`가 false면 \`assistSpId\`가 -1, true면 실제 선수 식별자인지
 - \`inPenalty\` 값이 슈팅 좌표가 페널티박스 안에 있는지와 일치하는지
 
-### 4. 참가자 간 정합성 — 양쪽 기록이 서로 맞는가
+### 4. 일관성 — 양쪽 참가자의 기록이 서로 맞는가
 - 두 참가자의 \`possession\` 합이 100인지
 - 양쪽 골 수를 비교한 결과가 각자의 \`matchResult\`와 맞는지 (몰수 등 \`matchEndType\` 예외는 별도 처리)
 
@@ -504,27 +719,28 @@ A single match holds per-participant \`matchDetail\`, \`shoot\`, \`shootDetail[]
 - \`spId\`, \`spPosition\`, \`seasonId\`, \`matchType\`이 메타데이터 목록에 실제로 있는 값인지
 - \`matchType\`에 따라 기대값이 달라지는 항목은 규칙을 다르게 적용하는지
 
-### 6. 시간 · 장면 검사
+### 6. 시간 · 장면 확인
 - 전·후반, 연장, 승부차기 구간이 함께 담긴 \`goalTime\` 값을 실제 경기 시각으로 풀어, 녹화 영상의 해당 장면과 나란히 확인
 - 슈팅·어시스트 좌표를 피치 위에 그려, 의미 없는 기본 좌표로 남은 기록을 눈으로 바로 구별`,
-        contentEn: `Extending the tool's concept to FC Online match detail data, the following checks run automatically without manual effort.
+        contentEn: `Applied to FC Online match detail data, the following checks run automatically, grouped by data quality criterion.
 
-### 1. Format — Is Each Value Present and Well-Formed?
+### 1. Completeness & Validity — Is Each Value Present and Well-Formed?
+- Every shot records \`goalTime\`, \`x\`, \`y\`, \`type\`, \`result\`, and \`spId\`
 - \`matchResult\` in 승/무/패, \`matchEndType\` in 0/1/2, \`controller\` in keyboard/pad/etc
 - \`shootDetail[].type\` within 1–12 and \`result\` within 1–3
 - \`x\`, \`y\`, \`assistX\`, \`assistY\` within the 0–1 pitch range
 
-### 2. Summary ↔ Detail — Do Totals Match Line Items?
+### 2. Consistency ① Summary ↔ Detail — Do Totals Match Line Items?
 - \`shootTotal\` vs number of \`shootDetail\` entries; \`goalTotal\` vs goal-result shots
 - \`goalTotal = goalInPenalty + goalOutPenalty + goalPenaltyKick\`
 - Per-player \`player[].status\` sums vs team \`shoot\`/\`pass\` summaries
 
-### 3. Relations — Do the Numbers Make Sense?
+### 3. Consistency ② Relations — Do the Numbers Make Sense?
 - Successes never exceed attempts (\`passSuccess ≤ passTry\`, \`tackleSuccess ≤ tackleTry\`, \`effectiveShootTotal ≤ shootTotal\`, \`goalHeading ≤ shootHeading\`)
 - \`assist: false\` implies \`assistSpId = -1\`, and \`assist: true\` requires a real player ID
 - \`inPenalty\` agrees with whether the shot coordinates fall inside the box
 
-### 4. Cross-Participant — Do Both Sides Agree?
+### 4. Cross-Record Agreement — Do Both Participants Agree?
 - Both participants' \`possession\` sums to 100
 - Goal comparison agrees with each side's \`matchResult\` (forfeit \`matchEndType\` handled separately)
 
@@ -537,58 +753,82 @@ A single match holds per-participant \`matchDetail\`, \`shoot\`, \`shootDetail[]
 - Shot and assist coordinates are drawn on the pitch, exposing placeholder positions at a glance`
       },
       {
-        num: '05',
-        titleKo: '05. Expected Benefits (기대 효과)',
-        titleEn: '05. Expected Benefits',
-        contentKo: `### 1. 사람이 데이터를 검증하는 시간 단축
-- 수백 개 값의 형식 확인과 합계 계산 같은 반복 작업을 툴이 대신하므로, 사람이 데이터를 하나씩 열어 확인하던 시간이 크게 줄어듭니다.
+        titleKo: '엔지니어링 포인트 — 믿을 수 있고 빠른 검사기 만들기',
+        titleEn: 'Engineering Notes — Building a Checker People Trust, and Fast',
+        tocKo: '엔지니어링',
+        tocEn: 'Engineering',
+        contentKo: `### 1. 오탐 줄이기 — 경고가 많으면 아무도 믿지 않는다
+- **문제**: 명세를 문자 그대로 적용하니 정상 데이터도 문제로 잡혔습니다. "해당 없음"을 뜻하는 -1, 특정 조건(예: 특정 세트피스를 선택했을 때)에서만 기록되는 값, 아직 송출 전인 필드가 모두 오류로 표시됐습니다.
+- **해결**: 명세상 정상 의미를 가진 값과 조건부 필드를 규칙에서 구분하고, 관련된 값끼리 교차 확인하도록 바꿨습니다. (예: 상대 선수 ID가 -1이면 소속 팀 값도 "없음"이어야 정상) 판정도 이벤트별 규칙 모듈 한 곳으로 모아, 같은 문제가 두 개의 경고로 보고되지 않게 했습니다.
+- **결과**: 실제 로그 기준 해당 항목의 오탐 **38건 → 0건**. 세트피스 등 다른 항목도 정상 데이터에서 오탐 0건을 확인했습니다.
 
-### 2. 엣지케이스 탐색에 시간을 쏟을 수 있음
-- 아낀 시간은 규칙으로 잡기 어려운 예외 상황에 쓸 수 있습니다. 연장전·승부차기로 끝난 경기, 몰수 처리된 경기, 자책골이 섞인 경기처럼 드물지만 중요한 케이스를 더 깊이 들여다볼 수 있습니다.
+### 2. 속도 — 느린 곳을 측정한 뒤에 고치기
+- **문제**: 로그 1,001건 검사에 116초가 걸렸고, 검사가 도는 동안 다른 화면이 멈췄습니다.
+- **해결**: 프로파일링해 보니 검사 로직이 아니라 시각화용 **선수 이름 조회**(수만 행짜리 표를 매번 검색, 로그 233건 처리에 6,270회)가 시간 대부분을 쓰고 있었습니다. 표를 한 번만 읽어 사전(dict)으로 캐시하고, 검사는 별도 스레드에서 돌려 다른 요청에 바로 응답하게 했습니다.
+- **결과**: **116초 → 10.8초**(약 10배), 검사 중 다른 화면 응답 대기 4.4초 → 0.2~0.9초. 바꾸기 전후 결과 파일의 해시(sha256)가 같아, 속도만 바뀌고 결과는 한 글자도 바뀌지 않았음을 확인했습니다.
 
-### 3. 데이터 정합성의 지속적 트래킹
-- 같은 기준으로 반복 검증한 결과가 쌓이므로, 업데이트나 시즌이 바뀔 때마다 정합성이 어떻게 변하는지 추세로 추적할 수 있습니다. 이전에 통과하던 항목이 실패로 바뀌면 바로 드러나 문제를 조기에 발견할 수 있습니다.
+### 3. 시각화 정확도 — 같은 선수 카드를 양 팀이 쓸 때
+- **문제**: 두 팀이 같은 선수 카드를 쓰면 선수 식별자만으로는 누가 행동했는지 구분되지 않아, 상대 팀 선수에게 "패스한 선수" 같은 역할이 잘못 붙었습니다.
+- **해결**: 선수 식별자에 소속 팀 정보를 함께 써서 행동한 선수를 찾고, 팀 정보가 없을 때는 이벤트 좌표에 가장 가까운 선수로 확정하도록 바꿨습니다.
+- **결과**: 확인한 패스 로그 89건 모두 올바른 팀의 선수에게 역할이 연결되었습니다.
 
-### 4. 일관된 검증 기준과 신뢰할 수 있는 데이터
-- 사람마다 달라질 수 있는 확인 기준이 규칙으로 고정되어, 누가 언제 검증해도 같은 결과를 얻습니다. 검증된 데이터는 분석·통계·서비스 지표의 신뢰도를 높이는 기반이 됩니다.`,
-        contentEn: `### 1. Less Time Spent Verifying Data by Hand
-- Format checks and total calculations across hundreds of values are automated, sharply cutting manual verification time.
+### 4. 확장성 — 명세 파일만 넣으면 검사 범위가 늘어난다
+- 처음에는 검사 기준이 코드에 박혀 있었지만, YAML 명세를 읽어 검사하도록 바꾸고 이벤트별 규칙 · 시각화 모듈을 분리했습니다. 지금은 이벤트 35종 모두 규칙 모듈을 갖추고 있고, 새 기능이 추가되어도 명세 파일만 넣으면 바로 검사할 수 있습니다.`,
+        contentEn: `### 1. Cutting False Alarms — Nobody Trusts a Tool That Cries Wolf
+- **Problem**: Applying the spec literally flagged correct data: -1 meaning "not applicable", values recorded only under certain conditions (such as a particular set-piece choice), and fields not yet emitted.
+- **Fix**: Rules now distinguish values the spec defines as normal and conditional fields, and related values are cross-checked (e.g. if the opposing player ID is -1, the team value must be "none"). All verdicts come from one rule module per event, so one problem never shows up as two warnings.
+- **Result**: False alarms on real logs for that item went from **38 to 0**, and other items such as set pieces showed zero false alarms on correct data.
 
-### 2. More Time for Edge Cases
-- Saved time goes to cases rules can't easily capture: extra-time and shoot-out finishes, forfeits, own goals.
+### 2. Speed — Measure Before You Fix
+- **Problem**: Checking 1,001 logs took 116 s, and other screens froze while it ran.
+- **Fix**: Profiling showed the time went not to checking but to **player-name lookups** for the visualizer (a table with tens of thousands of rows searched every time; 6,270 lookups for 233 logs). The table is now read once and cached as a dict, and checks run on a separate thread so other requests answer immediately.
+- **Result**: **116 s → 10.8 s** (about 10×), and other screens respond in 0.2–0.9 s instead of waiting 4.4 s. Output hashes (sha256) matched before and after, so only the speed changed.
 
-### 3. Continuous Integrity Tracking
-- Repeated checks under the same criteria build a history, so integrity trends can be tracked across updates and seasons, and regressions surface immediately.
+### 3. Visualization Accuracy — When Both Teams Use the Same Player Card
+- **Problem**: With the same card on both teams, the player ID alone could not tell who acted, so roles such as "passer" landed on the wrong team's player.
+- **Fix**: Actors are identified by player ID plus team, and when team info is missing, by the player closest to the event position.
+- **Result**: All 89 pass logs checked linked roles to the correct team's player.
 
-### 4. Consistent Criteria, Trustworthy Data
-- Rules fix the criteria, giving the same result regardless of who checks or when, strengthening analytics and service metrics built on the data.`
+### 4. Extensibility — Add a Spec File, Get New Checks
+- Criteria started out hard-coded; they are now read from YAML specs, with rule and visualization modules split per event. All 35 event types have rule modules, and new features only need a spec file to be checked.`
       },
       {
-        num: '06',
-        titleKo: '06. Conclusion & Lessons Learned (결론 및 배운 점)',
-        titleEn: '06. Conclusion & Lessons Learned',
-        contentKo: `### 1. 데이터는 '관계'로 검증해야 한다
-- 값 하나하나가 맞는지보다, 요약과 상세, 참가자와 참가자 사이가 서로 맞는지를 볼 때 실제 문제가 드러난다는 점을 배웠습니다.
+        titleKo: '배운 점 & 다음 단계',
+        titleEn: 'Lessons & Next Steps',
+        tocKo: '배운 점',
+        tocEn: 'Lessons',
+        contentKo: `### 1. 데이터는 '관계'로 확인해야 한다
+- 값 하나하나가 맞는지보다 요약과 상세, 참가자와 참가자 사이가 서로 맞는지를 볼 때 실제 문제가 드러난다는 점을 배웠습니다.
 
-### 2. 스키마를 참조하는 구조는 다른 데이터로도 확장된다
-- 검사 기준을 데이터 스키마에서 가져오는 구조 덕분에, 같은 툴의 개념을 FC Online 매치 상세 데이터처럼 전혀 다른 데이터에도 그대로 적용할 수 있습니다.
+### 2. 오탐을 줄이는 것이 신뢰를 만든다
+- 경고가 너무 많이 뜨는 검사기는 결국 쓰이지 않습니다. 명세가 말하는 "정상"을 정확히 이해하고 맥락에 따라 기대값을 달리하는 것이 툴을 실제로 쓰이게 만드는 핵심이었습니다.
 
-### 3. 오탐을 줄이는 것이 신뢰를 만든다
-- 실패가 너무 많이 뜨는 검증기는 결국 쓰이지 않습니다. 맥락에 따라 기대값을 달리하는 규칙이 툴을 실제로 쓰이게 만드는 핵심입니다.
+### 3. 고치기 전에 측정한다
+- 느린 원인은 예상(검사 로직)과 달리 이름 조회였습니다. 추측 대신 측정으로 병목을 찾고, 고친 뒤 결과가 바뀌지 않았는지까지 확인하는 습관이 생겼습니다.
 
-### 4. 다음 단계
-- 시각화 화면에서 최신 규칙으로 바로 다시 검사하는 실시간 동기화, 그리고 시나리오 단위로 "무엇을 플레이하고 무엇을 확인할지" 안내하는 기능으로 확장할 계획입니다.`,
-        contentEn: `### 1. Validate Relationships, Not Just Values
+### 4. 명세를 참조하는 구조는 다른 데이터로도 확장된다
+- 검사 기준을 명세에서 가져오는 구조 덕분에 같은 원리를 전혀 다른 데이터에도 적용할 수 있습니다. 실제로 FCO Live Boost Lab 프로젝트에서 넥슨 Open API 응답의 정합성을 확인할 때 같은 방식을 썼습니다.
+
+### 5. 다음 단계
+- 새 기능에 맞춘 검사 항목 설계와 자동 검사 범위 확장
+- 원하는 이벤트만 골라 보는 필터와 스냅샷 형태의 로그 시각화
+- 시각화 화면에서 최신 규칙으로 바로 다시 검사하는 기능`,
+        contentEn: `### 1. Check Relationships, Not Just Values
 - Real problems appear when summaries, details, and participants are checked against each other.
 
-### 2. Schema-Referenced Design Generalizes
-- Because criteria come from the data schema, the same concept applies to entirely different datasets such as FC Online match detail.
+### 2. Fewer False Alarms Build Trust
+- A checker that flags everything gets ignored. Understanding exactly what the spec calls "normal" and adapting expectations to context is what keeps the tool in use.
 
-### 3. Fewer False Positives Build Trust
-- A validator that flags everything gets ignored; context-aware expectations keep the tool useful.
+### 3. Measure Before Fixing
+- The slowdown was name lookups, not the checks I suspected. I now find bottlenecks by measuring, and confirm the output is unchanged after the fix.
 
-### 4. Next Steps
-- Real-time re-checking from the visualizer, and scenario-driven guidance on what to play and what to verify.`
+### 4. Spec-Driven Design Carries Over to Other Data
+- Because criteria come from the spec, the same approach works on entirely different data; FCO Live Boost Lab uses it to check Nexon Open API responses.
+
+### 5. Next Steps
+- Design checks for new features and widen automatic coverage
+- Event filters and snapshot-style log visualization
+- Re-run the latest rules directly from the visualizer`
       }
     ]
   },
@@ -614,72 +854,158 @@ A single match holds per-participant \`matchDetail\`, \`shoot\`, \`shootDetail[]
     repoUrl: 'https://github.com/hope77-githhub/F125_Personal_RaceEngineer',
     techStack: ['Python', 'FastAPI', 'UDP Socket (:20777)', 'WebSocket', 'React & SVG', 'GPT-SoVITS (Few-shot Fine-tuning)', 'faster-whisper', 'Electron Overlay'],
 
-    metricsHeadingKo: '결과 요약 (Summary of Results)',
-    metricsHeadingEn: 'Results Summary',
-    keyMetrics: [
-      {
-        valueKo: '게임 데이터 초당 60번 실시간 수신 · 해석',
-        valueEn: 'Game Data Received & Decoded 60 Times per Second',
-        icon: 'fas fa-network-wired'
+    story: {
+      problem: {
+        headlineKo: 'F1 게임을 하는 사람에게는, 실제 F1처럼 달리는 중에 귀로 알려 주는 "레이스 엔지니어"가 없었습니다.',
+        headlineEn: 'Players of the F1 game have no race engineer talking in their ear the way real F1 drivers do.',
+        pointsKo: [
+          '실제 F1 드라이버는 운전에만 집중하고, 피트월의 엔지니어가 무전으로 "앞차와 0.8초, DRS 가능", "이번 랩 박스(피트인)"처럼 필요한 정보를 말해 줍니다.',
+          '게임 화면에도 숫자는 나오지만, **시속 300km로 코너에 들어가면서 작은 숫자를 읽으면 실수가 납니다.**',
+          '주행이 끝난 뒤에도 "어느 코너에서 왜 느렸는지" 알려 주는 사람이 없어, **수만 개의 숫자를 혼자 뒤져야** 했습니다.'
+        ],
+        pointsEn: [
+          'A real F1 driver just drives while the pit-wall engineer radios what matters: "0.8 s to the car ahead, DRS available", "box this lap".',
+          'The game does show numbers, but **reading small figures while braking into a corner at 300 km/h causes mistakes.**',
+          'After a run, nobody explains which corner cost time and why; you are left **digging through tens of thousands of numbers** alone.'
+        ]
       },
-      {
-        valueKo: '목소리 3분 36초로 파인튜닝 → 무전 · 답변 음성 639개',
-        valueEn: '3 min 36 s of Voice → 639 Radio & Answer Clips',
-        icon: 'fas fa-headset'
+      approach: {
+        headlineKo: '게임이 이미 내보내는 차량 데이터를 받아, 판단은 규칙으로 하고 말은 AI 목소리로 하는 "나만의 엔지니어"를 만들기로 했습니다.',
+        headlineEn: 'Take the car data the game already broadcasts and build a personal engineer: rules make the decisions, an AI voice does the talking.',
+        pointsKo: [
+          'F1 게임은 설정 하나만 켜면 차의 속도 · 기어 · 페달 · 위치 · 타이어 상태를 **1초에 60번** 네트워크로 내보냅니다. 이 데이터를 받아 해석하면 됩니다.',
+          '"제동이 늦었다" 같은 숫자 판단은 빠르고 정확해야 해서 **규칙**으로, 사람처럼 들리는 목소리는 **AI**로 역할을 나눴습니다.',
+          '게임이 그래픽카드를 거의 다 쓰기 때문에, 목소리는 달리는 중에 만들지 않고 **미리 만들어 두기로** 했습니다.'
+        ],
+        pointsEn: [
+          'With one setting, the F1 game sends speed, gear, pedals, position, and tyre state **60 times per second** over the network; the job is to receive and interpret it.',
+          'Numeric calls such as "you braked late" must be fast and exact, so they use **rules**; sounding human is the job of the **AI**.',
+          'The game uses nearly all of the graphics card, so voice lines are **made in advance** rather than generated mid-race.'
+        ]
       },
-      {
-        valueKo: '24개 서킷 코너 맵 · 엔지니어에게 질문 7종',
-        valueEn: '24 Track Corner Maps · 7 Ask-the-Engineer Questions',
-        icon: 'fas fa-map-location-dot'
+      method: {
+        headlineKo: '초당 60번 들어오는 차량 데이터, 3분 36초 분량의 목소리 녹음, 24개 서킷의 코너 지도로 만들었습니다.',
+        headlineEn: 'Built from 60 Hz car telemetry, 3 min 36 s of recorded voice, and corner maps for 24 tracks.',
+        data: [
+          {
+            nameKo: '차량 텔레메트리 (UDP)',
+            nameEn: 'Car telemetry (UDP)',
+            descKo: '속도 · 기어 · 페달 · 위치 · 타이어 상태 등, 게임이 **1초에 60번** 보내는 데이터 묶음(패킷)',
+            descEn: 'Speed, gear, pedals, position, and tyres: data packets the game sends **60 times per second**'
+          },
+          {
+            nameKo: '서킷 코너 맵 24개',
+            nameEn: 'Corner maps for 24 tracks',
+            descKo: '서킷마다 공식 코너 번호와 위치를 정리해, 어느 코너에서 무슨 일이 있었는지 짚는 기준',
+            descEn: 'Official turn numbers and positions for each track, used to pin events to the right corner'
+          },
+          {
+            nameKo: '레이스 엔지니어 목소리 녹음',
+            nameEn: 'Race-engineer voice recordings',
+            descKo: '9개 클립, 총 **3분 36초**. 목소리 학습 재료',
+            descEn: '9 clips, **3 min 36 s** in total: the training material for the voice'
+          }
+        ],
+        methods: [
+          {
+            nameKo: '실시간 패킷 해석',
+            nameEn: 'Real-time packet decoding',
+            descKo: '게임사가 공개한 형식대로 0과 1을 "속도 287km/h, 7단" 같은 값으로 변환',
+            descEn: 'Turns 0s and 1s into values such as "287 km/h, 7th gear" using the game\'s published format'
+          },
+          {
+            nameKo: '규칙 기반 판단 엔진',
+            nameEn: 'Rule-based decision engine',
+            descKo: '세션 최고 랩과 비교해 기준을 벗어난 순간만 무전 (예: 제동 지점 5~45m 차이, 무전 사이 최소 6초)',
+            descEn: 'Compares with the session\'s best lap and calls only real deviations (e.g. braking point off by 5–45 m, at least 6 s between calls)'
+          },
+          {
+            nameKo: '퓨샷 음성 파인튜닝 (GPT-SoVITS)',
+            nameEn: 'Few-shot voice fine-tuning (GPT-SoVITS)',
+            descKo: '이미 말할 줄 아는 AI 모델에 짧은 녹음만 들려줘 "이 사람 목소리"로 맞춤',
+            descEn: 'Nudges a model that already speaks toward one person\'s voice using a short recording'
+          },
+          {
+            nameKo: 'AI 받아쓰기로 품질 채점 (Whisper)',
+            nameEn: 'AI transcription as a quality check (Whisper)',
+            descKo: '만든 음성을 다시 글자로 바꿔, 대본과 가장 같은 결과만 채택',
+            descEn: 'Transcribes each generated line back to text and keeps only the take closest to the script'
+          }
+        ]
       },
-      {
-        valueKo: '게임 화면 위 TV 중계 오버레이 연동',
-        valueEn: 'TV Broadcast Overlay on Top of the Game',
-        icon: 'fas fa-tv'
+      solution: {
+        headlineKo: '데이터 받기 → 해석 → 코너별 기록 → 판단 → 무전까지 이어지는 프로그램을 만들고, 대시보드와 TV 중계 오버레이로 보여 줬습니다.',
+        headlineEn: 'I built a program that runs from receiving data through decoding, per-corner logging, decisions, and radio calls, shown on a dashboard and a TV-style overlay.',
+        flow: [
+          { titleKo: '게임이 데이터 보내기 (초당 60번)', titleEn: 'Game sends data (60 Hz)' },
+          { titleKo: '해석 · 랩 · 코너별 기록', titleEn: 'Decode & log laps / corners' },
+          { titleKo: '엔지니어 두뇌가 상황 판단', titleEn: 'Engineer brain decides' },
+          { titleKo: '파인튜닝한 목소리로 무전', titleEn: 'Radio in the fine-tuned voice' },
+          { titleKo: '대시보드 · TV 오버레이 표시', titleEn: 'Dashboard & TV overlay' }
+        ],
+        pointsKo: [
+          '2랩부터 코너를 빠져나올 때마다 이번 세션 가장 빠른 랩과 제동 지점을 비교해 **"제동이 13m 빨랐어"**처럼 바로 알려 줍니다. 레이스에서는 페이스 · 앞차 간격 · 피트인 시점도 알려 줍니다.',
+          '"앞차 잡을 수 있어?", "언제 피트인 해야 해?" 같은 **7가지 질문**에 지금 데이터로 계산한 숫자와 함께 음성으로 답합니다. (한국어 · 영어)',
+          '무전 · 답변 문장 **639개를 미리 만들어 두고** 상황에 맞는 파일만 골라 재생해, 게임이 끊기지 않고 무전이 바로 나옵니다.',
+          '세이프티카 · 피트인 랩은 비교에서 빼고 무전 사이에 간격을 두어 **엉뚱한 무전이 나오지 않게** 했습니다.'
+        ],
+        pointsEn: [
+          'From lap 2, after every corner it compares the braking point with the session\'s fastest lap and says things like **"braking was 13 m early"**; in races it also covers pace, the gap ahead, and when to pit.',
+          '**Seven questions** such as "Can I catch the car ahead?" or "When should I pit?" are answered by voice with numbers computed from live data (Korean or English).',
+          '**639 radio and answer lines are pre-made**, and the app just picks and plays the right one, so calls come instantly without stuttering the game.',
+          'Safety-car and pit laps are excluded and calls are spaced out, so **no nonsense calls go out**.'
+        ]
+      },
+      result: {
+        headlineKo: '실제 주행 중에 엔지니어가 데이터를 근거로 말을 거는 데모를 완성했습니다.',
+        headlineEn: 'I completed a working demo in which the engineer talks to you during a real run, backed by live data.',
+        metrics: [
+          {
+            valueKo: '초당 60회',
+            valueEn: '60 per second',
+            labelKo: '실시간으로 받아 해석하는 게임 데이터',
+            labelEn: 'Game data received and decoded live',
+            noteKo: '실제 게임 연결 · 녹화 주행 리플레이 모두 지원',
+            noteEn: 'Works live or on recorded replays'
+          },
+          {
+            valueKo: '3분 36초 → 639개',
+            valueEn: '3:36 → 639 lines',
+            labelKo: '녹음 분량 → 만든 무전 · 답변 음성',
+            labelEn: 'Recording length → radio and answer lines',
+            noteKo: '집 그래픽카드(RTX 3070 8GB)로 몇 분 만에 학습',
+            noteEn: 'Trained in minutes on a home RTX 3070 (8 GB)'
+          },
+          {
+            valueKo: '0.92',
+            valueEn: '0.92',
+            labelKo: '생성 음성과 대본의 평균 일치율',
+            labelEn: 'Average match between generated voice and script',
+            noteKo: '1에 가까울수록 대본과 똑같이 발음',
+            noteEn: 'Closer to 1 means closer to the script'
+          },
+          {
+            valueKo: '24개 · 7종',
+            valueEn: '24 · 7',
+            labelKo: '코너 맵을 갖춘 서킷 · 엔지니어에게 할 수 있는 질문',
+            labelEn: 'Tracks with corner maps · questions you can ask'
+          }
+        ],
+        pointsKo: [
+          '실버스톤 실제 주행 데모 영상(약 1분 40초)에서 TV 중계 오버레이와 엔지니어 무전이 함께 동작하는 모습을 볼 수 있습니다. (아래 기술 상세의 "데모 · 화면")'
+        ],
+        pointsEn: [
+          'The Silverstone demo video (about 1 min 40 s) under "Demo & screens" below shows the TV overlay and engineer radio working together in a real run.'
+        ]
       }
-    ],
-
-    pipelineFlow: [
-      { step: '01', titleKo: '게임이 데이터 보내기 (초당 60번)', titleEn: 'Game Sends Data (60 Hz)' },
-      { step: '02', titleKo: '해석 · 랩 · 코너별 기록', titleEn: 'Decode & Record Laps / Corners' },
-      { step: '03', titleKo: '엔지니어 두뇌가 상황 판단', titleEn: 'Engineer Brain Decides' },
-      { step: '04', titleKo: '파인튜닝한 목소리로 무전', titleEn: 'Radio in the Fine-Tuned Voice' },
-      { step: '05', titleKo: '대시보드 · TV 오버레이 표시', titleEn: 'Dashboard & TV Overlay' }
-    ],
-
-    beforeAfter: {
-      beforeKo: '시속 300km로 달리면서 화면 구석의 작은 숫자(타이어 마모, 랩 타임 차이)를 읽기는 어렵고, 주행이 끝나도 "어느 코너에서 왜 느렸는지" 알려 주는 사람이 없었습니다.',
-      beforeEn: 'Reading tiny numbers (tyre wear, lap deltas) at 300 km/h is hard, and after a run nobody tells you which corner cost you time and why.',
-      afterKo: '달리는 동안에는 엔지니어가 귀로 "1번 코너 제동이 13m 빨랐어", "이번 랩 박스!"처럼 알려 주고, 궁금한 건 직접 물어볼 수 있습니다. 주행이 끝나면 코너별 기록과 서킷 지도로 내 주행을 다시 확인합니다.',
-      afterEn: 'While driving, the engineer tells you things like "braking was 13 m early into Turn 1" or "box this lap", and you can ask questions. Afterward, corner tables and the track map show exactly where time went.'
     },
 
     sections: [
       {
-        num: '01',
-        titleKo: '01. Background & Problem (배경 및 문제점)',
-        titleEn: '01. Background & Problem',
-        contentKo: `### 1. 실제 F1에는 '귀로 듣는 코치'가 있다
-실제 F1 드라이버는 운전에만 집중하고, 피트월의 레이스 엔지니어가 무전으로 "앞차와 0.8초, DRS 가능", "이번 랩 박스"처럼 필요한 정보를 말해 줍니다. 하지만 F1 게임을 하는 사람에게는 그런 엔지니어가 없습니다.
-
-### 2. 화면 숫자는 달리면서 볼 수 없다
-게임 화면에도 숫자는 나오지만, 시속 300km로 코너에 들어가면서 작은 숫자를 읽으면 실수가 납니다. 그렇다고 주행이 끝난 뒤 수만 개의 숫자를 혼자 뒤져 "어디서 느렸는지" 찾기도 어렵습니다.
-
-### 3. 게임은 데이터를 이미 보내 주고 있었다
-F1 게임은 설정만 켜면 차의 속도 · 기어 · 페달 · 위치 · 타이어 상태를 **1초에 60번** 네트워크(UDP)로 보내 줍니다. 이 데이터를 받아서 해석하고, 사람 엔지니어처럼 말해 주는 프로그램을 직접 만들기로 했습니다.`,
-        contentEn: `### 1. Real F1 Drivers Have a Coach in Their Ear
-In real F1, the driver focuses on driving while a race engineer radios things like "0.8 seconds to the car ahead, DRS available" or "box this lap". Players of the F1 game have no such engineer.
-
-### 2. You Can't Read Numbers at 300 km/h
-The game shows numbers, but reading them while braking into a corner causes mistakes, and digging through tens of thousands of numbers after a run is just as hard.
-
-### 3. The Game Was Already Sending the Data
-With one setting, the F1 game sends speed, gear, pedals, position, and tyre data **60 times per second** over the network (UDP). I built a program that receives it, makes sense of it, and talks like a real engineer.`
-      },
-      {
-        num: '02',
-        titleKo: '02. What I Built (무엇을 만들었나)',
-        titleEn: '02. What I Built',
+        titleKo: '만든 기능',
+        titleEn: 'What I Built',
+        tocKo: '기능',
+        tocEn: 'Features',
         contentKo: `### 1. 실시간 대시보드
 - 지금 속도 · 기어 · 페달, 랩별 기록, 코너별 진입 · 정점 · 탈출 속도와 제동 지점을 보여 줍니다. 녹화한 주행을 1~4배속으로 다시 볼 수도 있습니다.
 
@@ -720,9 +1046,10 @@ With one setting, the F1 game sends speed, gear, pedals, position, and tyre data
 - A transparent broadcast-style timing tower, lap card, and speed / gear / pedal HUD over the game, built by connecting an open-source (MIT) overlay to our data.`
       },
       {
-        num: '03',
-        titleKo: '03. System Architecture (시스템 구조)',
-        titleEn: '03. System Architecture',
+        titleKo: '시스템 구조 — 데이터가 무전이 되기까지',
+        titleEn: 'System Architecture — From Data to Radio',
+        tocKo: '구조',
+        tocEn: 'Architecture',
         contentKo: `### 데이터가 무전이 되기까지 5단계
 1. **받기**: 게임이 1초에 60번 보내는 데이터 묶음(패킷)을 내 PC의 Python 서버가 받습니다. 편지가 쉬지 않고 쏟아지는 우체통이라고 생각하면 됩니다.
 2. **해석하기**: 패킷은 0과 1로 된 정해진 모양이라, 게임 회사가 공개한 형식대로 잘라 "속도 287km/h, 기어 7단, 브레이크 0%" 같은 값으로 바꿉니다.
@@ -903,9 +1230,10 @@ With one setting, the F1 game sends speed, gear, pedals, position, and tyre data
         ]
       },
       {
-        num: '04',
-        titleKo: '04. Voice Fine-Tuning, Explained Simply (목소리 파인튜닝 쉽게 이해하기)',
-        titleEn: '04. Voice Fine-Tuning, Explained Simply',
+        titleKo: '목소리 파인튜닝 쉽게 이해하기',
+        titleEn: 'Voice Fine-Tuning, Explained Simply',
+        tocKo: '목소리 파인튜닝',
+        tocEn: 'Voice fine-tuning',
         contentKo: `### 1. 파인튜닝이란? — 이미 잘하는 학생에게 '말투'만 가르치기
 처음부터 말하는 법을 가르치려면 수천 시간의 녹음이 필요합니다. 그래서 이미 수천 시간 동안 말하기를 배운 AI 모델(GPT-SoVITS)을 가져와, 엔지니어 목소리 **3분 36초**만 들려주며 "이 사람처럼 말해 봐" 하고 **조금만 고쳐 주는** 방식을 썼습니다. 이걸 소량의 데이터로 맞춘다고 해서 '퓨샷(few-shot) 파인튜닝'이라고 부릅니다.
 
@@ -956,9 +1284,10 @@ Teaching speech from scratch needs thousands of hours of audio. Instead, I took 
 - **A larger new model (Fish Audio S2 Pro)**: needs 16–24 GB of graphics memory; won't run on 8 GB.`
       },
       {
-        num: '05',
-        titleKo: '05. Results & UI (구현 성과 및 대시보드 화면)',
-        titleEn: '05. Results & UI',
+        titleKo: '데모 영상 & 화면',
+        titleEn: 'Demo Video & Screens',
+        tocKo: '데모 · 화면',
+        tocEn: 'Demo & screens',
         highlight: true,
         contentKo: `### Demo 완성 — 실제 주행에서 엔지니어가 말을 겁니다
 아래 데모 영상(약 1분 40초)은 실버스톤 프랙티스 1에서 실제로 주행하는 화면입니다. 게임 화면 위에서 TV 중계 오버레이와 헤일로 HUD가 실시간으로 움직이고, 엔지니어 무전이 함께 나옵니다.
@@ -1022,9 +1351,10 @@ Enter a session and the dashboard starts receiving data; corner braking calls be
         ]
       },
       {
-        num: '06',
-        titleKo: '06. Lessons & Next Steps (배운 점 및 다음 단계)',
-        titleEn: '06. Lessons & Next Steps',
+        titleKo: '배운 점 & 다음 단계',
+        titleEn: 'Lessons & Next Steps',
+        tocKo: '배운 점',
+        tocEn: 'Lessons',
         contentKo: `### 1. AI는 꼭 필요한 곳에만
 - 처음에는 판단까지 AI에게 맡기려 했지만, 1초에 60번 들어오는 숫자를 빠르고 정확하게 판단하는 데는 규칙이 더 낫다는 걸 알았습니다. AI는 사람처럼 들리는 목소리에 집중해서 썼습니다.
 
@@ -1063,99 +1393,152 @@ Enter a session and the dashboard starts receiving data; corner braking calls be
     badgeTextKo: '완료 (Live)',
     badgeTextEn: 'Completed',
     badgeType: 'success',
-    titleKo: 'NEIS Letter Counter (개선 버전) — 텍스트 카운터 & 엑셀 중복 탐지 유틸리티',
-    titleEn: 'NEIS Letter Counter & In-Memory Excel Duplicate Detector',
+    titleKo: 'NEIS Letter Counter — 생활기록부 바이트 계산 & 엑셀 중복 문장 탐지 도구',
+    titleEn: 'NEIS Letter Counter — Byte Counter & Excel Duplicate-Sentence Finder for School Records',
     tabLabelKo: 'NEIS 문자 계산기',
     tabLabelEn: 'NEIS Letter Counter',
-    oneLinerKo: '나이스 글자수/바이트 정밀 계산 및 엑셀 내 중복 문장 발생 행(Row)을 클라이언트에서 즉시 탐지하는 실무 유틸리티',
-    oneLinerEn: 'Client-side utility for exact NEIS byte counting and in-memory Excel duplicate sentence row detection without server upload.',
-    roleKo: '프론트엔드 엔지니어 (텍스트 엔진, SheetJS 엑셀 파서, 전산 규격 알고리즘 구현)',
-    roleEn: 'Frontend Engineer (Text Engine, SheetJS Parser, System Spec Compliance Algorithm)',
+    oneLinerKo: '선생님들이 학교생활기록부를 쓸 때 나이스(NEIS) 규격 그대로 글자 수(바이트)를 계산하고, 엑셀 속 학생 간 중복 문장을 행 번호로 바로 찾아 주는 도구입니다. 데이터는 브라우저 밖으로 나가지 않습니다.',
+    oneLinerEn: 'A tool for teachers writing school records: it counts bytes exactly the way NEIS does and pinpoints duplicate sentences across students by Excel row number, without the data ever leaving the browser.',
+    roleKo: '프론트엔드 개발 (바이트 계산 엔진 · SheetJS 엑셀 파서 · 중복 탐지 구현)',
+    roleEn: 'Frontend development (byte engine, SheetJS Excel parser, duplicate detection)',
     period: '2026.09 (완료)',
     periodEn: '2026.09 (Completed)',
     techStack: ['React', 'JavaScript (ES6+)', 'SheetJS (xlsx)', 'RegEx', 'Client In-Memory'],
 
-    metricsHeadingKo: '결과 요약 (Summary of Results)',
-    metricsHeadingEn: 'Results Summary',
-    keyMetrics: [
-      {
-        valueKo: '나이스(NEIS) 특수 바이트 계산 규격 정합도 100%',
-        valueEn: '100% Accuracy in Official NEIS Byte Regulations',
-        icon: 'fas fa-calculator'
+    story: {
+      problem: {
+        headlineKo: '학교생활기록부 작성 시기마다, 선생님들은 "바이트 초과" 오류와 중복 문장 찾기로 밤늦게까지 일했습니다.',
+        headlineEn: 'Every school-record season, teachers stayed late fighting "byte limit exceeded" errors and hunting for duplicate sentences.',
+        pointsKo: [
+          '교육행정정보시스템(NEIS)은 글자 수를 **독자 규격**(한글 3바이트, 줄바꿈 2바이트 등)으로 셉니다. 일반 글자 수 세기 사이트로 맞춘 문장도 입력하면 길이 초과로 튕기기 일쑤였습니다.',
+          '수백 명 학생의 평가 문장 중 서로 겹치는 문장을 엑셀에서 Ctrl+F로 하나씩 찾느라 **1시간 이상**이 걸렸습니다.',
+          '학생 평가는 민감한 개인정보라 **외부 서버에 올리는 도구는 쓸 수 없었습니다.**'
+        ],
+        pointsEn: [
+          'NEIS, the national school administration system, counts length with **its own rules** (Hangul 3 bytes, line break 2 bytes, etc.), so text sized with ordinary counters was often rejected as too long.',
+          'Finding overlapping sentences across hundreds of students meant pressing Ctrl+F in Excel one sentence at a time: **over an hour** of work.',
+          'Student evaluations are sensitive personal data, so **tools that upload to a server were off-limits.**'
+        ]
       },
-      {
-        valueKo: '엑셀 중복 문장 행(Row) 탐지 시간 90%+ 단축 (2초)',
-        valueEn: '> 90% Faster Excel Duplicate Detection (< 2s)',
-        icon: 'fas fa-bolt'
+      approach: {
+        headlineKo: '데이터를 어디에도 보내지 않고 브라우저 안에서만 계산하는, NEIS 규격 그대로의 도구를 만들기로 했습니다.',
+        headlineEn: 'Build a tool that follows the NEIS rules exactly and does all its work inside the browser, sending data nowhere.',
+        pointsKo: [
+          'NEIS가 실제로 세는 방식을 **그대로 따라 계산**하면 입력 오류를 미리 막을 수 있습니다.',
+          '엑셀 파일을 서버에 올리지 않고 **브라우저 메모리 안에서만** 읽어, 개인정보가 밖으로 나가지 않게 했습니다.',
+          '중복은 "어느 행과 겹치는지" **행 번호로 바로** 알려 주고, 그 자리에서 고쳐 다시 엑셀로 저장할 수 있게 했습니다.'
+        ],
+        pointsEn: [
+          'Counting **exactly the way NEIS does** prevents input errors before they happen.',
+          'Excel files are read **only in browser memory**, never uploaded, so personal data never leaves the machine.',
+          'Duplicates are reported **by row number** and can be fixed in place and saved back to Excel.'
+        ]
       },
-      {
-        valueKo: '서버 전송 0건 — 브라우저 인메모리 완전 샌드박스',
-        valueEn: 'Zero Server Upload — 100% In-Memory Sandbox',
-        icon: 'fas fa-user-shield'
+      method: {
+        headlineKo: '선생님들이 쓰는 엑셀 파일을 그대로 입력으로 받아, 규격 계산과 문장 단위 비교로 처리했습니다.',
+        headlineEn: 'The teachers\' own Excel files are the input, processed with spec-exact counting and sentence-level comparison.',
+        data: [
+          {
+            nameKo: '생활기록부 엑셀 파일',
+            nameEn: 'School-record Excel files',
+            descKo: '학생별 평가 문장이 행(Row)마다 담긴 시트 (수백 행)',
+            descEn: 'Sheets with one student\'s evaluation per row (hundreds of rows)'
+          },
+          {
+            nameKo: 'NEIS 바이트 규격',
+            nameEn: 'NEIS byte rules',
+            descKo: '한글 3바이트, 영문 · 숫자 · 공백 1바이트, 줄바꿈 2바이트',
+            descEn: 'Hangul 3 bytes; letters, digits, and spaces 1 byte; line break 2 bytes'
+          }
+        ],
+        methods: [
+          {
+            nameKo: '브라우저 인메모리 처리 (SheetJS)',
+            nameEn: 'In-browser processing (SheetJS)',
+            descKo: '엑셀을 서버 전송 없이 브라우저 안에서 읽고 씀',
+            descEn: 'Reads and writes Excel inside the browser with no server transfer'
+          },
+          {
+            nameKo: '유니코드 기반 바이트 계산',
+            nameEn: 'Unicode-based byte counting',
+            descKo: '글자마다 종류(한글 · 영문 · 공백 · 줄바꿈)를 판별해 NEIS 방식으로 합산',
+            descEn: 'Classifies every character (Hangul, Latin, space, line break) and sums bytes the NEIS way'
+          },
+          {
+            nameKo: '문장 분리 + 해시맵 색인',
+            nameEn: 'Sentence splitting + hash-map index',
+            descKo: '글을 문장 단위로 나누고, 같은 문장이 나온 행 번호를 표(해시맵)에 기록해 즉시 찾음',
+            descEn: 'Splits text into sentences and records the rows each sentence appears in, for instant lookup'
+          }
+        ]
       },
-      {
-        valueKo: '웹 인라인 수정 & 원본 엑셀 양방향 실시간 동기화',
-        valueEn: 'Real-Time Inline Editing & Bidirectional Excel Export',
-        icon: 'fas fa-file-excel'
+      solution: {
+        headlineKo: '엑셀을 올리면 2초 안에 중복 행을 표시하고, 고친 내용을 바로 엑셀로 내려받는 도구를 만들었습니다.',
+        headlineEn: 'I built a tool that marks duplicate rows within 2 seconds of loading an Excel file and exports the edits straight back to Excel.',
+        flow: [
+          { titleKo: '엑셀 파일 선택 (서버 전송 없음)', titleEn: 'Pick an Excel file (no upload)' },
+          { titleKo: 'NEIS 규격 바이트 계산', titleEn: 'Count bytes the NEIS way' },
+          { titleKo: '문장 단위 중복 탐지', titleEn: 'Detect duplicate sentences' },
+          { titleKo: '중복 행 번호 표시', titleEn: 'Show duplicate row numbers' },
+          { titleKo: '수정 후 엑셀 내려받기', titleEn: 'Edit and download Excel' }
+        ],
+        pointsKo: [
+          '"Row 5, Row 19와 중복"처럼 **겹치는 위치를 행 번호로** 보여 줍니다.',
+          '화면에서 문장을 고치면 바이트 수와 중복 여부가 **즉시 다시 계산**됩니다.',
+          '수정 사항을 반영한 .xlsx 파일을 **한 번에 내려받을** 수 있습니다.'
+        ],
+        pointsEn: [
+          'Overlaps are shown **by row number**, e.g. "duplicate of Row 5, Row 19".',
+          'Editing a sentence on screen **recalculates** bytes and duplicates instantly.',
+          'The edited sheet downloads as an .xlsx file **in one click**.'
+        ]
+      },
+      result: {
+        headlineKo: '1시간 넘게 걸리던 중복 확인이 2초로 줄었고, NEIS 입력 시 길이 초과 오류를 미리 막을 수 있게 되었습니다.',
+        headlineEn: 'Duplicate checks dropped from over an hour to 2 seconds, and NEIS length errors are caught before entry.',
+        metrics: [
+          {
+            valueKo: '1시간+ → 2초',
+            valueEn: '1 h+ → 2 s',
+            labelKo: '수백 행 엑셀의 중복 문장 확인',
+            labelEn: 'Duplicate check across hundreds of rows',
+            noteKo: '확인 작업 시간 90% 이상 단축',
+            noteEn: '90%+ less checking time'
+          },
+          {
+            valueKo: '100%',
+            valueEn: '100%',
+            labelKo: 'NEIS 바이트 계산 규격 일치',
+            labelEn: 'Match with NEIS byte rules',
+            noteKo: '일반 글자 수 세기와 다른 독자 규격 그대로 계산',
+            noteEn: 'The same rules NEIS uses, unlike generic counters'
+          },
+          {
+            valueKo: '0건',
+            valueEn: '0',
+            labelKo: 'NEIS 입력 시 길이 초과 반려',
+            labelEn: 'Length rejections when entering into NEIS',
+            noteKo: '입력 전에 미리 확인',
+            noteEn: 'Caught before entry'
+          },
+          {
+            valueKo: '0건',
+            valueEn: '0',
+            labelKo: '외부 서버로 전송되는 데이터',
+            labelEn: 'Data sent to any server',
+            noteKo: '모든 처리를 브라우저 안에서',
+            noteEn: 'Everything runs in the browser'
+          }
+        ]
       }
-    ],
-
-    pipelineFlow: [
-      { step: '01', titleKo: '엑셀 파일 로컬 선택', descKo: 'SheetJS를 통한 브라우저 메모리 직접 적재 (서버 전송 0건)' },
-      { step: '02', titleKo: '나이스 특수 바이트 정밀 연산', descKo: '한글 3Byte, 영문/공백 1Byte, 줄바꿈 2Byte 공식 알고리즘 판정' },
-      { step: '03', titleKo: '문장 단위 정규화 및 해싱', descKo: '정규식 기반 종결 어미 분리 및 중복 문장 발생 인덱싱' },
-      { step: '04', titleKo: '실시간 행(Row) 매핑 및 하이라이트', descKo: '중복 문장 발생 행 번호 즉각 표시 및 테이블 시각화' },
-      { step: '05', titleKo: '인라인 수정 및 원클릭 내보내기', descKo: '브라우저 상에서 수정 후 변경된 엑셀 파일 즉시 다운로드' }
-    ],
-
-    beforeAfter: {
-      beforeKo: '수백 명의 학생 생활기록부를 작성할 때 엑셀 내 중복 문장을 찾기 위해 밤늦게까지 눈으로 대조해야 했고, 일반 글자수 세기 사이트는 나이스 고유 바이트 규격과 달라 등록 오류가 빈번했습니다.',
-      beforeEn: 'Educators worked late into the night visually checking multi-row spreadsheets to avoid duplicate evaluations across students. Generic online word counters failed to adhere to NEIS byte specifications.',
-      afterKo: '대용량 엑셀을 업로드하자마자 2초 만에 중복 문장 발생 행 번호를 즉각 확인하고, 나이스 규격에 100% 일치하는 정밀 바이트를 서버 전송 없이 안전하게 검토할 수 있습니다.',
-      afterEn: 'Instantly identifies duplicate sentence rows within 2 seconds upon uploading, ensuring 100% NEIS byte compliance with zero server data leakage.'
     },
 
     sections: [
       {
-        num: '01',
-        titleKo: '01. Background & Problem (문제 정의 및 규격 불일치)',
-        titleEn: '01. Background & Problem (Context & Regulatory Bottlenecks)',
-        contentKo: `### 1. 학교생활기록부 입력 시기의 반복적 행정 병목
-학교생활기록부 작성 기간 동안 교사들은 수백 명의 학생에 대한 세부능력 및 특기사항 평가를 수작업으로 검토합니다.
-
-### 2. NEIS 독자 규격과 시중 글자수 세기 툴의 불일치
-교육행정정보시스템(NEIS)의 독자적 바이트 계산 규격(한글 3바이트, 줄바꿈 2바이트 등)이 일반 웹 글자수 세기 툴과 달라 입력 시 길이 초과 오류가 빈번하게 발생했습니다.
-
-### 3. 수백 행 엑셀 수동 대조와 개인정보 유출 위험
-수백 행의 엑셀 시트에서 학생 간 중복 문장을 육안으로 찾느라 야근이 반복되었으며, 민감한 학생 평가 데이터를 외부 클라우드 서버에 업로드하는 것은 개인정보보호법상 엄격히 금지되어 있었습니다.`,
-        contentEn: `### 1. Administrative Bottlenecks in Student Record Entry
-During evaluation seasons, educators review hundreds of student records manually, spending hours cross-checking phrasing.
-
-### 2. Discrepancy Between NEIS Standards and Generic Counters
-NEIS uses specific byte logic (Hangul 3 bytes, CRLF newlines 2 bytes) differing from generic counters, causing frequent length overflow errors upon submission.
-
-### 3. Manual Excel Auditing and Privacy Risks
-Educators spent hours manually scanning Excel spreadsheets to avoid duplicate evaluations across students. Uploading student evaluations to cloud servers was strictly prohibited by privacy regulations.`
-      },
-      {
-        num: '02',
-        titleKo: '02. Discovery & Trigger (문제 인지 계기)',
-        titleEn: '02. Discovery & Trigger (Discovery Context)',
-        contentKo: `### 1. 바이트 초과 오류와 수작업 Ctrl+F 야근의 악순환 목격
-교직원들이 나이스 시스템에 복사-붙여넣기 후 "바이트 초과" 팝업을 만나 문장을 일일이 다시 줄이거나, 엑셀 Ctrl+F로 중복 문장을 밤새도록 하나씩 찾는 모습을 보며 현장의 심각한 비효율을 확인했습니다.
-
-### 2. "보안 유출 없는 순수 인메모리 도구"의 필요성 절감
-> "서버로 데이터를 전혀 전송하지 않고 100% 브라우저 메모리 안에서만 나이스 맞춤형 바이트를 계산하고 엑셀 중복을 행 번호로 찾아주는 도구가 있다면 현장의 큰 고통을 해결할 수 있다"고 확신했습니다.`,
-        contentEn: `### 1. Observing the Cycle of Byte Overflows and Manual Searching
-Witnessed teachers repeatedly encountering "byte overflow" alerts, desperately trimming words, and using Ctrl+F all night to find duplicate evaluations across classes.
-
-### 2. Need for a Zero-Leakage In-Memory Solution
-> Convinced that a 100% client-side tool calculating exact NEIS bytes and pinpointing duplicate rows without any server transmission would eliminate massive operational pain.`
-      },
-      {
-        num: '03',
-        titleKo: '03. Approach & Methodology (접근 전략 및 보안 원칙)',
-        titleEn: '03. Approach & Methodology (Architecture & Privacy Principles)',
+        titleKo: '설계 원칙 — 개인정보 보호와 규격 준수',
+        titleEn: 'Design Principles — Privacy and Spec Compliance',
+        tocKo: '설계 원칙',
+        tocEn: 'Design principles',
         contentKo: `### 1. 100% 클라이언트 인메모리 샌드박스 (SheetJS)
 - 단 한 바이트의 데이터도 외부 서버로 전송하지 않고, 브라우저 메모리(RAM) 내에서만 모든 처리를 완결하여 학생 개인정보 완벽 보호
 
@@ -1180,9 +1563,10 @@ Witnessed teachers repeatedly encountering "byte overflow" alerts, desperately t
 - Enabled direct table editing with automatic recalculation and 1-click export back to .xlsx format.`
       },
       {
-        num: '04',
-        titleKo: '04. Implementation & System (구현 및 해결 과정)',
-        titleEn: '04. Implementation & System (Engineering Execution)',
+        titleKo: '구현 상세',
+        titleEn: 'Implementation Details',
+        tocKo: '구현',
+        tocEn: 'Implementation',
         contentKo: `### 1. 유니코드 코드포인트 순회 기반 정밀 바이트 엔진
 - 자바스크립트 문자열의 유니코드 코드포인트를 순회하며 한글(3byte), 줄바꿈(\r\n, 2byte), 공백(1byte)을 구분 측정하는 전용 알고리즘 구축
 
@@ -1207,31 +1591,10 @@ Witnessed teachers repeatedly encountering "byte overflow" alerts, desperately t
 - Synced inline modifications with real-time recalculations, allowing 1-click export of modified spreadsheets.`
       },
       {
-        num: '05',
-        titleKo: '05. Quantitative Results (정량 성과 및 무누출 달성)',
-        titleEn: '05. Quantitative Results (Measurable Impact)',
-        highlight: true,
-        contentKo: `### 1. 대규모 엑셀 시트 내 중복 행 탐지 소요 시간 90% 이상 단축
-- 기존 1시간 이상 소요되던 수백 행 육안 검토 작업을 엑셀 업로드 즉시 **2초 이내**로 단축했습니다.
-
-### 2. 나이스 특수 규격 기준 바이트 계산 정합도 100% 달성
-- 나이스 시스템 입력 시 길이 초과로 인한 반려 및 반환 수정 사례를 **0건**으로 예방했습니다.
-
-### 3. 0% 서버 전송으로 개인정보 유출 위험 원천 차단
-- 100% 브라우저 인메모리 샌드박스 구동으로 민감한 학생 평가 데이터의 개인정보보호법 규정을 완벽하게 충족했습니다.`,
-        contentEn: `### 1. > 90% Reduction in Duplicate Verification Time
-- Cut over 1 hour of manual scanning down to **sub-2-second automated row highlighting**.
-
-### 2. 100% NEIS Byte Compliance
-- Completely eliminated character overflow rejections when pasting into the administrative portal.
-
-### 3. 0% Server Transmission Risk
-- In-browser sandbox fully satisfied strict student privacy legal compliance with zero data leakage.`
-      },
-      {
-        num: '06',
-        titleKo: '06. Learnings & Retrospective (회고 및 배운 점)',
-        titleEn: '06. Learnings & Retrospective (Key Takeaways)',
+        titleKo: '배운 점',
+        titleEn: 'Lessons Learned',
+        tocKo: '배운 점',
+        tocEn: 'Lessons',
         contentKo: `### 1. 민감 도메인에서의 '순수 클라이언트 인메모리' 아키텍처의 위력
 보안이 극도로 민감한 행정/교육 도메인에서는 서버를 쓰지 않는 "순수 클라이언트 인메모리(Client-Side Sandbox)" 아키텍처가 사용자에게 가장 큰 신뢰를 준다는 것을 확인했습니다.
 
@@ -1259,80 +1622,166 @@ Reaffirmed that deeply understanding domain-specific quirks (such as unique byte
     titleEn: 'FCO Live Boost Lab — Live Boost Prediction & Match Record Analysis',
     tabLabelKo: 'FCO 라이브 부스트',
     tabLabelEn: 'FCO Live Boost',
-    oneLinerKo: '실제 UEFA 챔피언스리그 경기 데이터로 FC온라인 챔스 카드의 라이브 부스트를 확률로 예측하고, 유저 ID 하나로 공식경기 기록을 분석해 플레이 스타일을 진단하는 FC온라인 분석 서비스',
-    oneLinerEn: 'An FC Online analytics service that predicts Live Boosts for Champions League cards as probabilities from real UCL match data, and diagnoses play style from official match records with a single user ID.',
+    oneLinerKo: '실제 UEFA 챔피언스리그 경기 기록으로 FC온라인 챔스 카드의 능력치 변화(라이브 부스트)를 확률로 예측하고, 유저 ID 하나로 공식경기 기록을 분석해 플레이 스타일과 고칠 점을 진단하는 분석 서비스입니다.',
+    oneLinerEn: 'An analytics service that predicts, as probabilities, how FC Online Champions League cards will change with real UCL performances (Live Boost), and diagnoses play style and fixes from official match records with a single user ID.',
     roleKo: '개인 프로젝트 · 기획, 데이터 수집, 모델링, 풀스택 개발',
     roleEn: 'Personal Project · Planning, Data Collection, Modeling & Full-Stack Development',
     period: '2026.11 – 현재 (Active)',
     periodEn: '2026.11 – Present (Active)',
     techStack: ['Python', 'FastAPI', 'React & TypeScript', 'FotMob Crawling', 'Nexon Open API', 'Data Mining', 'pytest'],
 
-    metricsHeadingKo: '현재까지의 결과 (Progress So Far)',
-    metricsHeadingEn: 'Progress So Far',
-    keyMetrics: [
-      {
-        valueKo: '학습에 쓰지 않은 시즌 적중률 45.2% → 56.0%',
-        valueEn: 'Held-Out Season Accuracy 45.2% → 56.0%',
-        icon: 'fas fa-bullseye'
+    story: {
+      problem: {
+        headlineKo: 'FC온라인 챔스 카드의 능력치는 실제 경기 활약에 따라 오르내리는데(라이브 부스트), 그 기준이 공개되지 않아 유저는 감으로 짐작할 수밖에 없었습니다.',
+        headlineEn: 'FC Online Champions League cards rise and fall with real-match performance (Live Boost), but the criteria are unpublished, so players could only guess.',
+        pointsKo: [
+          '챔피언스리그 시즌 카드는 실제 경기 활약에 따라 라운드마다 능력치(OVR)가 바뀌지만, 이를 정하는 경기 평점은 공개되지 않습니다. 카드를 **살지, 강화할지 판단할 근거가 없었습니다.**',
+          '공식경기 전적은 승 · 무 · 패 숫자뿐이라 **"왜 지는지, 누구에게 약한지, 잘하는 사람과 무엇이 다른지"** 알 수 없었습니다.',
+          '부스트 결과, 실제 경기 기록, 게임 전적이 **서로 다른 곳에 흩어져 있고 선수 이름 표기도 달라**, 데이터를 모으고 잇는 일부터 큰 작업이었습니다.'
+        ],
+        pointsEn: [
+          'Champions League season cards change OVR every round based on real performances, but the match ratings behind it are never published, leaving **no basis for deciding whether to buy or upgrade a card**.',
+          'Official match history shows only wins, draws, and losses, so there was no way to see **why you lose, who you struggle against, or how you differ from strong players**.',
+          'Boost results, real match stats, and game records **live in different places with different player-name spellings**, so even gathering and linking the data was a big job.'
+        ]
       },
-      {
-        valueKo: '유력 범위 적중 80% · 오를지 가려내는 힘 0.90',
-        valueEn: '80% Likely-Range Hit · 0.90 Rise Discrimination',
-        icon: 'fas fa-chart-simple'
+      approach: {
+        headlineKo: '과거 시즌의 실제 경기 기록과 부스트 결과를 모아 "어떤 활약이 부스트로 이어지는지"를 데이터로 찾고, 전적은 상위 랭커와 비교해 진단하기로 했습니다.',
+        headlineEn: 'Collect past seasons\' real match stats and boost results to learn which performances lead to boosts, and diagnose match records by comparing them with top rankers.',
+        pointsKo: [
+          '정답(실제 부스트 결과)이 있는 과거 시즌으로 모델을 만들고, **학습에 쓰지 않은 시즌으로 실력을 검증**합니다.',
+          '"+1" 같은 숫자 하나가 아니라 **"오를 확률"로** 보여 줘서, 예측이 빗나가도 판단에 쓸 수 있게 했습니다.',
+          '전적분석은 표를 늘어놓는 대신 **"나는 어떤 유형? → 누구에게 약한가? → 무엇을 고칠까?"** 질문 순서로 답하도록 설계했습니다.'
+        ],
+        pointsEn: [
+          'Build the model on past seasons where the answers (actual boosts) are known, and **test it on a season it never saw**.',
+          'Show **the probability of a rise** rather than a lone "+1", so the prediction stays useful even when it misses.',
+          'Answer match analysis in the order players ask: **what kind of player am I → who beats me → what should I fix**, instead of dumping tables.'
+        ]
       },
-      {
-        valueKo: '전적분석 첫 결과 380초 → 약 90초, 재분석 3초',
-        valueEn: 'Record Analysis: 380s → ~90s First Run, 3s Re-Run',
-        icon: 'fas fa-gauge-high'
+      method: {
+        headlineKo: '세 시즌의 실제 경기 기록, 부스트 정답 723명, 넥슨 공식경기 로그를 데이터 마이닝으로 분석했습니다.',
+        headlineEn: 'Three seasons of real match stats, boost ground truth for 723 players, and Nexon match logs, analyzed through data mining.',
+        data: [
+          {
+            nameKo: '실제 경기 세부 기록 (FotMob)',
+            nameEn: 'Real match details (FotMob)',
+            descKo: '경기에 출전한 양 팀 **모든 선수의 경기별 세부 기록**, 세 시즌 분량',
+            descEn: '**Per-match details for every player on both teams**, three seasons'
+          },
+          {
+            nameKo: '라이브 부스트 정답 데이터',
+            nameEn: 'Live Boost ground truth',
+            descKo: '넥슨 공식 발표 결과 **723명** (발표 표가 없는 팀은 다른 공식 데이터로 복원)',
+            descEn: 'Nexon\'s announced results for **723 players** (teams without a table rebuilt from other official data)'
+          },
+          {
+            nameKo: '공식경기 매치 로그 (넥슨 Open API)',
+            nameEn: 'Official match logs (Nexon Open API)',
+            descKo: '유저 ID로 받는 최근 공식경기 기록과 상위 랭커의 경기 기록',
+            descEn: 'Recent ranked matches fetched by user ID, plus top rankers\' matches'
+          }
+        ],
+        methods: [
+          {
+            nameKo: '데이터 마이닝 · 모델 비교',
+            nameEn: 'Data mining & model comparison',
+            descKo: '단순한 기준선에서 시작해 여러 후보 모델을 같은 조건으로 비교하며 정확도를 끌어올림 (구체적 구성은 비공개)',
+            descEn: 'Start from simple baselines and compare candidate models under identical conditions (internals not disclosed)'
+          },
+          {
+            nameKo: '엄격한 검증 설계',
+            nameEn: 'Strict validation design',
+            descKo: '"처음 보는 팀"을 맞히는 조건으로 검증하고, 한 시즌은 끝까지 숨겨 둔 최종 시험용으로 사용',
+            descEn: 'Validate on unseen teams and hold one season back as a final test'
+          },
+          {
+            nameKo: '확률 예측',
+            nameEn: 'Probabilistic output',
+            descKo: '부스트별 확률 · 가장 유력한 값 · 유력 범위 · 오를 확률을 함께 출력',
+            descEn: 'Per-boost odds, most likely value, likely range, and rise probability together'
+          },
+          {
+            nameKo: '랭커 비교 분석',
+            nameEn: 'Ranker benchmarking',
+            descKo: '6가지 플레이 유형 점수를 매기고, 나와 비슷한 랭커와 견줘 상성 · 개선점을 도출',
+            descEn: 'Scores six play styles and compares with similar rankers to find matchups and fixes'
+          }
+        ]
       },
-      {
-        valueKo: '경기 종료 → 수집 → 예측 → 렌더링 실시간 파이프라인',
-        valueEn: 'Real-Time Pipeline: Match End → Crawl → Predict → Render',
-        icon: 'fas fa-bolt'
+      solution: {
+        headlineKo: '경기가 끝나면 수집 → 예측 → 화면 표시까지 자동으로 이어지는 서비스를 만들고, 전적분석은 유저 ID 하나로 끝나게 했습니다.',
+        headlineEn: 'I built a service where collection, prediction, and display run automatically after each match, and match analysis needs only a user ID.',
+        flow: [
+          { titleKo: '전 선수 경기 기록 수집 (FotMob)', titleEn: 'Collect full-squad match data (FotMob)' },
+          { titleKo: '라이브 부스트 정답 정리', titleEn: 'Prepare boost ground truth' },
+          { titleKo: '데이터 마이닝으로 모델 탐색', titleEn: 'Search models via data mining' },
+          { titleKo: '선수별 예측 확률 표시', titleEn: 'Show per-player odds' },
+          { titleKo: '유저 ID → 플레이 스타일 리포트', titleEn: 'User ID → play style report' }
+        ],
+        pointsKo: [
+          '라운드 경기가 끝나면 넥슨 발표 전에 **선수별 예측 OVR과 오를 확률**을 보여 주고, 발표가 나오면 같은 화면에서 적중 여부(✓ / ✕)를 채웁니다.',
+          '유저 ID 하나로 **플레이 스타일 리포트 → 상성표 → 개선점 → 슈팅 분석 → 선수 구성 처방**까지 한 화면에서 진단합니다.',
+          '실제 API 응답을 공식 문서와 대조하는 **정합성 확인**을 넣어, 화면의 숫자가 게임 안 기록과 맞도록 했습니다. (데이터 품질 가드와 같은 접근)',
+          '요청 한도가 엄격한 API에 맞춰 수집 순서를 다시 짜고, 저장된 데이터로 다시 분석할 때는 API를 한 번도 부르지 않게 했습니다.'
+        ],
+        pointsEn: [
+          'When a round ends, **each player\'s predicted OVR and rise odds** appear before Nexon announces, and hits (✓ / ✕) are filled in on the same screen afterward.',
+          'One user ID produces a **play style report → matchup board → fixes → shot analysis → squad prescriptions**, all on one screen.',
+          '**Integrity checks** compare real API responses with the official docs so on-screen numbers match the game (the same approach as the Data Quality Guard).',
+          'Collection was reordered to fit a tightly rate-limited API, and re-analysis from stored data makes zero API calls.'
+        ]
+      },
+      result: {
+        headlineKo: '학습에 쓰지 않은 시즌에서 예측 적중률을 45.2%에서 56.0%로 끌어올렸고, 전적분석 첫 결과 시간은 380초에서 약 90초로 줄였습니다.',
+        headlineEn: 'Accuracy on a held-out season rose from 45.2% to 56.0%, and the first match-analysis result now arrives in about 90 s instead of 380 s.',
+        metrics: [
+          {
+            valueKo: '45.2% → 56.0%',
+            valueEn: '45.2% → 56.0%',
+            labelKo: '학습에 쓰지 않은 시즌의 정확 적중률',
+            labelEn: 'Exact-hit accuracy on a held-out season',
+            noteKo: '처음 보는 팀 기준 50.6% (항상 "변화 없음"으로 찍을 때보다 +17.8%p)',
+            noteEn: '50.6% on unseen teams (+17.8 pp over always predicting "no change")'
+          },
+          {
+            valueKo: '80%',
+            valueEn: '80%',
+            labelKo: '실제 결과가 예측한 유력 범위 안에 든 비율',
+            labelEn: 'Share of results inside the predicted likely range'
+          },
+          {
+            valueKo: '0.90',
+            valueEn: '0.90',
+            labelKo: '오를 선수를 가려내는 힘',
+            labelEn: 'Ability to tell which players will rise',
+            noteKo: '1에 가까울수록 정확',
+            noteEn: 'Closer to 1 is better'
+          },
+          {
+            valueKo: '380초 → 약 90초',
+            valueEn: '380 s → ~90 s',
+            labelKo: '전적분석 첫 결과까지 걸리는 시간',
+            labelEn: 'Time to the first match-analysis result',
+            noteKo: '저장된 기록으로 재분석 시 3초 (API 호출 0건)',
+            noteEn: '3 s to re-analyze from stored data (zero API calls)'
+          }
+        ],
+        pointsKo: [
+          '정답 데이터를 **723명**까지 늘렸고(발표 표가 없는 팀 복원 포함), 예시로 한 팀은 13명 중 10명의 부스트를 맞혔습니다.'
+        ],
+        pointsEn: [
+          'Ground truth grew to **723 players** (including rebuilt teams), and in one example team 10 of 13 boosts were predicted correctly.'
+        ]
       }
-    ],
-
-    pipelineFlow: [
-      { step: '01', titleKo: 'FotMob 전 선수 경기 세부 데이터 수집', titleEn: 'FotMob Full-Squad Match Data Collection' },
-      { step: '02', titleKo: '라이브 부스트 정답 데이터 정리', titleEn: 'Live Boost Ground Truth' },
-      { step: '03', titleKo: '데이터 마이닝으로 예측 모델 탐색', titleEn: 'Model Search via Data Mining' },
-      { step: '04', titleKo: '라부 예측: 경기 · 선수별 확률', titleEn: 'Boost Prediction: Per-Match, Per-Player Odds' },
-      { step: '05', titleKo: '유저 ID 검색 → 플레이 스타일 리포트', titleEn: 'User ID Search → Play Style Report' }
-    ],
-
-    beforeAfter: {
-      beforeKo: '라이브 부스트는 공개되지 않은 경기 평점으로 정해져, 어떤 선수가 오를지는 하이라이트를 보고 감으로 짐작해야 했습니다. 공식경기 전적도 승패 숫자뿐이라 "왜 지는지, 누구에게 약한지, 랭커와 무엇이 다른지"를 알 방법이 없었습니다.',
-      beforeEn: 'Live Boosts follow unpublished match ratings, so predicting who would rise was guesswork. Official match history showed only wins and losses, with no way to see why you lose, who you struggle against, or how you differ from top rankers.',
-      afterKo: '라운드가 끝나면 경기를 골라 선수마다 예측 OVR과 오를 확률을 보고, 넥슨 발표 뒤에는 적중 여부까지 확인합니다. 전적분석은 유저 ID 하나로 내 플레이 스타일, 상대 유형별 상성, 고칠 점과 처방을 랭커의 실제 경기와 견줘 보여줍니다.',
-      afterEn: 'After each round, pick a match to see each player\'s expected OVR and rise odds, then check hits once Nexon announces. Record analysis turns a user ID into play style, matchups, fixes, and prescriptions benchmarked against rankers\' real games.'
     },
 
     sections: [
       {
-        num: '01',
-        titleKo: '01. Background & Problem (배경 및 문제점)',
-        titleEn: '01. Background & Problem',
-        contentKo: `### 1. 실제 경기 결과가 카드 능력치를 바꾸는 라이브 부스트
-FC온라인 UEFA 챔피언스리그 시즌 카드는 실제 토너먼트 경기 활약에 따라 라운드마다 오버롤(OVR)이 오르거나 내립니다. 하지만 부스트 폭을 정하는 경기 평점은 공개되지 않아, 유저는 카드 구매 · 강화 판단을 감에 의존할 수밖에 없었습니다.
-
-### 2. 승패 숫자만 남는 공식경기 전적
-공식경기 기록은 승 · 무 · 패와 몇 가지 합계로만 보입니다. 내가 어떤 유형의 플레이어인지, 어떤 상대에게 유독 약한지, 상위 랭커와 무엇이 다른지는 직접 수십 경기를 돌려 보지 않고는 알기 어려웠습니다.
-
-### 3. 흩어진 데이터
-라이브 부스트 결과, 실제 경기 기록, 공식경기 기록이 서로 다른 곳에 흩어져 있고 선수 이름 표기도 달라, 데이터를 모으고 잇는 일부터가 큰 작업이었습니다.`,
-        contentEn: `### 1. Live Boosts Tie Real Matches to Card Stats
-FC Online UCL cards gain or lose OVR each round based on real knockout performances, but the match ratings that decide the boost are never published, so players had to rely on gut feeling when buying or upgrading cards.
-
-### 2. Official Records Show Only Wins and Losses
-Match history shows results and a few totals, not your play style, the opponents you struggle against, or how you differ from top rankers.
-
-### 3. Scattered Data
-Boost results, real match data, and official records live in different places with player names spelled differently in each.`
-      },
-      {
-        num: '02',
-        titleKo: '02. Service Overview (서비스 개요)',
-        titleEn: '02. Service Overview',
+        titleKo: '서비스 구조',
+        titleEn: 'Service Architecture',
+        tocKo: '구조',
+        tocEn: 'Architecture',
         contentKo: `### 1. 라부 예측 탭
 지난 시즌들의 실제 경기 데이터와 라이브 부스트 결과를 모아, **데이터 마이닝으로 예측 확률이 높은 모델을 찾아** 선수마다 다음 라운드 OVR과 오를 확률을 보여줍니다. 모델의 구체적인 구성은 이 프로젝트의 핵심 자산이라 공개하지 않습니다.
 
@@ -1519,9 +1968,10 @@ FotMob crawling collects **detailed per-match data for every player on both team
         ]
       },
       {
-        num: '03',
-        titleKo: '03. 라부 예측 탭 (Live Boost Prediction)',
-        titleEn: '03. Live Boost Prediction Tab',
+        titleKo: '라부 예측 탭 화면',
+        titleEn: 'Live Boost Prediction Tab',
+        tocKo: '예측 화면',
+        tocEn: 'Prediction screens',
         highlight: true,
         contentKo: `### 라운드 단위로 보는 라이브 부스트 예측
 - **실시간 예측 파이프라인**: 라운드 경기가 끝나면 수집을 시작하고(진행률 표시), 데이터가 저장되는 즉시 학습된 모델이 선수별 예측을 계산해 경기 라인업 화면과 팀 목록에 바로 그립니다. 넥슨 발표를 기다리지 않고 경기 직후에 결과를 볼 수 있고, 발표가 나오면 같은 화면에서 적중 여부가 채워집니다.
@@ -1560,9 +2010,10 @@ FotMob crawling collects **detailed per-match data for every player on both team
         ]
       },
       {
-        num: '04',
-        titleKo: '04. 전적분석 탭 (Match Record Analysis)',
-        titleEn: '04. Match Record Analysis Tab',
+        titleKo: '전적분석 탭 화면',
+        titleEn: 'Match Record Analysis Tab',
+        tocKo: '전적분석 화면',
+        tocEn: 'Analysis screens',
         highlight: true,
         contentKo: `### 유저 ID 검색 → 매치 로그 분석 → 플레이 스타일 리포트
 유저 ID(닉네임)를 검색하면 넥슨 Open API로 그 유저의 최근 공식경기 매치 로그를 받아, 자체 분석 엔진으로 경기 기록을 분석해 플레이 스타일 리포트를 만듭니다. 리포트에는 다음이 담깁니다.
@@ -1635,9 +2086,10 @@ Searching a user ID pulls recent official match logs from the Nexon Open API and
         ]
       },
       {
-        num: '05',
-        titleKo: '05. Problem Solving — 라부 예측 (문제 해결 과정)',
-        titleEn: '05. Problem Solving — Live Boost Prediction',
+        titleKo: '문제 해결 과정 — 라부 예측',
+        titleEn: 'Problem Solving — Live Boost Prediction',
+        tocKo: '문제 해결 · 예측',
+        tocEn: 'Solving · prediction',
         contentKo: `### 1. 정답이 공개되지 않은 문제 — 무엇을 맞힐지부터 다시 정하기
 - **문제**: 라부를 정하는 경기 평점은 공개되지 않습니다. 첫 모델은 학습에 쓰지 않은 시즌에서 정확 적중 45.2%에 머물렀고, 어디까지가 모델의 실력인지 판단할 기준도 없었습니다.
 - **시도**: 세 시즌의 정답 데이터를 직접 모은 뒤 단순한 기준선부터 세우고, 그 위에서 여러 후보 모델을 같은 조건으로 비교하는 데이터 마이닝을 반복하며 각 단계가 정확도를 얼마나 올리는지 숫자로 확인했습니다.
@@ -1698,9 +2150,10 @@ Searching a user ID pulls recent official match logs from the Nexon Open API and
 - **Result**: An end-to-end crawl → store → predict → render pipeline that shows predictions right after a round ends, before Nexon announces; three seasons of data became the foundation for data mining.`
       },
       {
-        num: '06',
-        titleKo: '06. Problem Solving — 전적분석 (문제 해결 과정)',
-        titleEn: '06. Problem Solving — Match Record Analysis',
+        titleKo: '문제 해결 과정 — 전적분석',
+        titleEn: 'Problem Solving — Match Record Analysis',
+        tocKo: '문제 해결 · 전적',
+        tocEn: 'Solving · analysis',
         contentKo: `### 1. 느린 첫 분석과 API 요청 한도
 - **문제**: 넥슨 Open API는 요청 수가 엄격히 제한되고, 첫 분석은 필요한 데이터를 차례로 받느라 **380초**가 걸렸습니다.
 - **시도**: 수집 순서를 다시 짜 기다리는 시간을 겹치고, 요청 한도 안에서 속도를 최대한 끌어올렸습니다. 결과를 먼저 보여주고 나머지 통계는 뒤에서 채우며, 오늘 사용량을 화면에 띄웠습니다.
@@ -1708,7 +2161,7 @@ Searching a user ID pulls recent official match logs from the Nexon Open API and
 
 ### 2. 실제 데이터는 문서와 달랐다
 - **문제**: 공식 문서만 믿고 계산하니 일부 숫자가 실제 게임 기록과 어긋났습니다.
-- **시도**: 실제 응답을 기준으로 정합성을 확인하고, 문서와 다른 부분은 안전하게 보정했습니다. 앞의 자동화 테스트 툴에서 다룬 "데이터 정합성 확인"을 실제 데이터에 그대로 적용한 셈입니다.
+- **시도**: 실제 응답을 기준으로 정합성을 확인하고, 문서와 다른 부분은 안전하게 보정했습니다. 데이터 품질 가드에서 다룬 "데이터 정합성 확인"을 실제 데이터에 그대로 적용한 셈입니다.
 - **결과**: 화면 숫자가 게임 안 기록과 맞게 되었고, 같은 실수를 막는 테스트를 추가했습니다.
 
 ### 3. 누구와 비교할 것인가 — 표본과 기준의 문제
@@ -1737,7 +2190,7 @@ Searching a user ID pulls recent official match logs from the Nexon Open API and
 
 ### 2. Real Data Differed from the Docs
 - **Problem**: Trusting the docs alone left some numbers out of line with the game.
-- **Approach**: Checked integrity against real responses and safely corrected mismatches — the same mindset as the Automation Test Tool.
+- **Approach**: Checked integrity against real responses and safely corrected mismatches — the same approach as the Data Quality Guard.
 - **Result**: Numbers match the game, guarded by tests.
 
 ### 3. Who to Compare Against
@@ -1761,9 +2214,10 @@ Searching a user ID pulls recent official match logs from the Nexon Open API and
 - **Result**: Prescriptions extend from "what to fix" to "which traits to add".`
       },
       {
-        num: '07',
-        titleKo: '07. Next Steps & Lessons (다음 단계 및 배운 점)',
-        titleEn: '07. Next Steps & Lessons',
+        titleKo: '배운 점 & 다음 단계',
+        titleEn: 'Lessons & Next Steps',
+        tocKo: '배운 점',
+        tocEn: 'Lessons',
         contentKo: `### 1. 정답이 무엇인지부터 정한다
 - 보이지 않는 값을 맞히는 문제일수록, 무엇을 정답으로 볼지와 어떻게 검증할지를 먼저 정해야 숫자를 믿을 수 있다는 점을 배웠습니다.
 
@@ -1812,44 +2266,150 @@ Searching a user ID pulls recent official match logs from the Nexon Open API and
     periodEn: '2026.11.20 (Submitted)',
     techStack: ['Game Design', 'FC Online 공식 데이터센터', 'Competitive Analysis', 'SVG Icon Design', 'PptxGenJS'],
 
-    metricsHeadingKo: '핵심 근거 (Key Evidence)',
-    metricsHeadingEn: 'Key Evidence',
-    keyMetrics: [
-      {
-        valueKo: '신규 특성 17종 전수 조사 → 패스 계열은 커맨더 1종',
-        valueEn: 'All 17 New Traits Audited → Only 1 Passing Trait',
-        icon: 'fas fa-magnifying-glass-chart'
+    story: {
+      problem: {
+        headlineKo: 'FC온라인의 공격 특성은 돌파 · 마무리 쪽에 쏠려 있어, 짧은 패스로 풀어 가는 "연계 축구"를 좋아하는 유저에게는 고를 특성이 거의 없었습니다.',
+        headlineEn: 'FC Online\'s attacking traits lean heavily toward dribbling and finishing, leaving almost nothing for players who love short-passing link-up football.',
+        pointsKo: [
+          '"특성"은 선수 카드에 붙여 특정 플레이를 강화하는 능력입니다. 그런데 신규 특성 17종 중 **패스 계열은 "커맨더" 1종뿐**이고, 그마저 공식 설명상 원터치 · 플레어 패스에서는 효과가 제한됩니다.',
+          '실제 축구에서는 외질 · 사비 · 이니에스타처럼 **골문을 등지고 원터치 힐패스로 동료에게 연결하는 장면**이 매 경기 나오지만, 게임에서는 정확도가 낮아 실전에서 쓰기 어렵습니다.'
+        ],
+        pointsEn: [
+          'A "trait" is an ability attached to a player card that boosts a specific kind of play. Of the 17 new traits, **only one ("Commander") is about passing**, and officially its effect is limited for one-touch and flair passes.',
+          'In real football, players like Özil, Xavi, and Iniesta **flick one-touch heel passes to teammates with their back to goal** every match, but in the game such passes are too inaccurate to rely on.'
+        ]
       },
-      {
-        valueKo: 'ST · CAM 상위 5개 특성 100% 돌파 · 마무리 계열',
-        valueEn: 'ST & CAM Top-5 Traits: 100% Dribbling / Finishing',
-        icon: 'fas fa-chart-column'
+      approach: {
+        headlineKo: '"연계 특성이 없다"는 느낌을 먼저 데이터로 확인한 뒤, 비어 있는 영역만 정확히 채우는 특성을 설계하기로 했습니다.',
+        headlineEn: 'First confirm with data that link-up traits really are missing, then design a trait that fills exactly that gap.',
+        pointsKo: [
+          '기존 특성을 **전부 조사**해, 겹치는 특성이 있는지부터 확인했습니다.',
+          '공식 **사용률 데이터**로 "정말 선택지가 부족한지"를 확인했습니다.',
+          '기존 특성을 잠식하지 않고, 출시 후에도 **밸런스를 조정하기 쉬운 좁은 조건**으로 설계했습니다.'
+        ],
+        pointsEn: [
+          '**Audit every existing trait** to check for overlap first.',
+          'Use official **usage data** to confirm that choices really are lacking.',
+          'Design with **narrow, tunable conditions** so it does not cannibalize existing traits and stays easy to balance after launch.'
+        ]
       },
-      {
-        valueKo: '중원(CM · CDM)에서도 패스 특성 사용률 8~9%',
-        valueEn: 'Passing Trait Usage Only 8–9% Even in Midfield',
-        icon: 'fas fa-percent'
+      method: {
+        headlineKo: '공식 업데이트 공지와 데이터센터의 포지션별 특성 사용률을 근거로 삼았습니다.',
+        headlineEn: 'Grounded in official update notices and position-level trait usage from the official data center.',
+        data: [
+          {
+            nameKo: '신규 특성 17종',
+            nameEn: 'All 17 new traits',
+            descKo: '공식 업데이트 공지와 데이터센터 아이콘 목록',
+            descEn: 'Official update notices and the data center\'s icon list'
+          },
+          {
+            nameKo: '포지션별 인기 특성 사용률',
+            nameEn: 'Popular traits by position',
+            descKo: 'FC 온라인 공식 데이터센터, 2026.11.20 기준, 상위 랭크(슈퍼챔피언스~월드클래스3) 1:1 공식경기',
+            descEn: 'FC Online official data center as of 2026.11.20, top ranks (Super Champions – World Class 3), 1v1 ranked'
+          },
+          {
+            nameKo: '실제 축구 장면',
+            nameEn: 'Real football footage',
+            descKo: '외질 · 사비 · 이니에스타 · 지루 · 피르미누의 등진 원터치 힐 연계',
+            descEn: 'Back-to-goal one-touch heel links by Özil, Xavi, Iniesta, Giroud, and Firmino'
+          }
+        ],
+        methods: [
+          {
+            nameKo: '전수 조사 · 분류',
+            nameEn: 'Full audit & classification',
+            descKo: '17종을 돌파 · 침투 / 마무리 / 피지컬 / 패스 / 수비 / GK로 분류',
+            descEn: 'All 17 sorted into dribbling, finishing, physical, passing, defense, and GK'
+          },
+          {
+            nameKo: '포지션별 사용률 비교',
+            nameEn: 'Usage comparison by position',
+            descKo: 'ST · CAM · CM · CDM의 상위 5개 특성을 비교해 공백 확인',
+            descEn: 'Top-5 traits for ST, CAM, CM, and CDM compared to find the gap'
+          },
+          {
+            nameKo: '구현 선례 분석',
+            nameEn: 'Precedent analysis',
+            descKo: '"방향"을 발동 조건으로 쓰는 기존 특성(레이저 슈터)과 EA FC의 유사 PlayStyle 확인',
+            descEn: 'An existing direction-based trait (Laser Shooter) and a similar EA FC PlayStyle'
+          }
+        ]
       },
-      {
-        valueKo: '커맨더 공식 설명: 논스톱 · 플레어 패스 효과 제한',
-        valueEn: 'Official: Commander Limited on One-Touch / Flair',
-        icon: 'fas fa-puzzle-piece'
+      solution: {
+        headlineKo: '등진 상태에서 원터치로 등 뒤 동료에게 보내는 패스만 강화하는 "블라인드 링커"를 설계하고, 아이콘과 발표 자료까지 만들어 제출했습니다.',
+        headlineEn: 'I designed "Blind Linker", which boosts only one-touch passes sent behind you while your back is to goal, and submitted it with an icon and a deck.',
+        flow: [
+          { titleKo: '실축 장면 관찰', titleEn: 'Observe real matches' },
+          { titleKo: '신규 특성 17종 전수 조사', titleEn: 'Audit all 17 traits' },
+          { titleKo: '사용률 데이터로 공백 확인', titleEn: 'Confirm the gap with usage data' },
+          { titleKo: '특성 설계', titleEn: 'Design the trait' },
+          { titleKo: '아이콘 · 발표 자료 제출', titleEn: 'Submit icon & deck' }
+        ],
+        pointsKo: [
+          '**4가지 조건**(등진 상태 · 원터치 · 플레어 패스 입력 · 등 뒤 180° 방향)을 모두 만족할 때만 발동해 게임 밸런스를 흔들지 않습니다.',
+          '발동 각도 · 보정치 · 압박 거리 · 공 속도 · 발동 구역의 **5가지 조정 레버**로 출시 후에도 밸런스를 맞출 수 있습니다.',
+          '기존 특성 아이콘 규칙을 따른 아이콘과 **15쪽 발표 자료**를 만들었습니다.'
+        ],
+        pointsEn: [
+          'It triggers only when **all four conditions** hold (back to goal, one-touch, flair-pass input, rear 180° direction), so it does not upset game balance.',
+          '**Five tuning levers** (angle, bonus, pressure distance, ball speed, zone) allow balancing after launch.',
+          'An icon following the existing trait-icon rules and a **15-page deck** were produced.'
+        ]
+      },
+      result: {
+        headlineKo: '데이터로 "빈 자리"를 증명한 기획안을 넥슨 공모전에 제출했습니다.',
+        headlineEn: 'I submitted a proposal to Nexon\'s contest that proves the gap with data.',
+        metrics: [
+          {
+            valueKo: '17종 중 1종',
+            valueEn: '1 of 17',
+            labelKo: '패스 계열 신규 특성',
+            labelEn: 'New traits about passing',
+            noteKo: '그마저 원터치 · 플레어 패스는 효과 제한',
+            noteEn: 'Even that one is limited on one-touch and flair passes'
+          },
+          {
+            valueKo: '100%',
+            valueEn: '100%',
+            labelKo: 'ST · CAM 상위 5개 특성 중 돌파 · 마무리 계열 비율',
+            labelEn: 'Dribbling / finishing share of the ST and CAM top 5',
+            noteKo: '상위 5개 사용률 합 88.2% · 85.3%',
+            noteEn: 'Top-5 usage totals of 88.2% and 85.3%'
+          },
+          {
+            valueKo: '8~9%',
+            valueEn: '8–9%',
+            labelKo: '중원(CM · CDM)에서도 유일한 패스 특성 사용률',
+            labelEn: 'Usage of the only passing trait, even in midfield',
+            noteKo: '두 포지션 모두 5위',
+            noteEn: 'Fifth place at both CM and CDM'
+          },
+          {
+            valueKo: '15쪽',
+            valueEn: '15 pages',
+            labelKo: '제출한 기획 발표 자료',
+            labelEn: 'Submitted proposal deck',
+            noteKo: '아이콘 · 발동 조건 도식 · 활용 시나리오 포함',
+            noteEn: 'Icon, trigger diagram, and use cases'
+          }
+        ],
+        pointsKo: [
+          '기능 설명에 그치지 않고 **사업적 타당성**(카드 · 이벤트 가치, 낮은 개발 · 밸런스 리스크, 보는 재미)까지 함께 제시했습니다.'
+        ],
+        pointsEn: [
+          'Beyond the feature itself, the proposal made the **business case**: card and event value, low development and balance risk, and spectator appeal.'
+        ]
       }
-    ],
-
-    pipelineFlow: [
-      { step: '01', titleKo: '실축 장면 관찰', titleEn: 'Real-Match Observation', descKo: '외질 · 사비 · 이니에스타 · 지루의 등진 원터치 힐 연계', descEn: 'Back-to-goal one-touch heel links' },
-      { step: '02', titleKo: '신규 특성 17종 전수 조사', titleEn: 'Audit of 17 Traits', descKo: '공식 공지 · 데이터센터 아이콘 목록으로 분류', descEn: 'Classified via notices & data center' },
-      { step: '03', titleKo: '사용률 데이터로 공백 확인', titleEn: 'Gap via Usage Data', descKo: '포지션별 8강 획득 특성 사용률 비교', descEn: 'Position-level trait usage' },
-      { step: '04', titleKo: '특성 설계', titleEn: 'Trait Design', descKo: '효과 · 4가지 발동 조건 · 밸런스 레버', descEn: 'Effect, 4 conditions, balance levers' },
-      { step: '05', titleKo: '아이콘 · 발표 자료 제출', titleEn: 'Icon & Deck Submitted', descKo: '공식 아이콘 문법 기반 아이콘 + 15쪽 PDF', descEn: 'Official-style icon + 15-page PDF' }
-    ],
+    },
 
     sections: [
       {
-        num: '01',
-        titleKo: '01. 제안 개요 (무엇을 제안했나)',
-        titleEn: '01. Proposal Overview',
+        titleKo: '제안 개요 — 블라인드 링커',
+        titleEn: 'Proposal Overview — Blind Linker',
+        tocKo: '제안 개요',
+        tocEn: 'Proposal',
         contentKo: `### 블라인드 링커 (Blind Linker)
 골문을 등지고 공을 받는 상황에서, 등 뒤로 보내는 힐 · 힐훅 · 노룩 원터치 패스의 정확도를 높이고 전용 모션을 우선 발동시키는 신규 특성입니다. 티키타카, 그 시절 바르셀로나와 아스날의 연계 축구를 좋아하는 유저를 위한 '연계형' 특성입니다.
 
@@ -1909,9 +2469,10 @@ Follows the existing new-trait icon rules (gold hexagon badge, single-color silh
         ]
       },
       {
-        num: '02',
-        titleKo: '02. 데이터적 근거 (왜 이 특성인가)',
-        titleEn: '02. Data Rationale',
+        titleKo: '데이터 근거 상세 — 왜 이 특성인가',
+        titleEn: 'Data Rationale — Why This Trait',
+        tocKo: '데이터 근거',
+        tocEn: 'Data rationale',
         contentKo: `### 1. 신규 특성 17종 전수 조사 — 패스 계열은 1종뿐
 - 공식 업데이트 공지와 데이터센터 아이콘 목록으로 신규 특성 17종을 모두 분류했습니다: 돌파 · 침투 3 / 마무리 3 / 피지컬 2 / **패스 1(커맨더)** / 수비 5 / GK 3.
 - 커맨더는 롱패스 전환 특성이며, 공식 설명에서 **"논스톱 · 플레어 패스와 같은 상황에서는 효과가 제한"**된다고 명시되어 있습니다. 즉 짧은 원터치 · 플레어 연계는 설계상 비어 있는 영역입니다.
@@ -1950,9 +2511,10 @@ Follows the existing new-trait icon rules (gold hexagon badge, single-color silh
 - Existing flair (heel / no-look) animations can be reused; EA FC's Pinged Pass PlayStyle also covers first-time back-heels.`
       },
       {
-        num: '03',
-        titleKo: '03. 사업적 타당성 (왜 넣을 만한가)',
-        titleEn: '03. Business Rationale',
+        titleKo: '사업적 타당성 — 왜 넣을 만한가',
+        titleEn: 'Business Rationale — Why It Is Worth Adding',
+        tocKo: '사업적 타당성',
+        tocEn: 'Business case',
         highlight: true,
         contentKo: `### 1. 운영 방향과 일치 — 선택지 다변화
 - 개발진은 저사용 신규 특성을 상향하며 "선택지로서의 의미가 충분히 있어야 된다"는 방향을 밝혔습니다. 돌파 · 마무리에 쏠린 공격 메타에 '연계'라는 새 루트를 더하는 것은 이 방향과 정확히 맞닿습니다.
@@ -1984,9 +2546,10 @@ Follows the existing new-trait icon rules (gold hexagon badge, single-color silh
 - Heel / no-look one-touch goals are highly clippable moments for FSL highlights and streams.`
       },
       {
-        num: '04',
-        titleKo: '04. 배운 점',
-        titleEn: '04. Lessons',
+        titleKo: '배운 점',
+        titleEn: 'Lessons Learned',
+        tocKo: '배운 점',
+        tocEn: 'Lessons',
         contentKo: `### 1. 만들기 전에 있는 것부터 전수 조사
 - 처음에는 '연계 특성이 없다'고 가정했지만, 17종을 모두 확인하며 커맨더의 존재와 공식 제한 문구를 찾았습니다. 주장의 범위를 '짧은 원터치 연계'로 좁히자 오히려 차별점이 더 선명해졌습니다.
 
